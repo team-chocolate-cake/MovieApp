@@ -6,4 +6,61 @@
     </style>
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
+
+    <!--region Font-->
+    <style name="TextStyle">
+        <item name="android:fontFamily">@font/plus_jakarata_sans</item>
+    </style>
+
+    <!--region Title-Font-->
+    <style name="TextStyle.TitleLarge">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.TitleMedium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.TitleSmall">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+
+    <!--region Body-Font-->
+    <style name="TextStyle.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+
+    <!--region label-Font-->
+    <style name="TextStyle.LabelLarge">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.LabelBody">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+    <!--endregion-->
 </resources>
