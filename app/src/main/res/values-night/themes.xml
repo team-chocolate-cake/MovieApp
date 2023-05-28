@@ -5,10 +5,12 @@
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 
+
+    <!--region Font-->
     <style name="TextStyle">
         <item name="android:fontFamily">@font/plus_jakarata_sans</item>
     </style>
-    <!--region Font-->
+
     <!--region Title-Font-->
     <style name="TextStyle.TitleLarge">
         <item name="android:textSize">22sp</item>
