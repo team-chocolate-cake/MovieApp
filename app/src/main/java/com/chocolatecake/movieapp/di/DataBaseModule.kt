@@ -3,7 +3,7 @@ package com.chocolatecake.movieapp.di
 import android.content.Context
 import androidx.room.Room
 import com.chocolatecake.movieapp.data.local.database.MovieDataBase
-import com.chocolatecake.movieapp.data.local.database.dao.MovieDao
+import com.chocolatecake.movieapp.data.local.database.MovieDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
