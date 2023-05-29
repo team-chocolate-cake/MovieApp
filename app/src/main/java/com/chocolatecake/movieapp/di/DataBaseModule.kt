@@ -17,7 +17,7 @@ object DataBaseModule {
 
     @Singleton
     @Provides
-    fun providesRoomDatabase(
+    fun providesMovieDatabase(
         @ApplicationContext context: Context,
     ): MovieDataBase {
         return Room.databaseBuilder(
