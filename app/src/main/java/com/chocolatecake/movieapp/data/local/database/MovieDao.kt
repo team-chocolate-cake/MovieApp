@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
+
     /// region Movies
     //popular
     @Insert(onConflict = OnConflictStrategy.REPLACE)
