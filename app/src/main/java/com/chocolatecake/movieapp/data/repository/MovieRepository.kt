@@ -14,7 +14,13 @@ interface MovieRepository {
 
     fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>>
 
+    suspend fun refreshNowPlayingMovies()
+
     fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>>
 
+    suspend fun refreshTopRatedMovies()
+
     fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>>
+
+    suspend fun refreshUpcomingMovies()
 }
