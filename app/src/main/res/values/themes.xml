@@ -7,6 +7,18 @@
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
 
+    <style name="TextStyle.BodyMedium.SearchBoxStyle">
+        <item name="android:background">@drawable/search_edittext_background</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+        <item name="android:drawablePadding">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:hint">search</item>
+        <item name="android:imeOptions">flagNoFullscreen</item>
+        <item name="android:inputType">text</item>
+        <item name="android:padding">16sp</item>
+
+    </style>
+
     <!--region Font-->
     <style name="TextStyle">
         <item name="android:fontFamily">@font/plus_jakarata_sans</item>
