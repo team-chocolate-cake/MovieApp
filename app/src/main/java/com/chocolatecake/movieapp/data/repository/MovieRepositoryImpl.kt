@@ -10,6 +10,7 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapp
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -20,57 +21,57 @@ class MovieRepositoryImpl @Inject constructor(
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
-) : MovieRepository {
+) : BaseRepository(), MovieRepository {
 
-    override fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
+    override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
+        refreshPopularMovies()
         return movieDao.getPopularMovies()
     }
 
-    override suspend fun refreshPopularMovies() {
-        service.getPopularMovies().takeIf { it.isSuccessful }
-            ?.body()
-            ?.results
-            ?.filterNotNull()
-            ?.let { movieDao.insertPopularMovies(it.map { item -> popularMovieMapper.map(item) }) }
+    private suspend fun refreshPopularMovies() {
+        refreshWrapper(
+            service::getPopularMovies,
+            popularMovieMapper::map,
+            movieDao::insertPopularMovies
+        )
     }
 
-    override fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>> {
+    override suspend fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>> {
+        refreshNowPlayingMovies()
         return movieDao.getNowPlayingMovies()
     }
 
-    override suspend fun refreshNowPlayingMovies() {
-        service.getNowPlayingMovies().takeIf { it.isSuccessful }
-            ?.body()
-            ?.results
-            ?.filterNotNull()
-            ?.let { movieDao.insertNowPlayingMovies(it.map { item -> nowPlayingMovieMapper.map(item) }) }
+    private suspend fun refreshNowPlayingMovies() {
+        refreshWrapper(
+            service::getNowPlayingMovies,
+            nowPlayingMovieMapper::map,
+            movieDao::insertNowPlayingMovies
+        )
     }
 
-    override fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>> {
+    override suspend fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>> {
+        refreshTopRatedMovies()
         return movieDao.getTopRatedMovies()
     }
 
-    override suspend fun refreshTopRatedMovies() {
-        service.getTopRatedMovies().takeIf { it.isSuccessful }
-            ?.body()
-            ?.results
-            ?.filterNotNull()
-            ?.let { movieDao.insertTopRatedMovies(it.map { item -> topRatedMovieMapper.map(item) }) }
-
+    private suspend fun refreshTopRatedMovies() {
+        refreshWrapper(
+            service::getTopRatedMovies,
+            topRatedMovieMapper::map,
+            movieDao::insertTopRatedMovies
+        )
     }
 
-    override fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>> {
+    override suspend fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>> {
+        refreshUpcomingMovies()
         return movieDao.getUpcomingMovies()
     }
 
-    override suspend fun refreshUpcomingMovies() {
-        service.getUpcomingMovies().takeIf { it.isSuccessful }
-            ?.body()
-            ?.results
-            ?.filterNotNull()
-            ?.let { movieDao.insertUpcomingMovies(it.map { item -> upComingMovieMapper.map(item) }) }
-
+    private suspend fun refreshUpcomingMovies() {
+        refreshWrapper(
+            service::getUpcomingMovies,
+            upComingMovieMapper::map,
+            movieDao::insertUpcomingMovies
+        )
     }
-
-
 }

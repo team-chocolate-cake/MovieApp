@@ -8,19 +8,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    fun getPopularMovies(): Flow<List<PopularMovieEntity>>
+    suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>>
 
-    suspend fun refreshPopularMovies()
+    suspend fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>>
 
-    fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>>
+    suspend fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>>
 
-    suspend fun refreshNowPlayingMovies()
+    suspend fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>>
 
-    fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>>
-
-    suspend fun refreshTopRatedMovies()
-
-    fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>>
-
-    suspend fun refreshUpcomingMovies()
 }
