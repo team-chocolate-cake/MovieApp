@@ -5,7 +5,6 @@
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 
-
     <!--region Font-->
     <style name="TextStyle">
         <item name="android:fontFamily">@font/plus_jakarata_sans</item>
