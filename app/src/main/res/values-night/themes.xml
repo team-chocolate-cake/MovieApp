@@ -4,4 +4,62 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <!--region Font-->
+    <style name="TextStyle">
+        <item name="android:fontFamily">@font/plus_jakarata_sans</item>
+    </style>
+
+    <!--region Title-Font-->
+    <style name="TextStyle.TitleLarge">
+        <item name="android:textSize">@dimen/text_giant</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.TitleMedium">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.TitleSmall">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+
+    <!--region Body-Font-->
+    <style name="TextStyle.BodyLarge">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.BodyMedium">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.BodySmall">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+
+    <!--region label-Font-->
+    <style name="TextStyle.LabelLarge">
+        <item name="android:textSize">@dimen/text_semi_small</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="TextStyle.LabelBody">
+        <item name="android:textSize">@dimen/text_semi_small</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+
+    <style name="TextStyle.LabelSmall">
+        <item name="android:textSize">@dimen/text_semi_small</item>
+        <item name="android:fontWeight">400</item>
+    </style>
+    <!--endregion-->
+
+    <!--endregion-->
 </resources>

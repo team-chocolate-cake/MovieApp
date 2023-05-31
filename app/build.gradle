@@ -45,6 +45,10 @@ android {
         dataBinding true
         buildConfig true
     }
+    buildFeatures {
+        dataBinding true
+        buildConfig true
+    }
 }
 
 dependencies {
@@ -96,4 +100,5 @@ dependencies {
 
     /// Preferences DataStore
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha04"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 }
