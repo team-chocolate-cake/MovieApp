@@ -16,7 +16,7 @@ abstract class BaseAdapter<T>(
     private val listener: BaseInteractionListener,
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
-    @get:LayoutRes
+
     abstract val layoutID: Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder =
