@@ -7,12 +7,12 @@ import javax.inject.Inject
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(username: String, password: String): ValidationResult {
+    suspend operator fun invoke(username: String, password: String): Boolean {
         return if (username.isNotEmpty() && password.isNotEmpty()) {
             authRepository.login(username, password)
-            ValidationResult(true)
+            true
         } else {
-            ValidationResult(false, "please fill all fields")
+            false
         }
     }
 }

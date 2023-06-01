@@ -57,10 +57,10 @@
             android:drawablePadding="12dp"
             android:inputType="text"
             android:paddingStart="12dp"
-            android:text="@={viewModel.userName}"
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onUserNameChanged="@{viewModel}" />
 
         <TextView
             android:id="@+id/textView"
@@ -85,10 +85,10 @@
             android:drawablePadding="12dp"
             android:inputType="textPassword"
             android:paddingStart="12dp"
-            android:text="@={viewModel.password}"
             app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onPasswordChanged="@{viewModel}" />
 
         <Button
             android:id="@+id/button_login"
