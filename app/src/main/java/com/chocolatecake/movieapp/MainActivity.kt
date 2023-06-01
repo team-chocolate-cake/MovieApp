@@ -22,11 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-
-        binding.buttonLogin.setOnClickListener {
-            viewModel.login()
-            Log.d("mimo", "------------MainActivity------->>> ")
-        }
     }
 }
 

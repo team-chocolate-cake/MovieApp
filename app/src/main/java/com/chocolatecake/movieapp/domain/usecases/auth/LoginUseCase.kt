@@ -10,10 +10,8 @@ class LoginUseCase @Inject constructor(
     suspend operator fun invoke(username: String, password: String): Boolean {
         return if (username.isNotEmpty() && password.isNotEmpty()) {
             authRepository.login(username, password)
-            Log.d("mimo", "------------LoginUseCase------->>> true")
             true
         } else {
-            Log.d("mimo", "------------LoginUseCase------->>> false")
             false
         }
     }

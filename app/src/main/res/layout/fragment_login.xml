@@ -99,6 +99,7 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/button_background"
             android:backgroundTint="#845EC2"
+            android:onClick="@{()->viewModel.login()}"
             android:paddingVertical="12dp"
             android:text="@string/login"
             android:textSize="16sp"

@@ -26,7 +26,6 @@ class LoginViewModel @Inject constructor(val loginUseCase: LoginUseCase) : ViewM
     fun login() {
         viewModelScope.launch {
             loginUseCase(userName.value, password.value)
-            Log.d("mimo", "------------ LoginViewModel------->>> $userName")
         }
     }
 }
