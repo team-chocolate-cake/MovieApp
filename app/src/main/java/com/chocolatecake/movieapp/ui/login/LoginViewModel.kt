@@ -1,5 +1,6 @@
 package com.chocolatecake.movieapp.ui.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.domain.usecases.auth.GetIsValidLoginUseCase
@@ -68,11 +69,13 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         }
     }
 
-    fun onUserNameChanged(userName: String) {
-        _loginState.update { it.copy(userName = userName, userNameError = null) }
+    fun onUserNameChanged(userName: CharSequence) {
+        _loginState.update { it.copy(userName = userName.toString(), userNameError = null) }
+        Log.d("mimo",userName.toString())
     }
 
-    fun onPasswordChanged(password: String) {
-        _loginState.update { it.copy(password = password, passwordError = null) }
+    fun onPasswordChanged(password: CharSequence) {
+        _loginState.update { it.copy(password = password.toString(), passwordError = null) }
+        Log.d("mimo",password.toString())
     }
 }
