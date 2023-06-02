@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
@@ -52,6 +53,12 @@ interface MovieDao {
 
     @Query("select * from UPCOMING_MOVIE_TABLE")
     fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecommendedMovies(movies: List<RecommendedMovieEntity>)
+
+    @Query("select * from RECOMMENDED_MOVIE_TABLE")
+    fun getRecommendedMovie(): Flow<List<RecommendedMovieEntity>>
 
     @Query("delete from UPCOMING_MOVIE_TABLE")
     suspend fun clearAllUpcomingMovies()

@@ -1,4 +1,6 @@
 package com.chocolatecake.movieapp.home.adapter
 
-interface HomeListener {
+import com.chocolatecake.movieapp.ui.base.BaseInteractionListener
+
+interface HomeListener :BaseInteractionListener{
 }
