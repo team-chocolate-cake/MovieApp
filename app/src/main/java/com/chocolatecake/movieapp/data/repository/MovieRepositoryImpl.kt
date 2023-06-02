@@ -5,13 +5,16 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMov
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
+import com.chocolatecake.movieapp.data.local.mappers.movie.LocalMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
+import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
+import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.domain.model.SearchHistory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,6 +28,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
     private val searchHistoryMapper: SearchHistoryUIMapper,
+    private val searchMovieUIMapper: MovieUIMapper,
+    private val searchMovieMapper: LocalMovieMapper,
 ) : BaseRepository(), MovieRepository {
 
     override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
@@ -82,8 +87,8 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search history
-    override fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
-        return  movieDao.getSearchHistory("%$keyword%").map { items->
+    override suspend fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
+        return  movieDao.getSearchHistory("%${keyword}%").map { items->
             items.map {
                 searchHistoryMapper.map(it)
             }
@@ -102,4 +107,21 @@ class MovieRepositoryImpl @Inject constructor(
         movieDao.deleteSearchHistory(keyword)
     }
     ///endregion
+
+
+    ///region search movies
+    override suspend fun getSearchMovies(keyword: String): Flow<List<Movie>> {
+         refreshSearchMovies(keyword)
+        return movieDao.getSearchMovie(keyword).map { items->
+            items.map { searchMovieUIMapper.map(it) }
+        }
+    }
+    private suspend fun refreshSearchMovies(keyword: String) {
+         refreshWrapper(
+             apiCall = { service.getSearchMovies(keyword)},
+             localMapper = searchMovieMapper::map,
+             databaseSaver = movieDao::insertSearchMovies
+        )
+    }
+    //endregion
 }

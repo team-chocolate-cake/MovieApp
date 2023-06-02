@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
@@ -71,5 +72,14 @@ interface MovieDao {
 
     @Query("delete from SEARCH_HISTORY_TABLE where keyword like :keyword")
     suspend fun deleteSearchHistory(keyword: String)
+    ///endregion
+
+
+    ///region search
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchMovies(movies: List<MovieEntity>)
+
+    @Query("select * from MOVIE_TABLE")
+    suspend fun getSearchMovie(keyword: String): Flow<List<MovieEntity>>
     ///endregion
 }

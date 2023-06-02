@@ -5,6 +5,7 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMov
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
+import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.domain.model.SearchHistory
 import kotlinx.coroutines.flow.Flow
 
@@ -20,9 +21,13 @@ interface MovieRepository {
 
 
     /// region search history
-    fun getSearchHistory(keyword: String): Flow<List<SearchHistory>>
+    suspend fun getSearchHistory(keyword: String): Flow<List<SearchHistory>>
     suspend fun insertSearchHistory(keyword: String)
     suspend fun clearAllSearchHistory()
     suspend fun deleteSearchHistory(keyword: String)
+    ///endregion
+
+    //region search movies
+    suspend fun getSearchMovies(keyword: String): Flow<List<Movie>>
     ///endregion
 }
