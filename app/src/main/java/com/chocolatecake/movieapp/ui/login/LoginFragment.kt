@@ -13,10 +13,10 @@ import com.chocolatecake.movieapp.databinding.FragmentLoginBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 
-@Suppress("UNREACHABLE_CODE")
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override val layoutIdFragment = R.layout.fragment_login
@@ -26,26 +26,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
+            viewModel.loginEvent.collect {
+                onEvent(it)
+            }
+        }
+
+        lifecycleScope.launch {
             viewModel.loginState.collect {
                 if (it.requestError) {
                     createSnackBar("Login Error :( ")
                 }
             }
         }
-
     }
 
     private fun onEvent(event: LoginUiEvent?) {
         when (event) {
             is LoginUiEvent.LoginEvent -> { // TODO --> Navigate To Home Screen
             }
-
-            LoginUiEvent.SignUpEvent -> {
+            is LoginUiEvent.SignUpEvent -> {
                 val browserIntent =
                     Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TMDB_SIGNUP_URL))
                 startActivity(browserIntent)
             }
-
             else -> {}
         }
     }

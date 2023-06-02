@@ -144,7 +144,7 @@
             android:text="@string/signup"
             android:textColor="#845EC2"
             android:textSize="14sp"
-            android:onClick="@{()->viewModel.onClickSignUp()}"
+            android:onClick="@{() -> viewModel.onClickSignUp()}"
             app:layout_constraintBottom_toBottomOf="@+id/textview_do_u_have_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

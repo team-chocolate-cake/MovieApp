@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.domain.usecases.auth.GetIsValidLoginUseCase
 import com.chocolatecake.movieapp.domain.usecases.auth.LoginStateIndicator
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +23,13 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     private val _loginState = MutableStateFlow(LoginUiState())
     val loginState: StateFlow<LoginUiState> = _loginState.asStateFlow()
 
-    private val _loginEvent = MutableStateFlow<LoginUiEvent?>(null)
-    val loginEvent = _loginEvent.asStateFlow()
+    private val _loginEvent = Channel<LoginUiEvent?>()
+    val loginEvent = _loginEvent.receiveAsFlow()
+    fun onClickSignUp() {
+        viewModelScope.launch {
+            _loginEvent.send(LoginUiEvent.SignUpEvent)
+        }
+    }
 
     fun login() {
         val userName = _loginState.value.userName
@@ -69,7 +77,9 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         _loginState.update {
             it.copy(userNameError = null, passwordError = null, isLoading = false)
         }
-        _loginEvent.update { LoginUiEvent.LoginEvent(1) }
+        viewModelScope.launch {
+            _loginEvent.send(LoginUiEvent.LoginEvent(1))
+        }
     }
 
     fun onUserNameChanged(userName: CharSequence) {
@@ -80,9 +90,5 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     fun onPasswordChanged(password: CharSequence) {
         _loginState.update { it.copy(password = password.toString(), passwordError = null) }
         Log.d("mimo", password.toString())
-    }
-
-    fun onClickSignUp() {
-        _loginEvent.update { LoginUiEvent.SignUpEvent }
     }
 }
