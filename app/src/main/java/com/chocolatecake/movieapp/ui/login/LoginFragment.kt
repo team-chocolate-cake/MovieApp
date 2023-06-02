@@ -25,11 +25,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewModel.loginEvent.collect {
-                onEvent(it)
-            }
-        }
+        lifecycleScope.launch { viewModel.loginEvent.collect { onEvent(it) } }
 
         lifecycleScope.launch {
             viewModel.loginState.collect {
@@ -42,13 +38,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun onEvent(event: LoginUiEvent?) {
         when (event) {
-            is LoginUiEvent.LoginEvent -> { // TODO --> Navigate To Home Screen
+            is LoginUiEvent.LoginEvent -> {
+                // TODO --> Navigate To Home Screen
             }
+
             is LoginUiEvent.SignUpEvent -> {
                 val browserIntent =
                     Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TMDB_SIGNUP_URL))
                 startActivity(browserIntent)
             }
+
             else -> {}
         }
     }
