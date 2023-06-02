@@ -31,3 +31,9 @@ fun setOnPasswordChangedListener(editText: EditText, viewModel: LoginViewModel) 
         override fun afterTextChanged(s: Editable?) {}
     })
 }
+
+@BindingAdapter("app:setTipError")
+fun EditText.setTipError(errorMessage: String?) {
+    if (errorMessage == null) return
+    else this.error = errorMessage
+}
