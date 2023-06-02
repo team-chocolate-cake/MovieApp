@@ -40,6 +40,8 @@ interface MovieService {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
 
+    @GET("movie/recommended")
+    suspend fun getRecommendedMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
     @GET("movie/latest")
     suspend fun getLatestMovie(): Response<MovieDto>
     /// endregion

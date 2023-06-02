@@ -3,10 +3,12 @@ package com.chocolatecake.movieapp.data.repository
 import com.chocolatecake.movieapp.data.local.database.MovieDao
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
+import com.chocolatecake.movieapp.data.local.mappers.movie.LocalRecommendedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
@@ -21,6 +23,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
+    private val recommendedMovieMapper: LocalRecommendedMovieMapper,
 ) : BaseRepository(), MovieRepository {
 
     override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
@@ -72,6 +75,19 @@ class MovieRepositoryImpl @Inject constructor(
             service::getUpcomingMovies,
             upComingMovieMapper::map,
             movieDao::insertUpcomingMovies
+        )
+    }
+
+    override suspend fun getRecommendedMovies(): Flow<List<RecommendedMovieEntity>> {
+        refreshRecommendedMovies()
+        return movieDao.getRecommendedMovie()
+    }
+
+    private suspend fun refreshRecommendedMovies() {
+        refreshWrapper(
+            service::getRecommendedMovies,
+            recommendedMovieMapper::map,
+            movieDao::insertRecommendedMovies
         )
     }
 }
