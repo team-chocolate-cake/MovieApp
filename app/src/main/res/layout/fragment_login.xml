@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onUserNameChanged="@{viewModel}"
+            app:onTextChanged="@{(text)->viewModel.onUserNameChanged(text)}"
             app:setTipError="@{viewModel.loginState.userNameError}" />
 
         <TextView
@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onPasswordChanged="@{viewModel}"
+            app:onTextChanged="@{(text)->viewModel.onPasswordChanged(text)}"
             app:setTipError="@{viewModel.loginState.passwordError}" />
 
         <Button
