@@ -9,7 +9,7 @@
         
         <variable
             name="listener"
-            type="" />
+            type="com.chocolatecake.movieapp.home.adapter.HomeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
