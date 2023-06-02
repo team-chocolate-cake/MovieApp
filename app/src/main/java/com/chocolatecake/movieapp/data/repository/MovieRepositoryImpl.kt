@@ -11,7 +11,10 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMap
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
+import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
+import com.chocolatecake.movieapp.domain.model.SearchHistory
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -21,6 +24,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
+    private val searchHistoryMapper: SearchHistoryUIMapper,
 ) : BaseRepository(), MovieRepository {
 
     override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
@@ -67,6 +71,7 @@ class MovieRepositoryImpl @Inject constructor(
         return movieDao.getUpcomingMovies()
     }
 
+
     private suspend fun refreshUpcomingMovies() {
         refreshWrapper(
             service::getUpcomingMovies,
@@ -74,4 +79,27 @@ class MovieRepositoryImpl @Inject constructor(
             movieDao::insertUpcomingMovies
         )
     }
+
+
+    ///region search history
+    override fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
+        return  movieDao.getSearchHistory("%$keyword%").map { items->
+            items.map {
+                searchHistoryMapper.map(it)
+            }
+        }
+    }
+
+    override suspend fun insertSearchHistory(keyword: String) {
+        return movieDao.insertSearchHistory(keyword)
+    }
+
+    override suspend fun clearAllSearchHistory() {
+        return movieDao.clearAllSearchHistory()
+    }
+
+    override suspend fun deleteSearchHistory(keyword: String) {
+        movieDao.deleteSearchHistory(keyword)
+    }
+    ///endregion
 }
