@@ -11,6 +11,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
@@ -42,7 +43,12 @@ interface MovieService {
 
     @GET("movie/latest")
     suspend fun getLatestMovie(): Response<MovieDto>
-    /// endregion
+
+    @GET("trending/{media_type}/{time_window}")
+    suspend fun getTrendingMovies(
+        @Path("media_type") mediaType: String ="person",
+        @Path("time_window") timeWindow: String="day"
+    ): Response<DataWrapperResponse<MovieDto>>
 
     /// region search
     @GET("search/movie")

@@ -4,10 +4,12 @@ import com.chocolatecake.movieapp.data.local.database.MovieDao
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
+import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
@@ -21,6 +23,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
+    private val trendingMoviesMapper: LocalTrendingMoviesMapper
 ) : BaseRepository(), MovieRepository {
 
     override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
@@ -72,6 +75,19 @@ class MovieRepositoryImpl @Inject constructor(
             service::getUpcomingMovies,
             upComingMovieMapper::map,
             movieDao::insertUpcomingMovies
+        )
+    }
+
+    override suspend fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>> {
+        refreshTrendingMovies()
+            return movieDao.getTrendingMovies()
+    }
+
+    private suspend fun refreshTrendingMovies(){
+        refreshWrapper(
+            {service.getTrendingMovies()},
+            trendingMoviesMapper::map,
+            movieDao::insertTrendingMovies
         )
     }
 }

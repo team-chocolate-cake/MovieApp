@@ -7,6 +7,7 @@ import androidx.room.Query
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -55,4 +56,17 @@ interface MovieDao {
     @Query("delete from UPCOMING_MOVIE_TABLE")
     suspend fun clearAllUpcomingMovies()
     /// endregion
-}
+
+
+    ///trending
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrendingMovies(movies: List<TrendingMoviesEntity>)
+
+    @Query("select * from TRENDING_MOVIES_TABLE")
+    fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>>
+
+    @Query("delete from TRENDING_MOVIES_TABLE")
+    suspend fun clearAllTrendingMovies()
+    ///endregion
+
+ }
