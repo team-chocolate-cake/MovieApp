@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -57,11 +58,11 @@
             android:drawablePadding="12dp"
             android:inputType="text"
             android:paddingHorizontal="20dp"
-            app:setTipError="@{viewModel.loginState.userNameError}"
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onUserNameChanged="@{viewModel}" />
+            app:onUserNameChanged="@{viewModel}"
+            app:setTipError="@{viewModel.loginState.userNameError}" />
 
         <TextView
             android:id="@+id/textView"
@@ -86,11 +87,11 @@
             android:drawablePadding="12dp"
             android:inputType="textPassword"
             android:paddingHorizontal="20dp"
-            app:setTipError="@{viewModel.loginState.passwordError}"
             app:layout_constraintBottom_toTopOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onPasswordChanged="@{viewModel}" />
+            app:onPasswordChanged="@{viewModel}"
+            app:setTipError="@{viewModel.loginState.passwordError}" />
 
         <Button
             android:id="@+id/button_login"
@@ -105,16 +106,30 @@
             android:paddingVertical="12dp"
             android:text="@string/login"
             android:textSize="16sp"
+            app:isVisible="@{viewModel.loginState.isLoading == false}"
             app:layout_constraintBottom_toTopOf="@+id/textview_do_u_have_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:indeterminateTintMode="src_atop"
+            app:isVisible="@{viewModel.loginState.isLoading == true}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_login" />
 
         <TextView
             android:id="@+id/textview_do_u_have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+
             android:layout_marginBottom="36dp"
             android:text="@string/don_t_have_an_account"
             android:textSize="14sp"

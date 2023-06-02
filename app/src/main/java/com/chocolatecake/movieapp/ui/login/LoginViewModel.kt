@@ -1,6 +1,5 @@
 package com.chocolatecake.movieapp.ui.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.domain.usecases.auth.GetIsValidLoginUseCase
@@ -25,7 +24,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         val password = _loginState.value.password
 
         viewModelScope.launch {
-            _loginState.update { it.copy(onLoading = true) }
+            _loginState.update { it.copy(isLoading = true) }
             when (getIsValidLoginUseCase(userName, password)) {
                 LoginStateIndicator.USER_NAME_ERROR -> updateStateToUserNameError()
                 LoginStateIndicator.PASSWORD_NAME_ERROR -> updateStateToPasswordError()
@@ -39,7 +38,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         _loginState.update {
             it.copy(
                 requestError = true,
-                onLoading = false
+                isLoading = false
             )
         }
     }
@@ -47,7 +46,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         _loginState.update {
             it.copy(
                 userNameError = "Username is required",
-                onLoading = false
+                isLoading = false
             )
         }
     }
@@ -55,7 +54,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
         _loginState.update {
             it.copy(
                 passwordError = "Password is required",
-                onLoading = false
+                isLoading = false
             )
         }
     }
@@ -64,7 +63,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
             it.copy(
                 userNameError = null,
                 passwordError = null,
-                onLoading = false
+                isLoading = false
             )
         }
     }
