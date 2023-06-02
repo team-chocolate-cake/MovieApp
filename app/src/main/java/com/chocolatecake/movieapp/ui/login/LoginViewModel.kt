@@ -20,6 +20,9 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     private val _loginState = MutableStateFlow(LoginUiState())
     val loginState: StateFlow<LoginUiState> = _loginState.asStateFlow()
 
+    private val _loginEvent = MutableStateFlow<LoginUiEvent?>(null)
+    val loginEvent = _loginEvent.asStateFlow()
+
     fun login() {
         val userName = _loginState.value.userName
         val password = _loginState.value.password
@@ -30,7 +33,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
                 LoginStateIndicator.USER_NAME_ERROR -> updateStateToUserNameError()
                 LoginStateIndicator.PASSWORD_NAME_ERROR -> updateStateToPasswordError()
                 LoginStateIndicator.REQUEST_ERROR -> updateStateToRequestError()
-                LoginStateIndicator.SUCCESS -> updateStateToSuccess()
+                LoginStateIndicator.SUCCESS -> updateStateToSuccessLogin()
             }
         }
     }
@@ -43,6 +46,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
             )
         }
     }
+
     private fun updateStateToUserNameError() {
         _loginState.update {
             it.copy(
@@ -51,6 +55,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
             )
         }
     }
+
     private fun updateStateToPasswordError() {
         _loginState.update {
             it.copy(
@@ -59,23 +64,25 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
             )
         }
     }
-    private fun updateStateToSuccess() {
+
+    private fun updateStateToSuccessLogin() {
         _loginState.update {
-            it.copy(
-                userNameError = null,
-                passwordError = null,
-                isLoading = false
-            )
+            it.copy(userNameError = null, passwordError = null, isLoading = false)
         }
+        _loginEvent.update { LoginUiEvent.LoginEvent(1) }
     }
 
     fun onUserNameChanged(userName: CharSequence) {
         _loginState.update { it.copy(userName = userName.toString(), userNameError = null) }
-        Log.d("mimo",userName.toString())
+        Log.d("mimo", userName.toString())
     }
 
     fun onPasswordChanged(password: CharSequence) {
         _loginState.update { it.copy(password = password.toString(), passwordError = null) }
-        Log.d("mimo",password.toString())
+        Log.d("mimo", password.toString())
+    }
+
+    fun onClickSignUp() {
+        _loginEvent.update { LoginUiEvent.SignUpEvent }
     }
 }

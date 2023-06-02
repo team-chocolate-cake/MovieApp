@@ -22,7 +22,6 @@ class GetIsValidLoginUseCase @Inject constructor(
     }
 }
 
-
 enum class LoginStateIndicator {
     USER_NAME_ERROR,
     PASSWORD_NAME_ERROR,
