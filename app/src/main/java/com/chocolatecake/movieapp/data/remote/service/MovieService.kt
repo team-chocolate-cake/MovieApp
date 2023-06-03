@@ -3,6 +3,7 @@ package com.chocolatecake.movieapp.data.remote.service
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.response.DataWrapperResponse
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
+import com.chocolatecake.movieapp.data.remote.response.actor.ActorDto
 import com.chocolatecake.movieapp.data.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.movieapp.data.remote.response.auth.SessionResponse
 import retrofit2.Response
@@ -55,4 +56,9 @@ interface MovieService {
     ): Response<DataWrapperResponse<MovieDto>>
 
     /// endregion
+
+    /// popular people region
+    @GET("person/popular")
+    suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<ActorDto>>
 }
+/// end region
