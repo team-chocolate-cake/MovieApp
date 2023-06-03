@@ -1,6 +1,8 @@
 package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.MovieDao
+import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
@@ -87,7 +89,7 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search history
-    override suspend fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
+    override fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
         return  movieDao.getSearchHistory("%${keyword}%").map { items->
             items.map {
                 searchHistoryMapper.map(it)
@@ -95,8 +97,8 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertSearchHistory(keyword: String) {
-        return movieDao.insertSearchHistory(keyword)
+    override suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity) {
+        return movieDao.insertSearchHistory(searchHistory)
     }
 
     override suspend fun clearAllSearchHistory() {
@@ -110,9 +112,9 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search movies
-    override suspend fun getSearchMovies(keyword: String): Flow<List<Movie>> {
+    override suspend fun getSearchMovies(keyword: String ): Flow<List<Movie>> {
          refreshSearchMovies(keyword)
-        return movieDao.getSearchMovie(keyword).map { items->
+        return movieDao.getSearchMovie().map { items->
             items.map { searchMovieUIMapper.map(it) }
         }
     }

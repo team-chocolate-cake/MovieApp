@@ -1,6 +1,7 @@
 package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
@@ -21,13 +22,13 @@ interface MovieRepository {
 
 
     /// region search history
-    suspend fun getSearchHistory(keyword: String): Flow<List<SearchHistory>>
-    suspend fun insertSearchHistory(keyword: String)
+    fun getSearchHistory(keyword: String): Flow<List<SearchHistory>>
+    suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity)
     suspend fun clearAllSearchHistory()
     suspend fun deleteSearchHistory(keyword: String)
     ///endregion
 
     //region search movies
-    suspend fun getSearchMovies(keyword: String): Flow<List<Movie>>
+    suspend fun getSearchMovies(keyword: String ): Flow<List<Movie>>
     ///endregion
 }

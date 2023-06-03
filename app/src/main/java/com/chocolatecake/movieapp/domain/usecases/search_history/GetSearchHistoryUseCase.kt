@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetSearchHistoryUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    operator fun invoke(keyword: String): Flow<List<SearchHistory>> {
+     operator fun invoke(keyword: String): Flow<List<SearchHistory>> {
         return movieRepository.getSearchHistory(keyword = keyword)
     }
 }

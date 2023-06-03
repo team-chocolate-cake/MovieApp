@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetSearchMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(): Flow<List<Movie>> {
-        return movieRepository.getSearchMovies()
+    suspend operator fun invoke(keyword: String): Flow<List<Movie>> {
+        return movieRepository.getSearchMovies(keyword = keyword )
     }
 }

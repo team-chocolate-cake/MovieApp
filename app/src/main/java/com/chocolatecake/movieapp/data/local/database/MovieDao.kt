@@ -64,8 +64,8 @@ interface MovieDao {
     @Query("select * from SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword")
     fun getSearchHistory(keyword: String): Flow<List<SearchHistoryEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSearchHistory(keyword: String)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity)
 
     @Query("delete from SEARCH_HISTORY_TABLE")
     suspend fun clearAllSearchHistory()
@@ -80,6 +80,6 @@ interface MovieDao {
     suspend fun insertSearchMovies(movies: List<MovieEntity>)
 
     @Query("select * from MOVIE_TABLE")
-    suspend fun getSearchMovie(keyword: String): Flow<List<MovieEntity>>
+    fun getSearchMovie(): Flow<List<MovieEntity>>
     ///endregion
 }
