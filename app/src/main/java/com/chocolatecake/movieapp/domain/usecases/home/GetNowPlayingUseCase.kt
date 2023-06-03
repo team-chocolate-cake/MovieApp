@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.take
 import java.util.Random
 import javax.inject.Inject
 
-class NowPlayingUseCase @Inject constructor(
-    val movieRepository: MovieRepository
+class GetNowPlayingUseCase @Inject constructor(
+    private val movieRepository: MovieRepository
 ) {
  suspend operator fun invoke():Flow<List<NowPlayingMovieEntity>> {
      return movieRepository.getNowPlayingMovies().map {
