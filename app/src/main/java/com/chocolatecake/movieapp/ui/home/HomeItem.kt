@@ -1,19 +1,29 @@
 package com.chocolatecake.movieapp.ui.home
 
-sealed class HomeItem (val priority: Int){
+import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 
-    data class Slider(val list:List<Slider>):HomeItem(0)
+sealed class HomeItem (val type: HomeItemType){
 
-    data class PopularPeople(val list:List<PopularPeople>):HomeItem(1)
+    data class Slider(val list:List<UpcomingMovieEntity>):HomeItem(HomeItemType.SLIDER)
 
-    data class NowPlaying(val list:List<NowPlaying>):HomeItem(2)
+    data class PopularPeople(val list:List<PopularPeopleEntity>):HomeItem(HomeItemType.POPULAR_PEOPLE)
 
-    data class Trending(val list:List<NowPlaying>):HomeItem(3)
+    data class NowPlaying(val list:List<NowPlayingMovieEntity>):HomeItem(HomeItemType.NOW_PLAYING)
 
-    data class TopRated(val list:List<NowPlaying>):HomeItem(4)
+    data class Trending(val list:List<TrendingMoviesEntity>):HomeItem(HomeItemType.TRENDING)
 
-    data class PopularMovies(val list:List<NowPlaying>):HomeItem(5)
+    data class TopRated(val list:List<TopRatedMovieEntity>):HomeItem(HomeItemType.TOP_RATED)
 
-    data class RecommendedMovies(val list:List<NowPlaying>):HomeItem(6)
+    data class PopularMovies(val list:List<PopularMovieEntity>):HomeItem(HomeItemType.POPULAR_MOVIES)
+
+    data class RecommendedMovies(val list:List<RecommendedMovieEntity>):HomeItem(HomeItemType.RECOMMENDED)
+
+    enum class HomeItemType { SLIDER, NOW_PLAYING, TRENDING, TOP_RATED,POPULAR_PEOPLE,POPULAR_MOVIES,RECOMMENDED }
 
 }
