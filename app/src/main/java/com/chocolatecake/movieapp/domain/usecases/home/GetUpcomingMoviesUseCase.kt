@@ -11,6 +11,8 @@ class GetUpcomingMoviesUseCase @Inject constructor(
     val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): Flow<List<UpcomingMovieEntity>> {
-        return movieRepository.getUpcomingMovies().map { it.shuffled(Random()) }
+        return movieRepository.getUpcomingMovies().map {
+            val random=Random()
+            it.shuffled(random).take(10) }
     }
 }

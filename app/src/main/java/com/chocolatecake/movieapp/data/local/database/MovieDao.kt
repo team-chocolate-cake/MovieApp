@@ -76,6 +76,7 @@ interface MovieDao {
     @Query("delete from POPULAR_PEOPLE_TABLE")
     suspend fun clearAllPopularPeople()
 }
+/// endregion
 
 
     ///trending
