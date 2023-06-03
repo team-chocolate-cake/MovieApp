@@ -4,12 +4,11 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieE
 import com.chocolatecake.movieapp.data.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
 import java.util.Random
 import javax.inject.Inject
 
-class GetPopularUseCase @Inject constructor(
-private val   movieRepository: MovieRepository
+class GetPopularMoviesUseCase @Inject constructor(
+    private val   movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): Flow<List<PopularMovieEntity>> {
 
