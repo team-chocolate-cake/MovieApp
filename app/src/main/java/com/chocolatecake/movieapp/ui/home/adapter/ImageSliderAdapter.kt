@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.movieapp.R
 import com.smarteist.autoimageslider.SliderViewAdapter
 
@@ -13,7 +12,7 @@ class ImageSliderAdapter(private val imageList: ArrayList<Int>) :
 
     override fun onCreateViewHolder(parent: ViewGroup?): ImageSliderViewHolder {
         val view =
-            LayoutInflater.from(parent?.context).inflate(R.layout.item_image_slider, parent, false)
+            LayoutInflater.from(parent?.context).inflate(R.layout.home_item_image_slider, parent, false)
         return ImageSliderViewHolder(view)
     }
 

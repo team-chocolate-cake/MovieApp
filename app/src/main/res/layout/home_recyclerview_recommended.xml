@@ -6,26 +6,25 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/text_view_now_playing"
+        android:id="@+id/recommended"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/now_playing"
-        android:textColor="#DE000000"
-       style="@style/TextStyle.TitleMedium"
+        android:text="Recommended"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recommended"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:paddingHorizontal="8dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/home_item_recommended"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_now_playing"
-        tools:listitem="@layout/home_item_now_playing" />
-
+        app:layout_constraintTop_toBottomOf="@+id/recommended" />
 </androidx.constraintlayout.widget.ConstraintLayout>
