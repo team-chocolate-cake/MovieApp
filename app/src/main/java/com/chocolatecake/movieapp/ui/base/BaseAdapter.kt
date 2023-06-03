@@ -2,17 +2,17 @@ package com.chocolatecake.movieapp.ui.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.movieapp.BR
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 
 interface BaseInteractionListener
 
 abstract class BaseAdapter<T>(
-    private var items: List<T>,
+    private var items: List<T?>,
     private val listener: BaseInteractionListener,
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
