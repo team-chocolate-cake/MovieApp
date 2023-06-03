@@ -4,10 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -62,4 +64,30 @@ interface MovieDao {
     @Query("delete from UPCOMING_MOVIE_TABLE")
     suspend fun clearAllUpcomingMovies()
     /// endregion
+
+    ///region People
+    //popular
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPopularPeople(people: List<PopularPeopleEntity>)
+
+    @Query("select * from POPULAR_PEOPLE_TABLE")
+    fun getPopularPeople(): Flow<List<PopularPeopleEntity>>
+
+    @Query("delete from POPULAR_PEOPLE_TABLE")
+    suspend fun clearAllPopularPeople()
 }
+/// endregion
+
+
+    ///trending
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTrendingMovies(movies: List<TrendingMoviesEntity>)
+
+    @Query("select * from TRENDING_MOVIES_TABLE")
+    fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>>
+
+    @Query("delete from TRENDING_MOVIES_TABLE")
+    suspend fun clearAllTrendingMovies()
+    ///endregion
+
+ }

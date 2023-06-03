@@ -3,6 +3,7 @@ package com.chocolatecake.movieapp.data.remote.service
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.response.DataWrapperResponse
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
+import com.chocolatecake.movieapp.data.remote.response.actor.ActorDto
 import com.chocolatecake.movieapp.data.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.movieapp.data.remote.response.auth.SessionResponse
 import retrofit2.Response
@@ -11,6 +12,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
@@ -44,7 +46,12 @@ interface MovieService {
     suspend fun getRecommendedMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
     @GET("movie/latest")
     suspend fun getLatestMovie(): Response<MovieDto>
-    /// endregion
+
+    @GET("trending/{media_type}/{time_window}")
+    suspend fun getTrendingMovies(
+        @Path("media_type") mediaType: String ="person",
+        @Path("time_window") timeWindow: String="day"
+    ): Response<DataWrapperResponse<MovieDto>>
 
     /// region search
     @GET("search/movie")
@@ -57,4 +64,9 @@ interface MovieService {
     ): Response<DataWrapperResponse<MovieDto>>
 
     /// endregion
+
+    /// popular people region
+    @GET("person/popular")
+    suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<ActorDto>>
 }
+/// end region
