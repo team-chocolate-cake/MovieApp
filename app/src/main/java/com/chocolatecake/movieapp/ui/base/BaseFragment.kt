@@ -33,8 +33,11 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
             return root
         }
     }
-    fun createSnackBar(text:String){
-        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-            text, Snackbar.LENGTH_LONG).show();
+
+    fun createSnackBar(text: String) {
+        Snackbar.make(
+            requireActivity().findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG
+        ).show();
     }
 }
