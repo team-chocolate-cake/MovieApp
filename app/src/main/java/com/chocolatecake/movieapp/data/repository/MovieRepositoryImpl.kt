@@ -8,7 +8,6 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMo
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import com.chocolatecake.movieapp.data.local.database.insertTrendingMovies
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalRecommendedMovieMapper
