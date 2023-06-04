@@ -53,6 +53,11 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
                 isLoading = false
             )
         }
+        _loginState.update {
+            it.copy(
+                requestError = false
+            )
+        }
     }
 
     private fun updateStateToUserNameError() {
