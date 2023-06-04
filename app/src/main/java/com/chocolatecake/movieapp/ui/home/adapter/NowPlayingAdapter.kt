@@ -6,7 +6,7 @@ import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 
 
-class NowPlayingAdapter(list: List<NowPlayingMovieEntity>,listner:HomeListener): BaseAdapter<NowPlayingMovieEntity>(list,listner) {
+class NowPlayingAdapter(list: List<NowPlayingMovieEntity>, listener :HomeListener): BaseAdapter<NowPlayingMovieEntity>(list,listener) {
     override val layoutID: Int
         get() = R.layout.home_item_now_playing
 }

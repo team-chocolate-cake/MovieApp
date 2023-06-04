@@ -6,4 +6,8 @@ interface HomeListener :BaseInteractionListener{
 
     fun onClickNowPlaying(itemId:Int)
     fun onClickTrending(itemId:Int)
+
+    fun onClickPopularMovies(itemId:Int)
+    fun onClickTopRated(itemId:Int)
+    fun onClickRecommended(itemId:Int)
 }
