@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#845EC2"/>
+    <solid android:color="@color/login_button_background"/>
     <corners android:radius="55dp"/>
     <padding
         android:left="8dp"
