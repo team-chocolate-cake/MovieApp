@@ -29,7 +29,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
     private val recommendedMovieMapper: LocalRecommendedMovieMapper,
-    private val trendingMoviesMapper: LocalTrendingMoviesMapper
+    private val trendingMoviesMapper: LocalTrendingMoviesMapper,
     private val popularPeopleMapper: LocalPopularPeopleMapper
 ) : BaseRepository(), MovieRepository {
 
