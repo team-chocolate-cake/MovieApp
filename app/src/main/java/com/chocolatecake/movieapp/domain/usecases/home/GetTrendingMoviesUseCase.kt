@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.take
 import java.util.Random
 import javax.inject.Inject
 
-class GetTrendingUseCase @Inject constructor(
+class GetTrendingMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 )  {
     suspend operator fun invoke():Flow<List<TrendingMoviesEntity>> {
