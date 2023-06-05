@@ -6,9 +6,9 @@ import com.chocolatecake.movieapp.ui.base.BaseAdapter
 import com.chocolatecake.movieapp.ui.home.ui_state.RecommendedUiState
 
 class RecommendedAdapter(
-    itemsTopRated: List<RecommendedUiState>,
+    itemsRecommended: List<RecommendedUiState>,
     listener: HomeListener
 ) :
-    BaseAdapter<RecommendedUiState>(itemsTopRated, listener) {
+    BaseAdapter<RecommendedUiState>(itemsRecommended, listener) {
     override val layoutID = R.layout.home_item_recommended
 }
