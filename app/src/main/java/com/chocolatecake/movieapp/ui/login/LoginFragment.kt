@@ -42,7 +42,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun showErrorMessageWhenErrorOccurs() {
         lifecycleScope.launch {
-            viewModel.loginState.collect {
+            viewModel.state.collect {
                 if (it.requestError) {
                     createSnackBar("Login Error :( ")
                 }

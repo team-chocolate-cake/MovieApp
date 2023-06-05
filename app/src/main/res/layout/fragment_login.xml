@@ -81,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_username"
-            app:setTipError="@{viewModel.loginState.userNameError}" />
+            app:setTipError="@{viewModel.state.userNameError}" />
 
         <TextView
             android:id="@+id/textView"
@@ -110,7 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:setTipError="@{viewModel.loginState.passwordError}" />
+            app:setTipError="@{viewModel.state.passwordError}" />
 
         <Button
             android:id="@+id/button_login"
@@ -125,7 +125,7 @@
             android:paddingVertical="@dimen/spacing_custom"
             android:text="@string/login"
             android:textSize="@dimen/text_medium"
-            app:isVisible="@{viewModel.loginState.isLoading == false}"
+            app:isVisible="@{viewModel.state.isLoading == false}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edittext_password" />
@@ -138,7 +138,7 @@
             android:indeterminate="true"
             android:indeterminateTint="@color/primary"
             android:indeterminateTintMode="src_atop"
-            app:isVisible="@{viewModel.loginState.isLoading == true}"
+            app:isVisible="@{viewModel.state.isLoading == true}"
             app:layout_constraintBottom_toBottomOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

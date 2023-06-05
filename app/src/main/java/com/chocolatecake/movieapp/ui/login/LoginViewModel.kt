@@ -10,7 +10,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,8 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: GetIsValidLoginUseCase) :
     ViewModel() {
-    private val _loginState = MutableStateFlow(LoginUiState())
-    val loginState: StateFlow<LoginUiState> = _loginState.asStateFlow()
+    private val _state = MutableStateFlow(LoginUiState())
+    val state: StateFlow<LoginUiState> = _state.asStateFlow()
 
     private val _loginEvent = Channel<LoginUiEvent?>()
     val loginEvent = _loginEvent.receiveAsFlow()
@@ -32,11 +31,11 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     fun login() {
-        val userName = _loginState.value.userName
-        val password = _loginState.value.password
+        val userName = _state.value.userName
+        val password = _state.value.password
 
         viewModelScope.launch {
-            _loginState.update { it.copy(isLoading = true) }
+            _state.update { it.copy(isLoading = true) }
             when (getIsValidLoginUseCase(userName, password)) {
                 LoginStateIndicator.USER_NAME_ERROR -> updateStateToUserNameError()
                 LoginStateIndicator.PASSWORD_NAME_ERROR -> updateStateToPasswordError()
@@ -47,13 +46,13 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     private fun updateStateToRequestError() {
-        _loginState.update {
+        _state.update {
             it.copy(
                 requestError = true,
                 isLoading = false
             )
         }
-        _loginState.update {
+        _state.update {
             it.copy(
                 requestError = false
             )
@@ -61,7 +60,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     private fun updateStateToUserNameError() {
-        _loginState.update {
+        _state.update {
             it.copy(
                 userNameError = "Username is required",
                 isLoading = false
@@ -70,7 +69,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     private fun updateStateToPasswordError() {
-        _loginState.update {
+        _state.update {
             it.copy(
                 passwordError = "Password is required",
                 isLoading = false
@@ -79,7 +78,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     private fun updateStateToSuccessLogin() {
-        _loginState.update {
+        _state.update {
             it.copy(userNameError = null, passwordError = null, isLoading = false)
         }
         viewModelScope.launch {
@@ -88,12 +87,12 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     fun onUserNameChanged(userName: CharSequence) {
-        _loginState.update { it.copy(userName = userName.toString(), userNameError = null) }
+        _state.update { it.copy(userName = userName.toString(), userNameError = null) }
         Log.d("mimo", userName.toString())
     }
 
     fun onPasswordChanged(password: CharSequence) {
-        _loginState.update { it.copy(password = password.toString(), passwordError = null) }
+        _state.update { it.copy(password = password.toString(), passwordError = null) }
         Log.d("mimo", password.toString())
     }
 }
