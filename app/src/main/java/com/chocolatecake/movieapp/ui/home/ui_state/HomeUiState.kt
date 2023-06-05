@@ -11,3 +11,21 @@ data class HomeUiState(
     val onErrors:List<Error> = emptyList(),
     val loading:Boolean=false,
 )
+
+data class PopularMoviesUiState (
+    val id: Int,
+    val imageUrl: String,
+    val rate: Double
+)
+
+data class RecommendedUiState (
+    val id: Int,
+    val imageUrl: String,
+    val rate: Double
+)
+
+data class TopRatedUiState (
+    val id: Int,
+    val imageUrl: String,
+    val rate: Double
+)
