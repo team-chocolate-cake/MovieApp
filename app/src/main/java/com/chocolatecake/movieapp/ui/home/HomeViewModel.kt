@@ -39,8 +39,8 @@ class HomeViewModel @Inject constructor(
         _uiState.update { it.copy(isLoading = true) }
         getUpComingMovies()
         getPopularPeople()
-
-
+        getNowPlayingMovies()
+        getTrendingMovies()
     }
 
     private fun getUpComingMovies() {
@@ -66,6 +66,31 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getNowPlayingMovies() {
+        viewModelScope.launch {
+            nowPlayingUseCase().collect { nowPlayingList ->
+                _uiState.update {
+                    it.copy(
+                        nowPlayingMovies = HomeItem.NowPlaying(nowPlayingList), isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getTrendingMovies() {
+        viewModelScope.launch {
+            trendingMoviesUseCase().collect { trendingList ->
+                _uiState.update {
+                    it.copy(
+                        trendingMovies = HomeItem.Trending(trendingList), isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
 
     override fun onClickNowPlaying(itemId: Int) {
 

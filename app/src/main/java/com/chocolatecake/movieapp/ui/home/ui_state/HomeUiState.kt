@@ -4,8 +4,8 @@ import com.chocolatecake.movieapp.ui.home.HomeItem
 
 data class HomeUiState(
     val upComingMovies: HomeItem = HomeItem.Slider(emptyList()),
-    val nowPlayingMovies: List<NowPlayingUiState> = emptyList(),
-    val trendingMovies: List<TrendingMoviesUiState> = emptyList(),
+    val nowPlayingMovies: HomeItem = HomeItem.NowPlaying(emptyList()),
+    val trendingMovies: HomeItem = HomeItem.Trending(emptyList()),
     val popularPeople: HomeItem = HomeItem.PopularPeople(emptyList()),
     val popularMovies: List<PopularMoviesUiState> = emptyList(),
     val topRated: List<TopRatedUiState> = emptyList(),
