@@ -12,6 +12,18 @@ data class HomeUiState(
     val loading:Boolean=false,
 )
 
+data class NowPlayingUiState(
+    val id: Int,
+    val imageUrl: String,
+)
+
+
+data class TrendingMoviesUiState(
+    val id: Int,
+    val imageUrl: String,
+    val rate: Double
+)
+
 data class PopularMoviesUiState (
     val id: Int,
     val imageUrl: String,
