@@ -13,6 +13,7 @@ import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import com.chocolatecake.movieapp.ui.home.HomeItem
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiState
+import com.chocolatecake.movieapp.ui.home.ui_state.PopularMoviesUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -41,7 +42,47 @@ class HomeViewModel @Inject constructor(
         getPopularPeople()
         getNowPlayingMovies()
         getTrendingMovies()
+        getPopularMovies()
+        getTopRatedMovies()
+        getRecommendedMovies()
     }
+
+    private fun getPopularMovies() {
+        viewModelScope.launch {
+            popularMoviesUseCase().collect { popularMoviesList ->
+                _uiState.update {
+                    it.copy(
+                        popularMovies = HomeItem.PopularMovies(popularMoviesList), isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        viewModelScope.launch {
+            topRatedUseCase().collect { topRatedList ->
+                _uiState.update {
+                    it.copy(
+                        topRated = HomeItem.TopRated(topRatedList), isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    private fun getRecommendedMovies() {
+        viewModelScope.launch {
+            recommendedUseCase().collect { recommendedList ->
+                _uiState.update {
+                    it.copy(
+                        recommended = HomeItem.RecommendedMovies(recommendedList), isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
 
     private fun getUpComingMovies() {
         viewModelScope.launch {
