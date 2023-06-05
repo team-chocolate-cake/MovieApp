@@ -22,7 +22,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     private val _state = MutableStateFlow(LoginUiState())
     val state: StateFlow<LoginUiState> = _state.asStateFlow()
 
-    private val _loginEvent = Channel<LoginUiEvent?>()
+    private val _loginEvent = Channel<LoginUiEvent>()
     val loginEvent = _loginEvent.receiveAsFlow()
     fun onClickSignUp() {
         viewModelScope.launch {
@@ -88,11 +88,9 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
 
     fun onUserNameChanged(userName: CharSequence) {
         _state.update { it.copy(userName = userName.toString(), userNameError = null) }
-        Log.d("mimo", userName.toString())
     }
 
     fun onPasswordChanged(password: CharSequence) {
         _state.update { it.copy(password = password.toString(), passwordError = null) }
-        Log.d("mimo", password.toString())
     }
 }

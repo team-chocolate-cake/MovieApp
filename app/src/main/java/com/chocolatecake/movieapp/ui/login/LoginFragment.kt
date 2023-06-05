@@ -37,11 +37,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         binding.loginMotionLayout.setTransitionDuration(500)
         if (hasFocus) {
             binding.loginMotionLayout.transitionToEnd()
+        }else{
+            binding.loginMotionLayout.transitionToStart()
         }
     }
 
     private fun showErrorMessageWhenErrorOccurs() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect {
                 if (it.requestError) {
                     createSnackBar("Login Error :( ")
@@ -51,10 +53,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun handleFragmentEvents() {
-        lifecycleScope.launch { viewModel.loginEvent.collect { onEvent(it) } }
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.loginEvent.collect { onEvent(it) } }
     }
 
-    private fun onEvent(event: LoginUiEvent?) {
+    private fun onEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.LoginEvent -> {
                 // TODO --> Navigate To Home Screen
@@ -65,8 +67,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TMDB_SIGNUP_URL))
                 startActivity(browserIntent)
             }
-
-            else -> {}
         }
     }
 }
