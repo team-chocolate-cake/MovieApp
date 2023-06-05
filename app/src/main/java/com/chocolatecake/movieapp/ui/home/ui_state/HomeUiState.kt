@@ -1,16 +1,19 @@
 package com.chocolatecake.movieapp.ui.home.ui_state
 
+import com.chocolatecake.movieapp.ui.home.HomeItem
+
 data class HomeUiState(
-    val upComingMovies:List<UpComingMoviesUiState> = emptyList(),
-    val nowPlayingMovies:List<NowPlayingUiState> = emptyList(),
-    val trendingMovies:List<TrendingMoviesUiState> = emptyList() ,
-    val popularPeople:List<PopularPeopleUiState> = emptyList(),
-    val popularMovies:List<PopularMoviesUiState> = emptyList(),
-    val topRated:List<TopRatedUiState> = emptyList(),
-    val recommended:List<RecommendedUiState> = emptyList(),
-    val onErrors:List<Error> = emptyList(),
-    val loading:Boolean=false,
+    val upComingMovies: HomeItem = HomeItem.Slider(emptyList()),
+    val nowPlayingMovies: List<NowPlayingUiState> = emptyList(),
+    val trendingMovies: List<TrendingMoviesUiState> = emptyList(),
+    val popularPeople: HomeItem = HomeItem.PopularPeople(emptyList()),
+    val popularMovies: List<PopularMoviesUiState> = emptyList(),
+    val topRated: List<TopRatedUiState> = emptyList(),
+    val recommended: List<RecommendedUiState> = emptyList(),
+    val onErrors: List<Error> = emptyList(),
+    val isLoading: Boolean = false,
 )
+
 data class PopularPeopleUiState(
     val id: Int,
     val profilePath: String,
@@ -27,26 +30,25 @@ data class NowPlayingUiState(
     val imageUrl: String,
 )
 
-
 data class TrendingMoviesUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
 )
 
-data class PopularMoviesUiState (
+data class PopularMoviesUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
 )
 
-data class RecommendedUiState (
+data class RecommendedUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
 )
 
-data class TopRatedUiState (
+data class TopRatedUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
