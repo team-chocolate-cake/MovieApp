@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="item"
-            type="com.chocolatecake.movieapp.ui.home.HomeItem.PopularMovies" />
+            name="adapter"
+            type="com.chocolatecake.movieapp.ui.home.adapter.PopularMoviesAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,10 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="8dp"
-            app:items="@{item.list}"
+            android:adapter="@{adapter}"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popular" />
+            app:layout_constraintTop_toBottomOf="@+id/popular"
+            tools:listitem="@layout/home_item_popular_movies"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

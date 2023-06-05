@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="item"
-            type="com.chocolatecake.movieapp.ui.home.HomeItem.RecommendedMovies" />
+            name="adapter"
+            type="com.chocolatecake.movieapp.ui.home.adapter.RecommendedAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
             android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:orientation="horizontal"
-            app:items="@{item.list}"
+            android:adapter="@{adapter}"
             tools:listitem="@layout/home_item_recommended"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.ui.home.ui_state.UpComingMoviesUiState" />
 
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.home.adapter.HomeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +24,8 @@
             app:cardCornerRadius="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+           android:onClick="@{()->listener.onClickUpComing(item.id)}" >
 
             <ImageView
                 android:id="@+id/image_view"

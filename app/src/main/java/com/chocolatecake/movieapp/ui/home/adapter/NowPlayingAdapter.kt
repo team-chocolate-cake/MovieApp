@@ -4,9 +4,9 @@ import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
+import com.chocolatecake.movieapp.ui.home.ui_state.NowPlayingUiState
 
 
-class NowPlayingAdapter(list: List<NowPlayingMovieEntity>, listener :HomeListener): BaseAdapter<NowPlayingMovieEntity>(list,listener) {
-    override val layoutID: Int
-        get() = R.layout.home_item_now_playing
+class NowPlayingAdapter(list: List<NowPlayingUiState>,val layout:Int,listener :HomeListener): BaseAdapter<NowPlayingUiState>(list,listener) {
+    override val layoutID = layout
 }

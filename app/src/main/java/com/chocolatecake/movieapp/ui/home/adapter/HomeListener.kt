@@ -4,6 +4,8 @@ import com.chocolatecake.movieapp.ui.base.BaseInteractionListener
 
 interface HomeListener :BaseInteractionListener{
 
+    fun onClickUpComing(itemId:Int)
+
     fun onClickNowPlaying(itemId:Int)
     fun onClickTrending(itemId:Int)
 
@@ -11,6 +13,5 @@ interface HomeListener :BaseInteractionListener{
     fun onClickTopRated(itemId:Int)
     fun onClickRecommended(itemId:Int)
 
-    fun onClickUpComing(itemId:Int)
     fun onClickPopularPeople(itemId:Int)
 }

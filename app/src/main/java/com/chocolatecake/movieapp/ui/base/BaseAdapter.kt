@@ -12,7 +12,7 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovie
 interface BaseInteractionListener
 
 abstract class BaseAdapter<T>(
-    private var items: List<T?>,
+    private var items: List<T>,
     private val listener: BaseInteractionListener,
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 

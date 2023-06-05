@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.chocolatecake.movieapp.R
+import com.chocolatecake.movieapp.ui.home.ui_state.UpComingMoviesUiState
 import com.smarteist.autoimageslider.SliderViewAdapter
 
-class UpComingAdapter(private val imageList: ArrayList<Int>) :
+class UpComingAdapter(private val imageList: List<UpComingMoviesUiState>) :
     SliderViewAdapter<UpComingAdapter.ImageSliderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?): ImageSliderViewHolder {
@@ -27,8 +28,8 @@ class UpComingAdapter(private val imageList: ArrayList<Int>) :
     inner class ImageSliderViewHolder(itemView: View) : ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.image_view)
 
-        fun bind(imageResId: Int) {
-            imageView.setImageResource(imageResId)
+        fun bind(imageResId: UpComingMoviesUiState, position: Int) {
+            imageView.setImageResource(imageList[position])
         }
     }
 }

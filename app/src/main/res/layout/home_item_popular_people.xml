@@ -6,7 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.ui.home.ui_state.PopularPeopleUiState" />
 
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.home.adapter.HomeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,14 +27,15 @@
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:imageUrlWithUrl="@{item.imageURL}"
+            app:imageUrlWithUrl="@{item.profilePath}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             app:srcCompat="@drawable/ic_image_not_found"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

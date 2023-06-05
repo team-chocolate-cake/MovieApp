@@ -5,8 +5,8 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity" />
-        
+            type="com.chocolatecake.movieapp.ui.home.ui_state.NowPlayingUiState" />
+
         <variable
             name="listener"
             type="com.chocolatecake.movieapp.home.adapter.HomeListener" />
@@ -27,7 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            android:onClick="@{()-> listener.onClickNowPlaying(item.id)}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

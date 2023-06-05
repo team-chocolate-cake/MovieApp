@@ -5,10 +5,10 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMo
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
+import com.chocolatecake.movieapp.ui.home.ui_state.RecommendedUiState
 
-class RecommendedAdapter (itemsTopRated:List<RecommendedMovieEntity?>, listener: HomeListener):
-    BaseAdapter<RecommendedMovieEntity?>(itemsTopRated,listener) {
-    override val layoutID: Int
-        get()  = R.layout.home_item_recommended
+class RecommendedAdapter (itemsTopRated:List<RecommendedUiState>, layout:Int,listener: HomeListener):
+    BaseAdapter<RecommendedUiState>(itemsTopRated,listener) {
+    override val layoutID = layout
 
 }

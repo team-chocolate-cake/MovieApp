@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="item"
-            type="com.chocolatecake.movieapp.ui.home.HomeItem.Slider" />
+            name="adapter"
+            type="com.chocolatecake.movieapp.home.adapter.UpComingAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

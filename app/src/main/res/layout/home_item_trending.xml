@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity" />
+            type="com.chocolatecake.movieapp.ui.home.ui_state.TrendingMoviesUiState" />
 
         <variable
             name="listener"
@@ -29,6 +29,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{()-> listener.onClickTrending(item.id)}"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
         <ImageView
