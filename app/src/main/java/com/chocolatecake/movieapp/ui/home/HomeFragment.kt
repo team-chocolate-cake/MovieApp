@@ -23,7 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun setAdapter() {
         homeAdapter = HomeAdapter(mutableListOf(), viewModel)
-        binding.recyclerViewHome.adapter=homeAdapter
+        binding.recyclerViewHome.adapter = homeAdapter
     }
 
     private fun collectAdapterData() {
