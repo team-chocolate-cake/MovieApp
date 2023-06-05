@@ -5,13 +5,13 @@
 
     <data>
         <variable
-            name="adapter"
-            type="com.chocolatecake.movieapp.home.adapter.UpComingAdapter" />
+            name="item"
+            type="com.chocolatecake.movieapp.ui.home.HomeItem.Slider" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/imageSlider"

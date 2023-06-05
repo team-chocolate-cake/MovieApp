@@ -8,8 +8,8 @@ import com.chocolatecake.movieapp.ui.home.ui_state.NowPlayingUiState
 
 
 class NowPlayingAdapter(
-    list: List<NowPlayingUiState>, val layout: Int, listener: HomeListener
+    list: List<NowPlayingUiState>, listener: HomeListener
 ) :
     BaseAdapter<NowPlayingUiState>(list, listener) {
-    override val layoutID = layout
+    override val layoutID = R.layout.home_item_image_slider
 }

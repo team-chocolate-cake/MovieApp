@@ -8,11 +8,10 @@ import com.chocolatecake.movieapp.ui.home.ui_state.PopularMoviesUiState
 
 class PopularMoviesAdapter(
     itemsPopular: List<PopularMoviesUiState>,
-    layout: Int,
     listener: HomeListener
 ) :
     BaseAdapter<PopularMoviesUiState>(itemsPopular, listener) {
-    override val layoutID = layout
+    override val layoutID = R.layout.home_item_popular_movies
 
 }
 

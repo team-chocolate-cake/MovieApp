@@ -1,12 +1,14 @@
-package com.chocolatecake.movieapp.home
+package com.chocolatecake.movieapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentHomeBinding
-import com.chocolatecake.movieapp.home.adapter.HomeAdapter
+import com.chocolatecake.movieapp.home.HomeViewModel
+import com.chocolatecake.movieapp.ui.home.adapter.HomeAdapter
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -42,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         it.recommended
                     )
                 )
+                Log.d("mimo", it.toString())
             }
         }
     }

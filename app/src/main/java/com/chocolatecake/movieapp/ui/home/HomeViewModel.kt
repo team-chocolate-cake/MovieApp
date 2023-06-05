@@ -65,39 +65,51 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularMovies() {
         viewModelScope.launch {
-            popularMoviesUseCase().collect { popularMoviesList ->
-                val items = popularMoviesList.map(popularMoviesUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        popularMovies = HomeItem.PopularMovies(items), isLoading = false
-                    )
+            try {
+                popularMoviesUseCase().collect { popularMoviesList ->
+                    val items = popularMoviesList.map(popularMoviesUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            popularMovies = HomeItem.PopularMovies(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
-            topRatedUseCase().collect { topRatedList ->
-                val items = topRatedList.map(topRatedUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        topRated = HomeItem.TopRated(items), isLoading = false
-                    )
+            try {
+                topRatedUseCase().collect { topRatedList ->
+                    val items = topRatedList.map(topRatedUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            topRated = HomeItem.TopRated(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
     private fun getRecommendedMovies() {
         viewModelScope.launch {
-            recommendedUseCase().collect { recommendedList ->
-                val items = recommendedList.map(recommendedUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        recommended = HomeItem.RecommendedMovies(items), isLoading = false
-                    )
+            try {
+                recommendedUseCase().collect { recommendedList ->
+                    val items = recommendedList.map(recommendedUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            recommended = HomeItem.RecommendedMovies(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
@@ -105,56 +117,77 @@ class HomeViewModel @Inject constructor(
 
     private fun getUpComingMovies() {
         viewModelScope.launch {
-            upcomingMoviesUseCase().collect { upComingList ->
-                val items = upComingList.map(upComingUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        upComingMovies = HomeItem.Slider(items), isLoading = false
-                    )
+            try {
+                upcomingMoviesUseCase().collect { upComingList ->
+                    val items = upComingList.map(upComingUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            upComingMovies = HomeItem.Slider(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
     private fun getPopularPeople() {
         viewModelScope.launch {
-            popularPeopleUseCase().collect { popularPeopleList ->
-                val items = popularPeopleList.map(popularPeopleUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        popularPeople = HomeItem.PopularPeople(items), isLoading = false
-                    )
+            try {
+                popularPeopleUseCase().collect { popularPeopleList ->
+                    val items = popularPeopleList.map(popularPeopleUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            popularPeople = HomeItem.PopularPeople(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
     private fun getNowPlayingMovies() {
         viewModelScope.launch {
-            nowPlayingUseCase().collect { nowPlayingList ->
-                val items = nowPlayingList.map(nowPlayingUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        nowPlayingMovies = HomeItem.NowPlaying(items), isLoading = false
-                    )
+            try {
+                nowPlayingUseCase().collect { nowPlayingList ->
+                    val items = nowPlayingList.map(nowPlayingUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            nowPlayingMovies = HomeItem.NowPlaying(items), isLoading = false
+                        )
+                    }
                 }
+            } catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
     private fun getTrendingMovies() {
         viewModelScope.launch {
-            trendingMoviesUseCase().collect { trendingList ->
-                val items = trendingList.map(trendingUiMapper::map)
-                _uiState.update {
-                    it.copy(
-                        trendingMovies = HomeItem.Trending(items), isLoading = false
-                    )
+            try {
+                trendingMoviesUseCase().collect { trendingList ->
+                    val items = trendingList.map(trendingUiMapper::map)
+                    _uiState.update {
+                        it.copy(
+                            trendingMovies = HomeItem.Trending(items), isLoading = false
+                        )
+                    }
                 }
+            }catch (th: Throwable) {
+                onError(th.message.toString())
             }
         }
     }
 
+    private fun onError(message: String) {
+        val errors = _uiState.value.onErrors.toMutableList()
+        errors.add(message)
+        _uiState.update { it.copy(onErrors = errors, isLoading = false) }
+    }
 
     override fun onClickNowPlaying(itemId: Int) {
 

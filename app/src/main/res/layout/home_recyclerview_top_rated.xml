@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="adapter"
-            type="com.chocolatecake.movieapp.ui.home.adapter.TopRatedAdapter" />
+            name="item"
+            type="com.chocolatecake.movieapp.ui.home.HomeItem.TopRated" />
     </data>
 
 
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="8dp"
-            android:adapter="@{adapter}"
+            app:items="@{item.list}"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

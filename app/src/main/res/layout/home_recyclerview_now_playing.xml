@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="adapter"
-            type="com.chocolatecake.movieapp.ui.home.adapter.NowPlayingAdapter" />
+            name="item"
+            type="com.chocolatecake.movieapp.ui.home.HomeItem.NowPlaying" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:contentDescription="@string/now_playing"
             android:orientation="horizontal"
-            android:adapter="@{adapter}"
+            app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

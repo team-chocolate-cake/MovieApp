@@ -1,12 +1,5 @@
 package com.chocolatecake.movieapp.ui.home
 
-import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import com.chocolatecake.movieapp.ui.home.ui_state.NowPlayingUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.PopularMoviesUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.PopularPeopleUiState

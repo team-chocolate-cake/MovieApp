@@ -8,10 +8,9 @@ import com.chocolatecake.movieapp.ui.home.ui_state.TrendingMoviesUiState
 
 class TrendingAdapter(
     list: List<TrendingMoviesUiState>,
-    layout: Int,
     listner: HomeListener
 ) :
     BaseAdapter<TrendingMoviesUiState>(list, listner) {
-    override val layoutID = layout
+    override val layoutID = R.layout.home_item_trending
 
 }
