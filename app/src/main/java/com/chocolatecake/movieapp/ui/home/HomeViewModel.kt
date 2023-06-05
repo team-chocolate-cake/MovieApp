@@ -1,7 +1,6 @@
 package com.chocolatecake.movieapp.home
 
 import androidx.lifecycle.viewModelScope
-import com.chocolatecake.movieapp.data.repository.MovieRepository
 import com.chocolatecake.movieapp.domain.usecases.home.GetNowPlayingUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUsecase
@@ -13,10 +12,8 @@ import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import com.chocolatecake.movieapp.ui.home.HomeItem
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiState
-import com.chocolatecake.movieapp.ui.home.ui_state.PopularMoviesUiState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +31,8 @@ class HomeViewModel @Inject constructor(
     BaseViewModel(), HomeListener {
 
     private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState> = _uiState
+    val uiState = _uiState.asStateFlow()
+
     init {
         getData()
     }
@@ -101,10 +99,10 @@ class HomeViewModel @Inject constructor(
 
     private fun getPopularPeople() {
         viewModelScope.launch {
-            popularPeopleUseCase().collect { popularPepleList ->
+            popularPeopleUseCase().collect { popularPeopleList ->
                 _uiState.update {
                     it.copy(
-                        popularPeople = HomeItem.PopularPeople(popularPepleList), isLoading = false
+                        popularPeople = HomeItem.PopularPeople(popularPeopleList), isLoading = false
                     )
                 }
             }
