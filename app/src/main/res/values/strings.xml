@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="movie">Movie</string>
+    <string name="tv">TV</string>
+    <string name="person">Person</string>
+    <string name="collection">Collection</string>
+    <string name="company">Company</string>
+    <string name="apply">Apply</string>
 </resources>

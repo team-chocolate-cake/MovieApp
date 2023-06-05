@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.domain.model.Movie" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.ui.search.ui_state.SearchListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
+            android:layout_width="@dimen/height_image"
+            android:layout_height="@dimen/height_card"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.posterPath}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/height_image"
+            android:layout_height="100dp"
+            android:background="@drawable/gradient_background"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+            app:layout_constraintStart_toStartOf="@+id/shapeableImageView" />
+
+        <ImageView
+            android:id="@+id/image_view_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_rates_number"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_rates_number"
+            app:layout_constraintTop_toTopOf="@+id/text_view_rates_number"
+            app:srcCompat="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/text_view_rates_number"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="31dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:text="@{String.valueOf(item.voteAverage)}"
+            android:textColor="#f6f6f6"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
+            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+            tools:text="9.6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

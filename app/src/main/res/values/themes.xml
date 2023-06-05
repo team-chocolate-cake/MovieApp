@@ -75,5 +75,22 @@
     </style>
     <!--endregion-->
 
+    <style name="TextStyle.LabelMedium.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipStartPadding">@dimen/spacing_medium</item>
+        <item name="chipEndPadding">@dimen/spacing_medium</item>
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="chipStrokeColor">@android:color/transparent</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipMinTouchTargetSize">0dp</item>
+    </style>
+    <!--endregion-->
+
+    <style name="ViewDividerStyle">
+        <item name="android:radius">@dimen/radius_full</item>
+    </style>
+
     <!--endregion-->
 </resources>
