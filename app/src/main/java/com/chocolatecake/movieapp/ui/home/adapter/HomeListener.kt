@@ -10,4 +10,7 @@ interface HomeListener :BaseInteractionListener{
     fun onClickPopularMovies(itemId:Int)
     fun onClickTopRated(itemId:Int)
     fun onClickRecommended(itemId:Int)
+
+    fun onClickUpComing(itemId:Int)
+    fun onClickPopularPeople(itemId:Int)
 }

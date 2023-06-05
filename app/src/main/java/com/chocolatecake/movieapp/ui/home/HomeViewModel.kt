@@ -13,7 +13,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     }
 
     override fun onClickNowPlaying(itemId: Int) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onClickTrending(itemId: Int) {
@@ -31,6 +31,15 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
     override fun onClickRecommended(itemId: Int) {
         TODO("Not yet implemented")
     }
+
+    override fun onClickUpComing(itemId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClickPopularPeople(itemId: Int) {
+        TODO("Not yet implemented")
+    }
+
 
 
 }
