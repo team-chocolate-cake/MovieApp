@@ -51,7 +51,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun handleKeyboardAppearanceEvent(isVisible: Boolean) {
         with(binding.loginMotionLayout) {
-            setTransitionDuration(1000)
+            setTransitionDuration(300)
             if (isVisible) {
                 transitionToEnd()
             } else {
