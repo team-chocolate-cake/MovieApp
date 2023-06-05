@@ -12,5 +12,6 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter("app:isVisible")
 fun View.isVisible(isVisible: Boolean?) {
+    if (isVisible == null) return
     visibility = if (isVisible == true) View.VISIBLE else View.INVISIBLE
 }

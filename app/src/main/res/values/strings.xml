@@ -5,4 +5,6 @@
     <string name="password">password</string>
     <string name="username">username</string>
     <string name="login">Login</string>
+    <string name="Password_is_required">Password is required</string>
+    <string name="Username_is_required">Username is required</string>
 </resources>

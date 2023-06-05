@@ -11,7 +11,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        >
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/login_motion_layout"
         android:layout_width="match_parent"

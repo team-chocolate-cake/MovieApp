@@ -1,10 +1,12 @@
 package com.chocolatecake.movieapp.ui.login
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
+import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
+import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.domain.usecases.auth.GetIsValidLoginUseCase
-import com.chocolatecake.movieapp.domain.usecases.auth.LoginStateIndicator
+import com.chocolatecake.movieapp.domain.usecases.auth.LoginUseCase
+import com.chocolatecake.movieapp.ui.base.BaseViewModel
+import com.chocolatecake.movieapp.ui.base.ResourceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,13 +19,16 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: GetIsValidLoginUseCase) :
-    ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
+    resourceManager: ResourceManager
+) : BaseViewModel(resourceManager) {
     private val _state = MutableStateFlow(LoginUiState())
     val state: StateFlow<LoginUiState> = _state.asStateFlow()
 
     private val _loginEvent = Channel<LoginUiEvent>()
     val loginEvent = _loginEvent.receiveAsFlow()
+
     fun onClickSignUp() {
         viewModelScope.launch {
             _loginEvent.send(LoginUiEvent.SignUpEvent)
@@ -31,14 +36,13 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     }
 
     fun login() {
-        val userName = _state.value.userName
-        val password = _state.value.password
-
         viewModelScope.launch {
+            val userName = _state.value.userName
+            val password = _state.value.password
             _state.update { it.copy(isLoading = true) }
-            when (getIsValidLoginUseCase(userName, password)) {
+            when (loginUseCase(userName, password)) {
                 LoginStateIndicator.USER_NAME_ERROR -> updateStateToUserNameError()
-                LoginStateIndicator.PASSWORD_NAME_ERROR -> updateStateToPasswordError()
+                LoginStateIndicator.PASSWORD_ERROR -> updateStateToPasswordError()
                 LoginStateIndicator.REQUEST_ERROR -> updateStateToRequestError()
                 LoginStateIndicator.SUCCESS -> updateStateToSuccessLogin()
             }
@@ -62,7 +66,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     private fun updateStateToUserNameError() {
         _state.update {
             it.copy(
-                userNameError = "Username is required",
+                userNameError = resourceManager.getString(R.string.Username_is_required),
                 isLoading = false
             )
         }
@@ -71,7 +75,7 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     private fun updateStateToPasswordError() {
         _state.update {
             it.copy(
-                passwordError = "Password is required",
+                passwordError =  resourceManager.getString(R.string.Password_is_required),
                 isLoading = false
             )
         }
@@ -93,4 +97,10 @@ class LoginViewModel @Inject constructor(private val getIsValidLoginUseCase: Get
     fun onPasswordChanged(password: CharSequence) {
         _state.update { it.copy(password = password.toString(), passwordError = null) }
     }
+
+    override fun getData() {
+
+    }
 }
+
+
