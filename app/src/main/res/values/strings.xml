@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="signup">Signup</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="login">Login</string>
 </resources>

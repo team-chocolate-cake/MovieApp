@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.movieapp.ui.login.LoginViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/login_motion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/login_form_background"
+        app:layoutDescription="@xml/fragment_login_xml_constraintlayout_scene">
+
+        <ImageView
+            android:id="@+id/imageview_login"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="-40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_cover_photo"
+            app:layout_constraintBottom_toTopOf="@+id/view_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guideline_55"
+            android:background="@drawable/header_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55" />
+
+
+        <TextView
+            android:id="@+id/textview_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_giant"
+            android:text="@string/username"
+            android:textColor="@color/secondary_text_60"
+            app:layout_constraintStart_toStartOf="@+id/edittext_username"
+            app:layout_constraintTop_toTopOf="@+id/view_background" />
+
+        <EditText
+            android:id="@+id/edittext_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:afterTextChanged="@{(text) -> viewModel.onUserNameChanged(text)}"
+            android:background="@drawable/edittext_background"
+            android:drawablePadding="@dimen/spacing_custom"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/spacing_x_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_username"
+            app:setTipError="@{viewModel.state.userNameError}" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/password"
+            android:textColor="@color/secondary_text_60"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_password"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/edittext_password"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_username" />
+
+        <EditText
+            android:id="@+id/edittext_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:afterTextChanged="@{(text) -> viewModel.onPasswordChanged(text)}"
+            android:background="@drawable/edittext_background"
+            android:drawablePadding="@dimen/spacing_custom"
+            android:inputType="textPassword"
+            android:paddingHorizontal="@dimen/spacing_x_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:setTipError="@{viewModel.state.passwordError}" />
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_giant"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/button_background"
+            android:onClick="@{()->viewModel.login()}"
+            android:paddingVertical="@dimen/spacing_custom"
+            android:text="@string/login"
+            android:textSize="@dimen/text_medium"
+            app:isVisible="@{viewModel.state.isLoading == false}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_password" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:indeterminateTintMode="src_atop"
+            app:isVisible="@{viewModel.state.isLoading == true}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_login" />
+
+        <TextView
+            android:id="@+id/textview_do_u_have_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="@string/don_t_have_an_account"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toStartOf="@+id/textview_signup"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_login" />
+
+        <TextView
+            android:id="@+id/textview_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:onClick="@{() -> viewModel.onClickSignUp()}"
+            android:text="@string/signup"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_do_u_have_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textview_do_u_have_account"
+            app:layout_constraintTop_toTopOf="@+id/textview_do_u_have_account" />
+
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+    </ScrollView>
+</layout>

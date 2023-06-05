@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.chocolatecake.movieapp.BR
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
     @get:LayoutRes
@@ -31,5 +32,12 @@ abstract class BaseFragment<VDB : ViewDataBinding> : Fragment() {
             setVariable(BR.viewModel, viewModel)
             return root
         }
+    }
+
+    fun createSnackBar(text: String) {
+        Snackbar.make(
+            requireActivity().findViewById(android.R.id.content),
+            text, Snackbar.LENGTH_LONG
+        ).show();
     }
 }
