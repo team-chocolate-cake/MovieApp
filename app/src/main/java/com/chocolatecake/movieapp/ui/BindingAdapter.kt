@@ -24,7 +24,7 @@ fun ImageView.loadImage(imageUrl: String?) {
 
 @BindingAdapter(value = ["app:hideResult", "app:query"])
 fun <T> View.hideResult(list: List<T>?, text: String) {
-    if (list.isNullOrEmpty() || text.isNotBlank()) {
+    if (list.isNullOrEmpty() && text.isNotBlank()) {
         this.visibility = View.VISIBLE
     } else {
         this.visibility = View.GONE
@@ -51,6 +51,7 @@ fun ChipGroup.setGenres(
     listener: SearchListener,
     chipSelected: Int?
 ) {
+    this.removeAllViews()
     items?.let {
         it.forEach { genre -> this.addView(this.createChip(genre, listener)) }
     }

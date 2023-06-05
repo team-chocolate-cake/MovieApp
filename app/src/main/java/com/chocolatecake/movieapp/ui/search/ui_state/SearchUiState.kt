@@ -11,7 +11,7 @@ data class SearchUiState(
     val error: List<String>? = null,
     val genresMovies: List<GenresMoviesUiState>? = emptyList(),
     val selectedMovieGenresId: Int? = null,
-    val searchHistory: List<String> = emptyList()
+    val searchHistory: List<String> = emptyList(),
 ) {
     data class SearchTypeUiState(
         val typeName: String = "",

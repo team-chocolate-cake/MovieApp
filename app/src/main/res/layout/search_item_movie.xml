@@ -16,14 +16,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:layout_margin="4dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/height_card"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.posterPath}"
             app:layout_constraintEnd_toEndOf="parent"

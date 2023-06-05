@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentSearchBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
@@ -22,6 +24,13 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         searchAdapter = SearchAdapter(mutableListOf(), viewModel)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.state.collect{
+                    searchAdapter.setItems(it.searchMovieResult)
+                }
+            }
+        }
         binding.recyclerViewSearch.adapter = searchAdapter
         handleEvent()
         setupSearchHistoryAdapter()

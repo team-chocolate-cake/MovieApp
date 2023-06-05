@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import com.chocolatecake.movieapp.BR
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.BottomSheetSearchFilterBinding
-import com.chocolatecake.movieapp.ui.search.SearchAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class FilterMovieBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetSearchFilterBinding
     val viewModel by activityViewModels<SearchViewModel>()
-    private lateinit var searchAdapter: SearchAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,11 +35,9 @@ class FilterMovieBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        searchAdapter = SearchAdapter(mutableListOf(), viewModel)
-        binding.buttonFilter.setOnClickListener {
+        binding.buttonApplyFilter.setOnClickListener {
             viewModel.getData()
             dismiss()
         }
     }
-
 }

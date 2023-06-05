@@ -11,8 +11,11 @@ class SearchMoviesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(keyword: String,genreId: Int?): List<Movie> {
         val movies = movieRepository.getSearchMovies(keyword)
-        return movies.map { movieUIMapper.map(it)}.filter { movie ->
-            movie.genreIds.takeIf { genreId != null }?.any { it == genreId } ?: true
+        return movies.filter { movie ->
+            movie.genreIds.takeIf { genreId != null }?.contains(genreId) ?: true
+        }.map { movie ->
+            val formattedVoteAverage = "%.1f".format(movie.voteAverage)
+            movieUIMapper.map(movie.copy(voteAverage = formattedVoteAverage.toDouble()))
         }
     }
 }
