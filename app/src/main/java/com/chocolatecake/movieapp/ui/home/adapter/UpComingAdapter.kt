@@ -7,8 +7,8 @@ import android.widget.ImageView
 import com.chocolatecake.movieapp.R
 import com.smarteist.autoimageslider.SliderViewAdapter
 
-class ImageSliderAdapter(private val imageList: ArrayList<Int>) :
-    SliderViewAdapter<ImageSliderAdapter.ImageSliderViewHolder>() {
+class UpComingAdapter(private val imageList: ArrayList<Int>) :
+    SliderViewAdapter<UpComingAdapter.ImageSliderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?): ImageSliderViewHolder {
         val view =
