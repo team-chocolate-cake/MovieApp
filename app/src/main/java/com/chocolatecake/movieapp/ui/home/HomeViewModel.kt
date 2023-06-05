@@ -35,6 +35,9 @@ class HomeViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState
+    init {
+        getData()
+    }
 
     override fun getData() {
         _uiState.update { it.copy(isLoading = true) }

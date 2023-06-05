@@ -24,8 +24,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 BaseAdapter<HomeItem>(itemsHome, listener)
 {
 
-    override val layoutID: Int
-        get() =0
+    override val layoutID: Int =0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -117,18 +116,19 @@ BaseAdapter<HomeItem>(itemsHome, listener)
         holder.binding.item = nowPlaying
     }
 
-//    fun setItem(item: EventDetailsItem) {
-//        val newItems = eventDetailsItems.apply {
-//            removeAt(item.type.ordinal)
-//            add(item.type.ordinal, item)
-//        }
-//        setItems(newItems)
-//    }
-//
-//    override fun setItems(newItems: List<EventDetailsItem>) {
-//        eventDetailsItems = newItems.sortedBy { it.type.ordinal }.toMutableList()
-//        super.setItems(newItems)
-//    }
+    fun setItem(item: HomeItem) {
+        val newItems = itemsHome.apply {
+            removeAt(item.type.ordinal)
+            add(item.type.ordinal, item)
+        }
+        setItems(newItems)
+    }
+
+    override fun setItems(newItems: List<HomeItem>) {
+        itemsHome = newItems.sortedBy { it.type.ordinal }.toMutableList()
+        super.setItems(newItems)
+    }
+
     private fun bindTopRated(holder: TopRatedViewHolder, position: Int) {
     val topRated = itemsHome[position] as HomeItem.TopRated
     val adapter = TopRatedAdapter(topRated.list, listener)
