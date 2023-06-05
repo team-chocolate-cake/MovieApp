@@ -11,8 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/login_motion_layout"
         android:layout_width="match_parent"
@@ -100,7 +99,7 @@
             android:id="@+id/edittext_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:afterTextChanged="@{(text) -> viewModel.onPasswordChanged(text)}"
             android:background="@drawable/edittext_background"
@@ -120,7 +119,6 @@
             android:layout_marginTop="@dimen/spacing_giant"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:background="@drawable/button_background"
-            android:backgroundTint="@color/primary"
             android:onClick="@{()->viewModel.login()}"
             android:paddingVertical="@dimen/spacing_custom"
             android:text="@string/login"

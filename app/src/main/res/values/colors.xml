@@ -15,4 +15,6 @@
     <color name="card">#ffffff</color>
     <color name="border">#14845ec2</color>
     <color name="login_form_background">#EFEFEF</color>
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="login_button_background">#845EC2</color>
 </resources>
