@@ -122,12 +122,38 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             app:hideResult="@{viewModel.state.error}"
-            app:showError="@{viewModel.state.error}"
             app:query="@{viewModel.state.query}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/search_item_movie"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/empty_state"
+            app:showWhenNoResult="@{viewModel.state.searchMovieResult}"
+            app:showWhenQueryEmpty="@{viewModel.state.query}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_no_network"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/no_connection"
+            app:showWhenError="@{viewModel.state.error}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.chocolatecake.movieapp.R
+import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchListener
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
@@ -60,13 +62,30 @@ fun ChipGroup.setGenres(
     this.getChildAt(chipIndex)?.id?.let { this.check(it) }
 }
 
-@BindingAdapter("app:showError")
-fun View.showErrorSnackBar(error: List<String>?) {
-    error?.let {
-        if (it.isNotEmpty()) {
-            val errorMessage = it.last()
-            Snackbar.make(this, errorMessage, Snackbar.LENGTH_SHORT).show()
-        }
+@BindingAdapter(value = ["app:showWhenQueryEmpty"])
+fun View.showWhenEmptyData(query: String?){
+    if(query?.isEmpty() == true){
+        this.visibility = View.VISIBLE
+    }else{
+        this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["app:showWhenNoResult"])
+fun View.showWhenNoResult(list: List<Movie>?){
+    if (list.isNullOrEmpty()){
+        this.visibility = View.VISIBLE
+    }else{
+        this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("app:showWhenError")
+fun <T> View.showWhenError(list: List<T>?){
+    if(list?.isNotEmpty() == true){
+        this.visibility = View.VISIBLE
+    }else{
+        this.visibility = View.GONE
     }
 }
 

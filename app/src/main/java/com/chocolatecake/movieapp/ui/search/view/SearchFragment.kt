@@ -12,6 +12,7 @@ import com.chocolatecake.movieapp.databinding.FragmentSearchBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import com.chocolatecake.movieapp.ui.search.SearchAdapter
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -44,6 +45,16 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
         when (uiEvent) {
             is SearchUiEvent.FilterEvent -> showBottomSheet()
             is SearchUiEvent.ApplyFilterEvent -> applyFilter(uiEvent.genre)
+            is SearchUiEvent.ShowSnackBar -> showSnackBar()
+        }
+    }
+
+    private fun showSnackBar() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collect {
+                viewModel.showErrorWithSnackBar()
+                Snackbar.make(binding.root, it.error?.first().toString(), Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 

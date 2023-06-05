@@ -111,7 +111,7 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickGenre(genresId: Int) {
-        val updatedGenres = state.value.genresMovies?.map { genre ->
+        val updatedGenres = _state.value.genresMovies?.map { genre ->
             genre.copy(isSelected = genre.genreId == genresId)
         }
         _state.update {
@@ -120,6 +120,12 @@ class SearchViewModel @Inject constructor(
                 isLoading = false,
                 genresMovies = updatedGenres
             )
+        }
+    }
+
+    fun showErrorWithSnackBar() {
+        viewModelScope.launch {
+            _event.send(SearchUiEvent.ShowSnackBar)
         }
     }
 }

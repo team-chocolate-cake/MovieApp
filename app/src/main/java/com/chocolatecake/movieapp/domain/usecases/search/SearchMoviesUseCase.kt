@@ -1,5 +1,6 @@
 package com.chocolatecake.movieapp.domain.usecases.search
 
+import android.util.Log
 import com.chocolatecake.movieapp.data.repository.MovieRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.model.Movie
