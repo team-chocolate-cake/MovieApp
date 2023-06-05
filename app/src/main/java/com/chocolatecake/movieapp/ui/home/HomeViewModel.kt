@@ -40,6 +40,4 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
         TODO("Not yet implemented")
     }
 
-
-
 }

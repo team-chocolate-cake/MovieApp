@@ -11,6 +11,16 @@ data class HomeUiState(
     val onErrors:List<Error> = emptyList(),
     val loading:Boolean=false,
 )
+data class PopularPeopleUiState(
+    val id: Int,
+    val profilePath: String,
+    val name: String
+)
+
+data class UpComingMoviesUiState(
+    val id: Int,
+    val imageUrl: String,
+)
 
 data class NowPlayingUiState(
     val id: Int,
