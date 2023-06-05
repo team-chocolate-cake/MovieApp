@@ -5,6 +5,9 @@
     <string name="password">password</string>
     <string name="username">username</string>
     <string name="login">Login</string>
-    <string name="Password_is_required">Password is required</string>
-    <string name="Username_is_required">Username is required</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="username_is_required">Username is required</string>
+    <string name="chocolate">chocolate</string>
+    <string name="password_hint">2131321</string>
+    <string name="the_request_failed">The Request sadly failed 😢</string>
 </resources>

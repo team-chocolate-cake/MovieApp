@@ -25,7 +25,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         super.onViewCreated(view, savedInstanceState)
         handleKeyboardAppearanceEvent()
         handleFragmentEvents()
-        showErrorMessageWhenErrorOccurs()
+
     }
 
     private fun handleKeyboardAppearanceEvent() {
@@ -60,16 +60,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun showErrorMessageWhenErrorOccurs() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect {
-                if (it.requestError) {
-                    createSnackBar("Login Error :( ")
-                }
-            }
-        }
-    }
-
     private fun handleFragmentEvents() {
         viewLifecycleOwner.lifecycleScope.launch { viewModel.loginEvent.collect { onEvent(it) } }
     }
@@ -85,6 +75,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                     Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.TMDB_SIGNUP_URL))
                 startActivity(browserIntent)
             }
+
+            is LoginUiEvent.ShowSnackBar -> {
+                createSnackBar(requireContext().getString(event.stringId))
+            }
+
         }
     }
 }

@@ -5,13 +5,13 @@ import android.widget.EditText
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("app:setTipError")
-fun EditText.setTipError(errorMessage: String?) {
+fun EditText.setTipError(errorMessage: Int?) {
     if (errorMessage == null) return
-    else this.error = errorMessage
+    else error = context.getString(errorMessage)
 }
 
 @BindingAdapter("app:isVisible")
 fun View.isVisible(isVisible: Boolean?) {
     if (isVisible == null) return
-    visibility = if (isVisible == true) View.VISIBLE else View.INVISIBLE
+    visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
 }

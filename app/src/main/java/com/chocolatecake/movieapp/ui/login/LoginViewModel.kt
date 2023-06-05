@@ -1,9 +1,7 @@
 package com.chocolatecake.movieapp.ui.login
 
-import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.R
-import com.chocolatecake.movieapp.domain.usecases.auth.GetIsValidLoginUseCase
 import com.chocolatecake.movieapp.domain.usecases.auth.LoginUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import com.chocolatecake.movieapp.ui.base.ResourceManager
@@ -21,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    resourceManager: ResourceManager
-) : BaseViewModel(resourceManager) {
+) : BaseViewModel() {
     private val _state = MutableStateFlow(LoginUiState())
     val state: StateFlow<LoginUiState> = _state.asStateFlow()
 
@@ -46,6 +43,7 @@ class LoginViewModel @Inject constructor(
                 LoginStateIndicator.REQUEST_ERROR -> updateStateToRequestError()
                 LoginStateIndicator.SUCCESS -> updateStateToSuccessLogin()
             }
+            _state.update { it.copy(isLoading = false) }
         }
     }
 
@@ -61,13 +59,14 @@ class LoginViewModel @Inject constructor(
                 requestError = false
             )
         }
+
+        sendEvent(LoginUiEvent.ShowSnackBar(R.string.the_request_failed))
     }
 
     private fun updateStateToUserNameError() {
         _state.update {
             it.copy(
-                userNameError = resourceManager.getString(R.string.Username_is_required),
-                isLoading = false
+                userNameError = R.string.username_is_required
             )
         }
     }
@@ -75,8 +74,7 @@ class LoginViewModel @Inject constructor(
     private fun updateStateToPasswordError() {
         _state.update {
             it.copy(
-                passwordError =  resourceManager.getString(R.string.Password_is_required),
-                isLoading = false
+                passwordError = R.string.password_is_required
             )
         }
     }
@@ -100,6 +98,13 @@ class LoginViewModel @Inject constructor(
 
     override fun getData() {
 
+    }
+
+
+    private fun sendEvent(event: LoginUiEvent) {
+        viewModelScope.launch {
+            _loginEvent.send(event)
+        }
     }
 }
 

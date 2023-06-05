@@ -7,12 +7,12 @@ import javax.inject.Inject
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     private val getIsValidLoginUseCase: GetIsValidLoginUseCase
-)  {
-    suspend operator fun invoke (username: String, password: String):LoginStateIndicator{
-        return when(getIsValidLoginUseCase(username, password)){
+) {
+    suspend operator fun invoke(username: String, password: String): LoginStateIndicator {
+        return when (getIsValidLoginUseCase(username, password)) {
             LoginInputErrors.USER_NAME_ERROR -> LoginStateIndicator.USER_NAME_ERROR
             LoginInputErrors.PASSWORD_ERROR -> LoginStateIndicator.PASSWORD_ERROR
-            LoginInputErrors.NO_INPUT_ERRORS -> tryToLogin(username,password)
+            LoginInputErrors.NO_INPUT_ERRORS -> tryToLogin(username, password)
         }
     }
 
