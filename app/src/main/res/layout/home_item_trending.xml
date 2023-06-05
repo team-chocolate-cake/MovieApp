@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.movieapp.ui.home.ui_state.TrendingMoviesUiState" />
@@ -23,33 +24,34 @@
             android:layout_height="@dimen/height_card"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:onClick="@{()-> listener.onClickTrending(item.id)}"
             android:scaleType="centerCrop"
             android:src="@drawable/image_header_home"
+            app:imageUrlWithUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{()-> listener.onClickTrending(item.id)}"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:imageUrlWithUrl="@{item.imageUrl}"/>
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
         <ImageView
             android:id="@+id/image_view_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
-            app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
-            app:srcCompat="@drawable/ic_star"
+            android:layout_marginStart="@dimen/spacing_extra_giant"
             android:layout_marginBottom="@dimen/spacing_semi_medium"
-            android:layout_marginStart="@dimen/spacing_extra_giant" />
+            app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
+            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+            app:srcCompat="@drawable/ic_star" />
 
         <TextView
             android:id="@+id/text_view_rates_number"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginStart="@dimen/spacing_tiny"
+            android:layout_marginBottom="16dp"
             android:text="@{String.valueOf(item.rate)}"
             android:textColor="#f6f6f6"
             app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"

@@ -15,6 +15,7 @@ import com.chocolatecake.movieapp.databinding.HomeRecyclerviewTrendingBinding
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 import com.chocolatecake.movieapp.ui.home.HomeItem
+import com.chocolatecake.movieapp.ui.home.HomeItemType
 
 class HomeAdapter(
     private var itemsHome: MutableList<HomeItem>,
@@ -26,65 +27,65 @@ class HomeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            HomeItem.HomeItemType.SLIDER.ordinal -> {
+            HomeItemType.SLIDER.ordinal -> {
                 SliderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_image_slider, parent, false
+                        R.layout.home_recyclerview_slider, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.NOW_PLAYING.ordinal -> {
+            HomeItemType.NOW_PLAYING.ordinal -> {
                 NowPlayingViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_now_playing, parent, false
+                        R.layout.home_recyclerview_now_playing, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.TRENDING.ordinal -> {
+            HomeItemType.TRENDING.ordinal -> {
                 TrendingViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_trending, parent, false
+                        R.layout.home_recyclerview_trending, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.TOP_RATED.ordinal -> {
+            HomeItemType.TOP_RATED.ordinal -> {
                 TopRatedViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_top_rated, parent, false
+                        R.layout.home_recyclerview_top_rated, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.POPULAR_PEOPLE.ordinal -> {
-                TopRatedViewHolder(
+            HomeItemType.POPULAR_PEOPLE.ordinal -> {
+                PopularPeopleViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_popular_people, parent, false
+                        R.layout.home_recyclerview_popular_people, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.POPULAR_MOVIES.ordinal -> {
-                TopRatedViewHolder(
+            HomeItemType.POPULAR_MOVIES.ordinal -> {
+                PopularMoviesViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_popular_movies, parent, false
+                        R.layout.home_recyclerview_popular_movies, parent, false
                     )
                 )
             }
 
-            HomeItem.HomeItemType.RECOMMENDED.ordinal -> {
-                TopRatedViewHolder(
+            HomeItemType.RECOMMENDED.ordinal -> {
+                RecommendedViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.home_item_recommended, parent, false
+                        R.layout.home_recyclerview_recommended, parent, false
                     )
                 )
             }
@@ -117,13 +118,13 @@ class HomeAdapter(
     override fun setItems(newItems: List<HomeItem>) {
         itemsHome = newItems.sortedBy { it.type.ordinal }.toMutableList()
         super.setItems(newItems)
-        Log.d("newItems", itemsHome.toString())
     }
 
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
         val adapter = UpComingAdapter(upComing.list)
         holder.binding.imageSlider.setSliderAdapter(adapter)
+        holder.binding.imageSlider.startAutoCycle()
         holder.binding.item = upComing
     }
 
@@ -172,10 +173,17 @@ class HomeAdapter(
     override fun getItemViewType(position: Int): Int = itemsHome[position].type.ordinal
 
     class SliderViewHolder(val binding: HomeRecyclerviewSliderBinding) : BaseViewHolder(binding)
-    class NowPlayingViewHolder(val binding: HomeRecyclerviewNowPlayingBinding) : BaseViewHolder(binding)
+    class NowPlayingViewHolder(val binding: HomeRecyclerviewNowPlayingBinding) :
+        BaseViewHolder(binding)
+
     class TrendingViewHolder(val binding: HomeRecyclerviewTrendingBinding) : BaseViewHolder(binding)
     class TopRatedViewHolder(val binding: HomeRecyclerviewTopRatedBinding) : BaseViewHolder(binding)
-    class PopularPeopleViewHolder(val binding: HomeRecyclerviewPopularPeopleBinding) : BaseViewHolder(binding)
-    class PopularMoviesViewHolder(val binding: HomeRecyclerviewPopularMoviesBinding) : BaseViewHolder(binding)
-    class RecommendedViewHolder(val binding: HomeRecyclerviewRecommendedBinding) : BaseViewHolder(binding)
+    class PopularPeopleViewHolder(val binding: HomeRecyclerviewPopularPeopleBinding) :
+        BaseViewHolder(binding)
+
+    class PopularMoviesViewHolder(val binding: HomeRecyclerviewPopularMoviesBinding) :
+        BaseViewHolder(binding)
+
+    class RecommendedViewHolder(val binding: HomeRecyclerviewRecommendedBinding) :
+        BaseViewHolder(binding)
 }

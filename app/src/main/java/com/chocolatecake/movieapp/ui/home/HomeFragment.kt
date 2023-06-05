@@ -43,7 +43,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         it.recommended
                     )
                 )
-                Log.d("mimo", it.toString())
             }
         }
     }

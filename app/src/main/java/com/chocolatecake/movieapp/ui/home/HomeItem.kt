@@ -27,7 +27,6 @@ sealed class HomeItem(val type: HomeItemType) {
 
     data class RecommendedMovies(val list: List<RecommendedUiState>) :
         HomeItem(HomeItemType.RECOMMENDED)
-
-    enum class HomeItemType { SLIDER, NOW_PLAYING, TRENDING, TOP_RATED, POPULAR_PEOPLE, POPULAR_MOVIES, RECOMMENDED }
-
 }
+
+enum class HomeItemType { SLIDER, NOW_PLAYING, TRENDING, TOP_RATED, POPULAR_PEOPLE, POPULAR_MOVIES, RECOMMENDED }

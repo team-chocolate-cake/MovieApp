@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.movieapp.ui.home.HomeItem.Trending" />
@@ -32,9 +33,9 @@
             android:orientation="horizontal"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/home_item_trending"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trending" />
+            app:layout_constraintTop_toBottomOf="@+id/trending"
+            tools:listitem="@layout/home_item_trending" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

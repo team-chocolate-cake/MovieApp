@@ -11,5 +11,5 @@ class NowPlayingAdapter(
     list: List<NowPlayingUiState>, listener: HomeListener
 ) :
     BaseAdapter<NowPlayingUiState>(list, listener) {
-    override val layoutID = R.layout.home_item_image_slider
+    override val layoutID = R.layout.home_item_now_playing
 }
