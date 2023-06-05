@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.home
+package com.chocolatecake.movieapp.ui.home
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.domain.mappers.NowPlayingUiMapper
@@ -17,7 +17,6 @@ import com.chocolatecake.movieapp.domain.usecases.home.GetTrendingMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetUpcomingMoviesUseCase
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
-import com.chocolatecake.movieapp.ui.home.HomeItem
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

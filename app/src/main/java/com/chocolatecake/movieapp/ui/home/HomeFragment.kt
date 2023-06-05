@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentHomeBinding
-import com.chocolatecake.movieapp.home.HomeViewModel
 import com.chocolatecake.movieapp.ui.home.adapter.HomeAdapter
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
