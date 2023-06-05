@@ -8,8 +8,10 @@ import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentHomeBinding
 import com.chocolatecake.movieapp.home.adapter.HomeAdapter
 import com.chocolatecake.movieapp.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutIdFragment: Int = R.layout.fragment_home
     override val viewModel: HomeViewModel by viewModels()
