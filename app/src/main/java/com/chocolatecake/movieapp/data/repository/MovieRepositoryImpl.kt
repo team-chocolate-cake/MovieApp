@@ -12,6 +12,7 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieM
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
+import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
@@ -89,12 +90,9 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search history
-    override fun getSearchHistory(keyword: String): Flow<List<SearchHistory>> {
-        return  movieDao.getSearchHistory("%${keyword}%").map { items->
-            items.map {
-                searchHistoryMapper.map(it)
-            }
-        }
+    override suspend fun getSearchHistory(keyword: String): List<SearchHistoryEntity> {
+        return movieDao.getSearchHistory("%${keyword}%")
+
     }
 
     override suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity) {
@@ -112,18 +110,9 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search movies
-    override suspend fun getSearchMovies(keyword: String ): Flow<List<Movie>> {
-         refreshSearchMovies(keyword)
-        return movieDao.getSearchMovie().map { items->
-            items.map { searchMovieUIMapper.map(it) }
-        }
-    }
-    private suspend fun refreshSearchMovies(keyword: String) {
-         refreshWrapper(
-             apiCall = { service.getSearchMovies(keyword)},
-             localMapper = searchMovieMapper::map,
-             databaseSaver = movieDao::insertSearchMovies
-        )
+    override suspend fun getSearchMovies(keyword: String): List<MovieDto> {
+        return wrapApiCall { service.getSearchMovies(keyword) }.results
+            ?.filterNotNull() ?: emptyList()
     }
     //endregion
 }
