@@ -1,10 +1,11 @@
 package com.chocolatecake.movieapp.ui.login
 
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnFocusChangeListener
+import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.movieapp.BuildConfig
@@ -28,17 +29,34 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun handleKeyboardAppearanceEvent() {
-        binding.edittextUsername.onFocusChangeListener = getOnEditTextFocusChangeClickListener()
-        binding.edittextPassword.onFocusChangeListener = getOnEditTextFocusChangeClickListener()
+        with(binding) {
+
+            val globalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+                val rect = Rect()
+                root.getWindowVisibleDisplayFrame(rect)
+
+                val screenHeight = root.rootView.height
+                val keyboardHeight = screenHeight - rect.bottom
+
+                val isKeyboardVisible =
+                    keyboardHeight > screenHeight * 0.15
+
+                handleKeyboardAppearanceEvent(isKeyboardVisible)
+            }
+
+            root.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+        }
+
     }
 
-    private fun getOnEditTextFocusChangeClickListener() = OnFocusChangeListener { view, hasFocus ->
-        binding.loginMotionLayout.setTransition(R.id.show_keyboard)
-        binding.loginMotionLayout.setTransitionDuration(500)
-        if (hasFocus) {
-            binding.loginMotionLayout.transitionToEnd()
-        }else{
-            binding.loginMotionLayout.transitionToStart()
+    private fun handleKeyboardAppearanceEvent(isVisible: Boolean) {
+        with(binding.loginMotionLayout) {
+            setTransitionDuration(1000)
+            if (isVisible) {
+                transitionToEnd()
+            } else {
+                transitionToStart()
+            }
         }
     }
 
