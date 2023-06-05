@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.domain.usecases.auth.LoginUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
-import com.chocolatecake.movieapp.ui.base.ResourceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

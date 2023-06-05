@@ -13,6 +13,7 @@ import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentLoginBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -61,7 +62,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun handleFragmentEvents() {
-        viewLifecycleOwner.lifecycleScope.launch { viewModel.loginEvent.collect { onEvent(it) } }
+        viewLifecycleOwner.lifecycleScope.launch { viewModel.loginEvent.collectLatest { onEvent(it) } }
     }
 
     private fun onEvent(event: LoginUiEvent) {
