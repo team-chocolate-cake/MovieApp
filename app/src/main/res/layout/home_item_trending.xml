@@ -30,7 +30,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:onClick="@{()-> listener.onClickTrending(item.id)}"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            app:imageUrlWithUrl="@{item.imageUrl}"/>
 
         <ImageView
             android:id="@+id/image_view_rate"
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="@dimen/spacing_tiny"
-            android:text=""
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="#f6f6f6"
             app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
             app:layout_constraintEnd_toEndOf="@id/shapeableImageView"

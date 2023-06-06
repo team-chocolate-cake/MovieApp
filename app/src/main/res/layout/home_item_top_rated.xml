@@ -30,7 +30,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            android:onClick="@{()-> listener.onClickTopRated(item.id)}"/>
+            android:onClick="@{()-> listener.onClickTopRated(item.id)}"
+            app:imageUrlWithUrl="@{item.imageUrl}"/>
 
         <ImageView
             android:id="@+id/image_view_rate"
@@ -40,7 +41,8 @@
             app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
             app:srcCompat="@drawable/ic_star"
             android:layout_marginBottom="@dimen/spacing_semi_medium"
-            android:layout_marginStart="@dimen/spacing_extra_giant" />
+            android:layout_marginStart="@dimen/spacing_extra_giant"
+            />
 
         <TextView
             android:id="@+id/text_view_rates_number"
@@ -49,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="@dimen/spacing_tiny"
-            android:text=""
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="#f6f6f6"
             app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
             app:layout_constraintEnd_toEndOf="@id/shapeableImageView"

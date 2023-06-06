@@ -35,7 +35,8 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             app:srcCompat="@drawable/ic_image_not_found"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"/>
+            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

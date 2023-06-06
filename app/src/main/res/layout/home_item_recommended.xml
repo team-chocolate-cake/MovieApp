@@ -30,7 +30,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            android:onClick="@{()-> listener.onClickRecommended(item.id)}"/>
+            android:onClick="@{()-> listener.onClickRecommended(item.id)}"
+            app:imageUrlWithUrl="@{item.imageUrl}"/>
 
         <ImageView
             android:id="@+id/image_view_rate"

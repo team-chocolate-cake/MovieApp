@@ -5,8 +5,8 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMovie
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 
-class TrendingAdapter(list: List<TrendingMoviesEntity>, listner: HomeListener): BaseAdapter<TrendingMoviesEntity>(list,listner) {
+class TrendingAdapter(list: List<TrendingMoviesEntity>, listner: HomeListener) :
+    BaseAdapter<TrendingMoviesEntity>(list, listner) {
     override val layoutID: Int
         get() = R.layout.home_item_trending
-
 }
