@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp
+package com.chocolatecake.movieapp.ui
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
