@@ -29,7 +29,7 @@ abstract class BaseRepository {
                     clearOldLocalData?.invoke()
                     databaseSaver(it.map { item -> localMapper(item) })
                 }
-        } catch (_: Exception) {
+        } catch (_: Throwable) {
         }
     }
 }
