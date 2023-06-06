@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -46,6 +47,24 @@ class SearchViewModel @Inject constructor(
     val state = _state.asStateFlow()
     private val _event = Channel<SearchUiEvent>()
     val event = _event.receiveAsFlow()
+
+    init {
+        viewModelScope.launch {
+            var oldValue = ""
+            onSearchInputChanged(state.value.query)
+            state.filter { it.query.isNotEmpty() && oldValue != state.value.query }
+                .debounce(1000)
+                .collect { value ->
+                    Log.i("MovieText", "$value")
+                    onSearchInputChanged(state.value.query)
+                    oldValue = state.value.query
+                }
+        }
+    }
+
+    fun setSearchQuery(query: CharSequence?) {
+        _state.update { it.copy(query = query.toString()) }
+    }
 
     private suspend fun getAllGenresMovies() {
         _state.update { it.copy(isLoading = true) }

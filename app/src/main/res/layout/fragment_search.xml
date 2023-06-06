@@ -26,7 +26,7 @@
             android:imeOptions="flagNoFullscreen"
             android:inputType="text"
             android:text="@{viewModel.state.query}"
-            android:afterTextChanged="@{(text) -> viewModel.onSearchInputChanged(text)}"
+            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
             android:paddingStart="@dimen/spacing_custom"
             android:paddingEnd="48dp"
             app:layout_constraintEnd_toEndOf="parent"
