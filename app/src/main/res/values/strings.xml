@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieApp</string>
+    <string name="app_name">Movies</string>
     <string name="now_playing">Now Playing</string>
     <string name="top_rated">Top Rated</string>
     <string name="trending">Trending</string>
