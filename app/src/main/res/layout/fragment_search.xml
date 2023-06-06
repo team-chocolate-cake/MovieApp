@@ -11,8 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_light">
+        android:layout_height="match_parent">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edittext_search"

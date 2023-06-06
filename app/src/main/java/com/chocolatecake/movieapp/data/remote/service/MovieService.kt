@@ -2,6 +2,8 @@ package com.chocolatecake.movieapp.data.remote.service
 
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.response.DataWrapperResponse
+import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
+import com.chocolatecake.movieapp.data.remote.response.GenresWrapperResponse
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.remote.response.actor.ActorDto
 import com.chocolatecake.movieapp.data.remote.response.auth.RequestTokenResponse
@@ -55,6 +57,7 @@ interface MovieService {
     suspend fun getTrendingMovies(
         @Path("time_window") timeWindow: String = "day"
     ): Response<DataWrapperResponse<MovieDto>>
+    ///endregion
 
     /// region search
     @GET("search/movie")
@@ -68,8 +71,15 @@ interface MovieService {
 
     /// endregion
 
-    /// popular people region
+    /// region popular people
     @GET("person/popular")
     suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<ActorDto>>
+    /// endregion
+
+    /// region genres
+    @GET("genre/movie/list")
+    suspend fun getListOfGenresForMovies(
+        @Query("language") language: String = "en"
+    ): Response<GenresWrapperResponse<GenreMovieDto>>
+    ///endregion
 }
-/// end region

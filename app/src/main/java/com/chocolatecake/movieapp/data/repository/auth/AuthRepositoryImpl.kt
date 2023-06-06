@@ -1,11 +1,10 @@
 package com.chocolatecake.movieapp.data.repository.auth
 
-import android.util.Log
 import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.service.MovieService
-import com.chocolatecake.movieapp.data.repository.base.UnauthorizedThrowable
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
+import com.chocolatecake.movieapp.data.repository.base.UnauthorizedThrowable
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(

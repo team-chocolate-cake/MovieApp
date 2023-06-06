@@ -12,9 +12,7 @@ class LocalTrendingMoviesMapper @Inject constructor() : Mapper<MovieDto, Trendin
     override fun map(input: MovieDto): TrendingMoviesEntity {
         return TrendingMoviesEntity(
             id = input.id ?: 0,
-            imageUrl = input.posterPath.takeIf {
-                it!=null
-            }?.let { (BuildConfig.IMAGE_BASE_PATH + it) }?: "https://www.themoviedb.org/assets/2/apple-touch-icon-cfba7699efe7a742de25c28e08c38525f19381d31087c69e89d6bcb8e3c0ddfa.png",
+            imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
             rate = input.voteAverage ?: 0.0
         )
     }
