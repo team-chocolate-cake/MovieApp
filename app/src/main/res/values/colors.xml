@@ -16,4 +16,6 @@
     <color name="edittext_background">#FFFFFF</color>
     <color name="login_button_background">#845EC2</color>
     <color name="chip_unselected_background">#DEDADADA</color>
+    <color name="bottom_navigation_indicator">#E4D3FF</color>
+    <color name="bottom_navigation_background">#F3F4F9</color>
 </resources>
