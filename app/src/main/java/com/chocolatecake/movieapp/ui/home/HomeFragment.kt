@@ -1,7 +1,6 @@
 package com.chocolatecake.movieapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -10,6 +9,7 @@ import com.chocolatecake.movieapp.databinding.FragmentHomeBinding
 import com.chocolatecake.movieapp.ui.home.adapter.HomeAdapter
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun collectAdapterData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect {
+            viewModel.uiState.collectLatest {
                 homeAdapter.setItems(
                     mutableListOf(
                         it.upComingMovies,
