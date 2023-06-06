@@ -20,11 +20,13 @@ import com.chocolatecake.movieapp.ui.home.adapter.RecommendedAdapter
 import com.chocolatecake.movieapp.ui.home.adapter.TopRatedAdapter
 import com.chocolatecake.movieapp.ui.home.adapter.TrendingAdapter
 
-class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val listener: HomeListener) :
-BaseAdapter<HomeItem>(itemsHome, listener)
-{
+class HomeAdapter(
+    private var itemsHome: MutableList<HomeItem>,
+    private val listener: HomeListener
+) :
+    BaseAdapter<HomeItem>(itemsHome, listener) {
 
-    override val layoutID: Int =0
+    override val layoutID: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -63,6 +65,7 @@ BaseAdapter<HomeItem>(itemsHome, listener)
                     )
                 )
             }
+
             HomeItem.HomeItemType.POPULAR_PEOPLE.ordinal -> {
                 TopRatedViewHolder(
                     DataBindingUtil.inflate(
@@ -71,6 +74,7 @@ BaseAdapter<HomeItem>(itemsHome, listener)
                     )
                 )
             }
+
             HomeItem.HomeItemType.POPULAR_MOVIES.ordinal -> {
                 TopRatedViewHolder(
                     DataBindingUtil.inflate(
@@ -79,6 +83,7 @@ BaseAdapter<HomeItem>(itemsHome, listener)
                     )
                 )
             }
+
             HomeItem.HomeItemType.RECOMMENDED.ordinal -> {
                 TopRatedViewHolder(
                     DataBindingUtil.inflate(
@@ -87,6 +92,7 @@ BaseAdapter<HomeItem>(itemsHome, listener)
                     )
                 )
             }
+
             else -> throw Exception("Mimo")
         }
     }
@@ -130,11 +136,12 @@ BaseAdapter<HomeItem>(itemsHome, listener)
     }
 
     private fun bindTopRated(holder: TopRatedViewHolder, position: Int) {
-    val topRated = itemsHome[position] as HomeItem.TopRated
-    val adapter = TopRatedAdapter(topRated.list, listener)
-    holder.binding.rvTopRated.adapter = adapter
-    holder.binding.item = topRated
+        val topRated = itemsHome[position] as HomeItem.TopRated
+        val adapter = TopRatedAdapter(topRated.list, listener)
+        holder.binding.rvTopRated.adapter = adapter
+        holder.binding.item = topRated
     }
+
     private fun bindTrending(holder: TrendingViewHolder, position: Int) {
         val trending = itemsHome[position] as HomeItem.Trending
         val adapter = TrendingAdapter(trending.list, listener)
@@ -164,13 +171,19 @@ BaseAdapter<HomeItem>(itemsHome, listener)
     }
 
 
-
     override fun getItemViewType(position: Int): Int = itemsHome[position].type.ordinal
     class SliderViewHolder(val binding: HomeRecyclerviewSliderBinding) : BaseViewHolder(binding)
-    class NowPlayingViewHolder(val binding: HomeRecyclerviewNowPlayingBinding) : BaseViewHolder(binding)
+    class NowPlayingViewHolder(val binding: HomeRecyclerviewNowPlayingBinding) :
+        BaseViewHolder(binding)
+
     class TrendingViewHolder(val binding: HomeRecyclerviewTrendingBinding) : BaseViewHolder(binding)
     class TopRatedViewHolder(val binding: HomeRecyclerviewTopRatedBinding) : BaseViewHolder(binding)
-    class PopularPeopleViewHolder(val binding: HomeRecyclerviewPopularPeopleBinding) : BaseViewHolder(binding)
-    class PopularMoviesViewHolder(val binding: HomeRecyclerviewPopularMoviesBinding) : BaseViewHolder(binding)
-    class RecommendedViewHolder(val binding: HomeRecyclerviewRecommendedBinding) : BaseViewHolder(binding)
+    class PopularPeopleViewHolder(val binding: HomeRecyclerviewPopularPeopleBinding) :
+        BaseViewHolder(binding)
+
+    class PopularMoviesViewHolder(val binding: HomeRecyclerviewPopularMoviesBinding) :
+        BaseViewHolder(binding)
+
+    class RecommendedViewHolder(val binding: HomeRecyclerviewRecommendedBinding) :
+        BaseViewHolder(binding)
 }
