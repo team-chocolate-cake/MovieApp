@@ -16,24 +16,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:layout_margin="@dimen/spacing_small">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
-            android:layout_width="@dimen/height_image"
+            android:layout_width="200dp"
             android:layout_height="@dimen/height_card"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.posterPath}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:srcCompat="@android:drawable/ic_menu_report_image" />
+            app:srcCompat="@drawable/image_header_home" />
 
         <View
             android:id="@+id/view"
-            android:layout_width="@dimen/height_image"
+            android:layout_width="200dp"
             android:layout_height="100dp"
             android:background="@drawable/gradient_background"
             app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
@@ -44,6 +45,7 @@
             android:id="@+id/image_view_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_rates_number"
             app:layout_constraintEnd_toStartOf="@+id/text_view_rates_number"
             app:layout_constraintTop_toTopOf="@+id/text_view_rates_number"
@@ -52,7 +54,7 @@
         <TextView
             android:id="@+id/text_view_rates_number"
             style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_width="31dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:text="@{String.valueOf(item.voteAverage)}"

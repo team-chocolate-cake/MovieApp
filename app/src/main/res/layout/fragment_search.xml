@@ -125,6 +125,7 @@
             app:query="@{viewModel.state.query}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
+            android:paddingBottom="@dimen/spacing_small"
             tools:listitem="@layout/search_item_movie"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
