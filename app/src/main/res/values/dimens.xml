@@ -49,4 +49,8 @@
     <dimen name="people_image_width">90dp</dimen>
     <dimen name="zero_height">0dp</dimen>
     <dimen name="slider_image_view_height">200dp</dimen>
+    <dimen name="width_search">200dp</dimen>
+    <dimen name="height_search">100dp</dimen>
+
+
 </resources>

@@ -20,7 +20,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
-            android:layout_width="200dp"
+            android:layout_width="@dimen/width_search"
             android:layout_height="@dimen/height_card"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.posterPath}"
@@ -34,8 +34,8 @@
 
         <View
             android:id="@+id/view"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/width_search"
+            android:layout_height="@dimen/height_search"
             android:background="@drawable/gradient_background"
             app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
             app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:text="@{String.valueOf(item.voteAverage)}"
-            android:textColor="#f6f6f6"
+            android:textColor="@color/rating_color"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
             app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"

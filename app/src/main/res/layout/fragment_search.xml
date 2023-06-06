@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_medium"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="@dimen/spacing_extra_giant"
             android:background="@drawable/edittext_background"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/spacing_custom"
@@ -28,7 +28,7 @@
             android:text="@{viewModel.state.query}"
             android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
             android:paddingStart="@dimen/spacing_custom"
-            android:paddingEnd="48dp"
+            android:paddingEnd="@dimen/spacing_extra_giant"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -119,14 +119,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_search"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/zero_height"
             android:clipToPadding="false"
             app:hideResult="@{viewModel.state.error}"
             app:query="@{viewModel.state.query}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
-            android:paddingBottom="@dimen/spacing_small"
-            tools:listitem="@layout/search_item_movie"
+            android:paddingVertical="@dimen/spacing_small"            tools:listitem="@layout/search_item_movie"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
@@ -147,7 +146,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation_view_no_network"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/zero_height"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
             app:lottie_rawRes="@raw/no_connection"
