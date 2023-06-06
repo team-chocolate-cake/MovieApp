@@ -47,18 +47,6 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun updateStateToRequestError() {
-        _state.update {
-            it.copy(
-                requestError = true,
-                isLoading = false
-            )
-        }
-        _state.update {
-            it.copy(
-                requestError = false
-            )
-        }
-
         sendEvent(LoginUiEvent.ShowSnackBar(R.string.the_request_failed))
     }
 
