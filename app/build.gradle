@@ -103,6 +103,9 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha04"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
+    /// lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
+
     /// slider
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 

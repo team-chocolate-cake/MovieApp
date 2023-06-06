@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.movieapp.ui.search.view.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_light">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/edittext_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/spacing_custom"
+            android:imeOptions="flagNoFullscreen"
+            android:inputType="text"
+            android:text="@{viewModel.state.query}"
+            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
+            android:paddingStart="@dimen/spacing_custom"
+            android:paddingEnd="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:indeterminate="true"
+            app:indeterminateAnimationType="disjoint"
+            app:loading="@{viewModel.state.loading}"
+            app:indicatorColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_search"
+            app:layout_constraintStart_toStartOf="@id/edittext_search"
+            app:layout_constraintTop_toBottomOf="@id/edittext_search" />
+
+        <ImageButton
+            android:id="@+id/image_button_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_custom"
+            android:background="@null"
+            android:src="@drawable/ic_filter"
+            android:onClick="@{() -> viewModel.onClickFilter()}"
+            app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_search"
+            app:layout_constraintTop_toTopOf="@+id/edittext_search" />
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/spacing_medium"
+            android:paddingEnd="@dimen/spacing_small"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/edittext_search"
+            app:layout_constraintTop_toBottomOf="@id/edittext_search">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMovie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:text="@string/movie" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv"
+                    style="@style/TextStyle.LabelMedium.ChipStyle" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipPerson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:text="@string/person" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCollection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:text="@string/collection" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:text="@string/company" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            app:hideResult="@{viewModel.state.error}"
+            app:query="@{viewModel.state.query}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/search_item_movie"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/empty_state"
+            app:showWhenNoResult="@{viewModel.state.searchMovieResult}"
+            app:showWhenQueryEmpty="@{viewModel.state.query}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_no_network"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/no_connection"
+            app:showWhenError="@{viewModel.state.error}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

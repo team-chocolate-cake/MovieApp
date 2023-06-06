@@ -4,7 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.chocolatecake.movieapp.data.local.database.entity.GenresMoviesEntity
+import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
 import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
@@ -90,4 +93,39 @@ interface MovieDao {
     suspend fun clearAllTrendingMovies()
     ///endregion
 
- }
+
+    ///region search history
+    @Query("select * from SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword")
+    fun getSearchHistory(keyword: String): List<SearchHistoryEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity)
+
+    @Query("delete from SEARCH_HISTORY_TABLE")
+    suspend fun clearAllSearchHistory()
+
+    @Query("delete from SEARCH_HISTORY_TABLE where keyword like :keyword")
+    suspend fun deleteSearchHistory(keyword: String)
+    ///endregion
+
+
+    ///region search
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchMovies(movies: List<MovieEntity>)
+
+    @Query("select * from MOVIE_TABLE")
+    fun getSearchMovie(): Flow<List<MovieEntity>>
+    ///endregion
+
+    //region genres
+    //movies
+    @Query("select * from GENRES_MOVIES_TABLE")
+    fun getGenresMovies(): List<GenresMoviesEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGenresMovies(genresMovies: List<GenresMoviesEntity>)
+
+    @Query("delete from GENRES_MOVIES_TABLE")
+    suspend fun clearAllGenresMovies()
+    //endregion
+}

@@ -17,4 +17,10 @@
     <string name="chocolate">chocolate</string>
     <string name="password_hint">2131321</string>
     <string name="the_request_failed">The Request sadly failed 😢</string>
+    <string name="movie">Movie</string>
+    <string name="tv">TV</string>
+    <string name="person">Person</string>
+    <string name="collection">Collection</string>
+    <string name="company">Company</string>
+    <string name="apply">Apply</string>
 </resources>

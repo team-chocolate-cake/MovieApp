@@ -58,7 +58,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-    suspend fun searchMovies(
+     suspend fun getSearchMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
