@@ -22,8 +22,7 @@
             android:id="@+id/shapeable_ImageView"
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/height_card"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             android:onClick="@{()-> listener.onClickTopRated(item.id)}"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic"
@@ -32,7 +31,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large" />
 
         <ImageView
             android:id="@+id/image_view_rate"

@@ -17,9 +17,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/spacing_custom"
-        android:padding="@dimen/spacing_small">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
@@ -27,6 +25,7 @@
             android:layout_height="@dimen/zero_height"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             app:imageUrlWithUrl="@{item.profilePath}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
