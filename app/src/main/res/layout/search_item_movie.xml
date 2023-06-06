@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:srcCompat="@drawable/image_header_home" />
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <View
             android:id="@+id/view"
