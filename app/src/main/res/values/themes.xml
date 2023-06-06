@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MovieApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -105,6 +105,23 @@
 
     <style name="ViewDividerStyle">
         <item name="android:radius">@dimen/radius_full</item>
+    </style>
+
+    <!--endregion-->
+    <!--region Bottom Navigation-->
+    <style name="BottomNavigation">
+        <item name="enforceTextAppearance">true</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="android:background">@color/bottom_navigation_background</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_tint</item>
+        <item name="itemTextColor">@color/on_background_38</item>
+        <item name="itemTextAppearanceActive">@color/on_background_87</item>
+        <item name="itemTextAppearanceInactive">@color/on_background_38</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="BottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/bottom_navigation_indicator</item>
     </style>
 
     <!--endregion-->

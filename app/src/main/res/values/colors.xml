@@ -18,4 +18,6 @@
     <color name="chip_unselected_background">#DEDADADA</color>
     <color name="rating_color">#f6f6f6</color>
     <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="bottom_navigation_indicator">#E4D3FF</color>
+    <color name="bottom_navigation_background">#F3F4F9</color>
 </resources>
