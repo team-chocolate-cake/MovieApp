@@ -21,15 +21,14 @@
             android:id="@+id/shapeable_ImageView"
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/height_card"
-            android:layout_marginStart="@dimen/spacing_small"
-            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             android:onClick="@{()-> listener.onClickPopularMovies(item.id)}"
             app:imageUrlWithUrl="@{item.imageUrl}"/>
 
@@ -40,8 +39,7 @@
             app:layout_constraintStart_toStartOf="@+id/shapeable_ImageView"
             app:layout_constraintBottom_toBottomOf="@id/shapeable_ImageView"
             app:srcCompat="@drawable/ic_star"
-            android:layout_marginBottom="@dimen/spacing_semi_medium"
-            android:layout_marginStart="@dimen/spacing_extra_giant" />
+            android:layout_marginBottom="@dimen/spacing_medium"/>
 
         <TextView
             android:id="@+id/text_view_rates_number"
