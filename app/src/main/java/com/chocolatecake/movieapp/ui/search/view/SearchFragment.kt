@@ -29,7 +29,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.state.collect{uiState ->
                     searchAdapter.setItems(uiState.searchMovieResult)
-                    uiState.error?.let { showSnackBar(it) }
+                    uiState.error?.last()?.let { showSnackBar(it) }
                 }
             }
         }
@@ -50,9 +50,8 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
         }
     }
 
-    private fun showSnackBar(messages: List<String>) {
-        val errorMessage = messages.first()
-        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
+    private fun showSnackBar(messages: String) {
+        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun applyFilter(genresId: Int) {

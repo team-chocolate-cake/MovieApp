@@ -1,6 +1,5 @@
 package com.chocolatecake.movieapp.ui.search.view
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
 import com.chocolatecake.movieapp.data.repository.base.NoNetworkThrowable
@@ -16,21 +15,11 @@ import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -108,7 +97,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             } catch (noNetwork: NoNetworkThrowable) {
-                showErrorWithSnackBar(listOf("No Network"))
+                showErrorWithSnackBar("No Network")
                 _state.update { it.copy(isLoading = false) }
             }
         }
@@ -134,7 +123,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private fun showErrorWithSnackBar(messages: List<String>) {
+    private fun showErrorWithSnackBar(messages: String) {
         viewModelScope.launch {
             _event.send(SearchUiEvent.ShowSnackBar(messages))
         }
