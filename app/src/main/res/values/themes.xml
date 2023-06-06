@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MovieApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -62,6 +62,18 @@
         <item name="android:fontWeight">400</item>
     </style>
     <!--endregion-->
+
+    <!--endregion-->
+    <!--region Bottom Navigation-->
+    <style name="BottomNavigation">
+        <item name="enforceTextAppearance">true</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="android:background">@color/background</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_tint</item>
+        <item name="itemTextColor">@color/on_background_38</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemRippleColor">@color/primary</item>
+    </style>
 
     <!--endregion-->
 </resources>
