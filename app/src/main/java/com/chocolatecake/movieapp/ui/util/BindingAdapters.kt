@@ -27,7 +27,7 @@ fun View.isVisible(isVisible: Boolean?) {
     if (isVisible == true) {
         this.visibility = View.VISIBLE
     } else {
-        this.visibility = View.GONE
+        this.visibility = View.INVISIBLE
     }
 }
 
