@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -29,6 +30,21 @@ abstract class BaseViewModel<STATE ,EVENT> : ViewModel() {
         viewModelScope.launch(dispatcher) {
             try {
                 call().also(onSuccess)
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
+    }
+
+    protected fun <T> tryToExecuteFlow(
+        call: suspend () -> Flow<T>,
+        onSuccess: (T) -> Unit,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                call().collect(onSuccess)
             } catch (th: Throwable) {
                 onError(th)
             }

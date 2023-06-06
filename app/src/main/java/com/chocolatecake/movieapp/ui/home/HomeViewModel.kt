@@ -1,6 +1,11 @@
 package com.chocolatecake.movieapp.ui.home
 
-import androidx.lifecycle.viewModelScope
+import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
+import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import com.chocolatecake.movieapp.domain.mappers.NowPlayingUiMapper
 import com.chocolatecake.movieapp.domain.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.domain.mappers.PopularPeopleUiMapper
@@ -15,12 +20,10 @@ import com.chocolatecake.movieapp.domain.usecases.home.GetTrendingMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetUpcomingMoviesUseCase
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
+import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiEvent
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -38,17 +41,16 @@ class HomeViewModel @Inject constructor(
     private val topRatedUiMapper: TopRatedUiMapper,
     private val popularPeopleUiMapper: PopularPeopleUiMapper,
     private val popularMoviesUiMapper: PopularMoviesUiMapper,
-) : BaseViewModel(), HomeListener {
+) : BaseViewModel<HomeUiState, HomeUiEvent>(), HomeListener {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState = _uiState.asStateFlow()
+    override fun initialState() = HomeUiState()
 
     init {
         getData()
     }
 
     override fun getData() {
-        _uiState.update { it.copy(isLoading = true) }
+        _state.update { it.copy(isLoading = true) }
         getUpComingMovies()
         getPopularPeople()
         getNowPlayingMovies()
@@ -59,137 +61,138 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getPopularMovies() {
-        viewModelScope.launch {
-            try {
-                popularMoviesUseCase().collect { popularMoviesList ->
-                    val items = popularMoviesList.map(popularMoviesUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            popularMovies = HomeItem.PopularMovies(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = { popularMoviesUseCase() },
+            onSuccess = ::onSuccessPopularMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessPopularMovies(popularMovieEntities: List<PopularMovieEntity>) {
+        val items = popularMovieEntities.map(popularMoviesUiMapper::map)
+        _state.update {
+            it.copy(
+                popularMovies = HomeItem.PopularMovies(items), isLoading = false
+            )
         }
+
     }
 
     private fun getTopRatedMovies() {
-        viewModelScope.launch {
-            try {
-                topRatedUseCase().collect { topRatedList ->
-                    val items = topRatedList.map(topRatedUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            topRated = HomeItem.TopRated(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = { topRatedUseCase() },
+            onSuccess = ::onSuccessTopRatedMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessTopRatedMovies(topRatedMovieEntities: List<TopRatedMovieEntity>) {
+        val items = topRatedMovieEntities.map(topRatedUiMapper::map)
+        _state.update {
+            it.copy(
+                topRated = HomeItem.TopRated(items), isLoading = false
+            )
         }
     }
 
 
     private fun getUpComingMovies() {
-        viewModelScope.launch {
-            try {
-                upcomingMoviesUseCase().collect { upComingList ->
-                    val items = upComingList.map(upComingUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            upComingMovies = HomeItem.Slider(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = {upcomingMoviesUseCase()},
+            onSuccess = ::onSuccessUpcomingMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessUpcomingMovies(upcomingMovieEntities: List<UpcomingMovieEntity>) {
+        val items = upcomingMovieEntities.map(upComingUiMapper::map)
+        _state.update {
+            it.copy(
+                upComingMovies = HomeItem.Slider(items), isLoading = false
+            )
         }
     }
 
     private fun getPopularPeople() {
-        viewModelScope.launch {
-            try {
-                popularPeopleUseCase().collect { popularPeopleList ->
-                    val items = popularPeopleList.map(popularPeopleUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            popularPeople = HomeItem.PopularPeople(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = {popularPeopleUseCase()},
+            onSuccess = ::onSuccessPopularPeople,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessPopularPeople(popularPeopleEntities: List<PopularPeopleEntity>) {
+        val items = popularPeopleEntities.map(popularPeopleUiMapper::map)
+        _state.update {
+            it.copy(
+                popularPeople = HomeItem.PopularPeople(items), isLoading = false
+            )
         }
     }
 
     private fun getNowPlayingMovies() {
-        viewModelScope.launch {
-            try {
-                nowPlayingUseCase().collect { nowPlayingList ->
-                    val items = nowPlayingList.map(nowPlayingUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            nowPlayingMovies = HomeItem.NowPlaying(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = {nowPlayingUseCase()},
+            onSuccess = ::onSuccessNowPlayingMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessNowPlayingMovies(nowPlayingMovieEntities: List<NowPlayingMovieEntity>) {
+        val items = nowPlayingMovieEntities.map(nowPlayingUiMapper::map)
+        _state.update {
+            it.copy(
+                nowPlayingMovies = HomeItem.NowPlaying(items), isLoading = false
+            )
         }
     }
 
     private fun getTrendingMovies() {
-        viewModelScope.launch {
-            try {
-                trendingMoviesUseCase().collect { trendingList ->
-                    val items = trendingList.map(trendingUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            trendingMovies = HomeItem.Trending(items), isLoading = false
-                        )
-                    }
-                }
-            } catch (th: Throwable) {
-                onError(th.message.toString())
-            }
+        tryToExecuteFlow(
+            call = {trendingMoviesUseCase()},
+            onSuccess = ::onSuccessTrendingMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessTrendingMovies(trendingMoviesEntities: List<TrendingMoviesEntity>) {
+        val items = trendingMoviesEntities.map(trendingUiMapper::map)
+        _state.update {
+            it.copy(
+                trendingMovies = HomeItem.Trending(items), isLoading = false
+            )
         }
     }
 
-    private fun onError(message: String) {
-        val errors = _uiState.value.onErrors.toMutableList()
-        errors.add(message)
-        _uiState.update { it.copy(onErrors = errors, isLoading = false) }
+    private fun onError(th: Throwable) {
+        val errors = _state.value.onErrors.toMutableList()
+        errors.add(th.message.toString())
+        _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
     override fun onClickNowPlaying(itemId: Int) {
-
+        sendEvent(HomeUiEvent.NowPlayingMovieEvent(itemId))
     }
 
     override fun onClickTrending(itemId: Int) {
-        TODO("Not yet implemented")
+        sendEvent(HomeUiEvent.TrendingMovieEvent(itemId))
     }
 
     override fun onClickPopularMovies(itemId: Int) {
-        TODO("Not yet implemented")
+        sendEvent(HomeUiEvent.PopularMovieEvent(itemId))
     }
 
     override fun onClickTopRated(itemId: Int) {
-        TODO("Not yet implemented")
+        sendEvent(HomeUiEvent.TopRatedMovieEvent(itemId))
     }
 
 
     override fun onClickUpComing(itemId: Int) {
-        TODO("Not yet implemented")
+        sendEvent(HomeUiEvent.UpComingMovieEvent(itemId))
     }
 
     override fun onClickPopularPeople(itemId: Int) {
-        TODO("Not yet implemented")
+        sendEvent(HomeUiEvent.PopularPeopleEvent(itemId))
     }
 
 }
