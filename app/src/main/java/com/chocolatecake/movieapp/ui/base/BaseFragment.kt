@@ -1,7 +1,6 @@
 package com.chocolatecake.movieapp.ui.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +39,6 @@ abstract class BaseFragment<VDB : ViewDataBinding, STATE, EVENT> : Fragment() {
         _binding.apply {
             lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel, viewModel)
-            Log.e("TAGTAG", "onCreateView: ")
             return root
         }
     }

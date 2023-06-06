@@ -7,7 +7,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.movieapp.BR
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 
 interface BaseInteractionListener
 
@@ -32,8 +31,8 @@ abstract class BaseAdapter<T>(
 
     open fun bind(holder: ItemViewHolder, position: Int) {
         holder.binding.apply {
-           // setVariable(BR.item, items[position])
-           // setVariable(BR.listener, listener)
+            setVariable(BR.item, items[position])
+            setVariable(BR.listener, listener)
         }
     }
 
