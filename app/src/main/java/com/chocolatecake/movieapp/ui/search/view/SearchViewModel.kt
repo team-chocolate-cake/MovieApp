@@ -46,7 +46,6 @@ class SearchViewModel @Inject constructor(
             state.filter { it.query.isNotEmpty() && oldValue != state.value.query }
                 .debounce(1000)
                 .collect { value ->
-                    Log.i("MovieText", "$value")
                     onSearchInputChanged(state.value.query)
                     oldValue = state.value.query
                 }
