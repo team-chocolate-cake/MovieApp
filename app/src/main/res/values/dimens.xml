@@ -6,10 +6,12 @@
     <dimen name="spacing_custom">12dp</dimen>
     <dimen name="spacing_semi_medium">14dp</dimen>
     <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_x_medium">20dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
     <dimen name="spacing_extra_large">28dp</dimen>
     <dimen name="spacing_giant">32dp</dimen>
-    <dimen name="spacing_extra_giant">56dp</dimen>
+    <dimen name="spacing_extra_giant">48dp</dimen>
+    <dimen name="spacing_extra_extra_giant">56dp</dimen>
 
     <!--text dimens-->
     <dimen name="text_tiny">11sp</dimen>
@@ -41,6 +43,7 @@
     <dimen name="height_tiny">4dp</dimen>
     <dimen name="height_giant">32dp</dimen>
     <dimen name="height_card">200dp</dimen>
-    <dimen name="height_image">240dp</dimen>
+    <dimen name="width_image">240dp</dimen>
+    <dimen name="height_image">150dp</dimen>
     <dimen name="lottie_error_size">180dp</dimen>
 </resources>

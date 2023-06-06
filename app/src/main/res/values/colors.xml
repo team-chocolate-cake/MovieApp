@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="secondary_text_87">#de1e1e1e</color>
-    <color name="onprimary_60">#99ffffff</color>
-    <color name="onprimary_87">#de1e1e1e</color>
     <color name="secondary_text_60">#991e1e1e</color>
     <color name="primary">#845ec2</color>
     <color name="secondary">#b39cd0</color>
-    <color name="on_primary">#DE1E1E1E</color>
+    <color name="on_primary">#DEFFFFFF</color>
     <color name="background">#deffffff</color>
     <color name="on_background_87">#de230228</color>
     <color name="on_background_60">#99230228</color>
@@ -14,4 +12,8 @@
     <color name="background_light">#faefefef</color>
     <color name="card">#ffffff</color>
     <color name="border">#14845ec2</color>
+    <color name="login_form_background">#EFEFEF</color>
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="login_button_background">#845EC2</color>
+    <color name="chip_unselected_background">#DEDADADA</color>
 </resources>

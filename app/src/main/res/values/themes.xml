@@ -7,6 +7,18 @@
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
 
+    <style name="TextStyle.BodyMedium.SearchBoxStyle">
+        <item name="android:background">@drawable/search_edittext_background</item>
+        <item name="android:drawableStart">@drawable/ic_search</item>
+        <item name="android:drawablePadding">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:hint">search</item>
+        <item name="android:imeOptions">flagNoFullscreen</item>
+        <item name="android:inputType">text</item>
+        <item name="android:padding">16sp</item>
+
+    </style>
+
     <!--region Font-->
     <style name="TextStyle">
         <item name="android:fontFamily">@font/plus_jakarata_sans</item>
@@ -62,6 +74,23 @@
         <item name="android:fontWeight">400</item>
     </style>
     <!--endregion-->
+
+    <style name="TextStyle.LabelMedium.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="android:fontFamily">@font/plus_jakarta_sans_regular</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipStartPadding">@dimen/spacing_medium</item>
+        <item name="chipEndPadding">@dimen/spacing_medium</item>
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="chipStrokeColor">@android:color/transparent</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipMinTouchTargetSize">0dp</item>
+    </style>
+    <!--endregion-->
+
+    <style name="ViewDividerStyle">
+        <item name="android:radius">@dimen/radius_full</item>
+    </style>
 
     <!--endregion-->
     <!--region Bottom Navigation-->
