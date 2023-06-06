@@ -8,17 +8,10 @@
             type="com.chocolatecake.movieapp.ui.login.LoginViewModel" />
     </data>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:clipToPadding="false"
-        >
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/login_motion_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/login_form_background"
         app:layoutDescription="@xml/fragment_login_xml_constraintlayout_scene">
 
@@ -176,7 +169,5 @@
             app:layout_constraintStart_toEndOf="@+id/textview_do_u_have_account"
             app:layout_constraintTop_toTopOf="@+id/textview_do_u_have_account" />
 
-
     </androidx.constraintlayout.motion.widget.MotionLayout>
-    </ScrollView>
 </layout>

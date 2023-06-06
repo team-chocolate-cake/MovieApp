@@ -72,7 +72,7 @@ class LoginViewModel @Inject constructor(
         _state.update {
             it.copy(userNameError = null, passwordError = null, isLoading = false)
         }
-        sendEvent(LoginUiEvent.LoginEvent(1))
+        sendEvent(LoginUiEvent.LoginEvent)
     }
 
     fun onUserNameChanged(userName: CharSequence) {
