@@ -1,30 +1,14 @@
 package com.chocolatecake.movieapp.domain.usecases.auth
 
-import com.chocolatecake.movieapp.data.repository.auth.AuthRepository
 import javax.inject.Inject
 
-class GetIsValidLoginUseCase @Inject constructor(
-    private val authRepository: AuthRepository
-) {
-    suspend operator fun invoke(username: String, password: String): LoginStateIndicator {
-        return if (username.isEmpty()) {
-            LoginStateIndicator.USER_NAME_ERROR
-        } else if (password.isEmpty()) {
-            LoginStateIndicator.PASSWORD_NAME_ERROR
-        } else {
-            try {
-                authRepository.login(username, password)
-                LoginStateIndicator.SUCCESS
-            } catch (th: Throwable) {
-                LoginStateIndicator.REQUEST_ERROR
-            }
+class GetIsValidLoginUseCase @Inject constructor(){
+     operator fun invoke(username: String, password: String): LoginInputErrors {
+        return when {
+            username.isEmpty() -> LoginInputErrors.USER_NAME_ERROR
+            password.isEmpty() -> LoginInputErrors.PASSWORD_ERROR
+            else -> LoginInputErrors.NO_INPUT_ERRORS
         }
     }
 }
 
-enum class LoginStateIndicator {
-    USER_NAME_ERROR,
-    PASSWORD_NAME_ERROR,
-    REQUEST_ERROR,
-    SUCCESS
-}
