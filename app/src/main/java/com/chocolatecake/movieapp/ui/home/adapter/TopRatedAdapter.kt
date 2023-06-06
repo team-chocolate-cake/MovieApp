@@ -6,13 +6,14 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovie
 import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 import com.chocolatecake.movieapp.ui.base.BaseInteractionListener
+import com.chocolatecake.movieapp.ui.home.ui_state.TopRatedUiState
 
 class TopRatedAdapter(
-    itemsTopRated: List<TopRatedMovieEntity?>,
+    itemsTopRated: List<TopRatedUiState>,
     layout: Int,
     listener: HomeListener
 ) :
-    BaseAdapter<TopRatedMovieEntity?>(itemsTopRated, listener) {
+    BaseAdapter<TopRatedUiState>(itemsTopRated, listener) {
     override val layoutID = layout
 
 }

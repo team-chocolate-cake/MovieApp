@@ -117,7 +117,7 @@ class HomeAdapter(
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
         val nowPlaying = itemsHome[position] as HomeItem.NowPlaying
-        val adapter = NowPlayingAdapter(nowPlaying.list, listener)
+        val adapter = NowPlayingAdapter(nowPlaying.list,R.layout.home_recyclerview_now_playing, listener)
         holder.binding.rvNowPlaying.adapter = adapter
         holder.binding.item = nowPlaying
     }
@@ -137,35 +137,35 @@ class HomeAdapter(
 
     private fun bindTopRated(holder: TopRatedViewHolder, position: Int) {
         val topRated = itemsHome[position] as HomeItem.TopRated
-        val adapter = TopRatedAdapter(topRated.list, listener)
+        val adapter = TopRatedAdapter(topRated.list,R.layout.home_recyclerview_top_rated, listener)
         holder.binding.rvTopRated.adapter = adapter
         holder.binding.item = topRated
     }
 
     private fun bindTrending(holder: TrendingViewHolder, position: Int) {
         val trending = itemsHome[position] as HomeItem.Trending
-        val adapter = TrendingAdapter(trending.list, listener)
+        val adapter = TrendingAdapter(trending.list,R.layout.home_recyclerview_trending, listener)
         holder.binding.rvTrending.adapter = adapter
         holder.binding.item = trending
     }
 
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
         val popularPeople = itemsHome[position] as HomeItem.PopularPeople
-        val adapter = PopularPeopleAdapter(popularPeople.list, listener)
+        val adapter = PopularPeopleAdapter(popularPeople.list,R.layout.home_recyclerview_popular_people, listener)
         holder.binding.rvPopularPeople.adapter = adapter
         holder.binding.item = popularPeople
     }
 
     private fun bindPopularMovies(holder: PopularMoviesViewHolder, position: Int) {
         val popularMovies = itemsHome[position] as HomeItem.PopularMovies
-        val adapter = PopularMoviesAdapter(popularMovies.list, listener)
+        val adapter = PopularMoviesAdapter(popularMovies.list,R.layout.home_recyclerview_popular_movies, listener)
         holder.binding.rvPopular.adapter = adapter
         holder.binding.item = popularMovies
     }
 
     private fun bindRecommended(holder: RecommendedViewHolder, position: Int) {
         val recommendedMovies = itemsHome[position] as HomeItem.RecommendedMovies
-        val adapter = RecommendedAdapter(recommendedMovies.list, listener)
+        val adapter = RecommendedAdapter(recommendedMovies.list,R.layout.home_recyclerview_recommended, listener)
         holder.binding.rvRecommended.adapter = adapter
         holder.binding.item = recommendedMovies
     }
