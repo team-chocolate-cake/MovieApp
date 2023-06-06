@@ -1,5 +1,6 @@
 package com.chocolatecake.movieapp.data.repository.auth
 
+import android.util.Log
 import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.service.MovieService
