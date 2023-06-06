@@ -27,8 +27,9 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
         searchAdapter = SearchAdapter(mutableListOf(), viewModel)
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.state.collect{
-                    searchAdapter.setItems(it.searchMovieResult)
+                viewModel.state.collect{uiState ->
+                    searchAdapter.setItems(uiState.searchMovieResult)
+                    uiState.error?.let { showSnackBar(it) }
                 }
             }
         }
@@ -45,17 +46,13 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
         when (uiEvent) {
             is SearchUiEvent.FilterEvent -> showBottomSheet()
             is SearchUiEvent.ApplyFilterEvent -> applyFilter(uiEvent.genre)
-            is SearchUiEvent.ShowSnackBar -> showSnackBar()
+            is SearchUiEvent.ShowSnackBar -> showSnackBar(uiEvent.messages)
         }
     }
 
-    private fun showSnackBar() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect {
-                viewModel.showErrorWithSnackBar()
-                Snackbar.make(binding.root, it.error?.first().toString(), Snackbar.LENGTH_SHORT).show()
-            }
-        }
+    private fun showSnackBar(messages: List<String>) {
+        val errorMessage = messages.first()
+        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun applyFilter(genresId: Int) {
