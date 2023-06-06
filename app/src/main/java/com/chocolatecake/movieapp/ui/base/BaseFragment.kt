@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.chocolatecake.movieapp.BR
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -56,6 +57,10 @@ abstract class BaseFragment<VDB : ViewDataBinding, STATE, EVENT> : Fragment() {
                collect()
             }
         }
+    }
+
+    protected fun showSnackBar(messages: String) {
+        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
 
 }

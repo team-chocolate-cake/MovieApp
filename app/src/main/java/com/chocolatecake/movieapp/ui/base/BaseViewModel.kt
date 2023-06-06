@@ -35,7 +35,7 @@ abstract class BaseViewModel<STATE ,EVENT> : ViewModel() {
         }
     }
 
-    protected fun senEvent(event: EVENT){
+    protected fun sendEvent(event: EVENT){
         viewModelScope.launch { _event.send(event) }
     }
 }

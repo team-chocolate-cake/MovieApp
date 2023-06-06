@@ -7,26 +7,20 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.movieapp.BuildConfig
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentLoginBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding, LoginUiState, LoginUiEvent>() {
     override val layoutIdFragment = R.layout.fragment_login
     override val viewModel by viewModels<LoginViewModel>()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         handleKeyboardAppearanceEvent()
-        handleFragmentEvents()
-
     }
 
     private fun handleKeyboardAppearanceEvent() {
@@ -61,11 +55,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    private fun handleFragmentEvents() {
-        viewLifecycleOwner.lifecycleScope.launch { viewModel.loginEvent.collectLatest { onEvent(it) } }
-    }
-
-    private fun onEvent(event: LoginUiEvent) {
+    override fun onEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.LoginEvent -> {
                 // TODO --> Navigate To Home Screen
@@ -78,9 +68,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             }
 
             is LoginUiEvent.ShowSnackBar -> {
-                createSnackBar(requireContext().getString(event.stringId))
+                showSnackBar(requireContext().getString(event.stringId))
             }
 
         }
+    }
+
+    override fun onSateChange(state: LoginUiState) {
+
     }
 }

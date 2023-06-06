@@ -11,7 +11,6 @@ import com.chocolatecake.movieapp.ui.base.BaseFragment
 import com.chocolatecake.movieapp.ui.search.SearchAdapter
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -55,10 +54,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding,SearchUiState, SearchU
             is SearchUiEvent.ApplyFilterEvent -> applyFilter(event.genre)
             is SearchUiEvent.ShowSnackBar -> showSnackBar(event.messages)
         }
-    }
-
-    private fun showSnackBar(messages: String) {
-        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun applyFilter(genresId: Int) {

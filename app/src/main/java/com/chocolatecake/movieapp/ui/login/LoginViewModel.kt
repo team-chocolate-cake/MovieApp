@@ -5,11 +5,6 @@ import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.domain.usecases.auth.LoginUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,17 +13,12 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-) : BaseViewModel() {
-    private val _state = MutableStateFlow(LoginUiState())
-    val state: StateFlow<LoginUiState> = _state.asStateFlow()
+) : BaseViewModel<LoginUiState, LoginUiEvent>() {
 
-    private val _loginEvent = Channel<LoginUiEvent>()
-    val loginEvent = _loginEvent.receiveAsFlow()
+    override fun initialState() = LoginUiState()
 
     fun onClickSignUp() {
-        viewModelScope.launch {
-            _loginEvent.send(LoginUiEvent.SignUpEvent)
-        }
+        sendEvent(LoginUiEvent.SignUpEvent)
     }
 
     fun login() {
@@ -82,9 +72,7 @@ class LoginViewModel @Inject constructor(
         _state.update {
             it.copy(userNameError = null, passwordError = null, isLoading = false)
         }
-        viewModelScope.launch {
-            _loginEvent.send(LoginUiEvent.LoginEvent(1))
-        }
+        sendEvent(LoginUiEvent.LoginEvent(1))
     }
 
     fun onUserNameChanged(userName: CharSequence) {
@@ -95,15 +83,9 @@ class LoginViewModel @Inject constructor(
         _state.update { it.copy(password = password.toString(), passwordError = null) }
     }
 
+
     override fun getData() {
 
-    }
-
-
-    private fun sendEvent(event: LoginUiEvent) {
-        viewModelScope.launch {
-            _loginEvent.send(event)
-        }
     }
 }
 
