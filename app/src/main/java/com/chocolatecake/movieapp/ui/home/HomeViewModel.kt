@@ -4,14 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.domain.mappers.NowPlayingUiMapper
 import com.chocolatecake.movieapp.domain.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.domain.mappers.PopularPeopleUiMapper
-import com.chocolatecake.movieapp.domain.mappers.RecommendedUiMapper
 import com.chocolatecake.movieapp.domain.mappers.TopRatedUiMapper
 import com.chocolatecake.movieapp.domain.mappers.TrendingUiMapper
 import com.chocolatecake.movieapp.domain.mappers.UpComingUiMapper
 import com.chocolatecake.movieapp.domain.usecases.home.GetNowPlayingUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUsecase
-import com.chocolatecake.movieapp.domain.usecases.home.GetRecommendedUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTopRatedUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTrendingMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetUpcomingMoviesUseCase
@@ -31,7 +29,6 @@ class HomeViewModel @Inject constructor(
     private val nowPlayingUseCase: GetNowPlayingUseCase,
     private val popularMoviesUseCase: GetPopularMoviesUseCase,
     private val popularPeopleUseCase: GetPopularPeopleUsecase,
-    private val recommendedUseCase: GetRecommendedUseCase,
     private val topRatedUseCase: GetTopRatedUseCase,
     private val trendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val upcomingMoviesUseCase: GetUpcomingMoviesUseCase,
@@ -41,7 +38,6 @@ class HomeViewModel @Inject constructor(
     private val topRatedUiMapper: TopRatedUiMapper,
     private val popularPeopleUiMapper: PopularPeopleUiMapper,
     private val popularMoviesUiMapper: PopularMoviesUiMapper,
-    private val recommendedUiMapper: RecommendedUiMapper
 ) : BaseViewModel(), HomeListener {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -59,7 +55,7 @@ class HomeViewModel @Inject constructor(
         getTrendingMovies()
         getPopularMovies()
         getTopRatedMovies()
-        getRecommendedMovies()
+
     }
 
     private fun getPopularMovies() {
@@ -73,7 +69,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 onError(th.message.toString())
             }
         }
@@ -90,24 +86,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (th: Throwable) {
-                onError(th.message.toString())
-            }
-        }
-    }
-
-    private fun getRecommendedMovies() {
-        viewModelScope.launch {
-            try {
-                recommendedUseCase().collect { recommendedList ->
-                    val items = recommendedList.map(recommendedUiMapper::map)
-                    _uiState.update {
-                        it.copy(
-                            recommended = HomeItem.RecommendedMovies(items), isLoading = false
-                        )
-                    }
-                }
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 onError(th.message.toString())
             }
         }
@@ -125,7 +104,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 onError(th.message.toString())
             }
         }
@@ -142,7 +121,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 onError(th.message.toString())
             }
         }
@@ -176,7 +155,7 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }
-            }catch (th: Throwable) {
+            } catch (th: Throwable) {
                 onError(th.message.toString())
             }
         }
@@ -204,9 +183,6 @@ class HomeViewModel @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun onClickRecommended(itemId: Int) {
-        TODO("Not yet implemented")
-    }
 
     override fun onClickUpComing(itemId: Int) {
         TODO("Not yet implemented")

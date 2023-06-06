@@ -20,6 +20,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/popular_people"
+            android:textColor="#DE000000"
+            style="@style/TextStyle.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

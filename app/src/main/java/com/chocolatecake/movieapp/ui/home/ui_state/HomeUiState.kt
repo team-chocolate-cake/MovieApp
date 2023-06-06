@@ -9,7 +9,6 @@ data class HomeUiState(
     val popularPeople: HomeItem = HomeItem.PopularPeople(emptyList()),
     val popularMovies: HomeItem = HomeItem.PopularMovies(emptyList()),
     val topRated: HomeItem = HomeItem.TopRated(emptyList()),
-    val recommended: HomeItem = HomeItem.RecommendedMovies(emptyList()),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
 )

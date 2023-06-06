@@ -40,9 +40,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         it.topRated,
                         it.popularPeople,
                         it.popularMovies,
-                        it.recommended
                     )
                 )
+                binding.recyclerViewHome.smoothScrollToPosition(0)
             }
         }
     }

@@ -21,13 +21,15 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/popular"
+            android:textColor="#DE000000"
+            style="@style/TextStyle.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_popular"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

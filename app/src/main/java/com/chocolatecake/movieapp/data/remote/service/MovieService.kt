@@ -42,15 +42,18 @@ interface MovieService {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
 
-    @GET("movie/recommended")
-    suspend fun getRecommendedMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getRecommendedMovies(
+        @Query("page") page: Int = 1,
+        @Path("movie_id") movieId: Int
+    ): Response<DataWrapperResponse<MovieDto>>
+
     @GET("movie/latest")
     suspend fun getLatestMovie(): Response<MovieDto>
 
-    @GET("trending/{media_type}/{time_window}")
+    @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
-        @Path("media_type") mediaType: String ="person",
-        @Path("time_window") timeWindow: String="day"
+        @Path("time_window") timeWindow: String = "day"
     ): Response<DataWrapperResponse<MovieDto>>
 
     /// region search

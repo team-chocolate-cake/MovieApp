@@ -8,7 +8,6 @@ import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewNowPlayingBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewPopularMoviesBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewPopularPeopleBinding
-import com.chocolatecake.movieapp.databinding.HomeRecyclerviewRecommendedBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewSliderBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewTopRatedBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewTrendingBinding
@@ -20,8 +19,7 @@ import com.chocolatecake.movieapp.ui.home.HomeItemType
 class HomeAdapter(
     private var itemsHome: MutableList<HomeItem>,
     private val listener: HomeListener
-) :
-    BaseAdapter<HomeItem>(itemsHome, listener) {
+) : BaseAdapter<HomeItem>(itemsHome, listener) {
 
     override val layoutID: Int = 0
 
@@ -81,14 +79,6 @@ class HomeAdapter(
                 )
             }
 
-            HomeItemType.RECOMMENDED.ordinal -> {
-                RecommendedViewHolder(
-                    DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context),
-                        R.layout.home_recyclerview_recommended, parent, false
-                    )
-                )
-            }
 
             else -> throw Exception("Mimo")
         }
@@ -102,7 +92,7 @@ class HomeAdapter(
             is TopRatedViewHolder -> bindTopRated(holder, position)
             is PopularPeopleViewHolder -> bindPopularPeople(holder, position)
             is PopularMoviesViewHolder -> bindPopularMovies(holder, position)
-            is RecommendedViewHolder -> bindRecommended(holder, position)
+
 
         }
     }
@@ -143,10 +133,12 @@ class HomeAdapter(
     }
 
     private fun bindTrending(holder: TrendingViewHolder, position: Int) {
+
         val trending = itemsHome[position] as HomeItem.Trending
         val adapter = TrendingAdapter(trending.list, listener)
         holder.binding.rvTrending.adapter = adapter
         holder.binding.item = trending
+        Log.i("trending", trending.toString())
     }
 
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
@@ -163,12 +155,6 @@ class HomeAdapter(
         holder.binding.item = popularMovies
     }
 
-    private fun bindRecommended(holder: RecommendedViewHolder, position: Int) {
-        val recommendedMovies = itemsHome[position] as HomeItem.RecommendedMovies
-        val adapter = RecommendedAdapter(recommendedMovies.list, listener)
-        holder.binding.rvRecommended.adapter = adapter
-        holder.binding.item = recommendedMovies
-    }
 
     override fun getItemViewType(position: Int): Int = itemsHome[position].type.ordinal
 
@@ -184,6 +170,5 @@ class HomeAdapter(
     class PopularMoviesViewHolder(val binding: HomeRecyclerviewPopularMoviesBinding) :
         BaseViewHolder(binding)
 
-    class RecommendedViewHolder(val binding: HomeRecyclerviewRecommendedBinding) :
-        BaseViewHolder(binding)
+
 }

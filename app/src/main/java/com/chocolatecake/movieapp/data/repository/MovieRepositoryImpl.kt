@@ -90,11 +90,11 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     private suspend fun refreshRecommendedMovies() {
-        refreshWrapper(
-            service::getRecommendedMovies,
-            recommendedMovieMapper::map,
-            movieDao::insertRecommendedMovies
-        )
+//        refreshWrapper(
+//            service::getRecommendedMovies,
+//            recommendedMovieMapper::map,
+//            movieDao::insertRecommendedMovies
+//        )
     }
 
     override suspend fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>> {

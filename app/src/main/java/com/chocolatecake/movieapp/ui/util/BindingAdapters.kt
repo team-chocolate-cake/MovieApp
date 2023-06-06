@@ -1,5 +1,6 @@
 package com.chocolatecake.movieapp.ui.util
 
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,4 +20,12 @@ fun ImageView.loadImageWithUrl(url: String?) {
 @BindingAdapter(value = ["app:items"])
 fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
     (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
+}
+@BindingAdapter(value = ["app:isVisible"])
+fun View.isVisible(isVisible: Boolean?) {
+    if (isVisible == true) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
+    }
 }
