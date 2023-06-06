@@ -14,28 +14,29 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/popular_people"
+            android:id="@+id/text_view_popular_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/popular_people"
-            android:textColor="#DE000000"
+            android:textColor="@color/on_background_87"
             style="@style/TextStyle.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_popular_people"
+            android:id="@+id/recycler_view_popular_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/home_item_popular_people"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popular_people" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_popular_people" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

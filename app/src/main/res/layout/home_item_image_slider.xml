@@ -21,7 +21,7 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero_height"
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
                 android:layout_height="match_parent"
                 app:layout_constraintDimensionRatio="16:9"
