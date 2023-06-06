@@ -17,4 +17,5 @@
     <color name="login_button_background">#845EC2</color>
     <color name="chip_unselected_background">#DEDADADA</color>
     <color name="rating_color">#f6f6f6</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

@@ -7,6 +7,21 @@
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
 
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+             animated drawable. One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Required for animated icons -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.MovieApp</item>
+    </style>
+
     <style name="TextStyle.BodyMedium.SearchBoxStyle">
         <item name="android:background">@drawable/search_edittext_background</item>
         <item name="android:drawableStart">@drawable/ic_search</item>
