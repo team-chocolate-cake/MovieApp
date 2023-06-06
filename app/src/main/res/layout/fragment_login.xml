@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        android:paddingBottom="80dp"
         android:clipToPadding="false"
         >
     <androidx.constraintlayout.motion.widget.MotionLayout
