@@ -1,9 +1,9 @@
 package com.chocolatecake.movieapp.ui.search.view
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.data.repository.base.NoNetworkThrowable
+import com.chocolatecake.movieapp.domain.model.Genre
+import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.InsertSearchHistoryUseCase
@@ -15,12 +15,8 @@ import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,19 +28,15 @@ class SearchViewModel @Inject constructor(
     private val genreUiStateMapper: GenreUiStateMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
-) : BaseViewModel(), SearchListener {
-
-    private val _state = MutableStateFlow(SearchUiState())
-    val state = _state.asStateFlow()
-    private val _event = Channel<SearchUiEvent>()
-    val event = _event.receiveAsFlow()
+) : BaseViewModel<SearchUiState,SearchUiEvent>(), SearchListener {
+    override fun initialState() = SearchUiState()
 
     init {
         viewModelScope.launch {
             var oldValue = ""
             onSearchInputChanged(state.value.query)
-            state.filter { it.query.isNotEmpty() && oldValue != state.value.query }
-                .debounce(1000)
+            state.debounce(1000)
+                .filter { it.query.isNotEmpty() && oldValue != state.value.query }
                 .collect { value ->
                     onSearchInputChanged(state.value.query)
                     oldValue = state.value.query
@@ -56,31 +48,8 @@ class SearchViewModel @Inject constructor(
         _state.update { it.copy(query = query.toString()) }
     }
 
-    private suspend fun getAllGenresMovies() {
-        _state.update { it.copy(isLoading = true) }
-        try {
-            _state.update {
-                val updatedGenres =
-                    getAllGenresMoviesUseCase()?.map { genreUiStateMapper.map(it) }?.map { genre ->
-                        genre.copy(isSelected = genre.genreId == it.selectedMovieGenresId)
-                    }
-                it.copy(
-                    genresMovies = updatedGenres,
-                    isLoading = false,
-                    error = null
-                )
-            }
-        } catch (noNetwork: NoNetworkThrowable) {
-            _state.update {
-                it.copy(
-                    error = listOf("No Network Connection"),
-                    isLoading = false
-                )
-            }
-        }
-    }
 
-    fun onSearchInputChanged(newQuery: CharSequence) {
+    private fun onSearchInputChanged(newQuery: CharSequence) {
         val query = newQuery.toString()
         _state.update { it.copy(query = query, isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
@@ -90,43 +59,74 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getSearchHistory(query: String) {
-        val result = searchHistoryUseCase(query)
-        _state.update { it.copy(searchHistory = result) }
-    }
-
-    override fun getData() {
-        onSearchForMovie()
-    }
-
     private suspend fun saveSearchHistoryInLocal(query: String) {
         _state.update { it.copy(isLoading = true) }
         val searchHistory = SearchHistoryEntity(keyword = query)
         insertSearchHistoryUseCase(searchHistory)
     }
 
+    private suspend fun getSearchHistory(query: String) {
+        val result = searchHistoryUseCase(query)
+        _state.update { it.copy(searchHistory = result) }
+    }
+
+
+
+    override fun getData() {
+        onSearchForMovie()
+    }
+
     private fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            try {
-                _state.update {
-                    it.copy(
-                        searchMovieResult = searchMoviesUseCase(it.query, it.selectedMovieGenresId),
-                        isLoading = false,
-                        error = null
-                    )
-                }
-            } catch (noNetwork: NoNetworkThrowable) {
-                showErrorWithSnackBar("No Network")
-                _state.update { it.copy(isLoading = false) }
-            }
+        tryToExecute(
+            call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId) },
+            onSuccess = ::onSuccessMovies,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessMovies(movies: List<Movie>) {
+        _state.update {
+            it.copy(
+                searchMovieResult = movies,
+                isLoading = false,
+                error = null
+            )
         }
     }
 
+
+    ///region events
     override fun onClickFilter() {
         viewModelScope.launch {
             getAllGenresMovies()
             _event.send(SearchUiEvent.FilterEvent)
+        }
+    }
+
+    private suspend fun getAllGenresMovies() {
+        _state.update { it.copy(isLoading = true) }
+        tryToExecute(
+            call = { getAllGenresMoviesUseCase() },
+            onSuccess = ::onSuccessGenres,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessGenres(genres: List<Genre>) {
+        _state.update {
+            val updatedGenres =
+                genres.map { genre ->
+                    genreUiStateMapper.map(
+                        genre,
+                        genre.genreID == it.selectedMovieGenresId
+                    )
+                }
+            it.copy(
+                genresMovies = updatedGenres,
+                isLoading = false,
+                error = null
+            )
         }
     }
 
@@ -142,10 +142,24 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    ///endregion
+
+
+    /// region error handling
+    private fun onError(throwable: Throwable) {
+        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false
+            )
+        }
+    }
 
     private fun showErrorWithSnackBar(messages: String) {
         viewModelScope.launch {
             _event.send(SearchUiEvent.ShowSnackBar(messages))
         }
     }
+    //endregion
 }

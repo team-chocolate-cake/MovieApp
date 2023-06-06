@@ -9,9 +9,9 @@ class GetAllGenresMoviesUseCase @Inject constructor(
     private val genresRepository: GenresRepository,
     private val genreMapper: GenreMapper
 ) {
-    suspend operator fun invoke(): List<Genre>? {
+    suspend operator fun invoke(): List<Genre> {
         return genresRepository.getGenresMovies()?.map {
             genreMapper.map(it)
-        }?.sortedBy { it.genreName }
+        }?.sortedBy { it.genreName } ?: emptyList()
     }
 }
