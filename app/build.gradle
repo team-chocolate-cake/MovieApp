@@ -60,6 +60,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
 
     /// navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
@@ -101,4 +102,9 @@ dependencies {
     /// Preferences DataStore
     implementation "androidx.datastore:datastore-preferences:1.1.0-alpha04"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+
+    /// slider
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
+
 }

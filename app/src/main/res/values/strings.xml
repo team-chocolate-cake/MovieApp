@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="trending">Trending</string>
+    <string name="recommended">Recommended</string>
+    <string name="show_more">Show More</string>
+    <string name="popular_people">Popular People</string>
+    <string name="popular">Popular</string>
     <string name="don_t_have_an_account">Don’t have an account?</string>
     <string name="signup">Signup</string>
     <string name="password">password</string>
