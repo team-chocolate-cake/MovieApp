@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -20,4 +20,12 @@
         android:id="@+id/tvFragment"
         android:name="com.chocolatecake.movieapp.ui.tvShow.TvFragment"
         android:label="TvFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.chocolatecake.movieapp.ui.login.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

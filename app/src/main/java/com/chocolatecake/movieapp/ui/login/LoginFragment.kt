@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.movieapp.BuildConfig
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentLoginBinding
@@ -58,7 +60,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginUiState, LoginUiEv
     override fun onEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.LoginEvent -> {
-                // TODO --> Navigate To Home Screen
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             }
 
             is LoginUiEvent.SignUpEvent -> {
