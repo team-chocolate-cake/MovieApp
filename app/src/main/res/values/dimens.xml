@@ -46,4 +46,7 @@
     <dimen name="width_image">240dp</dimen>
     <dimen name="height_image">150dp</dimen>
     <dimen name="lottie_error_size">180dp</dimen>
+    <dimen name="people_image_width">90dp</dimen>
+    <dimen name="zero_height">0dp</dimen>
+    <dimen name="slider_image_view_height">200dp</dimen>
 </resources>

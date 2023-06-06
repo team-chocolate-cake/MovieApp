@@ -16,29 +16,41 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/top_rated"
+            android:id="@+id/text_view_top_rated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/top_rated"
-            android:textColor="#DE000000"
+            android:textColor="@color/on_background_87"
             style="@style/TextStyle.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/text_view_show_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/show_more"
+            android:textColor="@color/primary"
+            style="@style/TextStyle.BodyMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_top_rated"
+            android:id="@+id/recycler_view_top_rated"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_rated"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_top_rated"
             tools:listitem="@layout/home_item_top_rated" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

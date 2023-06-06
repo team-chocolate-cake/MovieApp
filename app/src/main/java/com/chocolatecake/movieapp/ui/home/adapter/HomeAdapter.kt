@@ -121,14 +121,14 @@ class HomeAdapter(
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
         val nowPlaying = itemsHome[position] as HomeItem.NowPlaying
         val adapter = NowPlayingAdapter(nowPlaying.list, listener)
-        holder.binding.rvNowPlaying.adapter = adapter
+        holder.binding.recyclerViewNowPlaying.adapter = adapter
         holder.binding.item = nowPlaying
     }
 
     private fun bindTopRated(holder: TopRatedViewHolder, position: Int) {
         val topRated = itemsHome[position] as HomeItem.TopRated
         val adapter = TopRatedAdapter(topRated.list, listener)
-        holder.binding.rvTopRated.adapter = adapter
+        holder.binding.recyclerViewTopRated.adapter = adapter
         holder.binding.item = topRated
     }
 
@@ -136,7 +136,7 @@ class HomeAdapter(
 
         val trending = itemsHome[position] as HomeItem.Trending
         val adapter = TrendingAdapter(trending.list, listener)
-        holder.binding.rvTrending.adapter = adapter
+        holder.binding.recyclerViewTrending.adapter = adapter
         holder.binding.item = trending
         Log.i("trending", trending.toString())
     }
@@ -144,14 +144,14 @@ class HomeAdapter(
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
         val popularPeople = itemsHome[position] as HomeItem.PopularPeople
         val adapter = PopularPeopleAdapter(popularPeople.list, listener)
-        holder.binding.rvPopularPeople.adapter = adapter
+        holder.binding.recyclerViewPopularPeople.adapter = adapter
         holder.binding.item = popularPeople
     }
 
     private fun bindPopularMovies(holder: PopularMoviesViewHolder, position: Int) {
         val popularMovies = itemsHome[position] as HomeItem.PopularMovies
         val adapter = PopularMoviesAdapter(popularMovies.list, listener)
-        holder.binding.rvPopular.adapter = adapter
+        holder.binding.recyclerViewPopularMovies.adapter = adapter
         holder.binding.item = popularMovies
     }
 
