@@ -2,7 +2,6 @@ package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.MovieDao
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
@@ -17,16 +16,14 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalRecommendedMovie
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
-import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.local.mappers.people.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.remote.service.MovieService
-import com.chocolatecake.movieapp.data.repository.base.BaseRepository
-import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
-import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
-import com.chocolatecake.movieapp.domain.model.Movie
-import com.chocolatecake.movieapp.domain.model.SearchHistory
+import com.chocolatecake.movieapp.domain.repository.MovieRepository
+import com.chocolatecake.movieapp.data.mappers.search.MovieUIMapper
+import com.chocolatecake.movieapp.data.mappers.search_history.SearchHistoryUIMapper
+import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -163,4 +160,8 @@ class MovieRepositoryImpl @Inject constructor(
             ?.filterNotNull() ?: emptyList()
     }
     //endregion
+
+    override suspend fun getGenresMovies(): List<GenreMovieDto>? {
+        return service.getListOfGenresForMovies().body()?.results
+    }
 }

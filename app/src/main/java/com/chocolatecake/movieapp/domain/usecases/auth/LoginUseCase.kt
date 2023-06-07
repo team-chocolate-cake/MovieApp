@@ -1,7 +1,8 @@
 package com.chocolatecake.movieapp.domain.usecases.auth
 
-import com.chocolatecake.movieapp.data.repository.auth.AuthRepository
-import com.chocolatecake.movieapp.ui.login.LoginStateIndicator
+import com.chocolatecake.movieapp.domain.repository.AuthRepository
+import com.chocolatecake.movieapp.domain.usecases.auth.model.LoginInputErrors
+import com.chocolatecake.movieapp.domain.usecases.auth.model.LoginStateIndicator
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(

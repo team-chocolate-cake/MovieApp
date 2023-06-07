@@ -1,6 +1,6 @@
 package com.chocolatecake.movieapp.domain.usecases.search_history
 
-import com.chocolatecake.movieapp.data.repository.MovieRepository
+import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class ClearAllSearchHistoryUseCase @Inject constructor(

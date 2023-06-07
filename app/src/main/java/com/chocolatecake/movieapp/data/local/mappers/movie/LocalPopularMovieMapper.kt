@@ -3,7 +3,7 @@ package com.chocolatecake.movieapp.data.local.mappers.movie
 import com.chocolatecake.movieapp.BuildConfig
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
-import com.chocolatecake.movieapp.domain.mappers.Mapper
+import com.chocolatecake.movieapp.data.mappers.Mapper
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 

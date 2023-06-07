@@ -1,17 +1,14 @@
 package com.chocolatecake.movieapp.domain.usecases.genres
 
-import com.chocolatecake.movieapp.data.repository.genres.GenresRepository
-import com.chocolatecake.movieapp.domain.mappers.genre.GenreMapper
+
 import com.chocolatecake.movieapp.domain.model.Genre
+import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class GetAllGenresMoviesUseCase @Inject constructor(
-    private val genresRepository: GenresRepository,
-    private val genreMapper: GenreMapper
+    private val movieRepository: MovieRepository,
 ) {
     suspend operator fun invoke(): List<Genre> {
-        return genresRepository.getGenresMovies()?.map {
-            genreMapper.map(it)
-        }?.sortedBy { it.genreName } ?: emptyList()
+        return movieRepository.getGenresMovies().sortedBy { it.genreName }
     }
 }

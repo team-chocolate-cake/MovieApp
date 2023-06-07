@@ -1,5 +1,6 @@
 package com.chocolatecake.movieapp.domain.usecases.auth
 
+import com.chocolatecake.movieapp.domain.usecases.auth.model.LoginInputErrors
 import javax.inject.Inject
 
 class GetIsValidLoginUseCase @Inject constructor(){

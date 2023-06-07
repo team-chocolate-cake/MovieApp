@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
 
     /// region Movies
-    //popular
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPopularMovies(movies: List<PopularMovieEntity>)
 
@@ -30,7 +29,6 @@ interface MovieDao {
     @Query("delete from POPULAR_MOVIE_TABLE")
     suspend fun clearAllPopularMovies()
 
-    //now playing
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNowPlayingMovies(movies: List<NowPlayingMovieEntity>)
 
@@ -40,7 +38,6 @@ interface MovieDao {
     @Query("delete from NOW_PLAYING_MOVIE_TABLE")
     suspend fun clearAllNowPlayingMovies()
 
-    //top rated
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTopRatedMovies(movies: List<TopRatedMovieEntity>)
 
@@ -51,7 +48,6 @@ interface MovieDao {
     suspend fun clearAllTopRatedMovies()
 
 
-    //upcoming
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUpcomingMovies(movies: List<UpcomingMovieEntity>)
 
@@ -66,23 +62,7 @@ interface MovieDao {
 
     @Query("delete from UPCOMING_MOVIE_TABLE")
     suspend fun clearAllUpcomingMovies()
-    /// endregion
 
-    ///region People
-    //popular
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPopularPeople(people: List<PopularPeopleEntity>)
-
-    @Query("select * from POPULAR_PEOPLE_TABLE")
-    fun getPopularPeople(): Flow<List<PopularPeopleEntity>>
-
-    @Query("delete from POPULAR_PEOPLE_TABLE")
-    suspend fun clearAllPopularPeople()
-
-    /// endregion
-
-
-    ///trending
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrendingMovies(movies: List<TrendingMoviesEntity>)
 
@@ -91,7 +71,25 @@ interface MovieDao {
 
     @Query("delete from TRENDING_MOVIES_TABLE")
     suspend fun clearAllTrendingMovies()
-    ///endregion
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchMovies(movies: List<MovieEntity>)
+
+    @Query("select * from MOVIE_TABLE")
+    fun getSearchMovie(): Flow<List<MovieEntity>>
+    /// endregion
+
+
+    ///region People
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPopularPeople(people: List<PopularPeopleEntity>)
+
+    @Query("select * from POPULAR_PEOPLE_TABLE")
+    fun getPopularPeople(): Flow<List<PopularPeopleEntity>>
+
+    @Query("delete from POPULAR_PEOPLE_TABLE")
+    suspend fun clearAllPopularPeople()
+    /// endregion
 
 
     ///region search history
@@ -109,16 +107,7 @@ interface MovieDao {
     ///endregion
 
 
-    ///region search
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSearchMovies(movies: List<MovieEntity>)
-
-    @Query("select * from MOVIE_TABLE")
-    fun getSearchMovie(): Flow<List<MovieEntity>>
-    ///endregion
-
     //region genres
-    //movies
     @Query("select * from GENRES_MOVIES_TABLE")
     fun getGenresMovies(): List<GenresMoviesEntity>
 

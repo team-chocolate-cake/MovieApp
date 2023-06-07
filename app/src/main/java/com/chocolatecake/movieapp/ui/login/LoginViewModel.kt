@@ -2,6 +2,7 @@ package com.chocolatecake.movieapp.ui.login
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.R
+import com.chocolatecake.movieapp.domain.usecases.auth.model.LoginStateIndicator
 import com.chocolatecake.movieapp.domain.usecases.auth.LoginUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

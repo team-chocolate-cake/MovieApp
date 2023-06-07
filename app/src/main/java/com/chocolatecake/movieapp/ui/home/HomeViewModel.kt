@@ -6,15 +6,15 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieE
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import com.chocolatecake.movieapp.domain.mappers.NowPlayingUiMapper
-import com.chocolatecake.movieapp.domain.mappers.PopularMoviesUiMapper
-import com.chocolatecake.movieapp.domain.mappers.PopularPeopleUiMapper
-import com.chocolatecake.movieapp.domain.mappers.TopRatedUiMapper
-import com.chocolatecake.movieapp.domain.mappers.TrendingUiMapper
-import com.chocolatecake.movieapp.domain.mappers.UpComingUiMapper
+import com.chocolatecake.movieapp.data.mappers.NowPlayingUiMapper
+import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
+import com.chocolatecake.movieapp.data.mappers.PopularPeopleUiMapper
+import com.chocolatecake.movieapp.data.mappers.TopRatedUiMapper
+import com.chocolatecake.movieapp.data.mappers.TrendingUiMapper
+import com.chocolatecake.movieapp.data.mappers.UpComingUiMapper
 import com.chocolatecake.movieapp.domain.usecases.home.GetNowPlayingUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularMoviesUseCase
-import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUsecase
+import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTopRatedUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTrendingMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetUpcomingMoviesUseCase
@@ -31,7 +31,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val nowPlayingUseCase: GetNowPlayingUseCase,
     private val popularMoviesUseCase: GetPopularMoviesUseCase,
-    private val popularPeopleUseCase: GetPopularPeopleUsecase,
+    private val popularPeopleUseCase: GetPopularPeopleUseCase,
     private val topRatedUseCase: GetTopRatedUseCase,
     private val trendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val upcomingMoviesUseCase: GetUpcomingMoviesUseCase,
