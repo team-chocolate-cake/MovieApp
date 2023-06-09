@@ -1,35 +1,29 @@
 package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.MovieDao
-import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalNowPlayingMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalPopularMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalRecommendedMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTrendingMoviesMapper
-import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
-import com.chocolatecake.movieapp.data.local.mappers.people.LocalPopularPeopleMapper
-import com.chocolatecake.movieapp.data.remote.response.MovieDto
-import com.chocolatecake.movieapp.data.remote.service.MovieService
-import com.chocolatecake.movieapp.domain.repository.MovieRepository
+import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.data.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.data.mappers.search_history.SearchHistoryUIMapper
-import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
-import kotlinx.coroutines.flow.Flow
+import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalNowPlayingMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalPopularMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalRecommendedMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTopRatedMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTrendingMoviesMapper
+import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalUpcomingMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.people.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.domain.model.Genre
+import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
+import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val service: MovieService,
     private val movieDao: MovieDao,
     private val popularMovieMapper: LocalPopularMovieMapper,
+    private val popularMoviesUiMapper: PopularMoviesUiMapper,
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
     private val topRatedMovieMapper: LocalTopRatedMovieMapper,
     private val upComingMovieMapper: LocalUpcomingMovieMapper,
@@ -41,12 +35,11 @@ class MovieRepositoryImpl @Inject constructor(
     private val popularPeopleMapper: LocalPopularPeopleMapper
 ) : BaseRepository(), MovieRepository {
 
-    override suspend fun getPopularMovies(): Flow<List<PopularMovieEntity>> {
-        refreshPopularMovies()
-        return movieDao.getPopularMovies()
+    override suspend fun getPopularMovies(): List<HomeMovie> {
+        return popularMoviesUiMapper.map(movieDao.getPopularMovies())
     }
 
-    private suspend fun refreshPopularMovies() {
+    override suspend fun refreshPopularMovies() {
         refreshWrapper(
             service::getPopularMovies,
             popularMovieMapper::map,
@@ -54,12 +47,11 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>> {
-        refreshNowPlayingMovies()
+    override suspend fun getNowPlayingMovies(): List<Movie> {
         return movieDao.getNowPlayingMovies()
     }
 
-    private suspend fun refreshNowPlayingMovies() {
+    override suspend fun refreshNowPlayingMovies() {
         refreshWrapper(
             service::getNowPlayingMovies,
             nowPlayingMovieMapper::map,
@@ -67,7 +59,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>> {
+    override suspend fun getTopRatedMovies(): List<Movie> {
         refreshTopRatedMovies()
         return movieDao.getTopRatedMovies()
     }
@@ -80,7 +72,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>> {
+    override suspend fun getUpcomingMovies(): List<Movie> {
         refreshUpcomingMovies()
         return movieDao.getUpcomingMovies()
     }
@@ -94,7 +86,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getRecommendedMovies(): Flow<List<RecommendedMovieEntity>> {
+    override suspend fun getRecommendedMovies(): List<Movie> {
         refreshRecommendedMovies()
         return movieDao.getRecommendedMovie()
     }
@@ -107,7 +99,7 @@ class MovieRepositoryImpl @Inject constructor(
 //        )
     }
 
-    override suspend fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>> {
+    override suspend fun getTrendingMovies(): List<Movie> {
         refreshTrendingMovies()
             return movieDao.getTrendingMovies()
     }
@@ -120,7 +112,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getPopularPeople(): Flow<List<PopularPeopleEntity>> {
+    override suspend fun getPopularPeople(): List<Movie> {
         refreshPopularPeople()
         return movieDao.getPopularPeople()
     }
@@ -135,12 +127,12 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search history
-    override suspend fun getSearchHistory(keyword: String): List<SearchHistoryEntity> {
+    override suspend fun getSearchHistory(keyword: String): List<String> {
         return movieDao.getSearchHistory("%${keyword}%")
 
     }
 
-    override suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity) {
+    override suspend fun insertSearchHistory(searchHistory: String) {
         return movieDao.insertSearchHistory(searchHistory)
     }
 
@@ -155,13 +147,13 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search movies
-    override suspend fun getSearchMovies(keyword: String): List<MovieDto> {
+    override suspend fun getSearchMovies(keyword: String): List<Movie> {
         return wrapApiCall { service.getSearchMovies(keyword) }.results
             ?.filterNotNull() ?: emptyList()
     }
     //endregion
 
-    override suspend fun getGenresMovies(): List<GenreMovieDto>? {
+    override suspend fun getGenresMovies(): List<Genre> {
         return service.getListOfGenresForMovies().body()?.results
     }
 }

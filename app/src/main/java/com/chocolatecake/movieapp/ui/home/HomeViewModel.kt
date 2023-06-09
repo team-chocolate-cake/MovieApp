@@ -6,7 +6,7 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieE
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import com.chocolatecake.movieapp.data.mappers.NowPlayingUiMapper
+import com.chocolatecake.movieapp.data.mappers.NowPlayingDomainMapper
 import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.data.mappers.PopularPeopleUiMapper
 import com.chocolatecake.movieapp.data.mappers.TopRatedUiMapper
@@ -36,7 +36,7 @@ class HomeViewModel @Inject constructor(
     private val trendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val upcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val upComingUiMapper: UpComingUiMapper,
-    private val nowPlayingUiMapper: NowPlayingUiMapper,
+    private val nowPlayingDomainMapper: NowPlayingDomainMapper,
     private val trendingUiMapper: TrendingUiMapper,
     private val topRatedUiMapper: TopRatedUiMapper,
     private val popularPeopleUiMapper: PopularPeopleUiMapper,
@@ -139,7 +139,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun onSuccessNowPlayingMovies(nowPlayingMovieEntities: List<NowPlayingMovieEntity>) {
-        val items = nowPlayingMovieEntities.map(nowPlayingUiMapper::map)
+        val items = nowPlayingMovieEntities.map(nowPlayingDomainMapper::map)
         _state.update {
             it.copy(
                 nowPlayingMovies = HomeItem.NowPlaying(items), isLoading = false

@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.local.mappers.movie
+package com.chocolatecake.movieapp.data.repository.mappers.movie
 
 import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.remote.response.MovieDto

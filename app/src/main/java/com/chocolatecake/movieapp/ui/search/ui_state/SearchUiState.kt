@@ -1,6 +1,6 @@
 package com.chocolatecake.movieapp.ui.search.ui_state
 
-import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
 
 data class SearchUiState(
     val query: String = "",

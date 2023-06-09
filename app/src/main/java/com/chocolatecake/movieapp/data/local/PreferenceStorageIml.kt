@@ -1,9 +1,10 @@
-package com.chocolatecake.movieapp.data.local.prefs
+package com.chocolatecake.movieapp.data.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.chocolatecake.movieapp.data.repository.PreferenceStorage
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking

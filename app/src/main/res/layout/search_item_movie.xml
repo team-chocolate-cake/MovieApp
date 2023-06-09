@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.domain.model.Movie" />
+            type="com.chocolatecake.movieapp.domain.model.movie.Movie" />
 
         <variable
             name="listener"
@@ -23,7 +23,7 @@
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/height_card"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.posterPath}"
+            app:imageUrl="@{item.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

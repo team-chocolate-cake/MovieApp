@@ -1,11 +1,12 @@
 package com.chocolatecake.movieapp.domain.repository
 
 import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
 
 interface MovieRepository {
 
-    suspend fun getPopularMovies(): List<Movie>
+    suspend fun getPopularMovies(): List<HomeMovie>
 
     suspend fun getNowPlayingMovies(): List<Movie>
 
@@ -31,4 +32,5 @@ interface MovieRepository {
 
     suspend fun getGenresMovies(): List<Genre>
 
+    suspend fun refreshPopularMovies()
 }

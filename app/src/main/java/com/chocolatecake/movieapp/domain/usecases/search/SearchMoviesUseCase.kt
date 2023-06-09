@@ -1,7 +1,7 @@
 package com.chocolatecake.movieapp.domain.usecases.search
 
 import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
 import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 

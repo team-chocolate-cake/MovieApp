@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.local.mappers.genres
+package com.chocolatecake.movieapp.data.repository.mappers.genres
 
 import com.chocolatecake.movieapp.data.local.database.entity.GenresMoviesEntity
 import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto

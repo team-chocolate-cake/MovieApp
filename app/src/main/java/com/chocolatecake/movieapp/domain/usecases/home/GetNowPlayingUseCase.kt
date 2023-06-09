@@ -1,6 +1,6 @@
 package com.chocolatecake.movieapp.domain.usecases.home
 
-import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
 import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 

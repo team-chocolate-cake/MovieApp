@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.local.prefs
+package com.chocolatecake.movieapp.data.repository
 
 
 interface PreferenceStorage {

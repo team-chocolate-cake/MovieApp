@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chocolatecake.movieapp.R
-import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
+import com.chocolatecake.movieapp.data.repository.PreferenceStorage
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
 import com.chocolatecake.movieapp.ui.login.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint

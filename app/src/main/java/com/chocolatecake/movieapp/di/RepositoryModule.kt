@@ -3,7 +3,7 @@ package com.chocolatecake.movieapp.di
 import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import com.chocolatecake.movieapp.data.repository.MovieRepositoryImpl
 import com.chocolatecake.movieapp.domain.repository.AuthRepository
-import com.chocolatecake.movieapp.data.repository.AuthRepositoryImpl
+import com.chocolatecake.movieapp.data.repository.auth.AuthRepositoryImpl
 import com.chocolatecake.movieapp.data.repository.genres.GenresRepositoryImpl
 import dagger.Binds
 import dagger.Module

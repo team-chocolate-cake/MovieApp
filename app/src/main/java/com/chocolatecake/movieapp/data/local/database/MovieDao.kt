@@ -14,7 +14,6 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMo
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -24,7 +23,7 @@ interface MovieDao {
     suspend fun insertPopularMovies(movies: List<PopularMovieEntity>)
 
     @Query("select * from POPULAR_MOVIE_TABLE")
-    fun getPopularMovies(): Flow<List<PopularMovieEntity>>
+    suspend fun getPopularMovies(): List<PopularMovieEntity>
 
     @Query("delete from POPULAR_MOVIE_TABLE")
     suspend fun clearAllPopularMovies()
@@ -33,7 +32,7 @@ interface MovieDao {
     suspend fun insertNowPlayingMovies(movies: List<NowPlayingMovieEntity>)
 
     @Query("select * from NOW_PLAYING_MOVIE_TABLE")
-    fun getNowPlayingMovies(): Flow<List<NowPlayingMovieEntity>>
+    suspend fun getNowPlayingMovies(): List<NowPlayingMovieEntity>
 
     @Query("delete from NOW_PLAYING_MOVIE_TABLE")
     suspend fun clearAllNowPlayingMovies()
@@ -42,7 +41,7 @@ interface MovieDao {
     suspend fun insertTopRatedMovies(movies: List<TopRatedMovieEntity>)
 
     @Query("select * from TOP_RATED_MOVIE_TABLE")
-    fun getTopRatedMovies(): Flow<List<TopRatedMovieEntity>>
+    suspend fun getTopRatedMovies(): List<TopRatedMovieEntity>
 
     @Query("delete from TOP_RATED_MOVIE_TABLE")
     suspend fun clearAllTopRatedMovies()
@@ -52,13 +51,13 @@ interface MovieDao {
     suspend fun insertUpcomingMovies(movies: List<UpcomingMovieEntity>)
 
     @Query("select * from UPCOMING_MOVIE_TABLE")
-    fun getUpcomingMovies(): Flow<List<UpcomingMovieEntity>>
+    suspend fun getUpcomingMovies(): List<UpcomingMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecommendedMovies(movies: List<RecommendedMovieEntity>)
 
     @Query("select * from RECOMMENDED_MOVIE_TABLE")
-    fun getRecommendedMovie(): Flow<List<RecommendedMovieEntity>>
+    suspend fun getRecommendedMovie(): List<RecommendedMovieEntity>
 
     @Query("delete from UPCOMING_MOVIE_TABLE")
     suspend fun clearAllUpcomingMovies()
@@ -67,7 +66,7 @@ interface MovieDao {
     suspend fun insertTrendingMovies(movies: List<TrendingMoviesEntity>)
 
     @Query("select * from TRENDING_MOVIES_TABLE")
-    fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>>
+    suspend fun getTrendingMovies(): List<TrendingMoviesEntity>
 
     @Query("delete from TRENDING_MOVIES_TABLE")
     suspend fun clearAllTrendingMovies()
@@ -76,7 +75,7 @@ interface MovieDao {
     suspend fun insertSearchMovies(movies: List<MovieEntity>)
 
     @Query("select * from MOVIE_TABLE")
-    fun getSearchMovie(): Flow<List<MovieEntity>>
+    suspend fun getSearchMovie(): List<MovieEntity>
     /// endregion
 
 
@@ -85,7 +84,7 @@ interface MovieDao {
     suspend fun insertPopularPeople(people: List<PopularPeopleEntity>)
 
     @Query("select * from POPULAR_PEOPLE_TABLE")
-    fun getPopularPeople(): Flow<List<PopularPeopleEntity>>
+    suspend fun getPopularPeople(): List<PopularPeopleEntity>
 
     @Query("delete from POPULAR_PEOPLE_TABLE")
     suspend fun clearAllPopularPeople()
@@ -94,7 +93,7 @@ interface MovieDao {
 
     ///region search history
     @Query("select * from SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword")
-    fun getSearchHistory(keyword: String): List<SearchHistoryEntity>
+    suspend fun getSearchHistory(keyword: String): List<SearchHistoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSearchHistory(searchHistory: SearchHistoryEntity)
@@ -109,7 +108,7 @@ interface MovieDao {
 
     //region genres
     @Query("select * from GENRES_MOVIES_TABLE")
-    fun getGenresMovies(): List<GenresMoviesEntity>
+    suspend fun getGenresMovies(): List<GenresMoviesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGenresMovies(genresMovies: List<GenresMoviesEntity>)

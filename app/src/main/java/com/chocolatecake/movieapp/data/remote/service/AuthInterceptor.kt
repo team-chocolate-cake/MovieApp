@@ -1,7 +1,7 @@
 package com.chocolatecake.movieapp.data.remote.service
 
 import com.chocolatecake.movieapp.BuildConfig
-import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
+import com.chocolatecake.movieapp.data.repository.PreferenceStorage
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response

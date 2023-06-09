@@ -1,14 +1,15 @@
 package com.chocolatecake.movieapp.data.mappers
 
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
-import com.chocolatecake.movieapp.ui.home.ui_state.UpComingMoviesUiState
+import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
 import javax.inject.Inject
 
-class UpComingUiMapper @Inject constructor() : Mapper<UpcomingMovieEntity, UpComingMoviesUiState> {
-    override fun map(input: UpcomingMovieEntity): UpComingMoviesUiState {
-        return UpComingMoviesUiState(
+class UpComingUiMapper @Inject constructor() : Mapper<UpcomingMovieEntity, HomeMovie> {
+    override fun map(input: UpcomingMovieEntity): HomeMovie {
+        return HomeMovie(
             input.id,
-            input.imageUrl
+            input.imageUrl,
+            input.rate
         )
     }
 }

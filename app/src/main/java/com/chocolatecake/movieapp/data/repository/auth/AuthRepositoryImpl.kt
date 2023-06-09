@@ -1,8 +1,9 @@
-package com.chocolatecake.movieapp.data.repository
+package com.chocolatecake.movieapp.data.repository.auth
 
-import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
+import com.chocolatecake.movieapp.data.repository.PreferenceStorage
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.movieapp.data.repository.BaseRepository
 import com.chocolatecake.movieapp.domain.repository.AuthRepository
 import com.chocolatecake.movieapp.domain.repository.UnauthorizedThrowable
 import javax.inject.Inject

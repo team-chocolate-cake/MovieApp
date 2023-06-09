@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.local.mappers.people
+package com.chocolatecake.movieapp.data.repository.mappers.people
 
 import com.chocolatecake.movieapp.BuildConfig
 import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity

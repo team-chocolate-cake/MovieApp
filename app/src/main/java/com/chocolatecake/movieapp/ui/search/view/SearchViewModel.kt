@@ -3,7 +3,7 @@ package com.chocolatecake.movieapp.ui.search.view
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
 import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.movie.Movie
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.InsertSearchHistoryUseCase
