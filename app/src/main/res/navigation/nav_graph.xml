@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/searchFragment"
         tools:layout="@layout/fragment_search"
-        android:name="com.chocolatecake.movieapp.ui.search.view.SearchFragment"
+        android:name="com.chocolatecake.movieapp.ui.search.SearchFragment"
         android:label="SearchFragment" />
     <fragment
         android:id="@+id/tvFragment"

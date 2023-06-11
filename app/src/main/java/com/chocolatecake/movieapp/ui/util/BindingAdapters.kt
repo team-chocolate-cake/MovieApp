@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchListener
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
+import com.chocolatecake.movieapp.ui.search.SearchListener
+import com.chocolatecake.movieapp.ui.search.SearchUiState
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.progressindicator.LinearProgressIndicator
 

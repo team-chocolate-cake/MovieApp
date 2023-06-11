@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.ui.search.ui_state
+package com.chocolatecake.movieapp.ui.search
 
 sealed interface SearchUiEvent{
     object FilterEvent: SearchUiEvent

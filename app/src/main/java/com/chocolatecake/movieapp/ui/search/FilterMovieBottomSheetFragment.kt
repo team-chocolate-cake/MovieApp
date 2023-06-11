@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.ui.search.view
+package com.chocolatecake.movieapp.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

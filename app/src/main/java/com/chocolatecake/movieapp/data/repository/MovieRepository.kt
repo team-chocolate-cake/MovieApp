@@ -9,6 +9,7 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovie
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
+import com.chocolatecake.movieapp.data.remote.response.TvDto
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -38,4 +39,6 @@ interface MovieRepository {
     //region search movies
     suspend fun getSearchMovies(keyword: String ): List<MovieDto>
     ///endregion
+
+    suspend fun searchForTv(keyword: String): List<TvDto>
 }

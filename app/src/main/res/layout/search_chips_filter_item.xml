@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState.GenresMoviesUiState" />
+            type="com.chocolatecake.movieapp.ui.search.SearchUiState" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.movieapp.ui.search.ui_state.SearchListener" />
+            type="com.chocolatecake.movieapp.ui.search.SearchListener" />
     </data>
 
     <com.google.android.material.chip.Chip

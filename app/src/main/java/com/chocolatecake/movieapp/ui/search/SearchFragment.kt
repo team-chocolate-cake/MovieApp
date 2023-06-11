@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.ui.search.view
+package com.chocolatecake.movieapp.ui.search
 
 import android.os.Bundle
 import android.view.View
@@ -8,14 +8,11 @@ import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.FragmentSearchBinding
 import com.chocolatecake.movieapp.ui.base.BaseFragment
-import com.chocolatecake.movieapp.ui.search.SearchAdapter
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : BaseFragment<FragmentSearchBinding,SearchUiState, SearchUiEvent>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, SearchUiEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_search
     override val viewModel by activityViewModels<SearchViewModel>()

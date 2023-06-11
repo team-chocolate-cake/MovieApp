@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.ui.search.view
+package com.chocolatecake.movieapp.ui.search
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
@@ -9,10 +9,6 @@ import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.InsertSearchHistoryUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.SearchHistoryUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
-import com.chocolatecake.movieapp.ui.search.GenreUiStateMapper
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchListener
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
-import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.debounce
@@ -28,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val genreUiStateMapper: GenreUiStateMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
-) : BaseViewModel<SearchUiState,SearchUiEvent>(), SearchListener {
+) : BaseViewModel<SearchUiState, SearchUiEvent>(), SearchListener {
     override fun initialState() = SearchUiState()
 
     init {
@@ -74,6 +70,14 @@ class SearchViewModel @Inject constructor(
 
     override fun getData() {
         onSearchForMovie()
+        onSearchForTv()
+    }
+
+    private fun onSearchForTv() {
+        _state.update { it.copy(isLoading = true) }
+        tryToExecute(
+            call = {}
+        )
     }
 
     private fun onSearchForMovie() {

@@ -2,7 +2,6 @@ package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.MovieDao
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
@@ -17,16 +16,14 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalRecommendedMovie
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
-import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.local.mappers.people.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.data.remote.response.MovieDto
+import com.chocolatecake.movieapp.data.remote.response.TvDto
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
-import com.chocolatecake.movieapp.domain.model.Movie
-import com.chocolatecake.movieapp.domain.model.SearchHistory
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -159,7 +156,12 @@ class MovieRepositoryImpl @Inject constructor(
 
     ///region search movies
     override suspend fun getSearchMovies(keyword: String): List<MovieDto> {
-        return wrapApiCall { service.getSearchMovies(keyword) }.results
+        return wrapApiCall { service.searchForMovies(keyword) }.results
+            ?.filterNotNull() ?: emptyList()
+    }
+
+    override suspend fun searchForTv(keyword: String): List<TvDto> {
+        return wrapApiCall { service.searchForTv(keyword) }.results
             ?.filterNotNull() ?: emptyList()
     }
     //endregion
