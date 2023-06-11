@@ -36,10 +36,11 @@
             android:id="@+id/image_view_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/shapeable_ImageView"
+            android:layout_marginBottom="@dimen/spacing_medium_16dp"
             app:layout_constraintBottom_toBottomOf="@id/shapeable_ImageView"
-            app:srcCompat="@drawable/ic_star"
-            android:layout_marginBottom="@dimen/spacing_medium_16dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/shapeable_ImageView"
+            app:layout_constraintStart_toStartOf="@+id/shapeable_ImageView"
+            app:srcCompat="@drawable/ic_star" />
 
         <TextView
             android:id="@+id/text_view_rates_number"

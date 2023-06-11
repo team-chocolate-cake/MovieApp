@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_small">
+        android:layout_margin="@dimen/spacing_small_8dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_media_vertical"
@@ -39,7 +39,7 @@
             android:id="@+id/image_view_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_rates_number"
             app:layout_constraintEnd_toStartOf="@+id/text_view_rates_number"
             app:layout_constraintTop_toTopOf="@+id/text_view_rates_number"
@@ -50,7 +50,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_medium_16dp"
             android:gravity="center"
             android:textColor="@color/rating_color"
             app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_media_vertical"
