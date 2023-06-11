@@ -81,7 +81,7 @@
         <item name="android:fontWeight">600</item>
     </style>
 
-    <style name="TextStyle.LabelBody">
+    <style name="TextStyle.LabelMedium">
         <item name="android:textSize">@dimen/text_semi_small</item>
         <item name="android:fontWeight">400</item>
     </style>

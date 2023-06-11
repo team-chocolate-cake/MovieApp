@@ -21,7 +21,7 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
-            android:layout_width="@dimen/people_image_width"
+            android:layout_width="@dimen/image_width"
             android:layout_height="@dimen/zero_height"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"

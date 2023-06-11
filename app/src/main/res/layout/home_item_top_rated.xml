@@ -21,7 +21,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeable_ImageView"
             android:layout_width="@dimen/height_image"
-            android:layout_height="@dimen/height_card"
+            android:layout_height="@dimen/custom_height_card"
             android:layout_marginEnd="@dimen/spacing_tiny"
             android:onClick="@{()-> listener.onClickTopRated(item.id)}"
             android:scaleType="centerCrop"

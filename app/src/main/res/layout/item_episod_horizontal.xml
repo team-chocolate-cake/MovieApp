@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/material_card_view_season_horizontal"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="@dimen/height_card"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            app:cardBackgroundColor="@color/card"
+            app:cardCornerRadius="@dimen/radius_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shape_image_view_season"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_view_season_name"
+                    style="@style/TextStyle.TitleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textColor="@color/on_background_87"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Pilot" />
+
+                <TextView
+                    android:id="@+id/text_view_description"
+                    style="@style/TextStyle.BodyMedium"
+                    android:layout_width="@dimen/zero_width"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    android:textColor="@color/on_background_60"
+                    app:layout_constraintEnd_toEndOf="@id/text_view_season_name"
+                    app:layout_constraintStart_toStartOf="@id/text_view_season_name"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_season_name"
+                    tools:text="Walt must deal with the chain reaction of his choice, as he and Jesse face new and severe consequences. When danger and suspicion around Walt escalate, he is pushed to new levels of desperation. Just how much higher will the stakes rise? How far is Walt willing to go to ensure his family's security? Will his grand plan spiral out of control?" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/shape_image_view_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:src="@drawable/ic_clock"
+                    app:layout_constraintStart_toStartOf="@+id/text_view_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_description" />
+
+                <TextView
+                    android:id="@+id/text_view_date"
+                    style="@style/TextStyle.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_tiny"
+                    android:textColor="@color/on_background_38"
+                    app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_date"
+                    app:layout_constraintStart_toEndOf="@+id/shape_image_view_date"
+                    app:layout_constraintTop_toTopOf="@+id/shape_image_view_date"
+                    tools:text="59 min" />
+
+                <TextView
+                    android:id="@+id/text_view_count_episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/star"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_date"
+                    tools:text="9.5" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/shape_image_view_count_episode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_tiny"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/star"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_count_episode"
+                    app:layout_constraintEnd_toStartOf="@+id/text_view_count_episode"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_count_episode" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_season"
+            android:layout_width="@dimen/custom_width_image"
+            android:layout_height="@dimen/custom_height_image"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/material_card_view_season_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/material_card_view_season_horizontal"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_number_episode"
+            android:layout_width="@dimen/width_text_number_episode"
+            android:layout_height="@dimen/height_text_number_episode"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginStart="@dimen/spacing_tiny"
+            android:background="@drawable/box_background"
+            android:backgroundTint="@color/card"
+            android:gravity="center"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintStart_toStartOf="@+id/shape_image_view_season"
+            app:layout_constraintTop_toTopOf="@+id/shape_image_view_season"
+            tools:text="01" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

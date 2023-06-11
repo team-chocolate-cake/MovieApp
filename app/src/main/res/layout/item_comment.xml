@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/spacing_small">
+
+        <TextView
+            android:id="@+id/text_view_image_person"
+            android:layout_width="@dimen/width_text_image_person"
+            android:layout_height="@dimen/height_text_image_person"
+            android:background="@drawable/box_background"
+            android:backgroundTint="@color/primary"
+            android:gravity="center"
+            android:textColor="@color/on_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MS" />
+
+        <TextView
+            android:id="@+id/text_view_username"
+            style="@style/TextStyle.LabelLarge"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:maxLines="1"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_view_image_person"
+            app:layout_constraintTop_toTopOf="@+id/text_view_image_person"
+            tools:text="Mohammed Sofyan" />
+
+        <TextView
+            android:id="@+id/text_view_comment"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="@dimen/height_text_comment"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:ellipsize="end"
+            android:maxLines="5"
+            tools:text="asdasdasdpdla psldp[ alspd[la p[sldp[ las[pdl ap[sld[p al"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_username"
+            app:layout_constraintStart_toStartOf="@+id/text_view_username"
+            app:layout_constraintTop_toBottomOf="@id/text_view_username" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
