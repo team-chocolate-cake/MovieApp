@@ -8,6 +8,7 @@ import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMo
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
 import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
+import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import kotlinx.coroutines.flow.Flow
 
@@ -27,6 +28,7 @@ interface MovieRepository {
 
     suspend fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>>
 
+    suspend fun getGenresMovies(): List<GenreMovieDto>?
 
     /// region search history
     suspend fun getSearchHistory(keyword: String): List<SearchHistoryEntity>
@@ -37,5 +39,6 @@ interface MovieRepository {
 
     //region search movies
     suspend fun getSearchMovies(keyword: String ): List<MovieDto>
+
     ///endregion
 }

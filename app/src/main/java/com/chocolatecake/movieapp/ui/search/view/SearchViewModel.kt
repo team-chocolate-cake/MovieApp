@@ -2,6 +2,7 @@ package com.chocolatecake.movieapp.ui.search.view
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
+import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.model.Genre
 import com.chocolatecake.movieapp.domain.model.Movie
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
@@ -15,6 +16,7 @@ import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiEvent
 import com.chocolatecake.movieapp.ui.search.ui_state.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
@@ -28,30 +30,29 @@ class SearchViewModel @Inject constructor(
     private val genreUiStateMapper: GenreUiStateMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
+    private val movieUIMapper: MovieUIMapper
 ) : BaseViewModel<SearchUiState,SearchUiEvent>(), SearchListener {
     override fun initialState() = SearchUiState()
-
+   val query = MutableStateFlow("")
     init {
         viewModelScope.launch {
-            var oldValue = ""
-            onSearchInputChanged(state.value.query)
-            state.debounce(1000)
-                .filter { it.query.isNotEmpty() && oldValue != state.value.query }
-                .collect { value ->
+            query.debounce(1000)
+                .collect {
                     onSearchInputChanged(state.value.query)
-                    oldValue = state.value.query
                 }
         }
     }
-
     fun setSearchQuery(query: CharSequence?) {
         _state.update { it.copy(query = query.toString()) }
+        this.query.update { query.toString()  }
     }
 
 
     private fun onSearchInputChanged(newQuery: CharSequence) {
         val query = newQuery.toString()
-        _state.update { it.copy(query = query, isLoading = true) }
+        _state.update {
+            it.copy(query = query, isLoading = true)
+         }
         viewModelScope.launch(Dispatchers.IO) {
             saveSearchHistoryInLocal(query)
             getSearchHistory(query)
@@ -79,12 +80,15 @@ class SearchViewModel @Inject constructor(
     private fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId) },
+            call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId).map {
+                val formattedVoteAverage = "%.1f".format(it.voteAverage)
+             movieUIMapper.map(it.copy(voteAverage = formattedVoteAverage.toDouble()))
+
+            } },
             onSuccess = ::onSuccessMovies,
             onError = ::onError
         )
-    }
-
+}
     private fun onSuccessMovies(movies: List<Movie>) {
         _state.update {
             it.copy(

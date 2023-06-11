@@ -19,6 +19,7 @@ import com.chocolatecake.movieapp.data.local.mappers.movie.LocalTrendingMoviesMa
 import com.chocolatecake.movieapp.data.local.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.remote.response.MovieDto
 import com.chocolatecake.movieapp.data.local.mappers.people.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
 import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
@@ -113,6 +114,9 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getTrendingMovies(): Flow<List<TrendingMoviesEntity>> {
         refreshTrendingMovies()
             return movieDao.getTrendingMovies()
+    }
+    override suspend fun getGenresMovies(): List<GenreMovieDto>? {
+        return service.getListOfGenresForMovies().body()?.results
     }
 
     private suspend fun refreshTrendingMovies(){
