@@ -54,7 +54,7 @@
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="31dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_medium_16dp"
             android:text="@{String.valueOf(item.voteAverage)}"
             android:textColor="#f6f6f6"
             android:gravity="center"
