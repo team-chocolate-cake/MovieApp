@@ -18,9 +18,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MovieApp"
 include ':app'
-include ':date:local'
-include ':date:remote'
-include ':date:repository'
-include ':domain'
-include ':presentation:ui'
-include ':presentation:view-model'
+include ':core:data:local'
+include ':core:data:remote'
+include ':core:data:repository'
+include ':core:domain:usecase'
+include ':core:entities'
