@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.domain.model.TvEntity" />
+            type="com.chocolatecake.movieapp.ui.search.SearchUiState.MediaUIState" />
 
         <variable
             name="listener"
@@ -23,7 +23,7 @@
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/height_card"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.posterPath}"
+            app:imageUrl="@{item.mediaImage}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             android:layout_width="31dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="@{String.valueOf(item.voteAverage)}"
+            android:text="@{String.valueOf(item.mediaRate)}"
             android:textColor="#f6f6f6"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"

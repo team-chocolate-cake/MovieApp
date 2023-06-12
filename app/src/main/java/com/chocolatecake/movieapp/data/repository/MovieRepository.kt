@@ -37,7 +37,7 @@ interface MovieRepository {
     ///endregion
 
     //region search movies
-    suspend fun getSearchMovies(keyword: String ): List<MovieDto>
+    suspend fun searchForMovies(keyword: String ): List<MovieDto>
     ///endregion
 
     suspend fun searchForTv(keyword: String): List<TvDto>

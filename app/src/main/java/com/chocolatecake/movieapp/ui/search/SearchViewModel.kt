@@ -3,8 +3,6 @@ package com.chocolatecake.movieapp.ui.search
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
 import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.Movie
-import com.chocolatecake.movieapp.domain.model.TvEntity
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchTvUseCase
@@ -72,11 +70,15 @@ class SearchViewModel @Inject constructor(
 
 
     override fun getData() {
-//       Mediia.MOVIE -> onSearchForMovie()
-//       Media.Tv ->  onSearchForTv()
+        when(_state.value.mediaType){
+            SearchMedia.MOVIE -> onSearchForMovie()
+            SearchMedia.TV -> onSearchForTv()
+            SearchMedia.PEOPLE -> {}
+        }
+
     }
 
-    private fun onSearchForTv() {
+    fun onSearchForTv() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = {searchTvUseCase(_state.value.query)},
@@ -85,17 +87,18 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessTv(tv: List<TvEntity>) {
+    private fun onSuccessTv(tv: List<SearchUiState.MediaUIState>) {
         _state.update {
             it.copy(
-                searchTvShowResult = tv,
+                mediaType = SearchMedia.TV,
+                searchMediaResult = tv,
                 isLoading = false,
                 error = null
             )
         }
     }
 
-    private fun onSearchForMovie() {
+    fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId) },
@@ -104,10 +107,11 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessMovies(movies: List<Movie>) {
+    private fun onSuccessMovies(media:List<SearchUiState.MediaUIState>) {
         _state.update {
             it.copy(
-                searchMovieResult = movies,
+                mediaType = SearchMedia.MOVIE,
+                searchMediaResult = media,
                 isLoading = false,
                 error = null
             )
@@ -160,6 +164,10 @@ class SearchViewModel @Inject constructor(
                 genresMovies = updatedGenres
             )
         }
+    }
+
+    override fun onClickMedia() {
+        TODO("Not yet implemented")
     }
     ///endregion
 

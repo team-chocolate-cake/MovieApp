@@ -23,7 +23,6 @@ import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
-import com.chocolatecake.movieapp.domain.model.TvEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -156,7 +155,7 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search movies
-    override suspend fun getSearchMovies(keyword: String): List<MovieDto> {
+    override suspend fun searchForMovies(keyword: String): List<MovieDto> {
         return wrapApiCall { service.searchForMovies(keyword) }.results
             ?.filterNotNull() ?: emptyList()
     }

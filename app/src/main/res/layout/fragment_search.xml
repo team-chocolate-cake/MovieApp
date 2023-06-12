@@ -82,6 +82,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipMovie"
                     style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:onClick="@{() -> viewModel.onSearchForMovie()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -90,6 +91,7 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTV"
                     style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:onClick="@{() -> viewModel.onSearchForTv()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tv" />
@@ -100,20 +102,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/person" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCollection"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/collection" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCompany"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/company" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -143,7 +131,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/empty_state"
-            app:showWhenNoResult="@{viewModel.state.searchMovieResult}"
+            app:showWhenNoResult="@{viewModel.state.searchMediaResult}"
             app:showWhenQueryEmpty="@{viewModel.state.query}" />
 
         <com.airbnb.lottie.LottieAnimationView

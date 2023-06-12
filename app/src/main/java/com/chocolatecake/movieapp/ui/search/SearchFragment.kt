@@ -18,6 +18,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
     override val viewModel by activityViewModels<SearchViewModel>()
 
     private lateinit var searchAdapter: SearchAdapter
+//    private lateinit var searchMovieAdapter: SearchMovieAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +32,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
 
     override fun onSateChange(state: SearchUiState) {
         setupSearchHistoryAdapter(state)
-        searchAdapter.setItems(state.searchTvShowResult)
+
+        searchAdapter.setItems(state.searchMediaResult)
         state.error?.last()?.let { showSnackBar(it) }
     }
 
@@ -50,7 +52,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
             is SearchUiEvent.FilterEvent -> showBottomSheet()
             is SearchUiEvent.ApplyFilterEvent -> applyFilter(event.genre)
             is SearchUiEvent.ShowSnackBar -> showSnackBar(event.messages)
+            is SearchUiEvent.ClickMediaEvent -> clickMediaEvent(event.media)
         }
+    }
+
+    private fun clickMediaEvent(media: String) {
+
+
     }
 
     private fun applyFilter(genresId: Int) {
