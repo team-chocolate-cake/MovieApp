@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing dimens-->
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_custom">12dp</dimen>
+    <dimen name="spacing_semi_medium">14dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_x_medium">20dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_extra_large">28dp</dimen>
+    <dimen name="spacing_giant">32dp</dimen>
+    <dimen name="spacing_extra_giant">48dp</dimen>
+    <dimen name="spacing_extra_extra_giant">56dp</dimen>
+
+    <!--text dimens-->
+    <dimen name="text_tiny">11sp</dimen>
+    <dimen name="text_semi_small">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_semi_large">18sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_giant">22sp</dimen>
+
+    <!--radius dimens-->
+    <dimen name="radius_small">4dp</dimen>
+    <dimen name="radius_default">8dp</dimen>
+    <dimen name="radius_large">24dp</dimen>
+    <dimen name="radius_full">100dp</dimen>
+
+    <!--elevation dimens-->
+    <dimen name="elevation_tiny">4dp</dimen>
+    <dimen name="elevation_small">8dp</dimen>
+    <dimen name="elevation_medium">10dp</dimen>
+    <dimen name="elevation_semi_large">12dp</dimen>
+    <dimen name="elevation_large">14dp</dimen>
+    <dimen name="elevation_giant">16dp</dimen>
+    <dimen name="appbar_height">56dp</dimen>
+    <dimen name="description_edit_text_height">295dp</dimen>
+    <dimen name="height_field">48dp</dimen>
+
+    <!--height dimens-->
+    <dimen name="height_tiny">4dp</dimen>
+    <dimen name="height_giant">32dp</dimen>
+    <dimen name="height_card">200dp</dimen>
+    <dimen name="width_image">240dp</dimen>
+    <dimen name="height_image">150dp</dimen>
+    <dimen name="lottie_error_size">180dp</dimen>
+    <dimen name="people_image_width">90dp</dimen>
+    <dimen name="zero_height">0dp</dimen>
+    <dimen name="slider_image_view_height">200dp</dimen>
+</resources>
