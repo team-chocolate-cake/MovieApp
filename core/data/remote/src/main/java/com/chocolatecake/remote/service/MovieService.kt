@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.remote.service
+package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.response.DataWrapperResponse

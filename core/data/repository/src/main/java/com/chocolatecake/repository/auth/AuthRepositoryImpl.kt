@@ -1,6 +1,6 @@
 package com.chocolatecake.repository.auth
 
-import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.repository.AuthRepository
 import com.chocolatecake.repository.BaseRepository

@@ -5,7 +5,7 @@ import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
-import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalNowPlayingMovieMapper

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chocolatecake.usecase'
+    namespace 'com.chocolatecake.bases'
     compileSdk 33
 
     defaultConfig {
@@ -28,11 +28,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures{
+        dataBinding true
+    }
 }
 
 dependencies {
 
-    api project(path: ':core:domain:entities')
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
@@ -40,6 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    /// hilt
-    implementation "com.google.dagger:hilt-android:2.44"
+
+    /// viewModel
+    implementation 'androidx.fragment:fragment-ktx:1.5.7'
 }
