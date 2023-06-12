@@ -5,14 +5,22 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.ui.viewmodel.model.EpisodeHorizontalUI" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.ui.viewmodel.MediaListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{() -> listener.onClickMedia(item.id)}">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/material_card_view_season_horizontal"
+            android:id="@+id/material_card_view_episode_horizontal"
             android:layout_width="@dimen/zero_width"
             android:layout_height="@dimen/height_card"
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
@@ -20,7 +28,7 @@
             app:cardBackgroundColor="@color/card"
             app:cardCornerRadius="@dimen/radius_medium"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/shape_image_view_season"
+            app:layout_constraintStart_toEndOf="@+id/shape_image_view_episode"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,11 +36,12 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/text_view_season_name"
+                    android:id="@+id/text_view_episode_title"
                     style="@style/TextStyle.TitleSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:text="@{item.title}"
                     android:layout_marginStart="@dimen/spacing_small_8dp"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:textColor="@color/on_background_87"
@@ -46,56 +55,60 @@
                     style="@style/TextStyle.BodyMedium"
                     android:layout_width="@dimen/zero_width"
                     android:maxLines="1"
+                    android:text="@{item.description}"
                     android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_tiny_4dp"
                     android:textColor="@color/on_background_60"
-                    app:layout_constraintEnd_toEndOf="@id/text_view_season_name"
-                    app:layout_constraintStart_toStartOf="@id/text_view_season_name"
-                    app:layout_constraintTop_toBottomOf="@id/text_view_season_name"
+                    app:layout_constraintEnd_toEndOf="@id/text_view_episode_title"
+                    app:layout_constraintStart_toStartOf="@id/text_view_episode_title"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_episode_title"
                     tools:text="Walt must deal with the chain reaction of his choice, as he and Jesse face new and severe consequences. When danger and suspicion around Walt escalate, he is pushed to new levels of desperation. Just how much higher will the stakes rise? How far is Walt willing to go to ensure his family's security? Will his grand plan spiral out of control?" />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shape_image_view_date"
+                    android:id="@+id/shape_image_view_time_episode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:src="@drawable/ic_clock"
+                    app:tint="@color/on_background_38"
                     app:layout_constraintStart_toStartOf="@+id/text_view_description"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_description" />
 
                 <TextView
-                    android:id="@+id/text_view_date"
+                    android:id="@+id/text_view_time_episode"
                     style="@style/TextStyle.BodySmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_tiny_4dp"
+                    android:text="@{String.valueOf(item.timeEpisode)}"
                     android:textColor="@color/on_background_38"
-                    app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_date"
-                    app:layout_constraintStart_toEndOf="@+id/shape_image_view_date"
-                    app:layout_constraintTop_toTopOf="@+id/shape_image_view_date"
+                    app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_time_episode"
+                    app:layout_constraintStart_toEndOf="@+id/shape_image_view_time_episode"
+                    app:layout_constraintTop_toTopOf="@+id/shape_image_view_time_episode"
                     tools:text="59 min" />
 
                 <TextView
-                    android:id="@+id/text_view_count_episode"
+                    android:id="@+id/text_view_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/star"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_view_date"
+                    android:text="@{String.valueOf(item.rate)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_time_episode"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_date"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_time_episode"
                     tools:text="9.5" />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shape_image_view_count_episode"
+                    android:id="@+id/shape_image_view_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_tiny_4dp"
                     android:src="@drawable/ic_star"
                     android:tint="@color/star"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_view_count_episode"
-                    app:layout_constraintEnd_toStartOf="@+id/text_view_count_episode"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_count_episode" />
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_rate"
+                    app:layout_constraintEnd_toStartOf="@+id/text_view_rate"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_rate" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,14 +117,15 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shape_image_view_season"
+            android:id="@+id/shape_image_view_episode"
             android:layout_width="@dimen/custom_width_image"
             android:layout_height="@dimen/custom_height_image"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/material_card_view_season_horizontal"
+            app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="@+id/material_card_view_episode_horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/material_card_view_season_horizontal"
+            app:layout_constraintTop_toTopOf="@+id/material_card_view_episode_horizontal"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -124,9 +138,10 @@
             android:background="@drawable/box_background"
             android:backgroundTint="@color/card"
             android:gravity="center"
+            android:text="@{String.valueOf(item.numberEpisode)}"
             android:textColor="@color/on_background_87"
-            app:layout_constraintStart_toStartOf="@+id/shape_image_view_season"
-            app:layout_constraintTop_toTopOf="@+id/shape_image_view_season"
+            app:layout_constraintStart_toStartOf="@+id/shape_image_view_episode"
+            app:layout_constraintTop_toTopOf="@+id/shape_image_view_episode"
             tools:text="01" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
