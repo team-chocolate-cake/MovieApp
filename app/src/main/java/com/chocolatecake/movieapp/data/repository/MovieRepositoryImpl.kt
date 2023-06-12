@@ -23,6 +23,7 @@ import com.chocolatecake.movieapp.data.remote.service.MovieService
 import com.chocolatecake.movieapp.data.repository.base.BaseRepository
 import com.chocolatecake.movieapp.domain.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.domain.mappers.search_history.SearchHistoryUIMapper
+import com.chocolatecake.movieapp.domain.model.TvEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

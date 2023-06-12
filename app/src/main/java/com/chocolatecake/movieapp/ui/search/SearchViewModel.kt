@@ -4,8 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
 import com.chocolatecake.movieapp.domain.model.Genre
 import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.TvEntity
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
+import com.chocolatecake.movieapp.domain.usecases.search.SearchTvUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.InsertSearchHistoryUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.SearchHistoryUseCase
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
@@ -24,6 +26,7 @@ class SearchViewModel @Inject constructor(
     private val genreUiStateMapper: GenreUiStateMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
+    private val searchTvUseCase: SearchTvUseCase
 ) : BaseViewModel<SearchUiState, SearchUiEvent>(), SearchListener {
     override fun initialState() = SearchUiState()
 
@@ -69,15 +72,27 @@ class SearchViewModel @Inject constructor(
 
 
     override fun getData() {
-        onSearchForMovie()
+//        onSearchForMovie()
         onSearchForTv()
     }
 
     private fun onSearchForTv() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = {}
+            call = {searchTvUseCase(_state.value.query)},
+            onSuccess = ::onSuccessTv,
+            onError = ::onError
         )
+    }
+
+    private fun onSuccessTv(tv: List<TvEntity>) {
+        _state.update {
+            it.copy(
+                searchTvShowResult = tv,
+                isLoading = false,
+                error = null
+            )
+        }
     }
 
     private fun onSearchForMovie() {

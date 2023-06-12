@@ -9,6 +9,6 @@ class SearchTvUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(keyword: String): List<TvEntity> {
-            movieRepository.searchForTv(keyword).
+         return movieRepository.searchForTv(keyword).sortedByDescending { it.voteAverage }
     }
 }

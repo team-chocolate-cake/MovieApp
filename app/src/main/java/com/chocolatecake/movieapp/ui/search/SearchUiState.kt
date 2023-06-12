@@ -1,12 +1,13 @@
 package com.chocolatecake.movieapp.ui.search
 
 import com.chocolatecake.movieapp.domain.model.Movie
+import com.chocolatecake.movieapp.domain.model.TvEntity
 
 data class SearchUiState(
     val query: String = "",
     val mediaType: List<SearchTypeUiState> = emptyList(),
     val searchMovieResult: List<Movie> = emptyList(),
-    val searchTvShowResult: List<TvShowUiState> = emptyList(),
+    val searchTvShowResult: List<TvEntity> = emptyList(),
     val isLoading: Boolean = false,
     val error: List<String>? = null,
     val genresMovies: List<GenresMoviesUiState>? = emptyList(),
