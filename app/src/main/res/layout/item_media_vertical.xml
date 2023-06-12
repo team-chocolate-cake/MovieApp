@@ -65,7 +65,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_media_vertical"
             app:layout_constraintEnd_toEndOf="@+id/shape_image_view_media_vertical"
             app:layout_constraintStart_toStartOf="@+id/shape_image_view_media_vertical"
-            tools:text="9.6" />
+            tools:text="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

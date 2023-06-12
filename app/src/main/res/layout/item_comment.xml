@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_image_person"
             app:layout_constraintTop_toTopOf="@+id/text_view_image_person"
-            tools:text="Mohammed Sofyan" />
+            tools:text="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/text_view_comment"

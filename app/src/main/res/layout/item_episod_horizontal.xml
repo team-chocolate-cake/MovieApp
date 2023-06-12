@@ -48,7 +48,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Pilot" />
+                    tools:text="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/text_view_description"
@@ -86,7 +86,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_time_episode"
                     app:layout_constraintStart_toEndOf="@+id/shape_image_view_time_episode"
                     app:layout_constraintTop_toTopOf="@+id/shape_image_view_time_episode"
-                    tools:text="59 min" />
+                    tools:text="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/text_view_rate"
@@ -97,7 +97,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_time_episode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_time_episode"
-                    tools:text="9.5" />
+                    tools:text="@tools:sample/avatars" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/shape_image_view_rate"
@@ -142,7 +142,7 @@
             android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="@+id/shape_image_view_episode"
             app:layout_constraintTop_toTopOf="@+id/shape_image_view_episode"
-            tools:text="01" />
+            tools:text="@tools:sample/avatars" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

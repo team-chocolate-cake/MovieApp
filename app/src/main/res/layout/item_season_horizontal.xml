@@ -46,7 +46,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Spiderman" />
+                    tools:text="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/text_view_description"
@@ -61,7 +61,7 @@
                     app:layout_constraintEnd_toEndOf="@id/text_view_season_title"
                     app:layout_constraintStart_toStartOf="@id/text_view_season_title"
                     app:layout_constraintTop_toBottomOf="@id/text_view_season_title"
-                    tools:text="Walt must deal with the chain reaction of his choice, as he and Jesse face new and severe consequences. When danger and suspicion around Walt escalate, he is pushed to new levels of desperation. Just how much higher will the stakes rise? How far is Walt willing to go to ensure his family's security? Will his grand plan spiral out of control?" />
+                    tools:text="@tools:sample/avatars" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/shape_image_view_year"
@@ -84,7 +84,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_year"
                     app:layout_constraintStart_toEndOf="@+id/shape_image_view_year"
                     app:layout_constraintTop_toTopOf="@+id/shape_image_view_year"
-                    tools:text="2019" />
+                    tools:text="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/text_view_count_episode"
@@ -95,7 +95,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_year"
-                    tools:text="13" />
+                    tools:text="@tools:sample/avatars" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/shape_image_view_count_episode"
