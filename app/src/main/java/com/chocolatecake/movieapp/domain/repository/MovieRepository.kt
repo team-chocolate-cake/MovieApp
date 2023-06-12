@@ -1,24 +1,23 @@
 package com.chocolatecake.movieapp.domain.repository
 
-import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
-import com.chocolatecake.movieapp.domain.model.movie.Movie
+import com.chocolatecake.movieapp.domain.entities.GenreEntity
+import com.chocolatecake.movieapp.domain.entities.MovieEntity
 
 interface MovieRepository {
 
-    suspend fun getPopularMovies(): List<HomeMovie>
+    suspend fun getPopularMovies(): List<SimpleMovieEntity>
 
-    suspend fun getNowPlayingMovies(): List<Movie>
+    suspend fun getNowPlayingMovies(): List<SimpleMovieEntity>
 
-    suspend fun getTopRatedMovies(): List<Movie>
+    suspend fun getTopRatedMovies(): List<SimpleMovieEntity>
 
-    suspend fun getUpcomingMovies(): List<Movie>
+    suspend fun getUpcomingMovies(): List<SimpleMovieEntity>
 
-    suspend fun getPopularPeople() : List<Movie>
+    suspend fun getPopularPeople() : List<SimpleMovieEntity>
 
-    suspend fun getRecommendedMovies(): List<Movie>
+    suspend fun getRecommendedMovies(): List<SimpleMovieEntity>
 
-    suspend fun getTrendingMovies(): List<Movie>
+    suspend fun getTrendingMovies(): List<SimpleMovieEntity>
 
     suspend fun getSearchHistory(keyword: String): List<String>
 
@@ -28,9 +27,9 @@ interface MovieRepository {
 
     suspend fun deleteSearchHistory(keyword: String)
 
-    suspend fun getSearchMovies(keyword: String ): List<Movie>
+    suspend fun getSearchMovies(keyword: String ): List<MovieEntity>
 
-    suspend fun getGenresMovies(): List<Genre>
+    suspend fun getGenresMovies(): List<GenreEntity>
 
     suspend fun refreshPopularMovies()
 }

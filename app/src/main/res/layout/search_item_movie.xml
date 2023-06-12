@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.domain.model.movie.Movie" />
+            type="com.chocolatecake.movieapp.domain.entities.MovieEntity" />
 
         <variable
             name="listener"
@@ -55,7 +55,7 @@
             android:layout_width="31dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="@{String.valueOf(item.voteAverage)}"
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="#f6f6f6"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"

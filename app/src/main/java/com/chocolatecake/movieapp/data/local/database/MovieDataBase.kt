@@ -2,29 +2,29 @@ package com.chocolatecake.movieapp.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.chocolatecake.movieapp.data.local.database.entity.GenresMoviesEntity
-import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.MovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.RecommendedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
+import com.chocolatecake.movieapp.data.local.database.dto.GenresMoviesLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.MovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.PopularPeopleLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.NowPlayingMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.PopularMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.RecommendedMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.TopRatedMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.TrendingMoviesLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.UpcomingMovieLocalDto
 
 @Database(
     entities = [
-        PopularMovieEntity::class,
-        TopRatedMovieEntity::class,
-        UpcomingMovieEntity::class,
-        NowPlayingMovieEntity::class,
-        RecommendedMovieEntity::class,
-        TrendingMoviesEntity::class,
-        PopularPeopleEntity::class,
-        SearchHistoryEntity::class,
-        GenresMoviesEntity::class,
-        MovieEntity::class,
+        PopularMovieLocalDto::class,
+        TopRatedMovieLocalDto::class,
+        UpcomingMovieLocalDto::class,
+        NowPlayingMovieLocalDto::class,
+        RecommendedMovieLocalDto::class,
+        TrendingMoviesLocalDto::class,
+        PopularPeopleLocalDto::class,
+        SearchHistoryLocalDto::class,
+        GenresMoviesLocalDto::class,
+        MovieLocalDto::class,
     ],
     version = 1,
     exportSchema = false

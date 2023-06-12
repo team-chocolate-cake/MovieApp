@@ -1,13 +1,13 @@
-package com.chocolatecake.movieapp.data.local.database.entity.movie
+package com.chocolatecake.movieapp.data.local.database.dto.movie
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "NOW_PLAYING_MOVIE_TABLE")
-data class NowPlayingMovieEntity(
+@Entity(tableName = "MOVIE_TABLE")
+data class MovieLocalDto(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val imageUrl: String,
+    val title: String,
     val rate: Double,
 )
-

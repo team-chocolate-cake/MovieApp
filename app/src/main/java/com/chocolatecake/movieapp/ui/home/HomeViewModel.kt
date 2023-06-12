@@ -1,11 +1,11 @@
 package com.chocolatecake.movieapp.ui.home
 
-import com.chocolatecake.movieapp.data.local.database.entity.actor.PopularPeopleEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.PopularMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TopRatedMovieEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.TrendingMoviesEntity
-import com.chocolatecake.movieapp.data.local.database.entity.movie.UpcomingMovieEntity
+import com.chocolatecake.movieapp.data.local.database.dto.PopularPeopleLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.NowPlayingMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.PopularMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.TopRatedMovieLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.TrendingMoviesLocalDto
+import com.chocolatecake.movieapp.data.local.database.dto.movie.UpcomingMovieLocalDto
 import com.chocolatecake.movieapp.data.mappers.NowPlayingDomainMapper
 import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.data.mappers.PopularPeopleUiMapper
@@ -68,7 +68,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessPopularMovies(popularMovieEntities: List<PopularMovieEntity>) {
+    private fun onSuccessPopularMovies(popularMovieEntities: List<PopularMovieLocalDto>) {
         val items = popularMovieEntities.map(popularMoviesUiMapper::map)
         _state.update {
             it.copy(
@@ -86,7 +86,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessTopRatedMovies(topRatedMovieEntities: List<TopRatedMovieEntity>) {
+    private fun onSuccessTopRatedMovies(topRatedMovieEntities: List<TopRatedMovieLocalDto>) {
         val items = topRatedMovieEntities.map(topRatedUiMapper::map)
         _state.update {
             it.copy(
@@ -104,7 +104,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessUpcomingMovies(upcomingMovieEntities: List<UpcomingMovieEntity>) {
+    private fun onSuccessUpcomingMovies(upcomingMovieEntities: List<UpcomingMovieLocalDto>) {
         val items = upcomingMovieEntities.map(upComingUiMapper::map)
         _state.update {
             it.copy(
@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessPopularPeople(popularPeopleEntities: List<PopularPeopleEntity>) {
+    private fun onSuccessPopularPeople(popularPeopleEntities: List<PopularPeopleLocalDto>) {
         val items = popularPeopleEntities.map(popularPeopleUiMapper::map)
         _state.update {
             it.copy(
@@ -138,7 +138,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessNowPlayingMovies(nowPlayingMovieEntities: List<NowPlayingMovieEntity>) {
+    private fun onSuccessNowPlayingMovies(nowPlayingMovieEntities: List<NowPlayingMovieLocalDto>) {
         val items = nowPlayingMovieEntities.map(nowPlayingDomainMapper::map)
         _state.update {
             it.copy(
@@ -155,7 +155,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessTrendingMovies(trendingMoviesEntities: List<TrendingMoviesEntity>) {
+    private fun onSuccessTrendingMovies(trendingMoviesEntities: List<TrendingMoviesLocalDto>) {
         val items = trendingMoviesEntities.map(trendingUiMapper::map)
         _state.update {
             it.copy(

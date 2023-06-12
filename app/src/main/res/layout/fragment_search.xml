@@ -143,7 +143,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/empty_state"
-            app:showWhenNoResult="@{viewModel.state.searchMovieResult}"
+            app:showWhenNoResult="@{viewModel.state.searchMovieResultEntity}"
             app:showWhenQueryEmpty="@{viewModel.state.query}" />
 
         <com.airbnb.lottie.LottieAnimationView

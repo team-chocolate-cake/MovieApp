@@ -5,6 +5,7 @@ import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
 import com.chocolatecake.movieapp.data.mappers.search.MovieUIMapper
 import com.chocolatecake.movieapp.data.mappers.search_history.SearchHistoryUIMapper
 import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.movieapp.data.repository.mappers.genres.LocalGenresMovieMapper
 import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalMovieMapper
 import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalPopularMovieMapper
@@ -13,15 +14,15 @@ import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTopRatedMov
 import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.movieapp.data.repository.mappers.people.LocalPopularPeopleMapper
-import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
-import com.chocolatecake.movieapp.domain.model.movie.Movie
+import com.chocolatecake.movieapp.domain.entities.GenreEntity
+import com.chocolatecake.movieapp.domain.entities.MovieEntity
 import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val service: MovieService,
     private val movieDao: MovieDao,
+    private val genresMovieMapper: LocalGenresMovieMapper,
     private val popularMovieMapper: LocalPopularMovieMapper,
     private val popularMoviesUiMapper: PopularMoviesUiMapper,
     private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
@@ -47,7 +48,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getNowPlayingMovies(): List<Movie> {
+    override suspend fun getNowPlayingMovies(): List<MovieEntity> {
         return movieDao.getNowPlayingMovies()
     }
 
@@ -59,7 +60,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getTopRatedMovies(): List<Movie> {
+    override suspend fun getTopRatedMovies(): List<MovieEntity> {
         refreshTopRatedMovies()
         return movieDao.getTopRatedMovies()
     }
@@ -72,7 +73,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getUpcomingMovies(): List<Movie> {
+    override suspend fun getUpcomingMovies(): List<MovieEntity> {
         refreshUpcomingMovies()
         return movieDao.getUpcomingMovies()
     }
@@ -86,7 +87,7 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getRecommendedMovies(): List<Movie> {
+    override suspend fun getRecommendedMovies(): List<MovieEntity> {
         refreshRecommendedMovies()
         return movieDao.getRecommendedMovie()
     }
@@ -99,20 +100,20 @@ class MovieRepositoryImpl @Inject constructor(
 //        )
     }
 
-    override suspend fun getTrendingMovies(): List<Movie> {
+    override suspend fun getTrendingMovies(): List<MovieEntity> {
         refreshTrendingMovies()
-            return movieDao.getTrendingMovies()
+        return movieDao.getTrendingMovies()
     }
 
-    private suspend fun refreshTrendingMovies(){
+    private suspend fun refreshTrendingMovies() {
         refreshWrapper(
-            {service.getTrendingMovies()},
+            { service.getTrendingMovies() },
             trendingMoviesMapper::map,
             movieDao::insertTrendingMovies
         )
     }
 
-    override suspend fun getPopularPeople(): List<Movie> {
+    override suspend fun getPopularPeople(): List<MovieEntity> {
         refreshPopularPeople()
         return movieDao.getPopularPeople()
     }
@@ -147,13 +148,19 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     ///region search movies
-    override suspend fun getSearchMovies(keyword: String): List<Movie> {
-        return wrapApiCall { service.getSearchMovies(keyword) }.results
+    override suspend fun getSearchMovies(keyword: String): List<MovieEntity> {
+        genresMovieMapper.map(
+            wrapApiCall { service.getListOfGenresForMovies() }.results ?: emptyList()
+        ).let {
+            wrapApiCall { service.getSearchMovies(keyword) }.results
+                searchMovieMapper
+        }
+        return
             ?.filterNotNull() ?: emptyList()
     }
     //endregion
 
-    override suspend fun getGenresMovies(): List<Genre> {
+    override suspend fun getGenresMovies(): List<GenreEntity> {
         return service.getListOfGenresForMovies().body()?.results
     }
 }

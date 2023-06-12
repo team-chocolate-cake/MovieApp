@@ -1,9 +1,9 @@
 package com.chocolatecake.movieapp.ui.search.view
 
 import androidx.lifecycle.viewModelScope
-import com.chocolatecake.movieapp.data.local.database.entity.SearchHistoryEntity
-import com.chocolatecake.movieapp.domain.model.Genre
-import com.chocolatecake.movieapp.domain.model.movie.Movie
+import com.chocolatecake.movieapp.data.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.movieapp.domain.entities.GenreEntity
+import com.chocolatecake.movieapp.domain.entities.MovieEntity
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search.SearchMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.search_history.InsertSearchHistoryUseCase
@@ -61,7 +61,7 @@ class SearchViewModel @Inject constructor(
 
     private suspend fun saveSearchHistoryInLocal(query: String) {
         _state.update { it.copy(isLoading = true) }
-        val searchHistory = SearchHistoryEntity(keyword = query)
+        val searchHistory = SearchHistoryLocalDto(keyword = query)
         insertSearchHistoryUseCase(searchHistory)
     }
 
@@ -85,10 +85,10 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessMovies(movies: List<Movie>) {
+    private fun onSuccessMovies(movieEntities: List<MovieEntity>) {
         _state.update {
             it.copy(
-                searchMovieResult = movies,
+                searchMovieResultEntity = movieEntities,
                 isLoading = false,
                 error = null
             )
@@ -113,10 +113,10 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessGenres(genres: List<Genre>) {
+    private fun onSuccessGenres(genreEntities: List<GenreEntity>) {
         _state.update {
             val updatedGenres =
-                genres.map { genre ->
+                genreEntities.map { genre ->
                     genreUiStateMapper.map(
                         genre,
                         genre.genreID == it.selectedMovieGenresId

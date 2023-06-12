@@ -1,15 +1,14 @@
 package com.chocolatecake.movieapp.data.mappers
 
-import com.chocolatecake.movieapp.data.local.database.entity.movie.NowPlayingMovieEntity
-import com.chocolatecake.movieapp.domain.model.movie.HomeMovie
+import com.chocolatecake.movieapp.data.local.database.dto.movie.NowPlayingMovieLocalDto
 import javax.inject.Inject
 
-class NowPlayingDomainMapper @Inject constructor() : Mapper<NowPlayingMovieEntity, HomeMovie> {
-    override fun map(input: NowPlayingMovieEntity): HomeMovie {
-        return HomeMovie(
+class NowPlayingDomainMapper @Inject constructor() : Mapper<NowPlayingMovieLocalDto, SimpleMovieEntity> {
+    override fun map(input: NowPlayingMovieLocalDto): SimpleMovieEntity {
+        return SimpleMovieEntity(
             id = input.id,
             imageUrl = input.imageUrl,
-            voteAverage = input.rate
+            rate = input.rate
         )
     }
 }
