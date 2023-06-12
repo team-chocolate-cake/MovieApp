@@ -72,8 +72,8 @@ class SearchViewModel @Inject constructor(
 
 
     override fun getData() {
-//        onSearchForMovie()
-        onSearchForTv()
+//       Mediia.MOVIE -> onSearchForMovie()
+//       Media.Tv ->  onSearchForTv()
     }
 
     private fun onSearchForTv() {

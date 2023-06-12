@@ -31,7 +31,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
 
     override fun onSateChange(state: SearchUiState) {
         setupSearchHistoryAdapter(state)
-        searchAdapter.setItems(state.searchMovieResult)
+        searchAdapter.setItems(state.searchTvShowResult)
         state.error?.last()?.let { showSnackBar(it) }
     }
 
