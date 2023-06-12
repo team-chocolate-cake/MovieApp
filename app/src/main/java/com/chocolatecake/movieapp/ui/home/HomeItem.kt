@@ -3,7 +3,6 @@ package com.chocolatecake.movieapp.ui.home
 import com.chocolatecake.movieapp.ui.home.ui_state.NowPlayingUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.PopularMoviesUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.PopularPeopleUiState
-import com.chocolatecake.movieapp.ui.home.ui_state.RecommendedUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.TopRatedUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.TrendingMoviesUiState
 import com.chocolatecake.movieapp.ui.home.ui_state.UpComingMoviesUiState

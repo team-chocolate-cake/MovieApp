@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import com.chocolatecake.movieapp.R
-import com.chocolatecake.movieapp.databinding.FragmentProfileBinding
-import com.chocolatecake.movieapp.ui.base.BaseFragment
 
 
 class ProfileFragment() : Fragment() {

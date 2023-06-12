@@ -1,15 +1,20 @@
-package com.chocolatecake.movieapp.data.mappers
+package com.chocolatecake.movieapp.data.repository.mappers.domain.movie
 
 import com.chocolatecake.movieapp.data.local.database.dto.movie.PopularMovieLocalDto
+import com.chocolatecake.movieapp.data.repository.mappers.Mapper
 import com.chocolatecake.movieapp.domain.entities.MovieEntity
 import javax.inject.Inject
 
-class PopularMoviesUiMapper @Inject constructor() : Mapper<PopularMovieLocalDto, MovieEntity> {
+class DomainPopularMovieMapper @Inject constructor():
+    Mapper<PopularMovieLocalDto, MovieEntity> {
+
     override fun map(input: PopularMovieLocalDto): MovieEntity {
         return MovieEntity(
             id = input.id,
+            title = input.title,
             imageUrl = input.imageUrl,
-            rate = input.rate,
+            genreEntities = emptyList(),
+            rate = input.rate
         )
     }
 }

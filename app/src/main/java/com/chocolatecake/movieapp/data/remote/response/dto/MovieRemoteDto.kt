@@ -1,9 +1,9 @@
-package com.chocolatecake.movieapp.data.remote.response
+package com.chocolatecake.movieapp.data.remote.response.dto
 
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDto(
+data class MovieRemoteDto(
     @SerializedName("adult")
     val adult: Boolean?,
     @SerializedName("backdrop_path")

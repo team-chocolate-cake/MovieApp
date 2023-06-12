@@ -7,8 +7,7 @@ import javax.inject.Inject
 class GetTopRatedUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(limit: Int = 10):List<MovieEntity>{
-
-      return movieRepository.getTopRatedMovies().take(limit)
+    suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
+        return movieRepository.getTopRatedMovies().take(limit)
     }
 }

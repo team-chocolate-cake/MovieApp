@@ -2,12 +2,12 @@ package com.chocolatecake.movieapp.data.remote.service
 
 import com.chocolatecake.movieapp.data.remote.request.LoginRequest
 import com.chocolatecake.movieapp.data.remote.response.DataWrapperResponse
-import com.chocolatecake.movieapp.data.remote.response.GenreMovieDto
 import com.chocolatecake.movieapp.data.remote.response.GenresWrapperResponse
-import com.chocolatecake.movieapp.data.remote.response.MovieDto
-import com.chocolatecake.movieapp.data.remote.response.actor.ActorDto
 import com.chocolatecake.movieapp.data.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.movieapp.data.remote.response.auth.SessionResponse
+import com.chocolatecake.movieapp.data.remote.response.dto.GenreMovieRemoteDto
+import com.chocolatecake.movieapp.data.remote.response.dto.MovieRemoteDto
+import com.chocolatecake.movieapp.data.remote.response.dto.PeopleRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -33,30 +33,30 @@ interface MovieService {
 
     /// region movie
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
+    suspend fun getTopRatedMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("movie/popular")
-    suspend fun getPopularMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
+    suspend fun getPopularMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
+    suspend fun getUpcomingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieDto>>
+    suspend fun getNowPlayingMovies(@Query("page") page: Int = 1): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("movie/{movie_id}/recommendations")
     suspend fun getRecommendedMovies(
         @Query("page") page: Int = 1,
         @Path("movie_id") movieId: Int
-    ): Response<DataWrapperResponse<MovieDto>>
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("movie/latest")
-    suspend fun getLatestMovie(): Response<MovieDto>
+    suspend fun getLatestMovie(): Response<MovieRemoteDto>
 
     @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
         @Path("time_window") timeWindow: String = "day"
-    ): Response<DataWrapperResponse<MovieDto>>
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
     ///endregion
 
     /// region search
@@ -67,19 +67,19 @@ interface MovieService {
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
         @Query("region") region: String? = null,
         @Query("page") page: Int = 1,
-    ): Response<DataWrapperResponse<MovieDto>>
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
 
     /// endregion
 
     /// region popular people
     @GET("person/popular")
-    suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<ActorDto>>
+    suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<PeopleRemoteDto>>
     /// endregion
 
     /// region genres
     @GET("genre/movie/list")
     suspend fun getListOfGenresForMovies(
         @Query("language") language: String = "en"
-    ): Response<GenresWrapperResponse<GenreMovieDto>>
+    ): Response<GenresWrapperResponse<GenreMovieRemoteDto>>
     ///endregion
 }

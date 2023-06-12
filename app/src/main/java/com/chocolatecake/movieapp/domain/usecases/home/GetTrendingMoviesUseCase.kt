@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetTrendingMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
-)  {
-    suspend operator fun invoke(limit: Int = 10):List<MovieEntity> {
+) {
+    suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
         return movieRepository.getTrendingMovies().take(limit)
     }
 }

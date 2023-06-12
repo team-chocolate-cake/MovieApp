@@ -1,12 +1,9 @@
 package com.chocolatecake.movieapp.ui.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import com.smarteist.autoimageslider.SliderViewAdapter
-import com.bumptech.glide.Glide
 import com.chocolatecake.movieapp.R
 import com.chocolatecake.movieapp.databinding.HomeItemImageSliderBinding
 import com.chocolatecake.movieapp.ui.home.ui_state.UpComingMoviesUiState

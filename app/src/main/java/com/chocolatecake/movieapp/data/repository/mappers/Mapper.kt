@@ -1,4 +1,4 @@
-package com.chocolatecake.movieapp.data.mappers
+package com.chocolatecake.movieapp.data.repository.mappers
 
 interface Mapper<INPUT, OUTPUT> {
     fun map(input: INPUT): OUTPUT

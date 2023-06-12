@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey
 data class PopularPeopleLocalDto(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val profilePath: String,
+    val imagerUrl: String,
     val name: String,
-    val rate: Double,
 )
 
 

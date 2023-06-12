@@ -6,12 +6,6 @@ import com.chocolatecake.movieapp.data.local.database.dto.movie.PopularMovieLoca
 import com.chocolatecake.movieapp.data.local.database.dto.movie.TopRatedMovieLocalDto
 import com.chocolatecake.movieapp.data.local.database.dto.movie.TrendingMoviesLocalDto
 import com.chocolatecake.movieapp.data.local.database.dto.movie.UpcomingMovieLocalDto
-import com.chocolatecake.movieapp.data.mappers.NowPlayingDomainMapper
-import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
-import com.chocolatecake.movieapp.data.mappers.PopularPeopleUiMapper
-import com.chocolatecake.movieapp.data.mappers.TopRatedUiMapper
-import com.chocolatecake.movieapp.data.mappers.TrendingUiMapper
-import com.chocolatecake.movieapp.data.mappers.UpComingUiMapper
 import com.chocolatecake.movieapp.domain.usecases.home.GetNowPlayingUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUseCase

@@ -8,7 +8,10 @@ import javax.inject.Inject
 class SearchMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
-    suspend operator fun invoke(keyword: String, genreEntity: GenreEntity? = null): List<MovieEntity> {
+    suspend operator fun invoke(
+        keyword: String,
+        genreEntity: GenreEntity? = null
+    ): List<MovieEntity> {
 
         return movieRepository.getSearchMovies(keyword).filter { movie ->
             movie.genreEntities.takeIf { genreEntity != null }

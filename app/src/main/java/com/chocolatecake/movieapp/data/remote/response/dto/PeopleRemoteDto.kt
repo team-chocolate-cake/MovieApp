@@ -1,9 +1,9 @@
-package com.chocolatecake.movieapp.data.remote.response.actor
+package com.chocolatecake.movieapp.data.remote.response.dto
 
 
 import com.google.gson.annotations.SerializedName
 
-data class ActorDto(
+data class PeopleRemoteDto(
     @SerializedName("adult")
     val adult: Boolean? = null,
     @SerializedName("gender")

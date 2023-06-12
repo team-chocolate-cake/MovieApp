@@ -1,140 +1,131 @@
 package com.chocolatecake.movieapp.data.repository
 
 import com.chocolatecake.movieapp.data.local.database.MovieDao
-import com.chocolatecake.movieapp.data.mappers.PopularMoviesUiMapper
-import com.chocolatecake.movieapp.data.mappers.search.MovieUIMapper
-import com.chocolatecake.movieapp.data.mappers.search_history.SearchHistoryUIMapper
+import com.chocolatecake.movieapp.data.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.movieapp.data.remote.service.MovieService
-import com.chocolatecake.movieapp.data.repository.mappers.genres.LocalGenresMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalNowPlayingMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalPopularMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalRecommendedMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTopRatedMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalTrendingMoviesMapper
-import com.chocolatecake.movieapp.data.repository.mappers.movie.LocalUpcomingMovieMapper
-import com.chocolatecake.movieapp.data.repository.mappers.people.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.LocalGenresMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.LocalPopularPeopleMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.movie.LocalNowPlayingMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.movie.LocalPopularMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.movie.LocalTopRatedMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.movie.LocalTrendingMoviesMapper
+import com.chocolatecake.movieapp.data.repository.mappers.cash.movie.LocalUpcomingMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.DomainGenreMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainPopularMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainTopRatedMovieMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainTrendingMoviesMapper
+import com.chocolatecake.movieapp.data.repository.mappers.domain.movie.DomainUpcomingMovieMapper
 import com.chocolatecake.movieapp.domain.entities.GenreEntity
 import com.chocolatecake.movieapp.domain.entities.MovieEntity
+import com.chocolatecake.movieapp.domain.entities.PeopleEntity
 import com.chocolatecake.movieapp.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val service: MovieService,
+    private val movieService: MovieService,
     private val movieDao: MovieDao,
-    private val genresMovieMapper: LocalGenresMovieMapper,
-    private val popularMovieMapper: LocalPopularMovieMapper,
-    private val popularMoviesUiMapper: PopularMoviesUiMapper,
-    private val nowPlayingMovieMapper: LocalNowPlayingMovieMapper,
-    private val topRatedMovieMapper: LocalTopRatedMovieMapper,
-    private val upComingMovieMapper: LocalUpcomingMovieMapper,
-    private val searchHistoryMapper: SearchHistoryUIMapper,
-    private val searchMovieUIMapper: MovieUIMapper,
-    private val searchMovieMapper: LocalMovieMapper,
-    private val recommendedMovieMapper: LocalRecommendedMovieMapper,
-    private val trendingMoviesMapper: LocalTrendingMoviesMapper,
-    private val popularPeopleMapper: LocalPopularPeopleMapper
+    private val localGenresMovieMapper: LocalGenresMovieMapper,
+    private val localPopularMovieMapper: LocalPopularMovieMapper,
+    private val localPopularPeopleMapper: LocalPopularPeopleMapper,
+    private val localNowPlayingMovieMapper: LocalNowPlayingMovieMapper,
+    private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
+    private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
+    private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
+    private val domainMovieMapper: DomainMovieMapper,
+    private val domainPopularMovieMapper: DomainPopularMovieMapper,
+    private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
+    private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
+    private val domainUpcomingMovieMapper: DomainUpcomingMovieMapper,
+    private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
+    private val domainPeopleMapper: DomainPeopleMapper,
+    private val domainGenreMapper: DomainGenreMapper,
 ) : BaseRepository(), MovieRepository {
 
-    override suspend fun getPopularMovies(): List<HomeMovie> {
-        return popularMoviesUiMapper.map(movieDao.getPopularMovies())
+    /// region movies
+    override suspend fun getPopularMovies(): List<MovieEntity> {
+        return domainPopularMovieMapper.map(movieDao.getPopularMovies())
     }
 
     override suspend fun refreshPopularMovies() {
         refreshWrapper(
-            service::getPopularMovies,
-            popularMovieMapper::map,
+            movieService::getPopularMovies,
+            localPopularMovieMapper::map,
             movieDao::insertPopularMovies
         )
     }
 
     override suspend fun getNowPlayingMovies(): List<MovieEntity> {
-        return movieDao.getNowPlayingMovies()
+        return domainNowPlayingMovieMapper.map(movieDao.getNowPlayingMovies())
     }
 
     override suspend fun refreshNowPlayingMovies() {
         refreshWrapper(
-            service::getNowPlayingMovies,
-            nowPlayingMovieMapper::map,
+            movieService::getNowPlayingMovies,
+            localNowPlayingMovieMapper::map,
             movieDao::insertNowPlayingMovies
         )
     }
 
     override suspend fun getTopRatedMovies(): List<MovieEntity> {
-        refreshTopRatedMovies()
-        return movieDao.getTopRatedMovies()
+        return domainTopRatedMovieMapper.map(movieDao.getTopRatedMovies())
     }
 
-    private suspend fun refreshTopRatedMovies() {
+    override suspend fun refreshTopRatedMovies() {
         refreshWrapper(
-            service::getTopRatedMovies,
-            topRatedMovieMapper::map,
+            movieService::getTopRatedMovies,
+            localTopRatedMovieMapper::map,
             movieDao::insertTopRatedMovies
         )
     }
 
     override suspend fun getUpcomingMovies(): List<MovieEntity> {
-        refreshUpcomingMovies()
-        return movieDao.getUpcomingMovies()
+        return domainUpcomingMovieMapper.map(movieDao.getUpcomingMovies())
     }
 
-
-    private suspend fun refreshUpcomingMovies() {
+    override suspend fun refreshUpcomingMovies() {
         refreshWrapper(
-            service::getUpcomingMovies,
-            upComingMovieMapper::map,
+            movieService::getUpcomingMovies,
+            localUpcomingMovieMapper::map,
             movieDao::insertUpcomingMovies
         )
     }
 
-    override suspend fun getRecommendedMovies(): List<MovieEntity> {
-        refreshRecommendedMovies()
-        return movieDao.getRecommendedMovie()
-    }
-
-    private suspend fun refreshRecommendedMovies() {
-//        refreshWrapper(
-//            service::getRecommendedMovies,
-//            recommendedMovieMapper::map,
-//            movieDao::insertRecommendedMovies
-//        )
-    }
-
     override suspend fun getTrendingMovies(): List<MovieEntity> {
-        refreshTrendingMovies()
-        return movieDao.getTrendingMovies()
+        return domainTrendingMovieMapper.map(movieDao.getTrendingMovies())
     }
 
-    private suspend fun refreshTrendingMovies() {
+    override suspend fun refreshTrendingMovies() {
         refreshWrapper(
-            { service.getTrendingMovies() },
-            trendingMoviesMapper::map,
+            movieService::getTrendingMovies,
+            localTrendingMoviesMapper::map,
             movieDao::insertTrendingMovies
         )
     }
 
-    override suspend fun getPopularPeople(): List<MovieEntity> {
-        refreshPopularPeople()
-        return movieDao.getPopularPeople()
+    override suspend fun getPopularPeople(): List<PeopleEntity> {
+        return domainPeopleMapper.map(movieDao.getPopularPeople())
     }
 
-    private suspend fun refreshPopularPeople() {
+    override suspend fun refreshPopularPeople() {
         refreshWrapper(
-            service::getPopularPeople,
-            popularPeopleMapper::map,
+            movieService::getPopularPeople,
+            localPopularPeopleMapper::map,
             movieDao::insertPopularPeople
         )
     }
+    /// endregion
 
-
-    ///region search history
+    /// region search history
     override suspend fun getSearchHistory(keyword: String): List<String> {
-        return movieDao.getSearchHistory("%${keyword}%")
+        return movieDao.getSearchHistory("%${keyword}%").map { it.keyword }
 
     }
 
-    override suspend fun insertSearchHistory(searchHistory: String) {
-        return movieDao.insertSearchHistory(searchHistory)
+    override suspend fun insertSearchHistory(keyword: String) {
+        return movieDao.insertSearchHistory(SearchHistoryLocalDto(keyword))
     }
 
     override suspend fun clearAllSearchHistory() {
@@ -144,23 +135,29 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun deleteSearchHistory(keyword: String) {
         movieDao.deleteSearchHistory(keyword)
     }
-    ///endregion
+    /// endregion
 
-
-    ///region search movies
+    ///region search
     override suspend fun getSearchMovies(keyword: String): List<MovieEntity> {
-        genresMovieMapper.map(
-            wrapApiCall { service.getListOfGenresForMovies() }.results ?: emptyList()
-        ).let {
-            wrapApiCall { service.getSearchMovies(keyword) }.results
-                searchMovieMapper
-        }
-        return
-            ?.filterNotNull() ?: emptyList()
+        return wrapApiCall { movieService.getSearchMovies(keyword) }.results
+            ?.filterNotNull()?.let { movieDtos -> domainMovieMapper.map(movieDtos) } ?: emptyList()
     }
     //endregion
 
+    /// region genres
     override suspend fun getGenresMovies(): List<GenreEntity> {
-        return service.getListOfGenresForMovies().body()?.results
+        return domainGenreMapper.map(movieDao.getGenresMovies())
     }
+
+    override suspend fun refreshGenres() {
+        try {
+            wrapApiCall { movieService.getListOfGenresForMovies() }.results
+                ?.let { remoteGenres ->
+                    movieDao.insertGenresMovies(localGenresMovieMapper.map(remoteGenres))
+                }
+
+        } catch (_: Throwable) {
+        }
+    }
+    /// endregion
 }

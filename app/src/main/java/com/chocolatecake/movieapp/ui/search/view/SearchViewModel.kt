@@ -1,7 +1,6 @@
 package com.chocolatecake.movieapp.ui.search.view
 
 import androidx.lifecycle.viewModelScope
-import com.chocolatecake.movieapp.data.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.movieapp.domain.entities.GenreEntity
 import com.chocolatecake.movieapp.domain.entities.MovieEntity
 import com.chocolatecake.movieapp.domain.usecases.genres.GetAllGenresMoviesUseCase
@@ -28,7 +27,7 @@ class SearchViewModel @Inject constructor(
     private val genreUiStateMapper: GenreUiStateMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
-) : BaseViewModel<SearchUiState,SearchUiEvent>(), SearchListener {
+) : BaseViewModel<SearchUiState, SearchUiEvent>(), SearchListener {
     override fun initialState() = SearchUiState()
 
     init {
@@ -61,15 +60,13 @@ class SearchViewModel @Inject constructor(
 
     private suspend fun saveSearchHistoryInLocal(query: String) {
         _state.update { it.copy(isLoading = true) }
-        val searchHistory = SearchHistoryLocalDto(keyword = query)
-        insertSearchHistoryUseCase(searchHistory)
+        insertSearchHistoryUseCase(query)
     }
 
     private suspend fun getSearchHistory(query: String) {
         val result = searchHistoryUseCase(query)
         _state.update { it.copy(searchHistory = result) }
     }
-
 
 
     override fun getData() {
@@ -79,7 +76,15 @@ class SearchViewModel @Inject constructor(
     private fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId) },
+            call = {
+                val genreEntity: GenreEntity? = _state.value.run {
+                    selectedMovieGenresId?.let { selectedId ->
+                        genresMovies?.find { it.genreId == selectedId }
+                            ?.let { GenreEntity(selectedId, it.genresName) }
+                    }
+                }
+                searchMoviesUseCase(_state.value.query, genreEntity)
+            },
             onSuccess = ::onSuccessMovies,
             onError = ::onError
         )
