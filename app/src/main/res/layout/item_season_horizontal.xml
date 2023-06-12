@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="@{() -> listener.onClickMedia(item.id)}">
 
         <com.google.android.material.card.MaterialCardView
@@ -84,7 +84,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_year"
                     app:layout_constraintStart_toEndOf="@+id/shape_image_view_year"
                     app:layout_constraintTop_toTopOf="@+id/shape_image_view_year"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="2019" />
 
                 <TextView
                     android:id="@+id/text_view_count_episode"
@@ -95,7 +95,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_year"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="19" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/shape_image_view_count_episode"

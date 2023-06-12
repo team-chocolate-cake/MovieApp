@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="@{() -> listener.onClickMedia(item.id)}">
 
         <com.google.android.material.card.MaterialCardView
@@ -86,7 +86,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_time_episode"
                     app:layout_constraintStart_toEndOf="@+id/shape_image_view_time_episode"
                     app:layout_constraintTop_toTopOf="@+id/shape_image_view_time_episode"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="98 m" />
 
                 <TextView
                     android:id="@+id/text_view_rate"
@@ -97,7 +97,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_time_episode"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_time_episode"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="8.7" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/shape_image_view_rate"
@@ -142,7 +142,7 @@
             android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="@+id/shape_image_view_episode"
             app:layout_constraintTop_toTopOf="@+id/shape_image_view_episode"
-            tools:text="@tools:sample/avatars" />
+            tools:text="01" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
