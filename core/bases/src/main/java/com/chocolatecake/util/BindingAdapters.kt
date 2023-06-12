@@ -1,6 +1,5 @@
-package com.chocolatecake.ui
+package com.chocolatecake.util
 
-import android.graphics.Movie
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -67,7 +66,7 @@ fun View.showWhenEmptyData(query: String?){
 }
 
 @BindingAdapter(value = ["app:showWhenNoResult"])
-fun View.showWhenNoResult(list: List<Movie>?){
+fun <T> View.showWhenNoResult(list: List<T>?){
     if (list.isNullOrEmpty()){
         this.visibility = View.VISIBLE
     }else{
