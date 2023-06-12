@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.ui.viewmodel.model.PeopleUI" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.ui.viewmodel.MediaListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> listener.onClickMedia(item.id)}">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_people"
+            android:layout_width="@dimen/width_image_people"
+            android:layout_height="@dimen/height_image_people"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_name_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextStyle.BodySmall"
+            android:text="@{item.name}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/shape_image_view_people"
+            app:layout_constraintStart_toStartOf="@+id/shape_image_view_people"
+            app:layout_constraintTop_toBottomOf="@+id/shape_image_view_people"
+            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            tools:text="@tools:sample/avatars" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

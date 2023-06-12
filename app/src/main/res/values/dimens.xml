@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Spacing dimens-->
-    <dimen name="spacing_tiny">4dp</dimen>
-    <dimen name="spacing_small">8dp</dimen>
-    <dimen name="spacing_custom">12dp</dimen>
-    <dimen name="spacing_semi_medium">14dp</dimen>
-    <dimen name="spacing_medium">16dp</dimen>
-    <dimen name="spacing_x_medium">20dp</dimen>
-    <dimen name="spacing_large">24dp</dimen>
-    <dimen name="spacing_extra_large">28dp</dimen>
-    <dimen name="spacing_giant">32dp</dimen>
-    <dimen name="spacing_extra_giant">48dp</dimen>
-    <dimen name="spacing_extra_extra_giant">56dp</dimen>
+    <dimen name="spacing_tiny_4dp">4dp</dimen>
+    <dimen name="spacing_small_8dp">8dp</dimen>
+    <dimen name="spacing_custom_12dp">12dp</dimen>
+    <dimen name="spacing_semi_medium_14dp">14dp</dimen>
+    <dimen name="spacing_medium_16dp">16dp</dimen>
+    <dimen name="spacing_x_medium_20dp">20dp</dimen>
+    <dimen name="spacing_large_24dp">24dp</dimen>
+    <dimen name="spacing_extra_large_28dp">28dp</dimen>
+    <dimen name="spacing_giant_32dp">32dp</dimen>
+    <dimen name="spacing_extra_giant_48dp">48dp</dimen>
+    <dimen name="spacing_extra_extra_giant_56dp">56dp</dimen>
 
     <!--text dimens-->
     <dimen name="text_tiny">11sp</dimen>
@@ -25,6 +25,7 @@
     <!--radius dimens-->
     <dimen name="radius_small">4dp</dimen>
     <dimen name="radius_default">8dp</dimen>
+    <dimen name="radius_medium">12dp</dimen>
     <dimen name="radius_large">24dp</dimen>
     <dimen name="radius_full">100dp</dimen>
 
@@ -42,11 +43,27 @@
     <!--height dimens-->
     <dimen name="height_tiny">4dp</dimen>
     <dimen name="height_giant">32dp</dimen>
-    <dimen name="height_card">200dp</dimen>
+    <dimen name="custom_height_card">200dp</dimen>
     <dimen name="width_image">240dp</dimen>
     <dimen name="height_image">150dp</dimen>
     <dimen name="lottie_error_size">180dp</dimen>
-    <dimen name="people_image_width">90dp</dimen>
+    <dimen name="image_width">90dp</dimen>
     <dimen name="zero_height">0dp</dimen>
     <dimen name="slider_image_view_height">200dp</dimen>
+    <dimen name="width_image_memorize">104dp</dimen>
+    <dimen name="height_image_memorize">104dp</dimen>
+    <dimen name="width_text_image_person">35dp</dimen>
+    <dimen name="height_text_image_person">35dp</dimen>
+    <dimen name="zero_width">0dp</dimen>
+    <dimen name="height_text_comment">100dp</dimen>
+    <dimen name="height_card">90dp</dimen>
+    <dimen name="custom_width_image">76dp</dimen>
+    <dimen name="custom_height_image">102dp</dimen>
+    <dimen name="width_text_number_episode">20dp</dimen>
+    <dimen name="height_text_number_episode">20dp</dimen>
+    <dimen name="width_image_media_horizontal">240dp</dimen>
+    <dimen name="height_image_media_horizontal">135dp</dimen>
+    <dimen name="width_image_media_vertical">140dp</dimen>
+    <dimen name="width_image_people">80dp</dimen>
+    <dimen name="height_image_people">80dp</dimen>
 </resources>

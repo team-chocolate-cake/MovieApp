@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.chocolatecake.movieapp.ui.viewmodel.model.MediaHorizontalUI" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.movieapp.ui.viewmodel.MediaListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_media"
+            android:layout_width="@dimen/width_image_media_horizontal"
+            android:layout_height="@dimen/height_image_media_horizontal"
+            android:scaleType="centerCrop"
+            android:onClick="@{ () -> listener.onClickMedia(item.id)}"
+            app:imageUrl="@{item.imageUrl}"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
