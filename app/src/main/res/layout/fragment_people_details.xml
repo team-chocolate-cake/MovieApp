@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/shape_image_view_people"
+        android:layout_width="149dp"
+        android:layout_height="186dp"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/text_view_people_biography_title"
+        app:layout_constraintDimensionRatio="3:4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="149dp"
+        android:layout_height="186dp"
+        android:background="@drawable/gradient_background"
+        app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_people"
+        app:layout_constraintEnd_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintStart_toStartOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toTopOf="@+id/shape_image_view_people" />
+
+    <TextView
+        android:id="@+id/text_view_people_name"
+        style="@style/TextStyle.TitleMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="1dp"
+        android:textColor="@color/on_background_87"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_people_acting"
+        app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Jason Statham" />
+
+    <TextView
+        android:id="@+id/text_view_people_acting"
+        style="@style/TextStyle.BodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textColor="@color/on_background_60"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_people_gender"
+        app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_people_name"
+        tools:text="Acting" />
+
+    <TextView
+        android:id="@+id/text_view_people_gender"
+        style="@style/TextStyle.BodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textColor="@color/on_background_60"
+        app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toBottomOf="@id/text_view_people_acting"
+        tools:text="Male" />
+
+    <TextView
+        android:id="@+id/text_view_people_movies_number"
+        style="@style/TextStyle.BodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textColor="@color/on_background_60"
+        app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toBottomOf="@id/text_view_people_gender"
+        tools:text="Number of Movies: 30" />
+
+    <TextView
+        android:id="@+id/text_view_people_country"
+        style="@style/TextStyle.BodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_extra_large"
+        android:textColor="@color/on_background_60"
+        app:layout_constraintBottom_toBottomOf="@id/shape_image_view_people"
+        app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_people_movies_number"
+        tools:text="Beirut, Lebanon" />
+
+    <TextView
+        android:id="@+id/text_view_people_biography_title"
+        style="@style/TextStyle.TitleMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:text="@string/biography"
+        android:textColor="@color/on_background_87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_view_people_biography"
+        app:layout_constraintTop_toBottomOf="@+id/shape_image_view_people" />
+
+    <TextView
+        android:id="@+id/text_view_people_biography"
+        style="@style/TextStyle.BodySmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_medium"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        tools:text="@string/tools_biography_example"
+        android:textColor="@color/on_background_60"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_view_people_movies"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_people_biography_title" />
+
+
+    <TextView
+        android:id="@+id/text_view_people_movies"
+        style="@style/TextStyle.TitleMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:text="@string/movies"
+        android:textColor="@color/on_background_87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_people_movies"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_people_biography" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_people_movies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_people_movies"
+/>
+    <TextView
+        android:id="@+id/text_view_people_tv_shows"
+        style="@style/TextStyle.TitleMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:text="@string/tv_shows"
+        android:textColor="@color/on_background_87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_view_people_tv_shows"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view_people_movies" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_people_tv_shows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_people_tv_shows"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
