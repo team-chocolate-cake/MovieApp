@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             android:onClick="@{()-> listener.onClickNowPlaying(item.id)}"
-            app:imageUrlWithUrl="@{item.imageUrl}"/>
+            app:imageUrl="@{item.imageUrl}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -27,7 +27,7 @@
                 app:layout_constraintDimensionRatio="16:9"
                 tools:src="@tools:sample/backgrounds/scenic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:imageUrlWithUrl="@{item.imageUrl}"
+                app:imageUrl="@{item.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:onClick="@{()->listener.onClickUpComing(item.id)}"

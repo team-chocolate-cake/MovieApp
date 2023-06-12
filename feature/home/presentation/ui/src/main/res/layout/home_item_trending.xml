@@ -26,7 +26,7 @@
             android:onClick="@{()-> listener.onClickTrending(item.id)}"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic"
-            app:imageUrlWithUrl="@{item.imageUrl}"
+            app:imageUrl="@{item.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

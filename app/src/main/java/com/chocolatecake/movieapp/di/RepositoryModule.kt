@@ -1,9 +1,9 @@
 package com.chocolatecake.movieapp.di
 
-import com.chocolatecake.movieapp.data.repository.MovieRepositoryImpl
-import com.chocolatecake.movieapp.data.repository.auth.AuthRepositoryImpl
-import com.chocolatecake.movieapp.domain.repository.AuthRepository
-import com.chocolatecake.movieapp.domain.repository.MovieRepository
+import com.chocolatecake.repository.AuthRepository
+import com.chocolatecake.repository.MovieRepository
+import com.chocolatecake.repository.MovieRepositoryImpl
+import com.chocolatecake.repository.auth.AuthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

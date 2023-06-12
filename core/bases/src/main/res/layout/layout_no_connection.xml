@@ -6,6 +6,5 @@
     android:layout_height="@dimen/lottie_error_size"
     app:lottie_autoPlay="true"
     app:lottie_loop="false"
-    app:lottie_rawRes="@raw/no_connection"
-    app:showWhenError="@{viewModel.state.error}" />
+    app:lottie_rawRes="@raw/no_connection" />
 
