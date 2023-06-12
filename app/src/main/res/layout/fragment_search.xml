@@ -113,12 +113,12 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             app:hideResult="@{viewModel.state.error}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             app:query="@{viewModel.state.query}"
-            app:spanCount="2"
-            tools:listitem="@layout/search_item_movie" />
+            tools:itemCount="5"
+            tools:listitem="@layout/item_movie_horizontal" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation_view_empty"
