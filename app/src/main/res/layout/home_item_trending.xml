@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.movieapp.home.adapter.HomeListener" />
+            type="com.chocolatecake.movieapp.ui.home.HomeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

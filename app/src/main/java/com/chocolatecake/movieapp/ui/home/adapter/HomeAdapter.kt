@@ -11,7 +11,7 @@ import com.chocolatecake.movieapp.databinding.HomeRecyclerviewPopularPeopleBindi
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewSliderBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewTopRatedBinding
 import com.chocolatecake.movieapp.databinding.HomeRecyclerviewTrendingBinding
-import com.chocolatecake.movieapp.home.adapter.HomeListener
+import com.chocolatecake.movieapp.ui.home.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseAdapter
 import com.chocolatecake.movieapp.ui.home.HomeItem
 import com.chocolatecake.movieapp.ui.home.HomeItemType

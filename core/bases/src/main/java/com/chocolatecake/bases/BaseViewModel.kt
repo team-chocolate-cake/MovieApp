@@ -2,6 +2,7 @@ package com.chocolatecake.bases
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chocolatecake.mapper.Mapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +22,7 @@ abstract class BaseViewModel<STATE ,EVENT> : ViewModel() {
 
     abstract fun getData()
 
-    protected fun <T> tryToExecute(
+    protected fun <T> tryToExecuteList(
         call: suspend () -> T,
         onSuccess: (T) -> Unit,
         onError: (Throwable) -> Unit,
@@ -30,6 +31,22 @@ abstract class BaseViewModel<STATE ,EVENT> : ViewModel() {
         viewModelScope.launch(dispatcher) {
             try {
                 call().also(onSuccess)
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
+    }
+
+    protected fun <INPUT, OUTPUT> tryToExecuteList(
+        call: suspend () -> List<INPUT>,
+        onSuccess: (List<OUTPUT>) -> Unit,
+        mapper: Mapper<INPUT, OUTPUT>,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                mapper.map(call()).also(onSuccess)
             } catch (th: Throwable) {
                 onError(th)
             }

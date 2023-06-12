@@ -76,15 +76,7 @@ class SearchViewModel @Inject constructor(
     private fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = {
-                val genreEntity: GenreEntity? = _state.value.run {
-                    selectedMovieGenresId?.let { selectedId ->
-                        genresMovies?.find { it.genreId == selectedId }
-                            ?.let { GenreEntity(selectedId, it.genresName) }
-                    }
-                }
-                searchMoviesUseCase(_state.value.query, genreEntity)
-            },
+            call = { searchMoviesUseCase(_state.value.query, _state.value.selectedMovieGenresId) },
             onSuccess = ::onSuccessMovies,
             onError = ::onError
         )

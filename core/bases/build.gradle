@@ -45,4 +45,7 @@ dependencies {
 
     /// viewModel
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    
+    /// lottie
+    implementation 'com.airbnb.android:lottie:6.0.0'
 }

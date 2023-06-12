@@ -1,6 +1,6 @@
-package com.chocolatecake.movieapp.home.adapter
+package com.chocolatecake.viewmodel.home
 
-import com.chocolatecake.movieapp.ui.base.BaseInteractionListener
+import com.chocolatecake.bases.BaseInteractionListener
 
 interface HomeListener : BaseInteractionListener {
     fun onClickUpComing(itemId: Int)

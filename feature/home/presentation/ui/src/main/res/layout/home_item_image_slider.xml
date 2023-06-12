@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.home.UpComingMoviesUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.home.HomeListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+                android:layout_height="match_parent"
+                app:layout_constraintDimensionRatio="16:9"
+                tools:src="@tools:sample/backgrounds/scenic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:imageUrlWithUrl="@{item.imageUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{()->listener.onClickUpComing(item.id)}"
+                />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

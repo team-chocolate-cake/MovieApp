@@ -12,7 +12,6 @@ import com.chocolatecake.movieapp.domain.usecases.home.GetPopularPeopleUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTopRatedUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetTrendingMoviesUseCase
 import com.chocolatecake.movieapp.domain.usecases.home.GetUpcomingMoviesUseCase
-import com.chocolatecake.movieapp.home.adapter.HomeListener
 import com.chocolatecake.movieapp.ui.base.BaseViewModel
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiEvent
 import com.chocolatecake.movieapp.ui.home.ui_state.HomeUiState
