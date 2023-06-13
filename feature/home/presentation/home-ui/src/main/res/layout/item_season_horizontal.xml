@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.model.SeasonHorizontalUI" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.MediaListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginVertical="@dimen/spacing_tiny"
+        android:onClick="@{() -> listener.onClickMedia(item.id)}">
+
+        <View
+            android:id="@+id/view_card_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero_height"
+            android:layout_marginVertical="@dimen/spacing_small"
+            android:background="@drawable/custom_card_background"
+            app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_season"
+            app:layout_constraintTop_toTopOf="@+id/shape_image_view_season" />
+
+        <TextView
+            android:id="@+id/text_view_season_title"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:maxLines="1"
+            android:text="@{item.title}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/view_card_background"
+            app:layout_constraintStart_toEndOf="@+id/shape_image_view_season"
+            app:layout_constraintTop_toTopOf="@id/view_card_background"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/text_view_description"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.description}"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="@id/text_view_season_title"
+            app:layout_constraintStart_toStartOf="@id/text_view_season_title"
+            app:layout_constraintTop_toBottomOf="@id/text_view_season_title"
+            tools:text="@tools:sample/lorem/random" />
+
+
+        <TextView
+            android:id="@+id/text_view_year"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:drawableStart="@drawable/ic_date"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:drawableTint="@color/on_background_38"
+            android:text="@{item.year}"
+            android:textColor="@color/on_background_38"
+            app:layout_constraintBottom_toBottomOf="@id/view_card_background"
+            app:layout_constraintStart_toStartOf="@+id/text_view_description"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_description"
+            tools:text="2019" />
+
+        <TextView
+            android:id="@+id/text_view_count_episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_count_episodes"
+            android:drawablePadding="@dimen/spacing_tiny"
+            android:drawableTint="@color/on_background_38"
+            android:text="@{String.valueOf(item.countEpisode)}"
+            android:textColor="@color/on_background_38"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_description"
+            app:layout_constraintTop_toTopOf="@+id/text_view_year"
+            tools:text="19" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_season"
+            android:layout_width="@dimen/custom_width_image"
+            android:layout_height="@dimen/custom_height_image"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            tools:src="@tools:sample/backgrounds/scenic" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
