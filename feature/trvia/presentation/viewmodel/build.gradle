@@ -34,7 +34,7 @@ android {
 dependencies {
     implementation project(path: ':core:bases')
     implementation project(path: ':core:domain:usecase')
-    implementation project(path: ':feature:home:domain:usecase')
+    implementation project(path: ':feature:trvia:domain:usecase')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chocolatecake.viewmodel'
+    namespace 'com.chocolatecake.repository'
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -32,9 +32,9 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':core:bases')
+    implementation project(path: ':core:data:remote')
+    implementation project(path: ':core:data:local')
     implementation project(path: ':core:domain:usecase')
-    implementation project(path: ':feature:home:domain:usecase')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
@@ -46,13 +46,4 @@ dependencies {
     /// hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
-
-    /// viewModel
-    implementation "androidx.fragment:fragment-ktx:$androidxFragmentVersion"
-    implementation "androidx.activity:activity-ktx:$androidxActivityVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleExtensionsVersion"
-
-    /// coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 }

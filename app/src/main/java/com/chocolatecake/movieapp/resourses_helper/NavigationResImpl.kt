@@ -7,5 +7,5 @@ import javax.inject.Singleton
 
 @Singleton
 class NavigationResImpl @Inject constructor() : NavigationRes {
-    override val homeFeature: Int = com.chocolatecake.ui.R.id.home_nav_graph
+    override val homeFeature: Int = R.id.action_loginFragment_to_home_nav_graph
 }

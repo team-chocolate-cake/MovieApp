@@ -53,8 +53,6 @@ dependencies {
 
     /// viewModel
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     /// hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"
