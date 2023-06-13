@@ -24,7 +24,7 @@
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
             app:cardBackgroundColor="@color/card"
-            app:cardCornerRadius="@dimen/radius_medium"
+            android:background="@drawable/custom_material_card_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shape_image_view_season"
             app:layout_constraintTop_toTopOf="parent">
@@ -40,13 +40,13 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="@{item.title}"
-                    android:layout_marginStart="@dimen/spacing_small_8dp"
+                    android:layout_marginHorizontal="@dimen/spacing_small_8dp"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:textColor="@color/on_background_87"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="@tools:sample/lorem/random" />
 
                 <TextView
                     android:id="@+id/text_view_description"
@@ -61,29 +61,22 @@
                     app:layout_constraintEnd_toEndOf="@id/text_view_season_title"
                     app:layout_constraintStart_toStartOf="@id/text_view_season_title"
                     app:layout_constraintTop_toBottomOf="@id/text_view_season_title"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="@tools:sample/lorem/random" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shape_image_view_year"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small_8dp"
-                    android:src="@drawable/ic_date"
-                    app:tint="@color/on_background_38"
-                    app:layout_constraintStart_toStartOf="@+id/text_view_description"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_description" />
 
                 <TextView
                     android:id="@+id/text_view_year"
                     style="@style/TextStyle.BodySmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_tiny_4dp"
+                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:drawableStart="@drawable/ic_date"
                     android:text="@{item.year}"
+                    android:drawablePadding="@dimen/spacing_tiny_4dp"
+                    android:drawableTint="@color/on_background_38"
                     android:textColor="@color/on_background_38"
-                    app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_year"
-                    app:layout_constraintStart_toEndOf="@+id/shape_image_view_year"
-                    app:layout_constraintTop_toTopOf="@+id/shape_image_view_year"
+                    app:layout_constraintStart_toStartOf="@+id/text_view_description"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_description"
                     tools:text="2019" />
 
                 <TextView
@@ -92,25 +85,14 @@
                     android:layout_height="wrap_content"
                     android:text="@{String.valueOf(item.countEpisode)}"
                     android:textColor="@color/on_background_38"
+                    android:drawableStart="@drawable/ic_count_episodes"
+                    android:drawablePadding="@dimen/spacing_tiny_4dp"
+                    android:drawableTint="@color/on_background_38"
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_view_description"
                     app:layout_constraintTop_toTopOf="@+id/text_view_year"
                     tools:text="19" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/shape_image_view_count_episode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_tiny_4dp"
-                    android:src="@drawable/ic_count_episodes"
-                    app:tint="@color/on_background_38"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_view_count_episode"
-                    app:layout_constraintEnd_toStartOf="@+id/text_view_count_episode"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_count_episode" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         </com.google.android.material.card.MaterialCardView>
 
