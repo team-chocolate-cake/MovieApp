@@ -25,8 +25,6 @@ abstract class BaseFragment<VDB : ViewDataBinding, STATE, EVENT> : Fragment() {
     protected val binding: VDB
         get() = _binding
 
-
-    abstract fun onSateChange(state: STATE)
     abstract fun onEvent(event: EVENT)
 
     override fun onCreateView(
@@ -44,7 +42,6 @@ abstract class BaseFragment<VDB : ViewDataBinding, STATE, EVENT> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        collectLatest { viewModel.state.collectLatest { onSateChange(it) } }
         collectLatest { viewModel.event.collectLatest { onEvent(it) } }
     }
 

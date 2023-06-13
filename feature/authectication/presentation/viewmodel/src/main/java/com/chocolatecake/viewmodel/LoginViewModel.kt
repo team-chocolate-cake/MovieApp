@@ -16,9 +16,7 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val stringsRes: StringsRes,
     private val navigationRes: NavigationRes,
-) : BaseViewModel<LoginUiState, LoginUiEvent>() {
-
-    override fun initialState() = LoginUiState()
+) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState()) {
 
     fun onClickSignUp() {
         sendEvent(LoginUiEvent.SignUpEvent)
@@ -54,10 +52,6 @@ class LoginViewModel @Inject constructor(
     private fun updateStateToSuccessLogin() {
         _state.update { it.copy(userNameError = null, passwordError = null, isLoading = false) }
         sendEvent(LoginUiEvent.NavigateToHomeScreen(navigationRes.homeFeature))
-    }
-
-    override fun getData() {
-
     }
 }
 

@@ -75,8 +75,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginUiState, LoginUiEv
 
         }
     }
-
-    override fun onSateChange(state: LoginUiState) {
-
-    }
 }

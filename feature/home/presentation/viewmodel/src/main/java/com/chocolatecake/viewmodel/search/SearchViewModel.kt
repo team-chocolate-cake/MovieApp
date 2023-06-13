@@ -23,8 +23,7 @@ class SearchViewModel @Inject constructor(
     private val movieUiMapper: MovieUiMapper,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
-) : BaseViewModel<SearchUiState, SearchUiEvent>(), SearchListener {
-    override fun initialState() = SearchUiState()
+) : BaseViewModel<SearchUiState, SearchUiEvent>(SearchUiState()), SearchListener {
 
     val query = MutableStateFlow("")
 
@@ -55,13 +54,13 @@ class SearchViewModel @Inject constructor(
     }
 
 
-    override fun getData() {
+    fun getData() {
         onSearchForMovie()
     }
 
     private fun onSearchForMovie() {
         _state.update { it.copy(isLoading = true) }
-        tryToExecuteList(
+        tryToExecute(
             call = {
                 searchMoviesUseCase(
                     query.value,
@@ -89,13 +88,13 @@ class SearchViewModel @Inject constructor(
     override fun onClickFilter() {
         viewModelScope.launch {
             getAllGenresMovies()
-            _event.send(SearchUiEvent.FilterEvent)
+            _event.emit(SearchUiEvent.FilterEvent)
         }
     }
 
     private suspend fun getAllGenresMovies() {
         _state.update { it.copy(isLoading = true) }
-        tryToExecuteList(
+        tryToExecute(
             call = { getAllGenresMoviesUseCase() },
             onSuccess = ::onSuccessGenres,
             onError = ::onError
@@ -146,9 +145,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun showErrorWithSnackBar(messages: String) {
-        viewModelScope.launch {
-            _event.send(SearchUiEvent.ShowSnackBar(messages))
-        }
+        sendEvent(SearchUiEvent.ShowSnackBar(messages))
     }
     //endregion
 }

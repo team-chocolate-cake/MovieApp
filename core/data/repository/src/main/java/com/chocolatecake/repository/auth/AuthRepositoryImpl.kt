@@ -1,10 +1,10 @@
 package com.chocolatecake.repository.auth
 
-import com.chocolatecake.remote.service.MovieService
+import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.remote.request.LoginRequest
+import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.AuthRepository
 import com.chocolatecake.repository.BaseRepository
-import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.repository.UnauthorizedThrowable
 import javax.inject.Inject
 
