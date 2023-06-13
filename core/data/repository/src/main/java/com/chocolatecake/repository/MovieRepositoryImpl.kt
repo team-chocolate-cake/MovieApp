@@ -3,6 +3,7 @@ package com.chocolatecake.repository
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
@@ -14,6 +15,7 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
+import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
@@ -39,6 +41,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
+    private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -176,4 +179,8 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
     /// endregion
+
+    override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+    }
 }

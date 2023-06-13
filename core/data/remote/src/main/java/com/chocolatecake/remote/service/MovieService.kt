@@ -8,6 +8,7 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -82,4 +83,9 @@ interface MovieService {
         @Query("language") language: String = "en"
     ): Response<GenresWrapperResponse<GenreMovieRemoteDto>>
     ///endregion
+
+    @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations")
+    suspend fun getMovieDetails(
+        @Path("movieId") movieId: Int
+    ): Response<MovieDetailsDto>
 }
