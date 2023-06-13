@@ -36,6 +36,10 @@ android {
         dataBinding true
         buildConfig true
     }
+    packagingOptions {
+        exclude 'com/chocolatecake/ui/generated/callback/AfterTextChanged$Listener.class'
+        exclude 'com/chocolatecake/ui/DataBinderMapperImpl$InnerBrLookup.class'
+    }
 }
 
 dependencies {
