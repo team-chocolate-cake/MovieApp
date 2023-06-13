@@ -18,8 +18,14 @@ data class SearchUiState(
 
     data class MediaUIState(
         val mediaId: Int = 0,
+        val mediaType: SearchMedia,
         val mediaImage: String = "",
         val mediaName: String = "",
         val mediaRate: Double = 0.0,
     )
+    enum class SearchMedia {
+        MOVIE,
+        TV,
+        PEOPLE
+    }
 }
