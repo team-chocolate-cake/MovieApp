@@ -17,16 +17,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
         android:onClick="@{() -> listener.onClickMedia(item.id)}">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/material_card_view_movie_horizontal"
             android:layout_width="@dimen/zero_width"
             android:layout_height="@dimen/image_width"
-            android:layout_marginTop="@dimen/spacing_medium_16dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
-            app:cardBackgroundColor="@color/card"
+            android:layout_marginVertical="@dimen/spacing_medium_16dp"
+            android:background="@color/card"
+            android:padding="@dimen/spacing_small_8dp"
             app:cardCornerRadius="@dimen/radius_medium"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/shape_image_view_movie"
             app:layout_constraintTop_toTopOf="parent">
@@ -40,15 +42,14 @@
                     style="@style/TextStyle.TitleSmall"
                     android:layout_width="@dimen/zero_width"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_small_8dp"
-                    android:text="@{item.title}"
-                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{item.title}"
                     android:textColor="@color/on_background_87"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@tools:sample/avatars" />
+                    tools:text="@tools:sample/lorem/random" />
 
                 <TextView
                     android:id="@+id/text_view_genres"
@@ -56,8 +57,8 @@
                     android:layout_width="@dimen/zero_width"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_tiny_4dp"
-                    android:text="@{item.genres}"
                     android:maxLines="1"
+                    android:text="@{item.genres}"
                     android:textColor="@color/on_background_60"
                     app:layout_constraintEnd_toEndOf="@id/text_view_movie_title"
                     app:layout_constraintStart_toStartOf="@id/text_view_movie_title"
@@ -70,9 +71,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:src="@drawable/ic_date"
-                    app:tint="@color/on_background_38"
                     app:layout_constraintStart_toStartOf="@+id/text_view_genres"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_genres" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_genres"
+                    app:tint="@color/on_background_38" />
 
                 <TextView
                     android:id="@+id/text_view_year"
@@ -91,8 +92,8 @@
                     android:id="@+id/text_view_count_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/star"
                     android:text="@{String.valueOf(item.rate)}"
+                    android:textColor="@color/star"
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_year"
@@ -119,7 +120,6 @@
             android:id="@+id/shape_image_view_movie"
             android:layout_width="@dimen/custom_width_image"
             android:layout_height="@dimen/custom_height_image"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
             app:imageUrl="@{item.imageUrl}"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/material_card_view_movie_horizontal"
