@@ -9,8 +9,8 @@ import com.chocolatecake.usecase.search_history.InsertSearchHistoryUseCase
 import com.chocolatecake.usecase.search_history.SearchHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,30 +26,20 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel<SearchUiState, SearchUiEvent>(), SearchListener {
     override fun initialState() = SearchUiState()
 
+    val query = MutableStateFlow("")
+
     init {
         viewModelScope.launch {
-            var oldValue = ""
-            onSearchInputChanged(state.value.query)
-            state.debounce(1000)
-                .filter { it.query.isNotEmpty() && oldValue != state.value.query }
-                .collect { value ->
-                    onSearchInputChanged(state.value.query)
-                    oldValue = state.value.query
-                }
+            query.debounce(1000)
+                .collect { onSearchInputChanged(it) }
         }
     }
 
-    fun setSearchQuery(query: CharSequence?) {
-        _state.update { it.copy(query = query.toString()) }
-    }
-
-
-    private fun onSearchInputChanged(newQuery: CharSequence) {
-        val query = newQuery.toString()
-        _state.update { it.copy(query = query, isLoading = true) }
+    private fun onSearchInputChanged(newQuery: String) {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
-            saveSearchHistoryInLocal(query)
-            getSearchHistory(query)
+            saveSearchHistoryInLocal(newQuery)
+            getSearchHistory(newQuery)
             getData()
         }
     }
@@ -74,7 +64,7 @@ class SearchViewModel @Inject constructor(
         tryToExecuteList(
             call = {
                 searchMoviesUseCase(
-                    _state.value.query,
+                    query.value,
                     _state.value.selectedMovieGenresId
                 )
             },

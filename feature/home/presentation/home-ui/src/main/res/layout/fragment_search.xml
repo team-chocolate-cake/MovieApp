@@ -17,10 +17,9 @@
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edittext_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="48dp"
-            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
             android:background="@drawable/edittext_background"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/spacing_custom"
@@ -29,7 +28,7 @@
             android:inputType="text"
             android:paddingStart="@dimen/spacing_custom"
             android:paddingEnd="48dp"
-            android:text="@{viewModel.state.query}"
+            android:text="@={viewModel.query}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +127,7 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:query="@{viewModel.state.query}"
+            app:query="@{viewModel.query}"
             app:spanCount="2"
             tools:listitem="@layout/search_item_movie" />
 
@@ -144,7 +143,7 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/empty_state"
             app:showWhenNoResult="@{viewModel.state.searchMovieResultEntity}"
-            app:showWhenQueryEmpty="@{viewModel.state.query}" />
+            app:showWhenQueryEmpty="@{viewModel.query}" />
 
         <include
             android:id="@+id/lottie_animation_view_no_network"

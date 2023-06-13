@@ -81,10 +81,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:afterTextChanged="@{(text) -> viewModel.onPasswordChanged(text)}"
                 android:background="@drawable/edittext_background"
                 android:inputType="textPassword"
                 android:maxLines="1"
+                android:text="@={viewModel.state.password}"
                 android:padding="16dp"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
@@ -107,10 +107,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:afterTextChanged="@{(text) -> viewModel.onUserNameChanged(text)}"
                 android:background="@drawable/edittext_background"
                 android:inputType="textPersonName"
                 android:maxLines="1"
+                android:text="@={viewModel.state.userName}"
                 android:padding="16dp"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
