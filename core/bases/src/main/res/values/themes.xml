@@ -24,4 +24,10 @@
         <item name="postSplashScreenTheme">@style/Theme.MovieApp</item>
     </style>
 
+    <style name="MovieDetailsChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+    <item name="chipStrokeColor">@color/on_background_38</item>
+    <item name="chipStrokeWidth">1dp</item>
+    <item name="android:textColor">@color/on_background_38</item>
+    </style>
+
 </resources>
