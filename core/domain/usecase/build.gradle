@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    api project(path: ':core:domain:entities')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

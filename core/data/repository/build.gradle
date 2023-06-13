@@ -40,7 +40,6 @@ android {
 dependencies {
     implementation project(path: ':core:data:remote')
     implementation project(path: ':core:data:local')
-    implementation project(path: ':core:domain:entities')
     implementation project(path: ':core:domain:usecase')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
