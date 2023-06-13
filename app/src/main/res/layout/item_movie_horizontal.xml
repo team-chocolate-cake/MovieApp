@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.movieapp.ui.viewmodel.model.MovieHorizontalUI" />
+            type="com.chocolatecake.movieapp.ui.search.SearchUiState.MediaUIState" />
 
         <variable
             name="listener"
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> listener.onClickMedia(item.id)}">
+        android:onClick="@{() -> listener.onClickMedia(item.mediaId)}">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/material_card_view_movie_horizontal"
@@ -41,7 +41,7 @@
                     android:layout_width="@dimen/zero_width"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_small_8dp"
-                    android:text="@{item.title}"
+                    android:text="@{item.mediaName}"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:maxLines="1"
                     android:textColor="@color/on_background_87"
@@ -56,7 +56,7 @@
                     android:layout_width="@dimen/zero_width"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_tiny_4dp"
-                    android:text="@{item.genres}"
+                    android:text="@{item.mediaName}"
                     android:maxLines="1"
                     android:textColor="@color/on_background_60"
                     app:layout_constraintEnd_toEndOf="@id/text_view_movie_title"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_tiny_4dp"
                     android:maxLines="1"
-                    android:text="@{String.valueOf(item.year)}"
+                    android:text="@{String.valueOf(item.mediaRate)}"
                     android:textColor="@color/on_background_38"
                     app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_year"
                     app:layout_constraintStart_toEndOf="@+id/shape_image_view_year"
@@ -93,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/star"
-                    android:text="@{String.valueOf(item.rate)}"
+                    android:text="@{String.valueOf(item.mediaRate)}"
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_view_year"
@@ -121,7 +121,7 @@
             android:layout_width="@dimen/custom_width_image"
             android:layout_height="@dimen/custom_height_image"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
-            app:imageUrl="@{item.imageUrl}"
+            app:imageUrl="@{item.mediaImage}"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/material_card_view_movie_horizontal"
             app:layout_constraintStart_toStartOf="parent"
