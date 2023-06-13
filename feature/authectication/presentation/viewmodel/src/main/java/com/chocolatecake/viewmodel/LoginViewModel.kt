@@ -16,9 +16,7 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val stringsRes: StringsRes,
     private val navigationRes: NavigationRes,
-) : BaseViewModel<LoginUiState, LoginUiEvent>() {
-
-    override fun initialState() = LoginUiState()
+) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState()) {
 
     fun onClickSignUp() {
         sendEvent(LoginUiEvent.SignUpEvent)
@@ -44,39 +42,16 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun updateStateToUserNameError() {
-        _state.update {
-            it.copy(
-                userNameError = stringsRes.usernameIsRequired
-            )
-        }
+        _state.update { it.copy(userNameError = stringsRes.usernameIsRequired) }
     }
 
     private fun updateStateToPasswordError() {
-        _state.update {
-            it.copy(
-                passwordError = stringsRes.passwordIsRequired
-            )
-        }
+        _state.update { it.copy(passwordError = stringsRes.passwordIsRequired) }
     }
 
     private fun updateStateToSuccessLogin() {
-        _state.update {
-            it.copy(userNameError = null, passwordError = null, isLoading = false)
-        }
+        _state.update { it.copy(userNameError = null, passwordError = null, isLoading = false) }
         sendEvent(LoginUiEvent.NavigateToHomeScreen(navigationRes.homeFeature))
-    }
-
-    fun onUserNameChanged(userName: CharSequence) {
-        _state.update { it.copy(userName = userName.toString(), userNameError = null) }
-    }
-
-    fun onPasswordChanged(password: CharSequence) {
-        _state.update { it.copy(password = password.toString(), passwordError = null) }
-    }
-
-
-    override fun getData() {
-
     }
 }
 

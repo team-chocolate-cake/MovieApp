@@ -23,6 +23,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
+        collectChange()
     }
 
     private fun setAdapter() {
@@ -30,17 +31,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
         binding.recyclerViewHome.adapter = homeAdapter
     }
 
-    override fun onSateChange(state: HomeUiState) {
-        homeAdapter.setItems(
-            mutableListOf(
-                state.upComingMovies,
-                state.nowPlayingMovies,
-                state.trendingMovies,
-                state.topRated,
-                state.popularPeople,
-                state.popularMovies,
-            )
-        )
+    private fun collectChange() {
+        collectLatest {
+            viewModel.state.collect { state ->
+                homeAdapter.setItems(
+                    mutableListOf(
+                        state.upComingMovies,
+                        state.nowPlayingMovies,
+                        state.trendingMovies,
+                        state.topRated,
+                        state.popularPeople,
+                        state.popularMovies,
+                    )
+                )
+
+            }
+
+        }
         binding.recyclerViewHome.smoothScrollToPosition(0)
     }
 
@@ -79,6 +86,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             }
         }
     }
-
-
 }

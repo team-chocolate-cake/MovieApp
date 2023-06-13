@@ -32,16 +32,15 @@ class HomeViewModel @Inject constructor(
     private val topRatedUiMapper: TopRatedUiMapper,
     private val popularPeopleUiMapper: PopularPeopleUiMapper,
     private val popularMoviesUiMapper: PopularMoviesUiMapper,
-) : BaseViewModel<HomeUiState, HomeUiEvent>(), HomeListener {
+) : BaseViewModel<HomeUiState, HomeUiEvent>(HomeUiState()), HomeListener {
 
-    override fun initialState() = HomeUiState()
 
     /// region init
     init {
         getData()
     }
 
-    override fun getData() {
+    private fun getData() {
         _state.update { it.copy(isLoading = true) }
         getUpComingMovies()
         getPopularPeople()
@@ -55,7 +54,7 @@ class HomeViewModel @Inject constructor(
 
     /// region call
     private fun getPopularMovies() {
-        tryToExecuteList(
+        tryToExecute(
             call = { popularMoviesUseCase() },
             onSuccess = ::onSuccessPopularMovies,
             mapper = popularMoviesUiMapper,
@@ -73,7 +72,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getTopRatedMovies() {
-        tryToExecuteList(
+        tryToExecute(
             call = { topRatedUseCase() },
             onSuccess = ::onSuccessTopRatedMovies,
             mapper = topRatedUiMapper,
@@ -92,7 +91,7 @@ class HomeViewModel @Inject constructor(
 
 
     private fun getUpComingMovies() {
-        tryToExecuteList(
+        tryToExecute(
             call = { upcomingMoviesUseCase() },
             onSuccess = ::onSuccessUpcomingMovies,
             mapper = upComingUiMapper,
@@ -110,7 +109,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getPopularPeople() {
-        tryToExecuteList(
+        tryToExecute(
             call = { popularPeopleUseCase() },
             onSuccess = ::onSuccessPopularPeople,
             mapper = popularPeopleUiMapper,
@@ -128,7 +127,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getNowPlayingMovies() {
-        tryToExecuteList(
+        tryToExecute(
             call = { nowPlayingUseCase() },
             onSuccess = ::onSuccessNowPlayingMovies,
             mapper = nowPlayingUiMapper,
@@ -146,7 +145,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getTrendingMovies() {
-        tryToExecuteList(
+        tryToExecute(
             call = { trendingMoviesUseCase() },
             onSuccess = ::onSuccessTrendingMovies,
             mapper = trendingUiMapper,

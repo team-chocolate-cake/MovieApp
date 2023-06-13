@@ -1,7 +1,6 @@
 package com.chocolatecake.viewmodel.search
 
 data class SearchUiState(
-    val query: String = "",
     val mediaType: List<SearchTypeUiState> = emptyList(),
     val searchMovieResultEntity: List<MoviesUiState> = emptyList(),
     val searchTvShowResult: List<TvShowUiState> = emptyList(),

@@ -2,8 +2,8 @@ package com.chocolatecake.movieapp.resourses_helper
 
 import android.content.Context
 import androidx.annotation.StringRes
+import com.chocolatecake.bases.R
 import com.chocolatecake.bases.StringsRes
-import com.chocolatecake.movieapp.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

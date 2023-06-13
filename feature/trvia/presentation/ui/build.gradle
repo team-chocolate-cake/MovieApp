@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoTestVersion"
 
     /// viewModel
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
+    implementation "androidx.fragment:fragment-ktx:$androidxFragmentVersion"
 
     /// hilt
     implementation "com.google.dagger:hilt-android:$hiltVersion"

@@ -25,6 +25,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupHomeAdapter()
+        collectChange()
     }
 
     private fun setupHomeAdapter() {
@@ -32,10 +33,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         binding.recyclerViewSearch.adapter = searchAdapter
     }
 
-    override fun onSateChange(state: SearchUiState) {
-        setupSearchHistoryAdapter(state)
-        searchAdapter.setItems(state.searchMovieResultEntity)
-        state.error?.last()?.let { showSnackBar(it) }
+    private fun collectChange() {
+        collectLatest {
+            viewModel.state.collect { state ->
+                setupSearchHistoryAdapter(state)
+                searchAdapter.setItems(state.searchMovieResultEntity)
+                state.error?.last()?.let { showSnackBar(it) }
+            }
+        }
     }
 
     private fun setupSearchHistoryAdapter(state: SearchUiState) {

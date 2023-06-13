@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.utils
+package com.chocolatecake.ui.search.utils
 
 import android.view.LayoutInflater
 import android.view.View
