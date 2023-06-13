@@ -15,7 +15,6 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
-import com.chocolatecake.repository.mappers.domain.movie.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -33,7 +32,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
     private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
-    private val domainMovieMapper: DomainMovieMapper,
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
     private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
     private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
@@ -138,9 +136,28 @@ class MovieRepositoryImpl @Inject constructor(
 
     ///region search
     override suspend fun getSearchMovies(keyword: String): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
         return wrapApiCall { movieService.getSearchMovies(keyword) }.results
-            ?.filterNotNull()?.let { movieDtos -> domainMovieMapper.map(movieDtos) } ?: emptyList()
+            ?.filterNotNull()?.let { movieDtos ->
+                movieDtos.map { input ->
+                    MovieEntity(
+                        id = input.id ?: 0,
+                        rate = input.voteAverage ?: 0.0,
+                        title = input.title ?: "",
+                        genreEntities = filterGenres(
+                            input.genreIds?.filterNotNull() ?: emptyList(),
+                            genresEntities
+                        ),
+                        imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
+                    )
+                }
+            } ?: emptyList()
     }
+
+    private fun filterGenres(
+        genresIds: List<Int>,
+        genresEntities: List<GenreEntity>
+    ): List<GenreEntity> = genresEntities.filter { it.genreID in genresIds }
     //endregion
 
     /// region genres

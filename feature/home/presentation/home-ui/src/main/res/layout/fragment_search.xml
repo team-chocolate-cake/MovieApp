@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"-->
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edittext_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="48dp"
-            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
             android:background="@drawable/edittext_background"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/spacing_custom"

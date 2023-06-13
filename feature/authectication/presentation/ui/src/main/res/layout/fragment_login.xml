@@ -65,6 +65,35 @@
             app:layout_constraintTop_toTopOf="@+id/view_background" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edittext_password"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:passwordToggleDrawable="@drawable/selector_password_icon"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/on_background_60">
+
+            <!--                android:afterTextChanged="@{(text) -> viewModel.onPasswordChanged(text)}"-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:textAppearance="@style/TextStyle.BodyMedium"
+                android:textColor="@color/on_background_60"
+                app:setTipError="@{viewModel.state.passwordError}"
+                tools:text="chocolate" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edittext_username"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
@@ -75,10 +104,10 @@
             app:boxStrokeWidthFocused="0dp"
             app:layout_constraintTop_toBottomOf="@+id/textview_username">
 
+            <!--                android:afterTextChanged="@{(text) -> viewModel.onUserNameChanged(text)}"-->
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:afterTextChanged="@{(text) -> viewModel.onUserNameChanged(text)}"
                 android:background="@drawable/edittext_background"
                 android:inputType="textPersonName"
                 android:maxLines="1"
@@ -101,35 +130,6 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintStart_toStartOf="@+id/edittext_password"
             app:layout_constraintTop_toBottomOf="@+id/edittext_username" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edittext_password"
-            style="@style/TextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_small"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:passwordToggleDrawable="@drawable/selector_password_icon"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/on_background_60">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:afterTextChanged="@{(text) -> viewModel.onPasswordChanged(text)}"
-                android:background="@drawable/edittext_background"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:padding="16dp"
-                android:textAppearance="@style/TextStyle.BodyMedium"
-                android:textColor="@color/on_background_60"
-                app:setTipError="@{viewModel.state.passwordError}"
-                tools:text="chocolate" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login"
