@@ -27,9 +27,9 @@
   <path
       android:pathData="M20,16C20,15.448 19.552,15 19,15C18.448,15 18,15.448 18,16C18,16.552 18.448,17 19,17C19.552,17 20,16.552 20,16Z"
       android:fillColor="#230228"
-      android:fillAlpha="0.6"/>
+    />
   <path
       android:pathData="M20,12C20,11.448 19.552,11 19,11C18.448,11 18,11.448 18,12C18,12.552 18.448,13 19,13C19.552,13 20,12.552 20,12Z"
       android:fillColor="#230228"
-      android:fillAlpha="0.6"/>
+    />
 </vector>

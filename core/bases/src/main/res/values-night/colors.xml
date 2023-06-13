@@ -16,4 +16,5 @@
     <color name="login_button_background">#845EC2</color>
     <color name="bottom_navigation_indicator">@color/primary</color>
     <color name="bottom_navigation_background">#262626</color>
+    <color name="star">#DEF8C33C</color>
 </resources>

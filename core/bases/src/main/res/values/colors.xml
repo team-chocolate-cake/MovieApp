@@ -19,4 +19,6 @@
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="bottom_navigation_indicator">#E4D3FF</color>
     <color name="bottom_navigation_background">#F3F4F9</color>
+    <color name="star">#DEF8C33C</color>
+
 </resources>
