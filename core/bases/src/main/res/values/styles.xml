@@ -8,10 +8,6 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Material3.Corner.Full</item>
     </style>
 
-
-
-
-
     <style name="TextStyle.BodyMedium.TextInputEditTextStyle">
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/on_background_60</item>
