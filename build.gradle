@@ -31,10 +31,10 @@ ext {
 
     hiltVersion = '2.44'
 
-    androidxFragmentVersion = '1.5.7'
+    androidxFragmentVersion = '1.6.0'
     androidxActivityVersion = '1.7.2'
     androidxLifecycleExtensionsVersion = '2.2.0'
-    androidxNavigationVersion = '2.5.3'
+    androidxNavigationVersion = '2.6.0'
 
     coroutineVersion = '1.7.1'
 
