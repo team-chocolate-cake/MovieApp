@@ -34,22 +34,18 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.searchFragment,
-//                R.id.homeFragment,
-//                R.id.tvFragment,
-//                R.id.profileFragment -> showBottomNav()
-//
-//                else -> hideBottomNav()
-//            }
+            when (destination.id) {
+                com.chocolatecake.ui.R.id.home_nav_graph -> showBottomNav()
+                else -> hideBottomNav()
+            }
         }
         handleIsAuthorized(navController)
     }
 
     private fun handleIsAuthorized(navController: NavController) {
         if (!preferenceStorage.sessionId.isNullOrBlank()) {
-//            navController
-//                .navigate(R.id.home_nav_graph)
+            navController
+                .navigate(R.id.action_loginFragment_to_home_nav_graph)
         }
     }
 
