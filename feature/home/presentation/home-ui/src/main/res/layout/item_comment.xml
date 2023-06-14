@@ -12,7 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_small">
 
         <TextView
@@ -41,7 +40,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_view_image_person"
             app:layout_constraintTop_toTopOf="@+id/text_view_image_person"
-            tools:text="@tools:sample/avatars" />
+            tools:text="@tools:sample/lorem"
+            android:textSize="@dimen/text_medium"
+            />
 
         <TextView
             android:id="@+id/text_view_comment"
@@ -52,7 +53,7 @@
             android:ellipsize="end"
             android:maxLines="5"
             android:text="@{item.content}"
-            tools:text="@tools:sample/avatars"
+            tools:text="@tools:sample/lorem/random"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="@+id/text_view_username"
             app:layout_constraintStart_toStartOf="@+id/text_view_username"
