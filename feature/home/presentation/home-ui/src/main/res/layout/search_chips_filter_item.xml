@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:checked="@{item.selected}"
         android:onClick="@{() -> listener.onClickGenre(item.genreId)}"
-        android:padding="@dimen/spacing_small"
+        android:padding="@dimen/spacing_small_8dp"
         android:text="@{item.genresName}" />
 
 </layout>

@@ -13,13 +13,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium">
+        android:layout_marginStart="@dimen/spacing_medium_16dp">
 
         <TextView
             android:id="@+id/text_view_popular_movies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:text="@string/Popular_Movies"
             android:textColor="@color/on_background_87"
             style="@style/TextStyle.TitleMedium"
@@ -30,8 +30,8 @@
             android:id="@+id/text_view_show_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:text="@string/show_more"
             android:textColor="@color/primary"
             style="@style/TextStyle.BodyMedium"
@@ -42,7 +42,7 @@
             android:id="@+id/recycler_view_popular_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
