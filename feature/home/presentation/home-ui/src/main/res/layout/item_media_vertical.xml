@@ -6,44 +6,48 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.search.SearchUiState.MoviesUiState" />
+            type="com.chocolatecake.viewmodel.common.model.MediaVerticalUIState" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.search.SearchListener" />
+            type="com.chocolatecake.viewmodel.common.listener.MediaListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp">
+        android:onClick="@{() -> listener.onClickMedia(item.id)}"
+        android:layout_margin="@dimen/spacing_small">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shapeableImageView"
-            android:layout_width="@dimen/height_image"
+            android:id="@+id/shape_image_view_media_vertical"
+            android:layout_width="@dimen/width_image_media_vertical"
             android:layout_height="@dimen/custom_height_card"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <View
             android:id="@+id/view"
-            android:layout_width="@dimen/height_image"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/width_image_media_vertical"
+            android:layout_height="@dimen/custom_height_card"
             android:background="@drawable/gradient_background"
-            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
-            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
-            app:layout_constraintStart_toStartOf="@+id/shapeableImageView" />
+            app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_media_vertical"
+            app:layout_constraintEnd_toEndOf="@+id/shape_image_view_media_vertical"
+            app:layout_constraintStart_toStartOf="@+id/shape_image_view_media_vertical" />
 
         <ImageView
             android:id="@+id/image_view_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_tiny"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_rates_number"
             app:layout_constraintEnd_toStartOf="@+id/text_view_rates_number"
             app:layout_constraintTop_toTopOf="@+id/text_view_rates_number"
@@ -52,16 +56,16 @@
         <TextView
             android:id="@+id/text_view_rates_number"
             style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_width="31dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="@{String.valueOf(item.rate)}"
-            android:textColor="#f6f6f6"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
-            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
-            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
-            tools:text="9.6" />
+            android:text="@{String.valueOf(item.rate)}"
+            android:textColor="@color/rating_color"
+            app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_media_vertical"
+            app:layout_constraintEnd_toEndOf="@+id/shape_image_view_media_vertical"
+            app:layout_constraintStart_toStartOf="@+id/shape_image_view_media_vertical"
+            tools:text="9.9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
