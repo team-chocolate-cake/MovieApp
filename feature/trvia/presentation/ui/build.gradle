@@ -54,13 +54,12 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    /// slider
-    implementation "com.github.smarteist:autoimageslider:$autoimagesliderVersion"
-
     /// lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
     /// navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$androidxNavigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion"
+
+    implementation 'com.github.mckrpk:AnimatedProgressBar:0.1.0'
 }
