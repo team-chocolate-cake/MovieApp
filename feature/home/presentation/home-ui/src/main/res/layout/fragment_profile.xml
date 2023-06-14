@@ -1,21 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.profile.ProfileFragment">
+        android:layout_height="match_parent">
 
-        <!-- TODO: Update blank fragment layout -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_view_profile"
+            android:layout_width="123dp"
+            android:layout_height="133dp"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="118dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Profile" />
+            android:id="@+id/text_view_profile_username"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_view_profile"
+            tools:text=" @el-mtarsham" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/text_view_favorite"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_extra_large"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_heart"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Favorite"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username" />
+
+        <TextView
+            android:id="@+id/text_view_watchlist"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_bookmark"
+
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Watchlist"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_favorite" />
+
+        <TextView
+            android:id="@+id/text_view_watch_history"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Watch History"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist" />
+
+        <TextView
+            android:id="@+id/text_view_mylist"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_checklist"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="My Lists"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history" />
+
+        <TextView
+            android:id="@+id/text_view_rating"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Rating"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylist" />
+
+        <TextView
+            android:id="@+id/text_view_puzzle"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_gamepad"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Popcorn Puzzles!"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rating" />
+
+        <TextView
+            android:id="@+id/text_view_theme"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_sun"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Theme"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle" />
+
+        <TextView
+            android:id="@+id/text_view_logout"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_custom"
+            android:layout_marginEnd="@dimen/spacing_medium"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_logout"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small"
+            android:text="Logout"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_theme" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
