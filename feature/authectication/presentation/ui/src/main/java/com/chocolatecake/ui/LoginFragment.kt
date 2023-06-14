@@ -9,7 +9,9 @@ import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.databinding.FragmentLoginBinding
+import com.chocolatecake.ui.auth.BuildConfig
+import com.chocolatecake.ui.auth.R
+import com.chocolatecake.ui.auth.databinding.FragmentLoginBinding
 import com.chocolatecake.viewmodel.LoginUiEvent
 import com.chocolatecake.viewmodel.LoginUiState
 import com.chocolatecake.viewmodel.LoginViewModel

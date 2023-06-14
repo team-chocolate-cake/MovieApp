@@ -3,8 +3,8 @@ package com.chocolatecake.ui.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.HomeItemImageSliderBinding
+import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.HomeItemImageSliderBinding
 import com.chocolatecake.viewmodel.home.UpComingMoviesUiState
 import com.smarteist.autoimageslider.SliderViewAdapter
 

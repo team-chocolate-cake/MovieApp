@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.FragmentHomeBinding
 import com.chocolatecake.ui.home.adapter.HomeAdapter
+import com.chocolatecake.ui.home.databinding.FragmentHomeBinding
 import com.chocolatecake.viewmodel.home.HomeUiEvent
 import com.chocolatecake.viewmodel.home.HomeUiState
 import com.chocolatecake.viewmodel.home.HomeViewModel
