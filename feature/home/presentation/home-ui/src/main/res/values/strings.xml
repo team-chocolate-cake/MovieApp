@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite">Favorite</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="watch_history">Watch History</string>
+    <string name="my_lists">My Lists</string>
+    <string name="rating">Rating</string>
+    <string name="popcorn_puzzles">Popcorn Puzzles!</string>
+    <string name="theme">Theme</string>
+    <string name="logout">Logout</string>
+</resources>
