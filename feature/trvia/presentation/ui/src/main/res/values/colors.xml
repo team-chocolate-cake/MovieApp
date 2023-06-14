@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="card_memorize">#E4D3FF</color>
+    <color name="error">#99FF0000</color>
+    <color name="correct">#32CD32</color>
+</resources>
