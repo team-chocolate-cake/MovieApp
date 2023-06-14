@@ -6,11 +6,11 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.model.PeopleUI" />
+            type="com.chocolatecake.viewmodel.common.model.PeopleUIState" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.MediaListener" />
+            type="com.chocolatecake.viewmodel.common.listener.MediaListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

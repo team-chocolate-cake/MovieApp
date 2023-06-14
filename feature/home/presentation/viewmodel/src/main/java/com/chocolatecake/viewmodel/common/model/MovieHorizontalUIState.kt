@@ -1,6 +1,6 @@
-package com.chocolatecake.viewmodel.model
+package com.chocolatecake.viewmodel.common.model
 
-data class MovieHorizontalUI(
+data class MovieHorizontalUIState(
     val id: Int,
     val imageUrl: String,
     val title: String,

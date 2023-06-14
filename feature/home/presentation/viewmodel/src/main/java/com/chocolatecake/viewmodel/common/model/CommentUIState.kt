@@ -1,6 +1,6 @@
-package com.chocolatecake.viewmodel.model
+package com.chocolatecake.viewmodel.common.model
 
-data class CommentUi(
+data class CommentUIState(
     val name: String,
     val content: String,
 ) {

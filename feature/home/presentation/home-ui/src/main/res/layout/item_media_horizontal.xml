@@ -6,11 +6,11 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.model.MediaHorizontalUI" />
+            type="com.chocolatecake.viewmodel.common.model.MediaHorizontalUIState" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.MediaListener" />
+            type="com.chocolatecake.viewmodel.common.listener.MediaListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

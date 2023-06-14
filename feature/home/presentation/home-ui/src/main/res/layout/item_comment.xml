@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.model.CommentUi" />
+            type="com.chocolatecake.viewmodel.common.model.CommentUIState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

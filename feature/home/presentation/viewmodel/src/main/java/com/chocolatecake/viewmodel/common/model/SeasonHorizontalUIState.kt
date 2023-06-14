@@ -1,6 +1,6 @@
-package com.chocolatecake.viewmodel.model
+package com.chocolatecake.viewmodel.common.model
 
-data class SeasonHorizontalUI(
+data class SeasonHorizontalUIState(
     val id: Int,
     val imageUrl: String,
     val title: String,
