@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import com.chocolatecake.ui.BR
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.BottomSheetSearchFilterBinding
+import com.chocolatecake.ui.home.BR
+import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.BottomSheetSearchFilterBinding
 import com.chocolatecake.viewmodel.search.SearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

@@ -3,8 +3,8 @@ package com.chocolatecake.ui.search.utils
 import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.SearchChipsFilterItemBinding
+import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.SearchChipsFilterItemBinding
 import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.google.android.material.chip.ChipGroup

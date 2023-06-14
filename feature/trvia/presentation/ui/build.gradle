@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'com.chocolatecake.ui'
+    namespace 'com.chocolatecake.ui.trivia'
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {

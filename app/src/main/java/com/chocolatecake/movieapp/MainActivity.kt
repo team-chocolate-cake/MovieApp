@@ -35,7 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                com.chocolatecake.ui.R.id.home_nav_graph -> showBottomNav()
+                com.chocolatecake.ui.home.R.id.homeFragment,
+                com.chocolatecake.ui.home.R.id.searchFragment,
+                com.chocolatecake.ui.home.R.id.tvFragment,
+                com.chocolatecake.ui.home.R.id.profileFragment -> showBottomNav()
                 else -> hideBottomNav()
             }
         }
@@ -64,9 +67,7 @@ class MainActivity : AppCompatActivity() {
             animate()
                 .translationY(height.toFloat())
                 .setDuration(300)
-                .withEndAction {
-                    visibility = View.GONE
-                }
+                .withEndAction { visibility = View.GONE }
                 .start()
         }
     }
