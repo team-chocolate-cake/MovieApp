@@ -1,7 +1,7 @@
 package com.chocolatecake.ui.search
 
 import com.chocolatecake.bases.BaseAdapter
-import com.chocolatecake.ui.R
+import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
 

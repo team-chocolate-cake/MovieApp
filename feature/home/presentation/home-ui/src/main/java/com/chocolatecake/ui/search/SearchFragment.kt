@@ -6,8 +6,8 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.FragmentSearchBinding
+import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.FragmentSearchBinding
 import com.chocolatecake.viewmodel.search.SearchUiEvent
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.chocolatecake.viewmodel.search.SearchViewModel
