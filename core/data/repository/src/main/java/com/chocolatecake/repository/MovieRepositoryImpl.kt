@@ -3,9 +3,11 @@ package com.chocolatecake.repository
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
+import com.chocolatecake.repository.mappers.ProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalNowPlayingMovieMapper
@@ -39,6 +41,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
+    private val profileMapper : ProfileMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -174,6 +177,10 @@ class MovieRepositoryImpl @Inject constructor(
 
         } catch (_: Throwable) {
         }
+    }
+
+    override suspend fun getAccountDetails(): List<ProfileEntity> {
+        return profileMapper.map(movieService.getAccountDetails())
     }
     /// endregion
 }
