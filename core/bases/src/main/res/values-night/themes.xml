@@ -11,19 +11,16 @@
     <!--region Title-Font-->
     <style name="TextStyle.TitleLarge">
         <item name="android:textSize">@dimen/text_giant</item>
-        <item name="android:fontWeight">600</item>
         <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
     <style name="TextStyle.TitleMedium">
         <item name="android:textSize">@dimen/text_medium</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_medium</item>
     </style>
 
     <style name="TextStyle.TitleSmall">
         <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
     <!--endregion-->
@@ -31,19 +28,16 @@
     <!--region Body-Font-->
     <style name="TextStyle.BodyLarge">
         <item name="android:textSize">@dimen/text_medium</item>
-        <item name="android:fontWeight">600</item>
         <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
     <style name="TextStyle.BodyMedium">
         <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
     <style name="TextStyle.BodySmall">
         <item name="android:textSize">@dimen/text_small</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
     <!--endregion-->
@@ -51,19 +45,16 @@
     <!--region label-Font-->
     <style name="TextStyle.LabelLarge">
         <item name="android:textSize">@dimen/text_semi_small</item>
-        <item name="android:fontWeight">600</item>
         <item name="android:fontFamily">@font/montserrat_semibold</item>
     </style>
 
     <style name="TextStyle.LabelBody">
         <item name="android:textSize">@dimen/text_semi_small</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
     <style name="TextStyle.LabelSmall">
         <item name="android:textSize">@dimen/text_semi_small</item>
-        <item name="android:fontWeight">400</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
