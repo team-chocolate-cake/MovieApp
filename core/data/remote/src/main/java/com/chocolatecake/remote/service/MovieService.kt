@@ -84,7 +84,7 @@ interface MovieService {
     ): Response<GenresWrapperResponse<GenreMovieRemoteDto>>
     ///endregion
 
-    @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations")
+    @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int
     ): Response<MovieDetailsDto>

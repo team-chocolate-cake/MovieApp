@@ -5,15 +5,14 @@ import com.chocolatecake.entities.movieDetails.CreditsEntity
 import com.chocolatecake.entities.movieDetails.CrewEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieVideoEntity
-import com.chocolatecake.entities.movieDetails.ProductionCompanyEntity
-import com.chocolatecake.entities.movieDetails.ProductionCountryEntity
 import com.chocolatecake.entities.movieDetails.RecommendationsEntity
 import com.chocolatecake.entities.movieDetails.RecommendedMovieEntity
-import com.chocolatecake.entities.movieDetails.SpokenLanguageEntity
+import com.chocolatecake.entities.movieDetails.ReviewEntity
 import com.chocolatecake.entities.movieDetails.VideosEntity
 import com.chocolatecake.remote.response.movieDetails.Credits
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.Recommendations
+import com.chocolatecake.remote.response.movieDetails.Reviews
 import com.chocolatecake.remote.response.movieDetails.Videos
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
@@ -21,52 +20,17 @@ import javax.inject.Inject
 class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, MovieDetailsEntity> {
     override fun map(input: MovieDetailsDto): MovieDetailsEntity {
         return MovieDetailsEntity(
-            adult = input.adult,
             backdropPath = input.backdropPath,
-            belongsToCollection = input.belongsToCollection,
-            budget = input.budget,
             credits = mapCredits(input.credits),
             genres = input.genres.map { it.name },
-            homepage = input.homepage,
             id = input.id,
-            imdbId = input.imdbId,
-            originalLanguage = input.originalLanguage,
-            originalTitle = input.originalTitle,
             overview = input.overview,
-            popularity = input.popularity,
-            posterPath = input.posterPath,
-            productionCompanies = input.productionCompanies.map {
-                ProductionCompanyEntity(
-                    id = it.id,
-                    name = it.name,
-                    logoPath = it.logoPath,
-                    originCountry = it.originCountry
-                )
-            },
-            productionCountries = input.productionCountries.map {
-                ProductionCountryEntity(
-                    iso31661 = it.iso31661,
-                    name = it.name
-                )
-            },
             recommendations = mapRecommendations(input.recommendations),
-            releaseDate = input.releaseDate,
-            revenue = input.revenue,
-            runtime = input.runtime,
-            spokenLanguages = input.spokenLanguages.map {
-                SpokenLanguageEntity(
-                    englishName = it.englishName,
-                    iso6391 = it.iso6391,
-                    name = it.name
-                )
-            },
-            status = input.status,
-            tagline = input.tagline,
             title = input.title,
             video = input.video,
             videos = mapvideos(input.videos),
             voteAverage = input.voteAverage,
-            voteCount = input.voteCount
+            reviewEntities = mapReviews(input.reviews)
         )
     }
 
@@ -150,5 +114,16 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
                 )
             }
         )
+    }
+
+    private fun mapReviews(reviews: Reviews): List<ReviewEntity> {
+        return reviews.results.map {
+            ReviewEntity(
+                name = it.author,
+                avatar_path = it.authorDetails.avatarPath,
+                content = it.content,
+                created_at = it.createdAt
+            )
+        }
     }
 }
