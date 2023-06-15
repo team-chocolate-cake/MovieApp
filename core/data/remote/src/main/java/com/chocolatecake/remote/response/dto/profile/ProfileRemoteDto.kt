@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ProfileRemoteDto(
     @SerializedName("avatar")
-    val avatar: Avatar? = null,
+    val avatar: List<Avatar>? = null,
     @SerializedName("id")
     val id: Int? = null,
     @SerializedName("include_adult")
