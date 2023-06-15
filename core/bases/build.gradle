@@ -29,7 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding true
     }
 }
@@ -46,7 +46,7 @@ dependencies {
 
     /// viewModel
     implementation "androidx.fragment:fragment-ktx:$androidxFragmentVersion"
-    
+
     /// lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
 
@@ -55,4 +55,11 @@ dependencies {
 
     /// splash
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    /// paging
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
+
+    /// hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 }
