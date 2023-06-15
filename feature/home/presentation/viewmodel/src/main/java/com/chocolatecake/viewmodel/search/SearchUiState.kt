@@ -1,10 +1,13 @@
 package com.chocolatecake.viewmodel.search
 
+import com.chocolatecake.viewmodel.common.model.MovieHorizontalUIState
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
+
 data class SearchUiState(
     val mediaType: SearchMedia = SearchMedia.MOVIE,
-    val searchMediaResult: SearchItem = SearchItem.MediaItem(emptyList()),
-    val searchPeopleResult: SearchItem = SearchItem.PeopleItem(emptyList()),
-    val genresMovies: List<GenresMoviesUiState>? = emptyList(),
+    val searchMediaResult: List<MovieHorizontalUIState> = emptyList(),
+    val searchPeopleResult: List<PeopleUIState> = emptyList(),
+    val genresMovie: List<GenresMoviesUiState> = emptyList(),
     val selectedMovieGenresId: Int? = null,
     val searchHistory: List<String> = emptyList(),
     val isSelectedPeople: Boolean = false,

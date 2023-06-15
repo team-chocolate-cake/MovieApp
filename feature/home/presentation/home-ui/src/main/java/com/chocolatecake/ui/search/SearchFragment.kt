@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentSearchBinding
+import com.chocolatecake.viewmodel.search.SearchItem
 import com.chocolatecake.viewmodel.search.SearchUiEvent
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.chocolatecake.viewmodel.search.SearchViewModel
@@ -37,10 +38,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         collectLatest {
             viewModel.state.collect { state ->
                 setupSearchHistoryAdapter(state)
-                searchAdapter.setItems(mutableListOf(
-                    state.searchMediaResult,
-                    state.searchPeopleResult
-                ))
+                val searchItems = when (state.mediaType) {
+                    SearchUiState.SearchMedia.MOVIE, SearchUiState.SearchMedia.TV -> {
+                        state.searchMediaResult.map { SearchItem.MediaItem(it) }
+                    }
+                    SearchUiState.SearchMedia.PEOPLE -> {
+                        state.searchPeopleResult.map { SearchItem.PeopleItem(it) }
+                    }
+                }
+                searchAdapter.setItems(searchItems)
                 state.error?.last()?.let { showSnackBar(it) }
             }
         }
@@ -61,7 +67,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
             is SearchUiEvent.OpenFilterBottomSheet -> showBottomSheet()
             is SearchUiEvent.ApplyFilter -> applyFilter(event.genre)
             is SearchUiEvent.ShowSnackBar -> showSnackBar(event.messages)
-            is SearchUiEvent.NavigateToMovie -> TODO()
+            is SearchUiEvent.NavigateToMovie ->  TODO()
             is SearchUiEvent.NavigateToPeople -> TODO()
             is SearchUiEvent.NavigateToTv -> TODO()
             is SearchUiEvent.ShowMovieResult -> showMovieResult()

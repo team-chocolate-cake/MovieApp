@@ -50,15 +50,23 @@ class SearchAdapter(
 
     private fun bindMedia(holder: MediaViewHolder, position: Int) {
         val media = list[position] as SearchItem.MediaItem
-        media.movieHorizontalUIState.forEach { holder.binding.item = it }
+        holder.binding.item = media.movieHorizontalUIState
         holder.binding.listener = listener
 
     }
 
     private fun bindPeople(holder: PeopleViewHolder, position: Int) {
         val people = list[position] as SearchItem.PeopleItem
-        people.peopleItem.forEach { holder.binding.item = it }
+        holder.binding.item = people.peopleItem
         holder.binding.listener = listener
+    }
+
+    fun setItem(item: SearchItem) {
+        val newItems = list.apply {
+            removeAt(item.type.ordinal)
+            add(item.type.ordinal, item)
+        }
+        setItems(newItems)
     }
 
     override fun setItems(newItems: List<SearchItem>) {

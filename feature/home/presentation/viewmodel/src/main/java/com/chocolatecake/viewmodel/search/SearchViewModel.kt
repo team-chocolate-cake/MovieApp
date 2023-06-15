@@ -88,7 +88,7 @@ class SearchViewModel @Inject constructor(
         _state.update {
             it.copy(
                 mediaType = SearchUiState.SearchMedia.PEOPLE,
-                searchMediaResult = SearchItem.PeopleItem(people),
+                searchPeopleResult = people,
                 isSelectedPeople = true,
                 isLoading = false,
                 error = null
@@ -98,7 +98,7 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchForTv() {
         tryToExecute(
-            call = { searchTvsUseCase(query.value) },
+            call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
             mapper = tvUiMapper,
             onSuccess = ::onSuccessTv,
             onError = ::onError
@@ -109,7 +109,7 @@ class SearchViewModel @Inject constructor(
         _state.update {
             it.copy(
                 mediaType = SearchUiState.SearchMedia.TV,
-                searchMediaResult = SearchItem.MediaItem(tv),
+                searchMediaResult = tv,
                 isSelectedPeople = false,
                 isLoading = false,
                 error = null
@@ -135,7 +135,7 @@ class SearchViewModel @Inject constructor(
         _state.update {
             it.copy(
                 mediaType = SearchUiState.SearchMedia.MOVIE,
-                searchMediaResult = SearchItem.MediaItem(mediaUIState),
+                searchMediaResult = mediaUIState,
                 isSelectedPeople = false,
                 isLoading = false,
                 error = null
@@ -181,7 +181,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             it.copy(
-                genresMovies = updatedGenres,
+                genresMovie = updatedGenres,
                 isLoading = false,
                 error = null
             )
@@ -189,14 +189,14 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickGenre(genresId: Int) {
-        val updatedGenres = _state.value.genresMovies?.map { genre ->
+        val updatedGenres = _state.value.genresMovie.map { genre ->
             genre.copy(isSelected = genre.genreId == genresId)
         }
         _state.update {
             it.copy(
                 selectedMovieGenresId = genresId,
                 isLoading = false,
-                genresMovies = updatedGenres
+                genresMovie = updatedGenres
             )
         }
     }
