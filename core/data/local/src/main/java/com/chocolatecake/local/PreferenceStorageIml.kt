@@ -15,14 +15,21 @@ class PreferenceStorageIml @Inject constructor(
 ) : PreferenceStorage {
 
     private object PreferencesKeys {
+        val CURRENT_USERNAME_ID = stringPreferencesKey("CURRENT_USERNAME_ID")
         val SESSION_ID = stringPreferencesKey("SESSION_ID")
     }
 
     override val sessionId: String?
         get() = runBlocking { dataStore.data.map { it[PreferencesKeys.SESSION_ID] }.first() }
+    override val currentUserName: String?
+        get() = runBlocking { dataStore.data.map { it[PreferencesKeys.CURRENT_USERNAME_ID] }.first() }
 
     override suspend fun setSessionId(sessionId: String) {
         dataStore.setValue(PreferencesKeys.SESSION_ID, sessionId)
+    }
+
+    override suspend fun setCurrentUserName(currentUserName: String) {
+        dataStore.setValue(PreferencesKeys.CURRENT_USERNAME_ID, currentUserName)
     }
 
     override suspend fun clearPreferenceStorage() {

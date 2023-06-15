@@ -12,7 +12,8 @@ class LocalPopularPeopleMapper @Inject constructor() :
         return PopularPeopleLocalDto(
             id = input.id ?: 0,
             imagerUrl = BuildConfig.IMAGE_BASE_PATH + input.profilePath,
-            name = input.name ?: ""
+            name = input.name ?: "",
+            popularity = input.popularity ?: 0.0
         )
     }
 }

@@ -3,6 +3,8 @@ package com.chocolatecake.movieapp.di
 import com.chocolatecake.repository.AuthRepository
 import com.chocolatecake.repository.MovieRepository
 import com.chocolatecake.repository.MovieRepositoryImpl
+import com.chocolatecake.repository.TriviaRepository
+import com.chocolatecake.repository.TriviaRepositoryIml
 import com.chocolatecake.repository.auth.AuthRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -21,5 +23,9 @@ abstract class RepositoryModule {
     @Binds
     @ViewModelScoped
     abstract fun bindMovieRepository(movieRepositoryImpl: MovieRepositoryImpl): MovieRepository
+
+    @Binds
+    @ViewModelScoped
+    abstract fun bindTriviaRepository(triviaRepositoryImpl: TriviaRepositoryIml): TriviaRepository
 
 }

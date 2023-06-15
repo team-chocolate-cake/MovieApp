@@ -18,7 +18,11 @@ class AuthRepositoryImpl @Inject constructor(
         val body = LoginRequest(username, password, token)
 
         return wrapApiCall { movieService.login(body) }
-            .requestToken?.let { createSession(it); true } ?: false
+            .requestToken?.let { createSession(it); saveUsername(username); true } ?: false
+    }
+
+    private suspend fun saveUsername(username: String) {
+        prefs.setCurrentUserName(username)
     }
 
     private suspend fun createSession(requestToken: String) {
@@ -34,6 +38,10 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun logout() {
         prefs.setSessionId("")
+    }
+
+    override suspend fun getCurrentUsername(): String? {
+        return prefs.currentUserName
     }
 }
 

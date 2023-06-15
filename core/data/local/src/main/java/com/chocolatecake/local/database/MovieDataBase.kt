@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.local.database.dto.UserLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
@@ -25,10 +26,12 @@ import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
         SearchHistoryLocalDto::class,
         GenresMoviesLocalDto::class,
         MovieLocalDto::class,
+        UserLocalDto::class,
     ],
     version = 1,
     exportSchema = false
 )
 abstract class MovieDataBase : RoomDatabase() {
     abstract val movieDao: MovieDao
+    abstract val triviaDao: TriviaDao
 }
