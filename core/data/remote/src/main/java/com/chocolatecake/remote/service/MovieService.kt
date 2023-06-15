@@ -8,6 +8,8 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
+import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -61,7 +63,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun getSearchMovies(
+    suspend fun getSearchMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
@@ -82,4 +84,16 @@ interface MovieService {
         @Query("language") language: String = "en"
     ): Response<GenresWrapperResponse<GenreMovieRemoteDto>>
     ///endregion
+
+    /// region tv
+    @GET("/3/tv/{tv_id}")
+    suspend fun getTvDetails(
+        @Path("tv_id") tvShowId: Int
+    ): Response<TvDetailsRemoteDto>
+
+    @GET("/3/tv/{tv_id}/aggregate_credits")
+    suspend fun getTvDetailsCredit(
+        @Path("tv_id") tvShowId: Int
+    ): Response<TvDetailsCreditRemoteDto>
+    /// endregion
 }
