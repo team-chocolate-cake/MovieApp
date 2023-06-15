@@ -2,9 +2,7 @@ package com.chocolatecake.ui.movieDetails
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.airbnb.lottie.BuildConfig
 import com.bumptech.glide.Glide
-import com.chocolatecake.ui.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup

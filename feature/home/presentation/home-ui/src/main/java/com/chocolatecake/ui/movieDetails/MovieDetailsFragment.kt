@@ -1,15 +1,16 @@
-package com.chocolatecake.movieapp.ui.movieDetails
+package com.chocolatecake.ui.movieDetails
 
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.movieapp.ui.movieDetails.ui_state.MovieDetailsUiEvent
-import com.chocolatecake.movieapp.ui.movieDetails.ui_state.MovieDetailsUiState
-import com.chocolatecake.ui.R
-import com.chocolatecake.ui.databinding.FragmentMovieDetailsBinding
+
+import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
+import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiEvent
+import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 

@@ -2,10 +2,11 @@ package com.chocolatecake.viewmodel.movieDetails
 
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.movieapp.ui.movieDetails.ui_state.MovieDetailsListener
-import com.chocolatecake.movieapp.ui.movieDetails.ui_state.MovieDetailsUiEvent
-import com.chocolatecake.movieapp.ui.movieDetails.ui_state.MovieDetailsUiState
+
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
+import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener
+import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiEvent
+import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase
-) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()) , MovieDetailsListener {
+) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()) ,
+    MovieDetailsListener {
 
 
     init {
