@@ -9,6 +9,7 @@ import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter(value = ["app:imageUrlByBackDropPath"])
 fun ImageView.loadImageByBackDropPath(backDropPath: String?) {
+    //TODO Remove hardcoded link
     if (!backDropPath.isNullOrEmpty())
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/w500"+backDropPath)

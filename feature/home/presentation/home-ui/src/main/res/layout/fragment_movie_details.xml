@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState"/>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel" />
@@ -37,6 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
+                        app:imageUrlByBackDropPath="@{viewModel.state.movieUiState.backdropPath}"
                         tools:src="@tools:sample/backgrounds/scenic" />
 
                     <View
@@ -106,7 +109,7 @@
                     style="@style/TextStyle.BodyLarge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.state.movieDetailsEntity.title}"
+                    android:text="@{viewModel.state.movieUiState.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
@@ -118,7 +121,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="16dp"
-                    app:Genres="@{viewModel.state.movieDetailsEntity.genres}"
+                    app:Genres="@{viewModel.state.movieUiState.genres}"
                     app:chipSpacingHorizontal="4dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title"
