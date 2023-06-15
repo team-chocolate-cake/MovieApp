@@ -1,6 +1,7 @@
-package com.chocolatecake.viewmodel.search
+package com.chocolatecake.viewmodel.search.mappers
 
 import com.chocolatecake.entities.GenreEntity
+import com.chocolatecake.viewmodel.search.SearchUiState
 import javax.inject.Inject
 
 class GenreUiStateMapper @Inject constructor() {

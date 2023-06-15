@@ -3,10 +3,12 @@ package com.chocolatecake.repository
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
+import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalPopularMovieMapper
@@ -14,7 +16,9 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
+import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -26,6 +30,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDao: MovieDao,
     private val localGenresMovieMapper: LocalGenresMovieMapper,
+    private val localGenresTvMapper: LocalGenresTvMapper,
     private val localPopularMovieMapper: LocalPopularMovieMapper,
     private val localPopularPeopleMapper: LocalPopularPeopleMapper,
     private val localNowPlayingMovieMapper: LocalNowPlayingMovieMapper,
@@ -39,6 +44,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
+    private val domainGenreTvMapper: DomainGenreTvMapper,
+    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -135,9 +142,9 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     ///region search
-    override suspend fun getSearchMovies(keyword: String): List<MovieEntity> {
+    override suspend fun searchForMovies(keyword: String): List<MovieEntity> {
         val genresEntities = getGenresMovies()
-        return wrapApiCall { movieService.getSearchMovies(keyword) }.results
+        return wrapApiCall { movieService.searchForMovies(keyword) }.results
             ?.filterNotNull()?.let { movieDtos ->
                 movieDtos.map { input ->
                     MovieEntity(
@@ -149,9 +156,38 @@ class MovieRepositoryImpl @Inject constructor(
                             genresEntities
                         ),
                         imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
+                        year = input.releaseDate ?: ""
                     )
                 }
             } ?: emptyList()
+    }
+
+    override suspend fun searchForTv(keyword: String): List<TvEntity> {
+        val genresTvEntities = getGenresTvs()
+        return wrapApiCall { movieService.searchForTv(keyword) }.results
+            ?.filterNotNull()?.let { tvDtos ->
+                tvDtos.map { input ->
+                    TvEntity(
+                        id = input.id ?: 0,
+                        name = input.name ?: "",
+                        rate = input.voteAverage ?: 0.0,
+                        imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
+                        genreEntities = filterGenres(
+                            input.genreIds?.filterNotNull() ?: emptyList(),
+                            genresTvEntities
+                        ),
+                        year = input.firstAirDate ?: ""
+                    )
+                }
+            } ?: emptyList()
+    }
+
+    override suspend fun searchForPeople(keyword: String): List<PeopleEntity> {
+        return wrapApiCall { movieService.searchForPeople(keyword) }.results
+            ?.filterNotNull()?.map {
+                domainPeopleRemoteMapper.map(it)
+            } ?: emptyList()
+
     }
 
     private fun filterGenres(
@@ -170,6 +206,22 @@ class MovieRepositoryImpl @Inject constructor(
             wrapApiCall { movieService.getListOfGenresForMovies() }.results
                 ?.let { remoteGenres ->
                     movieDao.insertGenresMovies(localGenresMovieMapper.map(remoteGenres))
+                }
+
+        } catch (_: Throwable) {
+        }
+    }
+
+
+    override suspend fun getGenresTvs(): List<GenreEntity> {
+        return domainGenreTvMapper.map(movieDao.getGenresTvs())
+    }
+
+    override suspend fun refreshGenresTv() {
+        try {
+            wrapApiCall { movieService.getListOfGenresForTvs() }.results
+                ?.let { remoteGenres ->
+                    movieDao.insertGenresTvs(localGenresTvMapper.map(remoteGenres))
                 }
 
         } catch (_: Throwable) {

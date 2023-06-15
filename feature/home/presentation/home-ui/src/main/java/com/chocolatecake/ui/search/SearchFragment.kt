@@ -37,7 +37,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         collectLatest {
             viewModel.state.collect { state ->
                 setupSearchHistoryAdapter(state)
-                searchAdapter.setItems(state.searchMovieResultEntity)
+                searchAdapter.setItems(mutableListOf(
+                    state.searchMediaResult,
+                    state.searchPeopleResult
+                ))
                 state.error?.last()?.let { showSnackBar(it) }
             }
         }
@@ -55,9 +58,33 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
 
     override fun onEvent(event: SearchUiEvent) {
         when (event) {
-            is SearchUiEvent.FilterEvent -> showBottomSheet()
-            is SearchUiEvent.ApplyFilterEvent -> applyFilter(event.genre)
+            is SearchUiEvent.OpenFilterBottomSheet -> showBottomSheet()
+            is SearchUiEvent.ApplyFilter -> applyFilter(event.genre)
             is SearchUiEvent.ShowSnackBar -> showSnackBar(event.messages)
+            is SearchUiEvent.NavigateToMovie -> TODO()
+            is SearchUiEvent.NavigateToPeople -> TODO()
+            is SearchUiEvent.NavigateToTv -> TODO()
+            is SearchUiEvent.ShowMovieResult -> showMovieResult()
+            is SearchUiEvent.ShowPeopleResult -> showPeopleResult()
+            is SearchUiEvent.ShowTvResult -> showTvResult()
+        }
+    }
+
+    private fun showTvResult() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onSearchForTv()
+        }
+    }
+
+    private fun showPeopleResult() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onSearchForPeople()
+        }
+    }
+
+    private fun showMovieResult() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onSearchForMovie()
         }
     }
 

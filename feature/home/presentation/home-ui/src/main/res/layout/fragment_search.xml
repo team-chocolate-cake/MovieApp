@@ -8,6 +8,7 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.search.SearchViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_custom"
             android:background="@null"
+            app:hideImageButton="@{viewModel.state.isSelectedPeople}"
             android:onClick="@{() -> viewModel.onClickFilter()}"
             android:src="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
@@ -76,6 +78,7 @@
                 android:id="@+id/chipGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:selectedMedia="@{viewModel.state.mediaType}"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -84,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
+                    android:onClick="@{() -> viewModel.showResultMovie()}"
                     android:text="@string/movie" />
 
                 <com.google.android.material.chip.Chip
@@ -91,6 +95,7 @@
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.showResultTv()}"
                     android:text="@string/tv" />
 
                 <com.google.android.material.chip.Chip
@@ -98,21 +103,8 @@
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.showResultPeople()}"
                     android:text="@string/person" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCollection"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/collection" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipCompany"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/company" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -123,13 +115,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
+            app:searchLayoutManager="@{viewModel.state}"
             app:hideResult="@{viewModel.state.error}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             app:query="@{viewModel.query}"
-            app:spanCount="2"
-            tools:listitem="@layout/search_item_movie" />
+            tools:listitem="@layout/item_movie_horizontal" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation_view_empty"
@@ -142,7 +134,6 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/empty_state"
-            app:showWhenNoResult="@{viewModel.state.searchMovieResultEntity}"
             app:showWhenQueryEmpty="@{viewModel.query}" />
 
         <include

@@ -3,6 +3,7 @@ package com.chocolatecake.repository
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TvEntity
 
 
 interface MovieRepository {
@@ -30,9 +31,16 @@ interface MovieRepository {
     suspend fun clearAllSearchHistory()
     suspend fun deleteSearchHistory(keyword: String)
 
-    suspend fun getSearchMovies(keyword: String ): List<MovieEntity>
+    suspend fun searchForMovies(keyword: String ): List<MovieEntity>
+
+    suspend fun searchForTv(keyword: String): List<TvEntity>
+
+    suspend fun searchForPeople(keyword: String): List<PeopleEntity>
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
+
+    suspend fun getGenresTvs(): List<GenreEntity>
+    suspend fun refreshGenresTv()
 
 }

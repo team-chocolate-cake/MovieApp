@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
+import com.chocolatecake.local.database.dto.GenresTvsLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
@@ -115,5 +116,15 @@ interface MovieDao {
 
     @Query("delete from GENRES_MOVIES_TABLE")
     suspend fun clearAllGenresMovies()
+
+
+    @Query("select * from GENRES_TVS_TABLE")
+    suspend fun getGenresTvs(): List<GenresTvsLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGenresTvs(genresMovies: List<GenresTvsLocalDto>)
+
+    @Query("delete from GENRES_TVS_TABLE")
+    suspend fun clearAllGenresTvs()
     //endregion
 }
