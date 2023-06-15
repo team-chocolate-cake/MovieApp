@@ -2,6 +2,7 @@ package com.chocolatecake.bases
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.paging.PagingDataAdapter
@@ -13,6 +14,7 @@ abstract class BasePagingAdapter<T : Any, VB : ViewDataBinding>(
     private val listener: BaseInteractionListener
 ) : PagingDataAdapter<T, BasePagingAdapter<T, VB>.BaseViewHolder>(diffCallback) {
 
+    @get:LayoutRes
     abstract val layoutId: Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
