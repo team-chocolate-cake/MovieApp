@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="popcorn_puzzles">Popcorn Puzzles</string>
+    <string name="details">This game challenges you to solve memory puzzles based on movies, series, and TV shows. With four game modes, dive into cinema and test your entertainment expertise</string>
+    <string name="title_type_games">Choose your game</string>
+    <string name="choose_your_game">Choose your game</string>
+    <string name="lets_start">Lets Start</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <TextView
+            android:id="@+id/text_view_popcorn_puzzles"
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popcorn_puzzles"
+            android:textColor="@color/on_background_87"
+            android:layout_marginTop="@dimen/spacing_extra_giant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/image_view_game"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            app:lottie_rawRes="@raw/welcome"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_marginTop="@dimen/spacing_large"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_popcorn_puzzles" />
+
+        <TextView
+            android:id="@+id/text_view_details"
+            style="@style/TextStyle.BodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="@string/details"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:paddingVertical="@dimen/spacing_medium"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_game" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/PrimaryButton"
+            android:id="@+id/button_start"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="120dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/lets_start"
+            android:textAllCaps="false"
+            android:paddingHorizontal="48dp"
+            android:drawableRight="@drawable/ic_play"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_primary"
+            app:layout_constraintStart_toStartOf="@+id/text_view_details"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_details" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

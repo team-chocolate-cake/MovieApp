@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_medium"
-        android:layout_marginVertical="@dimen/spacing_tiny"
+        android:layout_marginVertical="@dimen/spacing_small"
+        android:padding="@dimen/spacing_medium"
         android:background="@drawable/card_game_level_background">
 
         <TextView
@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_tiny"
-            android:layout_marginTop="@dimen/spacing_medium"
             android:text="@{item.title}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +57,7 @@
         <com.mckrpk.animatedprogressbar.AnimatedProgressBar
             android:id="@+id/animatedProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="18dp"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             app:animationDurationInMs="1000"
