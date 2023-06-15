@@ -24,9 +24,6 @@
     <string name="company">Company</string>
     <string name="apply">Apply</string>
     <string name="Popular_Movies">Popular Movies</string>
-    <string name="biography">Biography</string>
-    <string name="tools_biography_example">Jason Statham (born 26 July 1967) is an English actor. He is known for portraying characters in various action-thriller films who are typically tough, hardboiled, gritty, or violent.
-    Statham began practising Chinese martial arts, kickboxing, and karate recreationally in his youth while working at local market stalls. An avid footballer and diver, he was a member of Britain's national diving team and competed for England in the 1990 Commonwealth</string>
-    <string name="movies">Movies</string>
+    <string name="biography">Biography</string><string name="movies">Movies</string>
     <string name="tv_shows">TV Shows</string>
 </resources>

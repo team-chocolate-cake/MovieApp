@@ -26,7 +26,7 @@ import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
         GenresMoviesLocalDto::class,
         MovieLocalDto::class,
     ],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class MovieDataBase : RoomDatabase() {

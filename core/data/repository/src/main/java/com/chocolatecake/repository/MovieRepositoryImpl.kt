@@ -2,7 +2,9 @@ package com.chocolatecake.repository
 
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
+import com.chocolatecake.entities.PeopleDataEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TvShowsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
@@ -14,11 +16,14 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
+import com.chocolatecake.repository.mappers.domain.DomainPeopleDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.movie.DomainMoviesByPeopleMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
+import com.chocolatecake.repository.mappers.domain.movie.DomainTvShowsByPeopleMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
 import javax.inject.Inject
 
@@ -39,6 +44,9 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
+    private val domainPeopleDetailsMapper: DomainPeopleDetailsMapper,
+    private val domainMoviesByPeopleMapper: DomainMoviesByPeopleMapper,
+    private val domainTvShowsByPeopleMapper: DomainTvShowsByPeopleMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -174,6 +182,18 @@ class MovieRepositoryImpl @Inject constructor(
 
         } catch (_: Throwable) {
         }
+    }
+
+    override suspend fun getPerson(person_id: Int): PeopleDataEntity {
+        return domainPeopleDetailsMapper.map(wrapApiCall { movieService.getPerson(person_id) })
+    }
+
+    override suspend fun getMoviesByPerson(person_id: Int): List<MovieEntity> {
+        return domainMoviesByPeopleMapper.map( wrapApiCall { movieService.getMoviesByPerson(person_id)}.cast!!)
+    }
+
+    override suspend fun getTvShowsByPerson(person_id: Int): List<TvShowsEntity> {
+        return domainTvShowsByPeopleMapper.map(wrapApiCall {  movieService.getTvShowsByPerson(person_id)}.cast!!)
     }
     /// endregion
 }

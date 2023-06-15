@@ -1,8 +1,11 @@
 package com.chocolatecake.remote.service
 
+import com.chocolatecake.remote.response.TvShowsByPeopleResponse
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
+import com.chocolatecake.remote.response.MoviesByPeopleResponse
+import com.chocolatecake.remote.response.PeopleDetailsResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
@@ -74,6 +77,17 @@ interface MovieService {
     /// region popular people
     @GET("person/popular")
     suspend fun getPopularPeople(@Query("page") page: Int = 1): Response<DataWrapperResponse<PeopleRemoteDto>>
+
+
+    @GET("person/{person_id}")
+    suspend fun getPerson(@Path("person_id") person_id: Int):Response< PeopleDetailsResponse>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getMoviesByPerson(@Path("person_id") person_id: Int):Response<MoviesByPeopleResponse>
+
+    @GET("person/{person_id}/tv_credits")
+    suspend fun getTvShowsByPerson(@Path("person_id") person_id: Int):Response<TvShowsByPeopleResponse>
+
     /// endregion
 
     /// region genres

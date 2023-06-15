@@ -2,7 +2,9 @@ package com.chocolatecake.repository
 
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
+import com.chocolatecake.entities.PeopleDataEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TvShowsEntity
 
 
 interface MovieRepository {
@@ -34,5 +36,9 @@ interface MovieRepository {
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
+    suspend fun getPerson( person_id: Int): PeopleDataEntity
+    suspend fun getMoviesByPerson( person_id: Int): List<MovieEntity>
+    suspend fun getTvShowsByPerson( person_id: Int): List<TvShowsEntity>
+
 
 }
