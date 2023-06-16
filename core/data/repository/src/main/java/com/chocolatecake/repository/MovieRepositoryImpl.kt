@@ -7,7 +7,7 @@ import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
-import com.chocolatecake.repository.mappers.ProfileMapper
+import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalNowPlayingMovieMapper
@@ -17,6 +17,7 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -34,6 +35,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
     private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
+    private val localProfileMapper : LocalProfileMapper
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
     private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
     private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
@@ -41,7 +43,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
-    private val profileMapper : ProfileMapper
+    private val domainProfileMapper: DomainProfileMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -178,9 +180,21 @@ class MovieRepositoryImpl @Inject constructor(
         } catch (_: Throwable) {
         }
     }
+    /// endregion
 
+
+    /// region profile
     override suspend fun getAccountDetails(): List<ProfileEntity> {
-        return profileMapper.map(movieService.getAccountDetails())
+        return domainProfileMapper.map(movieDao.getAccountDetails())
     }
+
+//    override suspend fun refreshAccountDetails() {
+//        refreshWrapper(
+//            movieService::getAccountDetails,
+//            LocalProfileMapper::map,
+//            movieDao::insertAccountDetails
+//        )
+//    }
+
     /// endregion
 }

@@ -37,4 +37,5 @@ interface MovieRepository {
     suspend fun refreshGenres()
 
     suspend fun getAccountDetails():List<ProfileEntity>
+    suspend fun refreshAccountDetails()
 }
