@@ -2,6 +2,7 @@ package com.chocolatecake.viewmodel.movieDetails
 
 
 data class MovieDetailsUiState(
+    val id: Int?=null,
     val movieUiState: MovieDetailsItem = MovieDetailsItem.Upper(null),
     val recommendedUiState: MovieDetailsItem = MovieDetailsItem.Recommended(emptyList()),
     val castUiState: MovieDetailsItem = MovieDetailsItem.People(emptyList()),

@@ -49,7 +49,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="end"
                         android:background="@null"
-                        android:onClick="@{()->viewModel.onClickSaveButton()}"
+                        android:onClick="@{()-> viewModel.onClickSaveButton(viewModel.state.id)}"
                         android:scaleType="centerCrop"
                         android:src="@drawable/save_icon"
                         app:layout_constraintEnd_toEndOf="parent"

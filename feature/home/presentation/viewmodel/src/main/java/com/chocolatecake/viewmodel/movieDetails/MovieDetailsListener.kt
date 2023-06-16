@@ -5,8 +5,8 @@ import com.chocolatecake.bases.BaseInteractionListener
 interface MovieDetailsListener : BaseInteractionListener {
     fun onClickPeople(itemId: Int)
     fun onClickRecommendedMovie(itemId: Int)
-    fun onClickPlayTrailer(key: Int)
+    fun onClickPlayTrailer(keys: List<String>)
     fun onClickRate(id: Int)
     fun onClickBackButton()
-    fun onClickSaveButton()
+    fun onClickSaveButton(id: Int)
 }

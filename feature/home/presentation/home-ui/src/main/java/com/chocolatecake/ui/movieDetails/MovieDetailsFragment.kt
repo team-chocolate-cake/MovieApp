@@ -56,16 +56,22 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
     override fun onEvent(event: MovieDetailsUiEvent) {
         when(event){
             MovieDetailsUiEvent.OnClickBack -> {
-                TODO()
+                //todo
+            }
+            is MovieDetailsUiEvent.PeopleEvent -> {
+                //todo
             }
             is MovieDetailsUiEvent.PlayVideoEvent -> {
-                TODO()
+                //todo
             }
             is MovieDetailsUiEvent.RateMovieEvent -> {
-                TODO()
+                //todo
+            }
+            is MovieDetailsUiEvent.RecommendedMovieEvent -> {
+                //todo
             }
             is MovieDetailsUiEvent.SaveToEvent -> {
-                TODO()
+                //todo
             }
             else -> {}
         }

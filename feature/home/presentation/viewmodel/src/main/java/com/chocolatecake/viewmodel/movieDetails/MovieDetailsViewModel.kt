@@ -40,6 +40,7 @@ class MovieDetailsViewModel @Inject constructor(
     private fun onSuccessMovieDetails(movieDetails: MovieDetailsEntity) {
         _state.update {
             it.copy(
+                id = movieDetails.id,
                 movieUiState = MovieDetailsItem.Upper(
                     UpperUiState(
                         id = movieDetails.id,
@@ -85,28 +86,29 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onClickPeople(itemId: Int) {
-        //todo navigate to people screen
+        Log.d("TAG" , "people")
+        sendEvent(MovieDetailsUiEvent.PeopleEvent(itemId))
     }
 
     override fun onClickRecommendedMovie(itemId: Int) {
-        //todo navigate to movie details screen
+        sendEvent(MovieDetailsUiEvent.RecommendedMovieEvent(itemId))
     }
 
-    override fun onClickPlayTrailer(itemId: Int) {
-        //todo navigate to Youtube
+    override fun onClickPlayTrailer(keys: List<String>) {
+        sendEvent(MovieDetailsUiEvent.PlayVideoEvent(keys))
     }
+
 
     override fun onClickRate(id: Int) {
-        //todo navigate to Rating Bottom sheet screen
-        Log.d("TAG" , "RATE")
+        sendEvent(MovieDetailsUiEvent.RateMovieEvent(id))
     }
 
     override fun onClickBackButton() {
-
+        sendEvent(MovieDetailsUiEvent.OnClickBack)
     }
 
-    override fun onClickSaveButton() {
-
+    override fun onClickSaveButton(id: Int) {
+        sendEvent(MovieDetailsUiEvent.SaveToEvent(id))
     }
 
 }
