@@ -8,6 +8,7 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import retrofit2.Response
@@ -95,5 +96,6 @@ interface MovieService {
     suspend fun getTvDetailsCredit(
         @Path("tv_id") tvShowId: Int
     ): Response<TvDetailsCreditRemoteDto>
+
     /// endregion
 }
