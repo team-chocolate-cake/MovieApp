@@ -30,7 +30,6 @@ class WatchHistoryViewModel @Inject constructor(
     private val getAllWatchHistoryMoviesUseCase: GetAllWatchHistoryMoviesUseCase,
     private val deleteMovieFromWatchHistoryUseCase: DeleteMovieFromWatchHistoryUseCase,
     private val searchWatchHistoryUseCase: SearchWatchHistoryUseCase,
-    private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val movieDomainMapper: MovieDomainMapper,
     private val movieUiStateMapper: MovieUiStateMapper
 )
