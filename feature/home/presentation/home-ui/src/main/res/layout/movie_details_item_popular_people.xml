@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.People" />
+
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener" />
@@ -16,39 +18,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
-        >
+        android:paddingBottom="16dp">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/textViewPeople"
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="People"
+            android:textColor="@color/on_background_87"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPeople"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingBottom="16dp"
-            >
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPeople"
+            app:items="@{item.list}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_people" />
 
-            <TextView
-                android:id="@+id/textViewPeople"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="People"
-                android:paddingBottom="8dp"
-                android:textColor="@color/on_background_87"
-                style="@style/TextStyle.TitleMedium"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPeople"
-                tools:listitem="@layout/item_people"
-                android:layout_width="match_parent"
-                android:clipToPadding="false"
-                android:layout_height="wrap_content"
-                app:items="@{item.list}"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
