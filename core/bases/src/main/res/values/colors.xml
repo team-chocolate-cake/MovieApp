@@ -21,4 +21,9 @@
     <color name="bottom_navigation_background">#F3F4F9</color>
     <color name="star">#DEF8C33C</color>
 
+    <color name="gradient1">#B3FFFFFF</color>
+    <color name="gradient2">#00FFFFFF</color>
+    <color name="gradient3">#00FFFFFF</color>
+    <color name="gradient4">#F5F5F5</color>
+
 </resources>

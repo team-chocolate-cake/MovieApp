@@ -39,6 +39,7 @@
                 android:id="@+id/ImageBackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/movie_image_background"
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
