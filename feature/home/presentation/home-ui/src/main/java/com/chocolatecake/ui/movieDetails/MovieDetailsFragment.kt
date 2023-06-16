@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.ui.home.HomeFragmentDirections
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
@@ -60,7 +62,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
         val bottomSheet = RatingMovieBottomSheet()
         when(event){
             MovieDetailsUiEvent.OnClickBack -> {
-                //todo
+                findNavController().popBackStack()
             }
             is MovieDetailsUiEvent.PeopleEvent -> {
                 //todo
@@ -74,12 +76,15 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                 bottomSheet.setMovieID(movieId)
             }
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
+                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragment2Self(event.movieId))
+            }
+            is MovieDetailsUiEvent.onSuccessRateEvent -> {
                 //todo
             }
             is MovieDetailsUiEvent.SaveToEvent -> {
                 //todo
             }
-            else -> {}
+
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.chocolatecake.viewmodel.movieDetails
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
@@ -8,21 +10,26 @@ import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase,
-    private val ratingUseCase: GetRatingUseCase
+    private val ratingUseCase: GetRatingUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener {
 
+    private val movieId = savedStateHandle.get<Int>("movieId") ?:502356
 
     init {
         _state.update { it.copy(isLoading = true) }
-        getMovieDetails(502356)
+        getMovieDetails(movieId)
     }
 
 
@@ -87,9 +94,10 @@ class MovieDetailsViewModel @Inject constructor(
             )
         }
     }
+
     fun onRatingSubmit(rating: Float, movieId: Int) {
         tryToExecute(
-            call = {ratingUseCase(movieId , rating)},
+            call = { ratingUseCase(movieId, rating) },
             onSuccess = ::onSuccessRating,
             onError = ::onError
         )
@@ -97,6 +105,8 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun onSuccessRating(ratingEntity: RatingEntity) {
         //todo
+        sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingEntity.statusMessage))
+
     }
 
 

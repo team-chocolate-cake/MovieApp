@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.R
@@ -49,6 +50,7 @@ class RatingMovieBottomSheet : BottomSheetDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.buttonApply.setOnClickListener{
             viewModel.onRatingSubmit(binding.rating.rating , movieId)
+            Toast.makeText(this.context , "Thanks for rating <3" , Toast.LENGTH_SHORT).show()
             this.dismiss()
         }
     }

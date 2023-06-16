@@ -7,23 +7,38 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        tools:layout="@layout/fragment_home"
         android:name="com.chocolatecake.ui.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment2"
+            app:destination="@id/movieDetailsFragment2" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
-        tools:layout="@layout/fragment_search"
         android:name="com.chocolatecake.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
-        tools:layout="@layout/fragment_profile"
         android:name="com.chocolatecake.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" />
-     <fragment
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
         android:id="@+id/tvFragment"
-        tools:layout="@layout/fragment_tv"
         android:name="com.chocolatecake.ui.tvShow.TvFragment"
-        android:label="TvFragment" />
+        android:label="TvFragment"
+        tools:layout="@layout/fragment_tv" />
+    <fragment
+        android:id="@+id/movieDetailsFragment2"
+        android:name="com.chocolatecake.ui.movieDetails.MovieDetailsFragment"
+        android:label="MovieDetailsFragment">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsFragment2_self"
+            app:destination="@id/movieDetailsFragment2" />
+    </fragment>
 </navigation>
