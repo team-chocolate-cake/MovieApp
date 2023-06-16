@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.movieDetails.ui_state.ReviewUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_people"
+            android:layout_width="@dimen/width_image_review"
+            android:layout_height="@dimen/height_image_review"
+            android:scaleType="centerCrop"
+            app:imageUrlByBackDropPath="@{item.avatar_path}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:src="@tools:sample/backgrounds/scenic" />
+        <TextView
+            android:id="@+id/auther_name"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/on_background_87"
+            style="@style/TextStyle.LabelLarge"
+            app:layout_constraintStart_toEndOf="@id/shape_image_view_people"
+            android:text="safdafdaffd"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintTop_toBottomOf="@id/auther_name"
+            style="@style/TextStyle.BodySmall"
+            app:layout_constraintStart_toEndOf="@id/shape_image_view_people"
+            android:text="safdafdaffd"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
