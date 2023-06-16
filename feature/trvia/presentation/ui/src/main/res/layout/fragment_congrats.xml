@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
-            app:lottie_rawRes="@raw/welcome" />
+            app:lottie_rawRes="@raw/winner" />
 
         <TextView
             android:id="@+id/text_view_congrats"
