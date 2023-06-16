@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
+import com.chocolatecake.local.database.dto.ProfileLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
@@ -115,5 +116,14 @@ interface MovieDao {
 
     @Query("delete from GENRES_MOVIES_TABLE")
     suspend fun clearAllGenresMovies()
+    //endregion
+
+
+    //region profile
+    @Query("select * from PROFILE_TABLE")
+    suspend fun getAccountDetails(): List<ProfileLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAccountDetails(account: List<ProfileLocalDto>)
     //endregion
 }
