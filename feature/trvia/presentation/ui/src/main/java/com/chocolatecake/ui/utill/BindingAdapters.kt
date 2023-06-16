@@ -37,6 +37,7 @@ fun CircularProgressView.setProgressAnimated(progress: Int) {
 
 @BindingAdapter("app:hearCount")
 fun LinearLayout.createHearts(heartCount: Int) {
+    this.removeAllViews()
     val inflater = LayoutInflater.from(context)
     repeat(heartCount) {
         addView(inflater.inflate(R.layout.item_heart, this, false))
