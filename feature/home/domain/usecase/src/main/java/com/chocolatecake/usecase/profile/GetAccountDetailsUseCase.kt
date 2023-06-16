@@ -4,7 +4,7 @@ import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
-class GetUserNameUseCase @Inject constructor(
+class GetAccountDetailsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): List<ProfileEntity> {
