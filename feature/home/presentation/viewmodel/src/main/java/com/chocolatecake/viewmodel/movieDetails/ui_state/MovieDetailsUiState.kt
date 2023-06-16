@@ -1,9 +1,13 @@
 package com.chocolatecake.viewmodel.movieDetails.ui_state
 
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
 
 
 data class MovieDetailsUiState(
     val movieUiState: MovieUiState? = null,
+    val recommendedUiState: MovieDetailsItem = MovieDetailsItem.Recommended(emptyList()),
+    val castUiState: MovieDetailsItem = MovieDetailsItem.People(emptyList()),
+    val reviewUiState: MovieDetailsItem = MovieDetailsItem.Reviews(emptyList()),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
 )
@@ -12,13 +16,10 @@ data class MovieUiState(
     val id: Int?,
     val backdropPath: String?,
     val genres: List<String>?,
-    val recommendations: List<RecommendedMoviesUiState>?,
     val title: String?,
     val overview: String?,
     val voteAverage: Double?,
     val videos: List<String?>?,
-    val cast: List<CastUiState>?,
-    val reviews: List<ReviewUiState>?,
 )
 
 data class RecommendedMoviesUiState(

@@ -51,38 +51,50 @@ class MovieDetailsViewModel @Inject constructor(
                     id = movieDetails.id,
                     backdropPath = movieDetails.backdropPath,
                     genres = movieDetails.genres,
-                    recommendations = movieDetails.recommendations?.recommendedMovies?.map {
+                    title = movieDetails.title,
+                    overview = movieDetails.overview,
+                    voteAverage = movieDetails.voteAverage,
+                    videos = movieDetails.videos?.results?.map { it.key },
+                    ),
+                recommendedUiState = MovieDetailsItem.Recommended(
+                    movieDetails.recommendations?.recommendedMovies?.map {
                         RecommendedMoviesUiState(
                             id = it?.id,
                             voteAverage = it?.voteAverage,
                             backdropPath = it?.backdropPath,
                         )
                     },
-                    title = movieDetails.title,
-                    overview = movieDetails.overview,
-                    voteAverage = movieDetails.voteAverage,
-                    videos = movieDetails.videos?.results?.map { it.key },
-                    cast = movieDetails.credits?.cast?.map {
+                ),
+                reviewUiState = MovieDetailsItem.Reviews(
+                    movieDetails.reviewEntities?.map {
+                        ReviewUiState(
+                            name = it.name,
+                            avatar_path = it.avatar_path,
+                            content = it.content,
+                            created_at = it.created_at
+                        )
+                    }
+                ),
+                castUiState = MovieDetailsItem.People(
+                    movieDetails.credits?.cast?.map {
                         CastUiState(
                             id = it?.id,
                             name = it?.name,
                             profilePath = it?.profilePath
                         )
-                    },
-                    reviews = movieDetails.reviewEntities?.map {
-                        ReviewUiState(
-                            name =it.name,
-                            avatar_path =it.avatar_path,
-                            content =it.content,
-                            created_at =it.created_at
-                        )
-                    },
-
-
-                    ),
+                    }
+                ),
                 isLoading = false
             )
         }
+    }
+
+    override fun onClickPeople(itemId: Int) {
+        Log.d("TAG", "People")
+    }
+
+    override fun onClickRecommendedMovie(itemId: Int) {
+        Log.d("TAG", "Recommended")
     }
 
 }
