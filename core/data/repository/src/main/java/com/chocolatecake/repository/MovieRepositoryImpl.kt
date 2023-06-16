@@ -1,11 +1,14 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
+import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -17,6 +20,7 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -42,6 +46,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
+    private val domainRatingMapper: DomainRatingMapper,
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -182,5 +187,9 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
         return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+    }
+
+    override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
+        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
     }
 }

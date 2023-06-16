@@ -3,8 +3,10 @@ package com.chocolatecake.viewmodel.movieDetails
 import android.util.Log
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
+import com.chocolatecake.entities.movieDetails.RatingEntity
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
+import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
-    private val movieDetailsUseCase: GetMovieDetailsUseCase
+    private val movieDetailsUseCase: GetMovieDetailsUseCase,
+    private val ratingUseCase: GetRatingUseCase
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener {
 
@@ -85,12 +88,19 @@ class MovieDetailsViewModel @Inject constructor(
         }
     }
     fun onRatingSubmit(rating: Float, movieId: Int) {
+        tryToExecute(
+            call = {ratingUseCase(movieId , rating)},
+            onSuccess = ::onSuccessRating,
+            onError = ::onError
+        )
+    }
 
+    private fun onSuccessRating(ratingEntity: RatingEntity) {
+        //todo
     }
 
 
     override fun onClickPeople(itemId: Int) {
-        Log.d("TAG" , "people")
         sendEvent(MovieDetailsUiEvent.PeopleEvent(itemId))
     }
 

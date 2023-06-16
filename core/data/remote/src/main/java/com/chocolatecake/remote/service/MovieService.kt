@@ -1,6 +1,7 @@
 package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.LoginRequest
+import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
@@ -9,11 +10,13 @@ import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
+import com.chocolatecake.remote.response.movieDetails.RatingDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -88,4 +91,11 @@ interface MovieService {
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int
     ): Response<MovieDetailsDto>
+
+    @Headers("Content-Type: application/json;charset=utf-8")
+    @POST("movie/{movieId}/rating")
+    suspend fun setMovieRate(
+        @Body ratingRequest: RatingRequest,
+        @Path("movieId") movieId: Int
+    ):Response<RatingDto>
 }

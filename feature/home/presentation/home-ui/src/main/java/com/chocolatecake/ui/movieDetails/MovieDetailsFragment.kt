@@ -1,7 +1,9 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
@@ -55,6 +57,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
     }
 
     override fun onEvent(event: MovieDetailsUiEvent) {
+        val bottomSheet = RatingMovieBottomSheet()
         when(event){
             MovieDetailsUiEvent.OnClickBack -> {
                 //todo
@@ -67,7 +70,6 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
             }
             is MovieDetailsUiEvent.RateMovieEvent -> {
                 val movieId = event.movieId
-                val bottomSheet = RatingMovieBottomSheet()
                 bottomSheet.show(childFragmentManager, "BOTTOM")
                 bottomSheet.setMovieID(movieId)
             }

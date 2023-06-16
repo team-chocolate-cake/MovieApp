@@ -49,7 +49,7 @@ class RatingMovieBottomSheet : BottomSheetDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.buttonApply.setOnClickListener{
             viewModel.onRatingSubmit(binding.rating.rating , movieId)
-            dismiss()
+            this.dismiss()
         }
     }
 }
