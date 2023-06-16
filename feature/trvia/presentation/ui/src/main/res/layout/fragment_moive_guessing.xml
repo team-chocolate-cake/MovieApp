@@ -53,5 +53,16 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
 
+        <include
+            android:id="@+id/include_item_card_choose_movie"
+            layout="@layout/item_card_choose"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_people" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

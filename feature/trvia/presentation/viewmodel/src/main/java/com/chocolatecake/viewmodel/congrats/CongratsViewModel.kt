@@ -9,7 +9,7 @@ class CongratsViewModel @Inject constructor(
 
 ) : BaseViewModel<CongratsUIState,CongratsUIEvent>(CongratsUIState()), CongratsListener {
 
-    override fun onClickNext() {
+    override fun onClickNextLevel() {
         sendEvent(CongratsUIEvent.NavigateToNextLevel)
     }
 

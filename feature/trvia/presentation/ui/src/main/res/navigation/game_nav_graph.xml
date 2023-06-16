@@ -18,7 +18,17 @@
         android:id="@+id/memorizeGameFragment"
         tools:layout="@layout/fragment_moive_guessing"
         android:name="com.chocolatecake.ui.memorize_game.MemorizeGameFragment"
-        android:label="MemorizeGameFragment" />
+        android:label="MemorizeGameFragment" >
+        <action
+            android:id="@+id/action_memorizeGameFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment" />
+        <action
+            android:id="@+id/action_memorizeGameFragment_to_homeGameFragment"
+            app:destination="@id/homeGameFragment" />
+        <action
+            android:id="@+id/action_memorizeGameFragment_to_congratsFragment"
+            app:destination="@id/congratsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/movieGuessingFragment"
         tools:layout="@layout/fragment_moive_guessing"
@@ -51,5 +61,13 @@
         <action
             android:id="@+id/action_typeGameFragment_to_peopleGuessingFragment"
             app:destination="@id/peopleGuessingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/congratsFragment"
+        android:name="com.chocolatecake.ui.congrats.CongratsFragment"
+        android:label="CongratsFragment" >
+        <argument
+            android:name="gameType"
+            app:argType="com.chocolatecake.viewmodel.common.model.GameType" />
     </fragment>
 </navigation>

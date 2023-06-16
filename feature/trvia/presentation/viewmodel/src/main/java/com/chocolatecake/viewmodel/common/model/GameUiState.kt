@@ -2,10 +2,9 @@ package com.chocolatecake.viewmodel.common.model
 
 data class GameUiState(
     val gameType: GameType = GameType.PEOPLE,
-    val CountDownTimer: Int = 30,
+    val countDownTimer: Int = 30,
     val level: Int = 1,
     val questionCount: Int = 1,
-    val totalQuestions: Int = 5,
     val heartCount: Int = 3,
     val points: Int = 0,
     val question: String = "",
@@ -15,7 +14,16 @@ data class GameUiState(
     val userAnswer: Int? = null
 
 
-)
+) {
+    val totalQuestions: Int
+        get() = when (level) {
+            1 -> 5
+            2 -> 10
+            else -> 15
+        }
+
+    val isLastQuestion: Boolean get() = questionCount == totalQuestions
+}
 
 enum class GameType{
     PEOPLE,

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.common.model.GameUiState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,13 +14,97 @@
         android:layout_height="match_parent">
 
         <View
-            android:id="@+id/view_card_type_game"
+            android:id="@+id/view_card_answer_one"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@drawable/textfield_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_answer_one"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`A |` + item.answers[0]}"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:textColor="@color/on_background_87"
+            tools:text="A |  The BlackList"
+            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_one"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_card_answer_two"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/textfield_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_card_answer_one" />
+
+        <TextView
+            android:id="@+id/text_view_answer_two"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`B |` + item.answers[1]}"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:textColor="@color/on_background_87"
+            tools:text="B |  The BlackList"
+            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_two"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_card_answer_two" />
+
+        <View
+            android:id="@+id/view_card_answer_three"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/textfield_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_card_answer_two" />
+
+        <TextView
+            android:id="@+id/text_view_answer_three"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`C |` + item.answers[2]}"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:textColor="@color/on_background_87"
+            tools:text="C |  The BlackList"
+            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_three"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_card_answer_three" />
+
+        <View
+            android:id="@+id/view_card_answer_four"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:background="@drawable/textfield_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_card_answer_three" />
+
+        <TextView
+            android:id="@+id/text_view_answer_four"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`D |` + item.answers[3]}"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:textColor="@color/on_background_87"
+            tools:text="D |  The BlackList"
+            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_four"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_card_answer_four" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

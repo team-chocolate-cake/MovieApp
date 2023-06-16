@@ -1,41 +1,54 @@
 package com.chocolatecake.ui.memorize_game
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentMemorizeBinding
-import com.chocolatecake.viewmodel.common.model.GameUIEvent
-import com.chocolatecake.viewmodel.common.model.GameUiState
+import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIEvent
+import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIState
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MemorizeGameFragment: BaseFragment<FragmentMemorizeBinding, GameUiState, GameUIEvent>() {
+class MemorizeGameFragment :
+    BaseFragment<FragmentMemorizeBinding, MemorizeGameUIState, MemorizeGameUIEvent>() {
     override val layoutIdFragment: Int = R.layout.fragment_memorize
     override val viewModel: MemorizeGameViewModel by viewModels()
-
-    override fun onEvent(event: GameUIEvent) {
-        when(event){
-            GameUIEvent.NavigateToWelcomeGameScreen -> navigateToWelcomeGameScreen()
-            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.level,event.points)
-            GameUIEvent.ShowTimeOut -> showTimeOut()
-            is GameUIEvent.UpdateQuestion -> updateQuestion(event.questionNumber)
+    private lateinit var memorizeGameAdapter: MemorizeGameAdapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("123123123", "onViewCreated: $123123123")
+        memorizeGameAdapter = MemorizeGameAdapter(mutableListOf(), viewModel)
+        binding.recyclerViewMemorizeGame.adapter = memorizeGameAdapter
+        collectLatest {
+            viewModel.state.collect {
+                Log.d("123123123", "onViewCreated: $it")
+                memorizeGameAdapter.setItems(it.board)
+            }
         }
     }
 
-    private fun navigateToWelcomeGameScreen() {
-        TODO("Not yet implemented")
-    }
+    override fun onEvent(event: MemorizeGameUIEvent) {
+        when (event) {
+            MemorizeGameUIEvent.NavigateToLoserScreen -> {
+                findNavController().navigate(MemorizeGameFragmentDirections.actionMemorizeGameFragmentToTypeGameFragment())
+            }
 
-    private fun navigateToWinnerScreen(level: Int, points: Int) {
+            MemorizeGameUIEvent.NavigateToWelcomeGameScreen -> {
+                findNavController().navigate(MemorizeGameFragmentDirections.actionMemorizeGameFragmentToHomeGameFragment())
+            }
 
-    }
-
-    private fun showTimeOut() {
-        TODO("Not yet implemented")
-    }
-
-    private fun updateQuestion(questionNumber: Int) {
-
+            is MemorizeGameUIEvent.NavigateToWinnerScreen -> {
+                findNavController().navigate(
+                    MemorizeGameFragmentDirections.actionMemorizeGameFragmentToCongratsFragment(
+                        event.gameType
+                    )
+                )
+            }
+        }
     }
 }
