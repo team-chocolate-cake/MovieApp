@@ -16,10 +16,26 @@ class TvShowGuessingFragment: BaseFragment<FragmentTvShowGuessingBinding, GameUi
 
     override fun onEvent(event: GameUIEvent) {
         when(event){
-            GameUIEvent.NavigateToWelcomeGameScreen -> TODO()
-            is GameUIEvent.NavigateToWinnerScreen -> TODO()
-            GameUIEvent.ShowTimeOut -> TODO()
-            is GameUIEvent.UpdateQuestion -> TODO()
+            GameUIEvent.NavigateToWelcomeGameScreen -> navigateToWelcomeGameScreen()
+            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.level,event.points)
+            GameUIEvent.ShowTimeOut -> showTimeOut()
+            is GameUIEvent.UpdateQuestion -> updateQuestion(event.questionNumber)
         }
+    }
+
+    private fun navigateToWelcomeGameScreen() {
+        TODO("Not yet implemented")
+    }
+
+    private fun navigateToWinnerScreen(level: Int, points: Int) {
+
+    }
+
+    private fun showTimeOut() {
+        TODO("Not yet implemented")
+    }
+
+    private fun updateQuestion(questionNumber: Int) {
+
     }
 }

@@ -3,7 +3,7 @@ package com.chocolatecake.ui.congrats
 import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
-import com.chocolatecake.ui.trivia.databinding.FragmentCongratsScreenBinding
+import com.chocolatecake.ui.trivia.databinding.FragmentCongratsBinding
 import com.chocolatecake.viewmodel.congrats.CongratsUIEvent
 import com.chocolatecake.viewmodel.congrats.CongratsUIState
 import com.chocolatecake.viewmodel.congrats.CongratsViewModel
@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CongratsFragment :
-    BaseFragment<FragmentCongratsScreenBinding, CongratsUIState, CongratsUIEvent>() {
+    BaseFragment<FragmentCongratsBinding, CongratsUIState, CongratsUIEvent>() {
     override val layoutIdFragment: Int = R.layout.fragment_congrats
     override val viewModel: CongratsViewModel by viewModels()
 
