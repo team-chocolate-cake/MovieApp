@@ -10,6 +10,7 @@ import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class TVShowsViewModel @Inject constructor(
     val getGetTopRatedTVShowsUseCase: GetTopRatedTVShowsUseCase,
     private val tvShowsMapper: TVShowsMapper
 ) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener {
+
 
     init {
         getData()
@@ -45,12 +47,16 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.AIRING_TODAY,
-                    tvShowUIS = items,
+                    tvShowResult = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
             }
-            Log.d("chips-----ViewModel", "AiringToday---- $items ")
+            items.collect{
+                Log.d("it-----ViewModel", "AiringToday---- $it ")
+            }
+
+            Log.d("chips-----ViewModel", "AiringToday---- ${items.collect()} ")
         }
     }
 
@@ -62,7 +68,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.ON_THE_AIR,
-                    tvShowUIS = items,
+                    tvShowResult = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
@@ -79,7 +85,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.POPULAR,
-                    tvShowUIS = items,
+                    tvShowResult = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
@@ -96,7 +102,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.TOP_RATED,
-                    tvShowUIS = items,
+                    tvShowResult = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
@@ -104,6 +110,8 @@ class TVShowsViewModel @Inject constructor(
             Log.d("chips-----ViewModel", "TopRated---- $items ")
         }
     }
+
+
 
     ///region event
     override fun onClickTVShows(itemId: Int) {

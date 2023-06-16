@@ -12,7 +12,7 @@ class GetAiringTodayTVShowsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): Flow<PagingData<TVShowsEntity>> {
-        Log.d("list---UseCase---AiringToday", movieRepository.getAiringTodayTVShows().toString())
+        Log.d("list---UseCase---AiringToday", movieRepository.getAiringTodayTVShows().flow.toString())
         return movieRepository.getAiringTodayTVShows().flow
     }
 }

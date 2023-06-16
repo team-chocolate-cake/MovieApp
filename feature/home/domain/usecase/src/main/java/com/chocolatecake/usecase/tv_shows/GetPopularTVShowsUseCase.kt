@@ -11,7 +11,7 @@ class GetPopularTVShowsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): Flow<PagingData<TVShowsEntity>> {
-        Log.d("list---UseCase---Popular", movieRepository.getPopularTVShows().toString())
+        Log.d("list---UseCase---Popular", movieRepository.getPopularTVShows().flow.toString())
         return movieRepository.getPopularTVShows().flow
     }
 }

@@ -10,7 +10,7 @@ class TVShowsMapper @Inject constructor() :
     override fun map(input: TVShowsEntity?): TVShowsUI {
         return TVShowsUI(
             id = input?.id,
-            input?.imageUrl
+            imageUrl = input?.imageUrl
         )
     }
 }

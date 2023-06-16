@@ -9,6 +9,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
@@ -37,22 +39,26 @@ class TvFragment :
     }
 
     private fun setAdapter() {
-        val footerAdapter = BaseFooterAdapter({ tvShowsAdapter.retry() })
-        binding.rvTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
 
+        val footerAdapter = BaseFooterAdapter { tvShowsAdapter.retry() }
+        binding.rvTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
 
         collect(flow = tvShowsAdapter.loadStateFlow,
             action = { viewModel.state.value.onErrors })
 
-        collectLast(viewModel.state.value.tvShowUIS, ::setAllTVShows)
+        collectLast(viewModel.state.value.tvShowResult, ::setAllTVShows)
+
+        getTVShowsResults()
+    }
+    private fun getTVShowsResults() {
+        collectLast(viewModel.state.value.tvShowResult)
+        { tvShowsAdapter.submitData(it) }
     }
 
     private suspend fun setAllTVShows(itemsPagingData: PagingData<TVShowsUI>) {
-        tvShowsAdapter.submitData(itemsPagingData)
-        viewModel.state.collect{
-            Log.d("state","mmmmmmmmmmmm"+it.tvShowUIS.toString())
+        viewLifecycleOwner.lifecycleScope.launch {
+            tvShowsAdapter.submitData(itemsPagingData)
         }
-
     }
 
     fun <T> LifecycleOwner.collectLast(flow: Flow<T>, action: suspend (T) -> Unit) {
@@ -72,20 +78,6 @@ class TvFragment :
             }
         }
     }
-
-
-    /*private fun setAdapter() {
-        tvShowsAdapter = TVShowsAdapter(mutableListOf(), viewModel)
-        binding.rvTvShows.adapter = tvShowsAdapter
-    }
-
-    override fun onSateChange(state: TVShowUIState) {
-        state.tvShowUIS?.let {
-            tvShowsAdapter.setItems(it.filterNotNull())
-            Log.d("list---Fragment", it.filterNotNull().toString())
-        }
-    }*/
-//--------------------------------------------------------------
 
     override fun onEvent(event: TVShowsInteraction) {
         when (event) {

@@ -16,7 +16,6 @@ class TVShowsAdapter @Inject constructor() : PagingDataAdapter<TVShowsUI, TVShow
     override fun onBindViewHolder(holder: TVShowsViewHolder, position: Int) {
         getItem(position)?.let { tvShowsUI -> holder.bind(tvShowsUI) }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TVShowsViewHolder {
         return TVShowsViewHolder(
             DataBindingUtil.inflate(
@@ -43,5 +42,6 @@ class TVShowsViewHolder(private val binding: ItemTvShowBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(tvShowsUI: TVShowsUI) {
         binding.item = tvShowsUI
+        binding.executePendingBindings()
     }
 }
