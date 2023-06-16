@@ -191,10 +191,9 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun refreshAccountDetails() {
         refreshWrapper(
             movieService::getAccountDetails,
-            LocalProfileMapper::map,
+            localProfileMapper::map,
             movieDao::insertAccountDetails
         )
     }
-
     /// endregion
 }
