@@ -35,7 +35,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
     private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
-    private val localProfileMapper : LocalProfileMapper
+    private val localProfileMapper : LocalProfileMapper,
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
     private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
     private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
@@ -188,13 +188,13 @@ class MovieRepositoryImpl @Inject constructor(
         return domainProfileMapper.map(movieDao.getAccountDetails())
     }
 
-//    override suspend fun refreshAccountDetails() {
-//        refreshWrapper(
-//            movieService::getAccountDetails,
-//            LocalProfileMapper::map,
-//            movieDao::insertAccountDetails
-//        )
-//    }
+    override suspend fun refreshAccountDetails() {
+        refreshWrapper(
+            movieService::getAccountDetails,
+            LocalProfileMapper::map,
+            movieDao::insertAccountDetails
+        )
+    }
 
     /// endregion
 }
