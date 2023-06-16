@@ -88,20 +88,23 @@ fun <T> View.showWhenError(list: List<T>?) {
     }
 }
 
-@BindingAdapter("chips")
-fun setChips(chipGroup: ChipGroup, chips: List<String>) {
-    chipGroup.removeAllViews()
-    val inflater = LayoutInflater.from(chipGroup.context)
+@BindingAdapter("app:chips")
+fun ChipGroup.setChips(chips: List<String>) {
+    removeAllViews()
+    val inflater = LayoutInflater.from(context)
     for (chipText in chips) {
-        val chip = inflater.inflate(R.layout.tv_details_item_chip, chipGroup, false) as Chip
-        chip.text = chipText
-        chipGroup.addView(chip)
+        val chip = inflater.inflate(R.layout.tv_details_item_chip, this, false) as Chip
+        chip.apply {
+            text = chipText
+            isCheckable = false
+        }
+        addView(chip)
     }
 }
 
-@BindingAdapter("onRatingChanged")
-fun setOnRatingChangedListener(ratingBar: RatingBar, onRatingChanged: ((Float) -> Unit)) {
-    ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+@BindingAdapter("app:onRatingChanged")
+fun RatingBar.setOnRatingChangedListener(onRatingChanged: ((Float) -> Unit)) {
+    setOnRatingBarChangeListener { _, rating, _ ->
         onRatingChanged.invoke(rating)
     }
 }
