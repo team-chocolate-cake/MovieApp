@@ -24,4 +24,5 @@
     <string name="company">Company</string>
     <string name="apply">Apply</string>
     <string name="Popular_Movies">Popular Movies</string>
+    <string name="retry">retry</string>
 </resources>
