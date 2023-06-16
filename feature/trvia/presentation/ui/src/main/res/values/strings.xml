@@ -8,5 +8,11 @@
     <string name="reward_text">You earned %1$d points and unlocked level %2$d</string>
     <string name="go_to_next_level">Go to next level</string>
     <string name="return_to_home">Return to home</string>
-
+    <string name="question_count_text">%1$d / %2$d</string>
+    <string name="level_text">Level #%1$d</string>
+    <string name="congrats_text">Congrats! %1$s</string>
+    <string name="answer_text_one">A |  %1$s</string>
+    <string name="answer_text_two">B |  %1$s</string>
+    <string name="answer_text_three">C |  %1$s</string>
+    <string name="answer_text_four">D |  %1$s</string>
 </resources>
