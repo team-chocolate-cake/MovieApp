@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:cardCornerRadius="@dimen/spacing_medium"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/card"
+
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeable_imageview_movie_banner"
+                android:layout_width="116dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/movie_banner"
+                app:imageUrl="@{item.imageUrl}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large" />
+
+            <TextView
+                android:id="@+id/textview_title"
+                style="@style/TextStyle.LabelSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_custom"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{item.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/shapeable_imageview_movie_banner"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="The Shawshank Redemption" />
+
+            <TextView
+                android:id="@+id/textview_description"
+                style="@style/TextStyle.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{item.description}"
+                app:layout_constraintEnd_toEndOf="@id/textview_title"
+                app:layout_constraintStart_toStartOf="@id/textview_title"
+                app:layout_constraintTop_toBottomOf="@id/textview_title"
+                tools:text="Framed in the 1940s for the double murder ...." />
+
+            <TextView
+                android:id="@+id/textview_rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:drawableStart="@drawable/ic_star"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:drawablePadding="@dimen/spacing_small"
+                android:drawableTint="@color/on_background_60"
+                android:text="@{String.valueOf(item.rating)}"
+                app:layout_constraintStart_toStartOf="@id/textview_title"
+                app:layout_constraintTop_toBottomOf="@id/textview_description"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                tools:text="7.9" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

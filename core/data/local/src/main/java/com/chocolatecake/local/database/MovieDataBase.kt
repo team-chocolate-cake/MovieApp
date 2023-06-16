@@ -2,9 +2,11 @@ package com.chocolatecake.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.local.database.dto.movie.MovieInWatchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
@@ -25,10 +27,12 @@ import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
         SearchHistoryLocalDto::class,
         GenresMoviesLocalDto::class,
         MovieLocalDto::class,
+        MovieInWatchHistoryLocalDto::class
     ],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Convertors::class)
 abstract class MovieDataBase : RoomDatabase() {
     abstract val movieDao: MovieDao
 }

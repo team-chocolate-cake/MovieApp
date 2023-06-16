@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.ui.watch_history.WatchHistoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <EditText
+            android:id="@+id/edittext_search"
+            style="@style/TextStyle.LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_extra_giant"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:afterTextChanged="@{(text) -> viewModel.setSearchQuery(text)}"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/spacing_small"
+            android:drawableTint="@color/on_background_60"
+            android:hint="@string/search"
+            android:paddingHorizontal="@dimen/spacing_medium"
+            android:textColorHint="@color/on_background_60"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/watch_history_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/spacing_medium"
+            app:items="@{viewModel.state.recyclerItems}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edittext_search"
+            tools:listitem="@layout/watch_history_recycler_view_card" />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary"
+            app:isVisible="@{viewModel.state.isLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{viewModel.state.recyclerItems.size()==0}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_search"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+
+            app:lottie_rawRes="@raw/empty_state" />
+
+        <TextView
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_items_found"
+            app:isVisible="@{viewModel.state.recyclerItems.size()==0}"
+            app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
+            app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
+            app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
