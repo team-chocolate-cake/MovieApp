@@ -13,40 +13,67 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:layout_marginHorizontal="@dimen/spacing_medium">
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_large">
 
         <TextView
             android:id="@+id/text_view_number_level"
             style="@style/TextStyle.TitleMedium"
-            android:textColor="@color/primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{`Level #` + item.level}"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_number_questions"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/circularProgressView"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Level #1" />
 
         <TextView
             android:id="@+id/text_view_number_questions"
+            style="@style/TextStyle.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
-            app:layout_constraintStart_toStartOf="@+id/text_view_number_level"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_number_level"
-            android:text="@{item.questionCount + '/' + item.totalQuestions}"
             android:drawableEnd="@drawable/ic_fire"
             android:drawablePadding="@dimen/spacing_tiny"
+            android:text="@{item.questionCount + '/' + item.totalQuestions}"
+            app:layout_constraintBottom_toBottomOf="@+id/circularProgressView"
+            app:layout_constraintStart_toStartOf="@+id/text_view_number_level"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_number_level"
             tools:text="03/10" />
 
         <com.github.guilhe.views.CircularProgressView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            app:progressBarThickness="10dp"
+            android:id="@+id/circularProgressView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:duplicateFirstColorInArray="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:max="30"
+            app:progress="@{item.countDownTimer}"
+            app:progressBackgroundColor="@color/background"
+            app:progressBarRounded="true"
+            app:progressBarThickness="3dp"
+            app:progressColors="@{item.countDownTimer}"
+            app:shadow="false" />
+
+        <TextView
+            android:id="@+id/text_view_timer"
+            style="@style/TextStyle.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(item.countDownTimer)}"
+            android:textColor="@color/error"
+            app:layout_constraintBottom_toBottomOf="@+id/circularProgressView"
+            app:layout_constraintEnd_toEndOf="@+id/circularProgressView"
+            app:layout_constraintStart_toStartOf="@+id/circularProgressView"
+            app:layout_constraintTop_toTopOf="@+id/circularProgressView"
+            app:maxTime="30"
+            app:timerColor="@{item.countDownTimer}"
+            tools:text="07" />
 
         <ImageView
             android:id="@+id/image_view_count_live"
@@ -55,20 +82,24 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_heart"
             android:textColor="@color/primary"
+            app:layout_constraintBottom_toTopOf="@+id/text_view_count_point"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/circularProgressView"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Level #1" />
 
         <TextView
             android:id="@+id/text_view_count_point"
+            style="@style/TextStyle.TitleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
-            app:layout_constraintEnd_toEndOf="@+id/image_view_count_live"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_count_live"
-            android:text="@{String.valueOf(item.points)}"
             android:drawableEnd="@drawable/ic_score"
             android:drawablePadding="@dimen/spacing_tiny"
+            android:text="@{String.valueOf(item.points)}"
+            app:layout_constraintBottom_toBottomOf="@+id/circularProgressView"
+            app:layout_constraintEnd_toEndOf="@+id/image_view_count_live"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_count_live"
             tools:text="300" />
 
 
