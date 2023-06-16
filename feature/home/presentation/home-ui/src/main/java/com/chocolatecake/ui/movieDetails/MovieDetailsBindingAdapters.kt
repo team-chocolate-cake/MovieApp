@@ -41,6 +41,7 @@ fun ChipGroup.setGenresMovieDetails(
             com.chocolatecake.bases.R.style.MovieDetailsChipStyle
         )
         chip.setChipDrawable(chipDrawable)
+        chip.isEnabled = false
         this.addView(chip)
     }
 }
