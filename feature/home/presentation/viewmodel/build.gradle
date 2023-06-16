@@ -55,4 +55,7 @@ dependencies {
     /// coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
+    /// paging
+    implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
 }

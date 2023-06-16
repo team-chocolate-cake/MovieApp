@@ -1,8 +1,10 @@
 package com.chocolatecake.repository
 
+import androidx.paging.Pager
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TVShowsEntity
 
 
 interface MovieRepository {
@@ -34,5 +36,10 @@ interface MovieRepository {
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
+
+    suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity>
+    suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity>
+    suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity>
+    suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity>
 
 }

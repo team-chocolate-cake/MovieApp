@@ -8,6 +8,7 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -58,6 +59,21 @@ interface MovieService {
         @Path("time_window") timeWindow: String = "day"
     ): Response<DataWrapperResponse<MovieRemoteDto>>
     ///endregion
+
+    /// region tv
+
+    @GET("tv/airing_today")
+    suspend fun getAiringTodayTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("tv/on_the_air")
+    suspend fun getOnTheAirTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("tv/popular")
+    suspend fun getPopularTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
+    /// endregion
 
     /// region search
     @GET("search/movie")
