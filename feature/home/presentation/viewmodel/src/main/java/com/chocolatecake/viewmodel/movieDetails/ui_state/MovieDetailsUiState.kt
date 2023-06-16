@@ -4,7 +4,7 @@ import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
 
 
 data class MovieDetailsUiState(
-    val movieUiState: MovieUiState? = null,
+    val movieUiState: MovieDetailsItem = MovieDetailsItem.Upper(null),
     val recommendedUiState: MovieDetailsItem = MovieDetailsItem.Recommended(emptyList()),
     val castUiState: MovieDetailsItem = MovieDetailsItem.People(emptyList()),
     val reviewUiState: MovieDetailsItem = MovieDetailsItem.Reviews(emptyList()),
@@ -12,14 +12,14 @@ data class MovieDetailsUiState(
     val isLoading: Boolean = false,
 )
 
-data class MovieUiState(
+data class UpperUiState(
     val id: Int?,
     val backdropPath: String?,
     val genres: List<String>?,
     val title: String?,
     val overview: String?,
-    val voteAverage: Double?,
-    val videos: List<String?>?,
+    val voteAverage: Float?,
+    val videos: List<String>?,
 )
 
 data class RecommendedMoviesUiState(

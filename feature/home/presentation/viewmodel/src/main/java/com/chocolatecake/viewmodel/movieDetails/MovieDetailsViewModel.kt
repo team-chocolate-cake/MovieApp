@@ -9,7 +9,7 @@ import com.chocolatecake.viewmodel.movieDetails.ui_state.CastUiState
 import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener
 import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieUiState
+import com.chocolatecake.viewmodel.movieDetails.ui_state.UpperUiState
 import com.chocolatecake.viewmodel.movieDetails.ui_state.RecommendedMoviesUiState
 import com.chocolatecake.viewmodel.movieDetails.ui_state.ReviewUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,15 +47,17 @@ class MovieDetailsViewModel @Inject constructor(
     private fun onSuccessMovieDetails(movieDetails: MovieDetailsEntity) {
         _state.update {
             it.copy(
-                movieUiState = MovieUiState(
-                    id = movieDetails.id,
-                    backdropPath = movieDetails.backdropPath,
-                    genres = movieDetails.genres,
-                    title = movieDetails.title,
-                    overview = movieDetails.overview,
-                    voteAverage = movieDetails.voteAverage,
-                    videos = movieDetails.videos?.results?.map { it.key },
-                    ),
+                movieUiState = MovieDetailsItem.Upper(
+                    UpperUiState(
+                        id = movieDetails.id,
+                        backdropPath = movieDetails.backdropPath,
+                        genres = movieDetails.genres,
+                        title = movieDetails.title,
+                        overview = movieDetails.overview,
+                        voteAverage = movieDetails.voteAverage?.toFloat()?.div(2f),
+                        videos = movieDetails.videos?.results?.map { it.key!! },
+                    )
+                ),
                 recommendedUiState = MovieDetailsItem.Recommended(
                     movieDetails.recommendations?.recommendedMovies?.map {
                         RecommendedMoviesUiState(
@@ -95,6 +97,14 @@ class MovieDetailsViewModel @Inject constructor(
 
     override fun onClickRecommendedMovie(itemId: Int) {
         //todo navigate to movie details screen
+    }
+
+    override fun onClickPlayTrailer(itemId: Int) {
+        Log.d("TAG" , "Play")
+    }
+
+    override fun onClickRate(id: Int) {
+
     }
 
 }
