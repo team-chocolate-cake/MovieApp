@@ -14,7 +14,8 @@ class LocalInWatchHistoryMoviesMapper @Inject constructor()
             title = input.title,
             voteAverage = input.voteAverage,
             description = input.description,
-            dateWatched = input.dateWatched
+            dateWatched = input.dateWatched,
+            year = input.year
         )
     }
 }

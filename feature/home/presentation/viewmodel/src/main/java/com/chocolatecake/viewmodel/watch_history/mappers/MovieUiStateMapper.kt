@@ -9,10 +9,12 @@ class MovieUiStateMapper @Inject constructor() : Mapper<MovieInWatchHistoryEntit
     override fun map(input: MovieInWatchHistoryEntity): MovieUiState {
         return MovieUiState(
             id = input.id,
-            title = input.title ?: "",
-            description = input.description ?: "",
-            rating = input.voteAverage ?: 0.0,
-            imageUrl = input.posterPath ?: ""
+            title = input.title,
+            description = input.description,
+            rating = input.voteAverage,
+            imageUrl = input.posterPath,
+            dateWatched = input.dateWatched,
+            year = input.year
         )
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/watchHistoryFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -17,6 +17,12 @@
             app:popUpToInclusive="true"/>
     </fragment>
 
-    <include app:graph="@navigation/home_nav_graph" />
+    <fragment
+        android:id="@+id/watchHistoryFragment"
+        tools:layout="@layout/fragment_watch_history"
+        android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
+        android:label="WatchHistoryFragment" />
+
+<!--    <include app:graph="@navigation/home_nav_graph" />-->
 
 </navigation>

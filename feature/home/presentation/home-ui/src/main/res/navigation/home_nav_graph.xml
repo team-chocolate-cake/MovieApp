@@ -26,4 +26,9 @@
         tools:layout="@layout/fragment_tv"
         android:name="com.chocolatecake.ui.tvShow.TvFragment"
         android:label="TvFragment" />
+    <fragment
+        android:id="@+id/watchHistoryFragment"
+        tools:layout="@layout/fragment_watch_history"
+        android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
+        android:label="WatchHistoryFragment" />
 </navigation>

@@ -7,6 +7,7 @@ import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCas
 import com.chocolatecake.usecase.watch_history.GetAllWatchHistoryMoviesUseCase
 import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
+import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieDomainMapper
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieUiStateMapper
 import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
@@ -20,6 +21,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.chocolatecake.viewmodel.watch_history.state_managment.Error
+import kotlinx.coroutines.runBlocking
+import java.util.Date
+import kotlin.math.abs
 
 @HiltViewModel
 class WatchHistoryViewModel @Inject constructor(
@@ -29,10 +33,10 @@ class WatchHistoryViewModel @Inject constructor(
     private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val movieDomainMapper: MovieDomainMapper,
     private val movieUiStateMapper: MovieUiStateMapper
-) : BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(
-    WatchHistoryUiState()
-), WatchHistoryOnEventListeners {
+)
+    : BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(WatchHistoryUiState()),MediaListener
 
+{
 
     init {
         getAllMovies()
@@ -51,7 +55,6 @@ class WatchHistoryViewModel @Inject constructor(
             onError = ::onGetAllMoviesError
         )
     }
-
 
     private fun onGetAllMoviesSuccess(items: List<MovieUiState>) {
         _state.update {
@@ -116,9 +119,13 @@ class WatchHistoryViewModel @Inject constructor(
     }
 
     private suspend fun searchMovies(searchTerm: String) {
-        val result = searchWatchHistoryUseCase(searchTerm).map {
-            movieUiStateMapper.map(it)
+        var result: List<MovieUiState>
+        runBlocking {
+            result = searchWatchHistoryUseCase(searchTerm).map {
+                movieUiStateMapper.map(it)
+            }
         }
+
         _state.update { uiState ->
             uiState.copy(
                 movies = result,
@@ -131,11 +138,11 @@ class WatchHistoryViewModel @Inject constructor(
         _state.update { it.copy(searchInput = query.toString()) }
     }
 
-    override fun onCardClickListener() {
-
+    override fun onClickMedia(id: Int) {
+        sendEvent(
+            WatchHistoryUiEvent.NavigateToMovieDetails(id)
+        )
     }
 
-    override fun onCardSwipeListener() {
 
-    }
 }

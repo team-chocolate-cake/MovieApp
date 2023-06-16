@@ -14,7 +14,8 @@ class DomainInWatchHistoryMoviesMapper @Inject constructor()
             description = input.title,
             voteAverage = input.voteAverage,
             dateWatched = input.dateWatched,
-            posterPath = input.posterPath
+            posterPath = input.posterPath,
+            year = input.year
         )
     }
 }
