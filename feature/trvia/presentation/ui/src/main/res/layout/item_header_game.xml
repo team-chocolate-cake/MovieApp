@@ -75,18 +75,16 @@
             app:timerColor="@{item.countDownTimer}"
             tools:text="07" />
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/image_view_count_live"
-            style="@style/TextStyle.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_heart"
-            android:textColor="@color/primary"
+            android:orientation="horizontal"
+            app:hearCount="@{item.heartCount}"
             app:layout_constraintBottom_toTopOf="@+id/text_view_count_point"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/circularProgressView"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Level #1" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/text_view_count_point"

@@ -1,6 +1,8 @@
 package com.chocolatecake.ui.utill
 
 import android.content.res.ColorStateList
+import android.view.LayoutInflater
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -32,3 +34,11 @@ fun CircularProgressView.setProgressAnimated(progress: Int) {
     setProgressColors(colors, floatArrayOf(), true)
 }
 
+
+@BindingAdapter("app:hearCount")
+fun LinearLayout.createHearts(heartCount: Int) {
+    val inflater = LayoutInflater.from(context)
+    repeat(heartCount) {
+        addView(inflater.inflate(R.layout.item_heart, this, false))
+    }
+}
