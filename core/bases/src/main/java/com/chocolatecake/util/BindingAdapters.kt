@@ -1,12 +1,17 @@
 package com.chocolatecake.util
 
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chocolatecake.bases.BaseAdapter
+import com.chocolatecake.bases.R
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 @BindingAdapter(value = ["app:items"])
@@ -57,28 +62,46 @@ fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
 }
 
 @BindingAdapter(value = ["app:showWhenQueryEmpty"])
-fun View.showWhenEmptyData(query: String?){
-    if(query?.isEmpty() == true){
+fun View.showWhenEmptyData(query: String?) {
+    if (query?.isEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter(value = ["app:showWhenNoResult"])
-fun <T> View.showWhenNoResult(list: List<T>?){
-    if (list.isNullOrEmpty()){
+fun <T> View.showWhenNoResult(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter("app:showWhenError")
-fun <T> View.showWhenError(list: List<T>?){
-    if(list?.isNotEmpty() == true){
+fun <T> View.showWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("chips")
+fun setChips(chipGroup: ChipGroup, chips: List<String>) {
+    chipGroup.removeAllViews()
+    val inflater = LayoutInflater.from(chipGroup.context)
+    for (chipText in chips) {
+        val chip = inflater.inflate(R.layout.tv_details_item_chip, chipGroup, false) as Chip
+        chip.text = chipText
+        chipGroup.addView(chip)
+    }
+}
+
+@BindingAdapter("onRatingChanged")
+fun setOnRatingChangedListener(ratingBar: RatingBar, onRatingChanged: ((Float) -> Unit)) {
+    ratingBar.setOnRatingBarChangeListener { _, rating, _ ->
+        onRatingChanged.invoke(rating)
     }
 }
