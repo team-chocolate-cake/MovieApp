@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentTypeGamesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TypeGameFragment: Fragment() {
     lateinit var binding: FragmentTypeGamesBinding
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.common.model.GameUiState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_marginHorizontal="@dimen/spacing_medium">
+
+        <TextView
+            android:id="@+id/text_view_number_level"
+            style="@style/TextStyle.TitleMedium"
+            android:textColor="@color/primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`Level #` + item.level}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Level #1" />
+
+        <TextView
+            android:id="@+id/text_view_number_questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintStart_toStartOf="@+id/text_view_number_level"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_number_level"
+            android:text="@{item.questionCount + '/' + item.totalQuestions}"
+            android:drawableEnd="@drawable/ic_fire"
+            android:drawablePadding="@dimen/spacing_tiny"
+            tools:text="03/10" />
+
+        <com.github.guilhe.views.CircularProgressView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:progressBarThickness="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_view_count_live"
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_heart"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Level #1" />
+
+        <TextView
+            android:id="@+id/text_view_count_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            app:layout_constraintEnd_toEndOf="@+id/image_view_count_live"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_count_live"
+            android:text="@{String.valueOf(item.points)}"
+            android:drawableEnd="@drawable/ic_score"
+            android:drawablePadding="@dimen/spacing_tiny"
+            tools:text="300" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -5,4 +5,8 @@
     <string name="title_type_games">Choose your game</string>
     <string name="choose_your_game">Choose your game</string>
     <string name="lets_start">Lets Start</string>
+    <string name="reward_text">You earned %1$d points and unlocked level %2$d</string>
+    <string name="go_to_next_level">Go to next level</string>
+    <string name="return_to_home">Return to home</string>
+
 </resources>
