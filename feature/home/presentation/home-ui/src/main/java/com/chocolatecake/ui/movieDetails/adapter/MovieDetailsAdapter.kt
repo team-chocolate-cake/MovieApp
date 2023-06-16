@@ -32,7 +32,6 @@ class MovieDetailsAdapter(
     override val layoutID: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        Log.d("TAG" , "A7a")
         return when (viewType) {
             MovieDetailsType.PEOPLE.ordinal -> {
                 PeopleViewHolder(

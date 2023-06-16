@@ -22,14 +22,16 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="16dp"
+            >
 
             <TextView
                 android:id="@+id/textViewPeople"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:text="People"
+                android:paddingBottom="8dp"
                 android:textColor="@color/on_background_87"
                 style="@style/TextStyle.TitleMedium"
                 android:textStyle="bold" />
@@ -41,7 +43,6 @@
                 android:layout_height="wrap_content"
                 app:items="@{item.list}"
                 android:orientation="horizontal"
-                android:padding="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>

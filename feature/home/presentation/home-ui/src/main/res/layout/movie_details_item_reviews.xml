@@ -34,7 +34,7 @@
                 android:id="@+id/recyclerViewReviews"
                 tools:listitem="@layout/item_review"
                 android:layout_width="match_parent"
-                android:layout_marginTop="16dp"
+                android:paddingBottom="8dp"
                 app:items="@{item.list}"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

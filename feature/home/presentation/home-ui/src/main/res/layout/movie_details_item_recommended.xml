@@ -19,14 +19,17 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="16dp"
+            >
 
             <TextView
                 android:id="@+id/textViewRecommended"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:text="Recommended"
+                android:paddingBottom="8dp"
+
                 android:textColor="@color/on_background_87"
                 style="@style/TextStyle.TitleMedium"
                 android:textStyle="bold" />
@@ -38,7 +41,6 @@
                 app:items="@{item.list}"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
