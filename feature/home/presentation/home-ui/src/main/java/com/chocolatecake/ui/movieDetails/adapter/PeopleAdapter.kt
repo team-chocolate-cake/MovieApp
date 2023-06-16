@@ -2,11 +2,8 @@ package com.chocolatecake.ui.movieDetails.adapter
 
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.viewmodel.common.model.PeopleUIState
-import com.chocolatecake.viewmodel.home.HomeListener
-import com.chocolatecake.viewmodel.home.PopularMoviesUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.CastUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener
+import com.chocolatecake.viewmodel.movieDetails.CastUiState
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener
 
 class PeopleAdapter(
     itemsPopular: List<CastUiState>,

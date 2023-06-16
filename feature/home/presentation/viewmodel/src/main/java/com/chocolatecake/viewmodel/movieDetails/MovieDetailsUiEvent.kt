@@ -1,6 +1,4 @@
-package com.chocolatecake.viewmodel.movieDetails.ui_state
-
-import com.chocolatecake.viewmodel.home.HomeUiEvent
+package com.chocolatecake.viewmodel.movieDetails
 
 sealed interface MovieDetailsUiEvent{
 

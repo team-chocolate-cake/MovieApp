@@ -9,7 +9,7 @@
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.People" />
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener" />
+            type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,29 +1,18 @@
 package com.chocolatecake.ui.movieDetails.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.airbnb.lottie.L
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.ui.home.adapter.HomeAdapter
-import com.chocolatecake.ui.home.adapter.NowPlayingAdapter
-import com.chocolatecake.ui.home.adapter.PopularMoviesAdapter
-import com.chocolatecake.ui.home.adapter.PopularPeopleAdapter
-import com.chocolatecake.ui.home.adapter.TopRatedAdapter
-import com.chocolatecake.ui.home.adapter.TrendingAdapter
-import com.chocolatecake.ui.home.adapter.UpComingAdapter
-import com.chocolatecake.ui.home.databinding.HomeRecyclerviewNowPlayingBinding
-import com.chocolatecake.ui.home.databinding.HomeRecyclerviewSliderBinding
-import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTrendingBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemPopularPeopleBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemRecommendedBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemReviewsBinding
-import com.chocolatecake.viewmodel.home.HomeItem
-import com.chocolatecake.viewmodel.home.HomeListener
+import com.chocolatecake.ui.home.databinding.MovieDetailsItemUpperBinding
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsType
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener
 
 class MovieDetailsAdapter(
     private var itemsMovie: MutableList<MovieDetailsItem>,
@@ -33,6 +22,14 @@ class MovieDetailsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
+            MovieDetailsType.UPPER.ordinal->{
+                UpperViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.movie_details_item_upper, parent, false
+                    )
+                )
+            }
             MovieDetailsType.PEOPLE.ordinal -> {
                 PeopleViewHolder(
                     DataBindingUtil.inflate(
@@ -67,6 +64,7 @@ class MovieDetailsAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
+            is UpperViewHolder -> bindUpper(holder , position)
             is PeopleViewHolder -> bindPeople(holder, position)
             is RecommendedViewHolder -> bindRecommended(holder, position)
             is ReviewsViewHolder -> bindReviews(holder, position)
@@ -89,7 +87,11 @@ class MovieDetailsAdapter(
         super.setItems(newItems)
     }
 
-
+    private fun bindUpper(holder: UpperViewHolder, position: Int) {
+        val upper = itemsMovie[position] as MovieDetailsItem.Upper
+        holder.binding.item = upper
+        holder.binding.listener = listener
+    }
     private fun bindPeople(holder: PeopleViewHolder, position: Int) {
         val people = itemsMovie[position] as MovieDetailsItem.People
         val adapter = PeopleAdapter(people.list!! ,listener)
@@ -114,6 +116,8 @@ class MovieDetailsAdapter(
 
     override fun getItemViewType(position: Int): Int = itemsMovie[position].type.ordinal
 
+    class UpperViewHolder(val binding: MovieDetailsItemUpperBinding) :
+        BaseViewHolder(binding)
     class PeopleViewHolder(val binding: MovieDetailsItemPopularPeopleBinding) :
         BaseViewHolder(binding)
 

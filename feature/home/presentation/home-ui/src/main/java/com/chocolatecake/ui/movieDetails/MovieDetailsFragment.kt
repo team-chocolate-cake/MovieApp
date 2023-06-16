@@ -1,18 +1,16 @@
 package com.chocolatecake.ui.movieDetails
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
-
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.ui.home.adapter.HomeAdapter
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiEvent
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -25,7 +23,9 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
     private lateinit var movieDetailsAdapter: MovieDetailsAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        selectImageBackground()
+
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
+        binding.toolbar.title =""
         setAdapter()
         collectChange()
     }
@@ -40,6 +40,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
             viewModel.state.collect { state ->
                 movieDetailsAdapter.setItems(
                     mutableListOf(
+                        state.movieUiState,
                         state.castUiState,
                         state.recommendedUiState,
                         state.reviewUiState
@@ -67,15 +68,6 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                 TODO()
             }
             else -> {}
-        }
-    }
-
-    private fun selectImageBackground(){
-        val nightModeFlags = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        when(nightModeFlags){
-            Configuration.UI_MODE_NIGHT_YES ->binding.ImageBackground.setBackgroundResource(com.chocolatecake.bases.R.drawable.movie_image_background_night)
-            Configuration.UI_MODE_NIGHT_NO ->binding.ImageBackground.setBackgroundResource(com.chocolatecake.bases.R.drawable.movie_image_background_light)
-            else->binding.ImageBackground.setBackgroundResource(com.chocolatecake.bases.R.drawable.movie_image_background_light)
         }
     }
 }

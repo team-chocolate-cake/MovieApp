@@ -1,6 +1,4 @@
-package com.chocolatecake.viewmodel.movieDetails.ui_state
-
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
+package com.chocolatecake.viewmodel.movieDetails
 
 
 data class MovieDetailsUiState(

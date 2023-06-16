@@ -36,6 +36,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@null"
                         android:scaleType="centerCrop"
+                        android:onClick="@{()->viewModel.onClickBackButton()}"
                         android:src="@drawable/arrow_left"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -48,6 +49,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_gravity="end"
                         android:background="@null"
+                        android:onClick="@{()->viewModel.onClickSaveButton()}"
                         android:scaleType="centerCrop"
                         android:src="@drawable/save_icon"
                         app:layout_constraintEnd_toEndOf="parent"

@@ -5,13 +5,6 @@ import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
-import com.chocolatecake.viewmodel.movieDetails.ui_state.CastUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsListener
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiEvent
-import com.chocolatecake.viewmodel.movieDetails.ui_state.MovieDetailsUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.UpperUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.RecommendedMoviesUiState
-import com.chocolatecake.viewmodel.movieDetails.ui_state.ReviewUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -100,10 +93,19 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onClickPlayTrailer(itemId: Int) {
-        Log.d("TAG" , "Play")
+        //todo navigate to Youtube
     }
 
     override fun onClickRate(id: Int) {
+        //todo navigate to Rating Bottom sheet screen
+        Log.d("TAG" , "RATE")
+    }
+
+    override fun onClickBackButton() {
+
+    }
+
+    override fun onClickSaveButton() {
 
     }
 
