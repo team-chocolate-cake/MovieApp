@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/game_nav_graph"
+    app:startDestination="@id/homeGameFragment">
+
+    <fragment
+        android:id="@+id/homeGameFragment"
+        android:name="com.chocolatecake.ui.home.HomeGameFragment"
+        tools:layout="@layout/fragment_game_home"
+        android:label="HomeGameFragment" >
+        <action
+            android:id="@+id/action_homeGameFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/memorizeGameFragment"
+        tools:layout="@layout/fragment_moive_guessing"
+        android:name="com.chocolatecake.ui.memorize_game.MemorizeGameFragment"
+        android:label="MemorizeGameFragment" />
+    <fragment
+        android:id="@+id/movieGuessingFragment"
+        tools:layout="@layout/fragment_moive_guessing"
+        android:name="com.chocolatecake.ui.movie_guessing.MovieGuessingFragment"
+        android:label="MovieGuessingFragment" />
+    <fragment
+        android:id="@+id/peopleGuessingFragment"
+        tools:layout="@layout/fragment_people_guessing"
+        android:name="com.chocolatecake.ui.people_guessing.PeopleGuessingFragment"
+        android:label="PeopleGuessingFragment" />
+    <fragment
+        android:id="@+id/tvShowGuessingFragment"
+        tools:layout="@layout/fragment_tv_show_guessing"
+        android:name="com.chocolatecake.ui.tv_show_guessing.TvShowGuessingFragment"
+        android:label="TvShowGuessingFragment" />
+    <fragment
+        android:id="@+id/typeGameFragment"
+        tools:layout="@layout/fragment_type_games"
+        android:name="com.chocolatecake.ui.type_game.TypeGameFragment"
+        android:label="TypeGameFragment" >
+        <action
+            android:id="@+id/action_typeGameFragment_to_tvShowGuessingFragment"
+            app:destination="@id/tvShowGuessingFragment" />
+        <action
+            android:id="@+id/action_typeGameFragment_to_memorizeGameFragment"
+            app:destination="@id/memorizeGameFragment" />
+        <action
+            android:id="@+id/action_typeGameFragment_to_movieGuessingFragment"
+            app:destination="@id/movieGuessingFragment" />
+        <action
+            android:id="@+id/action_typeGameFragment_to_peopleGuessingFragment"
+            app:destination="@id/peopleGuessingFragment" />
+    </fragment>
+</navigation>
