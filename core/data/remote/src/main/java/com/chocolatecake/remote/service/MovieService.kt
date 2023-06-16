@@ -87,8 +87,8 @@ interface MovieService {
     /// region account
     @GET("account")
     suspend fun getAccountDetails(
-        @Path("account_id") account_id: Int,
-        @Query("session_id") session_id : String = " "
+        @Path("account_id") accountId: Int,
+        @Query("session_id") sessionId : String = " "
     ) : Response<DataWrapperResponse<ProfileRemoteDto>>
     ///endregion
 }
