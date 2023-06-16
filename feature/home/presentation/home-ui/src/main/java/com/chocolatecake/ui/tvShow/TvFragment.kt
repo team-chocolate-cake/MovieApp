@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.tvShow
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -9,14 +8,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvBinding
 import com.chocolatecake.viewmodel.tv_shows.TVShowUIState
 import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
+import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.chocolatecake.viewmodel.tv_shows.TVShowsUI
 import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,20 +37,38 @@ class TvFragment :
     }
 
     private fun setAdapter() {
-
         val footerAdapter = BaseFooterAdapter { tvShowsAdapter.retry() }
         binding.rvTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
+
 
         collect(flow = tvShowsAdapter.loadStateFlow,
             action = { viewModel.state.value.onErrors })
 
-        collectLast(viewModel.state.value.tvShowResult, ::setAllTVShows)
+        collectLatest {
+            viewModel.state.collectLatest {
+                when (it.tvShowsType) {
+                    TVShowsType.AIRING_TODAY -> collectLast(
+                        viewModel.state.value.tvShowAiringToday,
+                        ::setAllTVShows
+                    )
 
-        getTVShowsResults()
-    }
-    private fun getTVShowsResults() {
-        collectLast(viewModel.state.value.tvShowResult)
-        { tvShowsAdapter.submitData(it) }
+                    TVShowsType.ON_THE_AIR -> collectLast(
+                        viewModel.state.value.tvShowOnTheAir,
+                        ::setAllTVShows
+                    )
+
+                    TVShowsType.TOP_RATED -> collectLast(
+                        viewModel.state.value.tvShowTopRated,
+                        ::setAllTVShows
+                    )
+
+                    TVShowsType.POPULAR -> collectLast(
+                        viewModel.state.value.tvShowPopular,
+                        ::setAllTVShows
+                    )
+                }
+            }
+        }
     }
 
     private suspend fun setAllTVShows(itemsPagingData: PagingData<TVShowsUI>) {
@@ -90,22 +106,22 @@ class TvFragment :
     }
 
     private fun showOnTheAirResult() {
-        viewModel.getOnTheAirTVShows()
-        Log.d("chips-----Fragment", "OnTheAirTVShows")
+        //   viewModel.getOnTheAirTVShows()
+        //   Log.d("chips-----Fragment", "OnTheAirTVShows")
     }
 
     private fun showAiringTodayResult() {
-            viewModel.getAiringTodayTVShows()
-            Log.d("chips-----Fragment", "AiringToday")
+        //    viewModel.getAiringTodayTVShows()
+        //    Log.d("chips-----Fragment", "AiringToday")
     }
 
     private fun showTopRatedResult() {
-            viewModel.getTopRatedTVShows()
-            Log.d("chips-----Fragment", "TopRated")
+        //  viewModel.getTopRatedTVShows()
+        //     Log.d("chips-----Fragment", "TopRated")
     }
 
     private fun showPopularResult() {
-            viewModel.getPopularTVShows()
-            Log.d("chips-----Fragment", "Popular")
+        //    viewModel.getPopularTVShows()
+        //    Log.d("chips-----Fragment", "Popular")
     }
 }

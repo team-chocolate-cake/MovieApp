@@ -11,7 +11,7 @@ class GetTopRatedTVShowsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): Flow<PagingData<TVShowsEntity>> {
-        Log.d("list---UseCase---TopRated", movieRepository.getTopRatedTVShows().flow.toString())
+        Log.d("list---UseCase---TopRated", movieRepository.getTopRatedTVShows().toString())
         return movieRepository.getTopRatedTVShows().flow
     }
 }

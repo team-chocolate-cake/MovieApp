@@ -5,8 +5,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 data class TVShowUIState(
-    val tvShowsType: TVShowsType = TVShowsType.TOP_RATED,
-    val tvShowResult: Flow<PagingData<TVShowsUI>> = emptyFlow(),
+    val tvShowsType: TVShowsType = TVShowsType.AIRING_TODAY,
+    val tvShowAiringToday: Flow<PagingData<TVShowsUI>> = emptyFlow(),
+    val tvShowTopRated: Flow<PagingData<TVShowsUI>> = emptyFlow(),
+    val tvShowOnTheAir: Flow<PagingData<TVShowsUI>> = emptyFlow(),
+    val tvShowPopular: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false
 )

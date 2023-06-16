@@ -47,15 +47,11 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.AIRING_TODAY,
-                    tvShowResult = items,
+                    tvShowAiringToday = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
             }
-            items.collect{
-                Log.d("it-----ViewModel", "AiringToday---- $it ")
-            }
-
             Log.d("chips-----ViewModel", "AiringToday---- ${items.collect()} ")
         }
     }
@@ -68,7 +64,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.ON_THE_AIR,
-                    tvShowResult = items,
+                    tvShowOnTheAir = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
@@ -85,7 +81,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.POPULAR,
-                    tvShowResult = items,
+                    tvShowPopular = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
@@ -102,7 +98,7 @@ class TVShowsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     tvShowsType = TVShowsType.TOP_RATED,
-                    tvShowResult = items,
+                    tvShowTopRated = items,
                     isLoading = false,
                     onErrors = emptyList()
                 )
