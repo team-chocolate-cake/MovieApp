@@ -2,6 +2,7 @@ package com.chocolatecake.repository.mappers.domain.tv
 
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
+import com.chocolatecake.repository.BuildConfig
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ class TVShowsDomainMapper @Inject constructor() :
         return TVShowsEntity(
             id = input.id ?: 0,
             title = input.name ?: "",
-            imageUrl = input.posterPath ?: "",
+            imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath ,
             genreEntities = emptyList(),
             rate = input.voteAverage ?: 0.0
         )
