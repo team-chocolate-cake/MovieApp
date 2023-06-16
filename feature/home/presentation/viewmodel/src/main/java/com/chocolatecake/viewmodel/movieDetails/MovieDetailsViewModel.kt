@@ -90,11 +90,11 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onClickPeople(itemId: Int) {
-        Log.d("TAG", "$itemId")
+        //todo navigate to people screen
     }
 
     override fun onClickRecommendedMovie(itemId: Int) {
-        Log.d("TAG", "$itemId")
+        //todo navigate to movie details screen
     }
 
 }

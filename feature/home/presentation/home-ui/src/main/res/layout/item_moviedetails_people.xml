@@ -16,7 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> listener.onClickPeople(item.id)}">
+        android:onClick="@{() -> listener.onClickPeople(item.id)}"
+        android:paddingEnd="8dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_people"

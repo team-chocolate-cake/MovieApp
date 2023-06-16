@@ -16,18 +16,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_people"
             android:layout_width="@dimen/width_image_review"
             android:layout_height="@dimen/height_image_review"
-            android:scaleType="centerCrop"
-            app:imageUrlByBackDropPath="@{item.avatar_path}"
+            android:layout_marginTop="4dp"
+            app:imageUrlForReviews="@{item.avatar_path}"
+            app:autherName="@{item.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             tools:src="@tools:sample/backgrounds/scenic" />
+
         <TextView
             android:id="@+id/auther_name"
             android:layout_width="wrap_content"
@@ -37,18 +40,22 @@
             android:textColor="@color/on_background_87"
             style="@style/TextStyle.LabelLarge"
             app:layout_constraintStart_toEndOf="@id/shape_image_view_people"
-            android:text="safdafdaffd"
+            android:text="@{item.name}"
+            tools:text ="Auther name"
             />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_marginStart="43dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             android:layout_height="wrap_content"
             android:textColor="@color/on_background_87"
             app:layout_constraintTop_toBottomOf="@id/auther_name"
             style="@style/TextStyle.BodySmall"
             app:layout_constraintStart_toEndOf="@id/shape_image_view_people"
-            android:text="safdafdaffd"
+            android:text="@{item.content}"
+            tools:text ="content"
+            android:maxLines="5"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

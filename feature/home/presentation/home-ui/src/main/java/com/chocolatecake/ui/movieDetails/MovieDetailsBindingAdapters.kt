@@ -1,7 +1,11 @@
 package com.chocolatecake.ui.movieDetails
 
+import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.avatarfirst.avatargenlib.AvatarConstants
+import com.avatarfirst.avatargenlib.AvatarGenerator
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
@@ -39,4 +43,26 @@ fun ChipGroup.setGenresMovieDetails(
         chip.setChipDrawable(chipDrawable)
         this.addView(chip)
     }
+}
+
+@BindingAdapter(value = ["app:imageUrlForReviews" ,"app:autherName"])
+fun ImageView.loadImageForReviews(backDropPath: String? , autherName:String) {
+    //TODO Remove hardcoded link
+    if (!backDropPath.isNullOrEmpty())
+        Glide.with(context)
+            .load("https://image.tmdb.org/t/p/w500"+backDropPath)
+            .fitCenter()
+            .centerCrop()
+            .placeholder(generateImage(this.context , autherName))
+            .into(this)
+}
+
+fun generateImage(context:Context , name:String): BitmapDrawable {
+    return AvatarGenerator.AvatarBuilder(context)
+        .setLabel(name)
+        .setAvatarSize(120)
+        .setTextSize(30)
+        .toSquare()
+        .toCircle()
+        .build()
 }

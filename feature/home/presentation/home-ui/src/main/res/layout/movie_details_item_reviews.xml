@@ -28,7 +28,8 @@
                 android:text="Reviews"
                 android:textColor="@color/on_background_87"
                 style="@style/TextStyle.TitleMedium"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingBottom="8dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewReviews"

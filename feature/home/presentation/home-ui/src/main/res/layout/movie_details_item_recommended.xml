@@ -36,7 +36,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewRecommened"
-                tools:listitem="@layout/search_item_movie"
+                tools:listitem="@layout/item_movie"
                 android:layout_width="match_parent"
                 app:items="@{item.list}"
                 android:layout_height="wrap_content"
