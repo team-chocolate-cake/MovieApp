@@ -84,6 +84,10 @@ class MovieDetailsViewModel @Inject constructor(
             )
         }
     }
+    fun onRatingSubmit(rating: Float, movieId: Int) {
+
+    }
+
 
     override fun onClickPeople(itemId: Int) {
         Log.d("TAG" , "people")

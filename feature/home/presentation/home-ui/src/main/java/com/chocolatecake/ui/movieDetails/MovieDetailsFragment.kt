@@ -8,6 +8,7 @@ import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
@@ -65,7 +66,10 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                 //todo
             }
             is MovieDetailsUiEvent.RateMovieEvent -> {
-                //todo
+                val movieId = event.movieId
+                val bottomSheet = RatingMovieBottomSheet()
+                bottomSheet.show(childFragmentManager, "BOTTOM")
+                bottomSheet.setMovieID(movieId)
             }
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
                 //todo
