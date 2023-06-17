@@ -57,7 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/lets_start"
             android:textAllCaps="false"
-            android:paddingHorizontal="48dp"
+            android:paddingHorizontal="@dimen/spacing_extra_giant"
             android:drawableRight="@drawable/ic_play"
             android:drawablePadding="@dimen/spacing_small"
             android:drawableTint="@color/on_primary"

@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
-            app:lottie_rawRes="@raw/welcome" />
+            app:lottie_rawRes="@raw/winner" />
 
         <TextView
             android:id="@+id/text_view_congrats"
@@ -82,7 +82,7 @@
             android:text="@string/return_to_home"
             android:textAllCaps="false"
             android:onClick="@{() -> listener.onClickReturn()}"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="@dimen/spacing_extra_extra_giant"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

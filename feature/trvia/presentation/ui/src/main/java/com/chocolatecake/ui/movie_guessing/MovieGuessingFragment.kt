@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentMoiveGuessingBinding
+import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.GameUIEvent
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import com.chocolatecake.viewmodel.movie_guessing.MovieGuessingViewModel
@@ -18,7 +19,7 @@ class MovieGuessingFragment :
     override fun onEvent(event: GameUIEvent) {
         when(event){
             GameUIEvent.NavigateToLoserScreen -> navigateToWelcomeGameScreen()
-            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.level,event.points)
+            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.gameType)
             GameUIEvent.ShowTimeOut -> showTimeOut()
             is GameUIEvent.UpdateQuestion -> updateQuestion(event.questionNumber)
         }
@@ -28,7 +29,7 @@ class MovieGuessingFragment :
         TODO("Not yet implemented")
     }
 
-    private fun navigateToWinnerScreen(level: Int, points: Int) {
+    private fun navigateToWinnerScreen(gameType: GameType) {
 
     }
 
