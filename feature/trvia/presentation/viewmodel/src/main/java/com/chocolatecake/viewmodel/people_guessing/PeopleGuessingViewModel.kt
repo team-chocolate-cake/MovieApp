@@ -24,8 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PeopleGuessingViewModel @Inject constructor(
-    private val getCurrentPeopleQuestion: GetCurrentPeopleQuestion,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val getCurrentPeopleQuestion: GetCurrentPeopleQuestion,
     private val updatePeopleQuestionCountUseCase: UpdatePeopleQuestionCountUseCase,
     private val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpPeopleUseCase: LevelUpPeopleUseCase,
