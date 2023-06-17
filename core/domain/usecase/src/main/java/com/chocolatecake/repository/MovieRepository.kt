@@ -35,4 +35,8 @@ interface MovieRepository {
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
 
+    suspend fun getLastRefreshTime(): Long?
+    suspend fun setLastRefreshTime(time: Long)
+    suspend fun refreshAll()
+
 }
