@@ -1,15 +1,22 @@
 package com.chocolatecake.viewmodel.people_guessing
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.QuestionEntity
+import com.chocolatecake.entities.UserEntity
 import com.chocolatecake.usecase.GetCurrentUserUseCase
 import com.chocolatecake.usecase.game.UpdateUserPointsUseCase
+import com.chocolatecake.usecase.game.levelup.LevelUpPeopleUseCase
 import com.chocolatecake.usecase.game.questions.GetCurrentPeopleQuestion
 import com.chocolatecake.usecase.game.questions.UpdatePeopleQuestionCountUseCase
 import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.GameUIEvent
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,43 +28,62 @@ class PeopleGuessingViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val updatePeopleQuestionCountUseCase: UpdatePeopleQuestionCountUseCase,
     private val updateUserPointsUseCase: UpdateUserPointsUseCase,
-) :
-    BaseViewModel<GameUiState, GameUIEvent>(GameUiState()), AnswerListener {
+    private val levelUpPeopleUseCase: LevelUpPeopleUseCase,
+) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState()), AnswerListener {
     init {
         getData()
     }
 
     private fun getData() {
-        viewModelScope.launch {
-            getCurrentUserUseCase().let { user ->
-                _state.update {
-                    it.copy(
-                        level = user.memorizeGameLevel,
-                        points = user.totalPoints,
-                        questionCount = user.numPeopleQuestionsPassed + 1,
-                    )
-                }
-            }
-            getCurrentPeopleQuestion().let { questionEntity ->
-                _state.update {
-                    it.copy(
-                        question = questionEntity.question,
-                        answers = questionEntity.choices,
-                        correctAnswerPosition = questionEntity.correctAnswerPosition,
-                        imageUrl = questionEntity.imageUrl,
-                    )
-                }
-            }
-            initTimer()
+        tryToExecute(
+            getCurrentUserUseCase::invoke,
+            ::onSuccessUser,
+            ::onError
+        )
+        tryToExecute(
+            getCurrentPeopleQuestion::invoke,
+            ::onSuccessQuestion,
+            ::onError
+        )
+    }
+
+    private fun onSuccessQuestion(questionEntity: QuestionEntity) {
+        _state.update {
+            it.copy(
+                question = questionEntity.question,
+                answers = questionEntity.choices,
+                correctAnswerPosition = questionEntity.correctAnswerPosition,
+                imageUrl = questionEntity.imageUrl,
+            )
+        }
+        initTimer()
+    }
+
+    private fun onSuccessUser(user: UserEntity) {
+        Log.e("TAGTAG", "onSuccessUser: $user")
+        _state.update {
+            it.copy(
+                level = user.peopleGameLevel,
+                points = user.totalPoints,
+                questionCount = user.numPeopleQuestionsPassed + 1,
+            )
         }
     }
 
+    private fun onError(throwable: Throwable) {
+        Log.e("TAGTAG", "onError: $throwable")
+    }
+
+    private var timerJob: Job? = null
     private fun initTimer() {
-        viewModelScope.launch {
+        _state.update { it.copy(countDownTimer = 30) }
+        timerJob?.cancel()
+        timerJob = viewModelScope.launch {
             while (true) {
                 if (_state.value.countDownTimer == 0) {
-                    onUserLose()
-                    break
+                    onTimeout()
+                    timerJob = null
+                    cancel()
                 }
                 delay(1000)
                 _state.update { it.copy(countDownTimer = it.countDownTimer - 1) }
@@ -65,11 +91,22 @@ class PeopleGuessingViewModel @Inject constructor(
         }
     }
 
+    private fun onTimeout() {
+        viewModelScope.launch {
+            sendEvent(GameUIEvent.ShowTimeOut)
+            delay(1000)
+            sendEvent(GameUIEvent.NavigateToLoserScreen)
+        }
+    }
+
     private fun onUserLose() {
-        sendEvent(GameUIEvent.NavigateToLoserScreen)
+        viewModelScope.launch {
+            sendEvent(GameUIEvent.NavigateToLoserScreen)
+        }
     }
 
     override fun onClickAnswer(position: Int) {
+        Log.d("TAGTAG", "onClickAnswer: $position")
         val heartCount = _state.value.heartCount
         val correctAnswer = _state.value.correctAnswerPosition
         if (correctAnswer != position) {
@@ -86,10 +123,19 @@ class PeopleGuessingViewModel @Inject constructor(
             return
         }
         if (_state.value.isLastQuestion) {
-            sendEvent(GameUIEvent.NavigateToWinnerScreen(GameType.PEOPLE))
+            onUserWins()
             return
         }
         updateToNextQuestion()
+    }
+
+    private fun onUserWins() {
+        viewModelScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                levelUpPeopleUseCase()
+                sendEvent(GameUIEvent.NavigateToWinnerScreen(GameType.PEOPLE))
+            }.onFailure(::onError)
+        }
     }
 
     private fun updateCurrentQuestion() {
@@ -97,13 +143,13 @@ class PeopleGuessingViewModel @Inject constructor(
     }
 
     private fun updateToNextQuestion() {
-        viewModelScope.launch {
-            updatePeopleQuestionCountUseCase(_state.value.questionCount)
-            _state.update { it.copy(
-                points = it.points + 100
-            ) }
-            updateUserPointsUseCase(_state.value.points)
-            getData()
+        viewModelScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                updatePeopleQuestionCountUseCase(_state.value.questionCount)
+                _state.update { it.copy(points = it.points + 100) }
+                updateUserPointsUseCase(_state.value.points)
+                getData()
+            }.onFailure(::onError)
         }
     }
 }

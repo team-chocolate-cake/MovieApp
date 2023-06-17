@@ -15,4 +15,6 @@
     <string name="answer_text_two">B |  %1$s</string>
     <string name="answer_text_three">C |  %1$s</string>
     <string name="answer_text_four">D |  %1$s</string>
+    <string name="time_out">Time Out! 😥</string>
+
 </resources>
