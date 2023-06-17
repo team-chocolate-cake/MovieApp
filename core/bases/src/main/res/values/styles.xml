@@ -8,6 +8,11 @@
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Material3.Corner.Full</item>
     </style>
 
+    <style name="PrimaryButton.ReturnHomeButton" parent="@style/Widget.Material3.Button.UnelevatedButton">
+        <item name="android:backgroundTint">@color/secondary</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
     <style name="TextStyle.BodyMedium.TextInputEditTextStyle">
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/on_background_60</item>

@@ -9,6 +9,7 @@ data class PopularPeopleLocalDto(
     val id: Int,
     val imagerUrl: String,
     val name: String,
+    val popularity: Double
 )
 
 

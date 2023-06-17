@@ -34,7 +34,9 @@ android {
 dependencies {
     implementation project(path: ':core:data:remote')
     implementation project(path: ':core:data:local')
+    implementation project(path: ':core:data:repository')
     implementation project(path: ':core:domain:usecase')
+    implementation project(path: ':feature:trvia:domain:usecase')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

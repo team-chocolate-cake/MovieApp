@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.congrats.CongratsViewModel" />
+
+  </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_congrats"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginHorizontal="@dimen/spacing_giant"
+            android:layout_marginTop="@dimen/spacing_extra_giant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/winner" />
+
+        <TextView
+            android:id="@+id/text_view_congrats"
+            style="@style/TextStyle.TitleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:text="@{@string/congrats_text(viewModel.state.userName)}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/lottie_animation_view_congrats"
+            app:layout_constraintStart_toStartOf="@+id/lottie_animation_view_congrats"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_animation_view_congrats"
+            tools:text="Congrats! Menna" />
+
+        <TextView
+            android:id="@+id/text_view_reword"
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:gravity="center"
+            android:text="@{@string/reward_text(viewModel.state.points, viewModel.state.level)}"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_congrats"
+            app:layout_constraintStart_toStartOf="@+id/text_view_congrats"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_congrats"
+            tools:text="You earned 1000 points and unlock level 2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_next_level"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_giant"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:onClick="@{() -> viewModel.onClickNextLevel()}"
+            android:text="@string/go_to_next_level"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/button_return_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_return_home"
+            style="@style/PrimaryButton.ReturnHomeButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_giant"
+            android:layout_marginHorizontal="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_extra_extra_giant"
+            android:onClick="@{() -> viewModel.onClickReturn()}"
+            android:text="@string/return_to_home"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
