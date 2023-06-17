@@ -9,7 +9,7 @@ import javax.inject.Inject
 class DomainProfileMapper @Inject constructor(): Mapper<ProfileRemoteDto, ProfileEntity> {
     override fun map(input: ProfileRemoteDto): ProfileEntity {
         return ProfileEntity(
-            username = input.username ?: "",
+            username = "@" + input.username,
             avatarUrl = BuildConfig.IMAGE_BASE_PATH + input.avatar?.tmdb?.avatarPath
         )
     }

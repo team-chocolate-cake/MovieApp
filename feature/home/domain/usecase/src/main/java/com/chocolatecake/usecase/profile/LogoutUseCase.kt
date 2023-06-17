@@ -1,4 +1,4 @@
-package com.chocolatecake.usecase
+package com.chocolatecake.usecase.profile
 
 import com.chocolatecake.repository.AuthRepository
 import javax.inject.Inject

@@ -1,8 +1,10 @@
 package com.chocolatecake.util
 
+import android.app.UiModeManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -88,5 +90,16 @@ fun <T> View.showWhenError(list: List<T>?){
         this.visibility = View.VISIBLE
     }else{
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("app:toggleUiMode")
+fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
+    this.setOnCheckedChangeListener { _, isChecked ->
+        if (isChecked) {
+            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_NO
+        } else {
+            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
+        }
     }
 }

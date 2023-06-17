@@ -8,8 +8,12 @@
             name="listener"
             type="com.chocolatecake.viewmodel.profile.ProfileListener" />
         <variable
-            name="item"
-            type="com.chocolatecake.viewmodel.profile.ProfileUIState" />
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.profile.ProfileViewModel" />
+
+        <variable
+            name="uiMode"
+            type="android.app.UiModeManager" />
 
     </data>
 
@@ -31,20 +35,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             tools:src="@tools:sample/backgrounds/scenic"
-            app:imageUrl="@{item.avatarUrl}"/>
+            app:imageUrl="@{viewModel.state.avatarUrl}" />
 
         <TextView
             android:id="@+id/text_view_profile_username"
             style="@style/TextAppearance.Material3.BodyLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="@dimen/spacing_custom"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_view_profile"
             tools:text=" @el-mtarsham"
-            android:text="@{item.username}"/>
+            android:text="@{viewModel.state.username}" />
 
         <TextView
             android:id="@+id/text_view_favorite"
@@ -167,40 +171,40 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_rating"
             android:onClick="@{()->listener.onClickPopcornPuzzles()}"/>
 
-        <TextView
-            android:id="@+id/text_view_theme"
-            style="@style/TextStyle.TitleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_custom"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:background="@drawable/custom_card_background"
-            android:drawableStart="@drawable/ic_sun"
-            android:drawablePadding="@dimen/spacing_small"
-            android:drawableTint="@color/on_background_38"
-            android:padding="@dimen/spacing_small"
-            android:text="@string/theme"
-            android:textColor="@color/on_background_60"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"
-            android:onClick="@{()->listener.onClickTheme()}"/>
+<!--        <TextView-->
+<!--            android:id="@+id/text_view_theme"-->
+<!--            style="@style/TextStyle.TitleSmall"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/spacing_medium"-->
+<!--            android:layout_marginTop="@dimen/spacing_custom"-->
+<!--            android:layout_marginEnd="@dimen/spacing_medium"-->
+<!--            android:background="@drawable/custom_card_background"-->
+<!--            android:drawableStart="@drawable/ic_sun"-->
+<!--            android:drawablePadding="@dimen/spacing_small"-->
+<!--            android:drawableTint="@color/on_background_38"-->
+<!--            android:padding="@dimen/spacing_small"-->
+<!--            android:text="@string/theme"-->
+<!--            android:textColor="@color/on_background_60"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"-->
+<!--            android:onClick="@{()->listener.onClickTheme()}"/>-->
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_theme"
-            android:layout_width="43dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="@dimen/spacing_small"
-            android:checked="true"
-            android:padding="28dp"
-            app:layout_goneMarginEnd="12dp"
-            android:thumb="@drawable/switch_thumb_selector"
-            app:layout_constraintEnd_toEndOf="@id/text_view_logout"
-            app:layout_constraintTop_toTopOf="@id/text_view_logout"
-            app:layout_constraintBottom_toBottomOf="@id/text_view_logout"
-            app:track="@color/primary"
-            />
+<!--        <androidx.appcompat.widget.SwitchCompat-->
+<!--            android:id="@+id/switch_theme"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:checked="true"-->
+<!--            android:padding="@dimen/spacing_tiny"-->
+<!--            android:thumb="@drawable/switch_thumb_selector"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintTop_toTopOf="@id/text_view_theme"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/text_view_logout"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/text_view_theme"-->
+<!--            app:track="@drawable/switch_track_selector"-->
+<!--            app:toggleUiMode="@{uiMode}"/>-->
+
 
         <TextView
             android:id="@+id/text_view_logout"
@@ -218,7 +222,7 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_theme"
+            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"
             android:onClick="@{()->listener.onClickLogout()}"/>
 
 
