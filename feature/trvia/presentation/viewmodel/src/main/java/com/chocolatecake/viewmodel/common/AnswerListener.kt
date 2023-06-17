@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.people_guessing
+package com.chocolatecake.viewmodel.common
 
 import com.chocolatecake.bases.BaseInteractionListener
 
