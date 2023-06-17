@@ -12,7 +12,8 @@ class LevelUpMoviesUseCase @Inject constructor(
         val oldUser = getCurrentUserUseCase()
         if (oldUser.moviesGameLevel == MAX_LEVEL) return false
         val updatedUser = oldUser.copy(
-            moviesGameLevel = oldUser.moviesGameLevel + 1
+            moviesGameLevel = oldUser.moviesGameLevel + 1,
+            numMoviesQuestionsPassed = 0
         )
         triviaRepository.updateUser(updatedUser)
         return true
