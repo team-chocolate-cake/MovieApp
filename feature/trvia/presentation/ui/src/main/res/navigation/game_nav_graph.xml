@@ -38,7 +38,14 @@
         android:id="@+id/peopleGuessingFragment"
         tools:layout="@layout/fragment_people_guessing"
         android:name="com.chocolatecake.ui.people_guessing.PeopleGuessingFragment"
-        android:label="PeopleGuessingFragment" />
+        android:label="PeopleGuessingFragment" >
+        <action
+            android:id="@+id/action_peopleGuessingFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment" />
+        <action
+            android:id="@+id/action_peopleGuessingFragment_to_congratsFragment"
+            app:destination="@id/congratsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tvShowGuessingFragment"
         tools:layout="@layout/fragment_tv_show_guessing"
