@@ -23,7 +23,7 @@
             android:layout_height="@dimen/custom_height_card"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
             android:onClick="@{()-> listener.onClickTVShows(item.id)}"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
