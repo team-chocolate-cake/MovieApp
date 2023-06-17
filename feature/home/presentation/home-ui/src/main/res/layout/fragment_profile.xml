@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_profile"
@@ -53,6 +54,7 @@
             android:text="@string/favorite"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_profile_username" />
 
@@ -95,7 +97,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_watchlist" />
 
         <TextView
-            android:id="@+id/text_view_mylist"
+            android:id="@+id/text_view_mylists"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,7 +132,7 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_mylist" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylists" />
 
         <TextView
             android:id="@+id/text_view_puzzle"
@@ -178,7 +180,6 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_custom"
             android:layout_marginEnd="@dimen/spacing_medium"
-            android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_logout"
             android:drawablePadding="@dimen/spacing_small"
             android:drawableTint="@color/on_background_38"

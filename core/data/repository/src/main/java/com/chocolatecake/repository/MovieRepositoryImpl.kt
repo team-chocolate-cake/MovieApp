@@ -35,7 +35,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
     private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
-    private val localProfileMapper : LocalProfileMapper,
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
     private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
     private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
@@ -43,7 +42,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
-    private val domainProfileMapper: DomainProfileMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -179,21 +177,6 @@ class MovieRepositoryImpl @Inject constructor(
 
         } catch (_: Throwable) {
         }
-    }
-    /// endregion
-
-
-    /// region profile
-    override suspend fun getAccountDetails(): List<ProfileEntity> {
-        return domainProfileMapper.map(movieDao.getAccountDetails())
-    }
-
-    override suspend fun refreshAccountDetails() {
-        refreshWrapper(
-            movieService::getAccountDetails,
-            localProfileMapper::map,
-            movieDao::insertAccountDetails
-        )
     }
     /// endregion
 }
