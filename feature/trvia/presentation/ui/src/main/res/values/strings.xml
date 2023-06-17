@@ -15,4 +15,9 @@
     <string name="answer_text_two">B |  %1$s</string>
     <string name="answer_text_three">C |  %1$s</string>
     <string name="answer_text_four">D |  %1$s</string>
+    <string name="characters">Characters</string>
+    <string name="tv_shows">Tv Shows</string>
+    <string name="movies">Movies</string>
+    <string name="memorize">Memorize</string>
+    <string name="comming_soon">Comming Soon</string>
 </resources>
