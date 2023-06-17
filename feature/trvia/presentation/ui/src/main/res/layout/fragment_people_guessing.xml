@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="item"
-            type="com.chocolatecake.viewmodel.common.model.GameUiState" />
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.people_guessing.PeopleGuessingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:layout_marginTop="@dimen/spacing_large"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{item.question}"
+            android:text="@{viewModel.state.question}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_item_header_game"
             tools:text="Which of the following names for this actor are correct?" />
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="225dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.imageUrl}"
+            app:imageUrl="@{viewModel.state.imageUrl}"
             android:layout_marginTop="@dimen/spacing_large"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             app:layout_constraintEnd_toEndOf="parent"
