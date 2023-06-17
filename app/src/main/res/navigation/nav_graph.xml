@@ -17,6 +17,6 @@
             app:popUpToInclusive="true"/>
     </fragment>
 
-    <include app:graph="@navigation/home_nav_graph" />
+        <include app:graph="@navigation/home_nav_graph" />
 
 </navigation>

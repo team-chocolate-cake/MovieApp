@@ -1,6 +1,7 @@
 package com.chocolatecake.local.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -8,6 +9,7 @@ import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
 import com.chocolatecake.local.database.dto.GenresTvsLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.local.database.dto.movie.MovieInWatchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
@@ -127,4 +129,19 @@ interface MovieDao {
     @Query("delete from GENRES_TVS_TABLE")
     suspend fun clearAllGenresTvs()
     //endregion
+
+    // region watch history
+    @Query("select * from WATCH_HISTORY_MOVIES_TABLE")
+    suspend fun getAllWatchHistoryVideos(): List<MovieInWatchHistoryLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieToWatchHistory(movieInWatchHistoryEntity: MovieInWatchHistoryLocalDto)
+
+    @Delete
+    suspend fun deleteMovieFromWatchHistory(movieInWatchHistoryEntity: MovieInWatchHistoryLocalDto)
+
+    @Query("select * from WATCH_HISTORY_MOVIES_TABLE where title like :keyword")
+    suspend fun searchWatchHistory(keyword: String): List<MovieInWatchHistoryLocalDto>
+
+    // endregion
 }
