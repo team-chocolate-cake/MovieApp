@@ -3,6 +3,7 @@ package com.chocolatecake.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
+import com.chocolatecake.local.database.dto.GenresTvsLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
@@ -24,6 +25,7 @@ import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
         PopularPeopleLocalDto::class,
         SearchHistoryLocalDto::class,
         GenresMoviesLocalDto::class,
+        GenresTvsLocalDto::class,
         MovieLocalDto::class,
     ],
     version = 1,

@@ -4,9 +4,18 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.usecase.GetAllGenresMoviesUseCase
+import com.chocolatecake.usecase.GetAllGenresTvsUseCase
 import com.chocolatecake.usecase.search.SearchMoviesUseCase
+import com.chocolatecake.usecase.search.SearchPeopleUseCase
+import com.chocolatecake.usecase.search.SearchTvsUseCase
 import com.chocolatecake.usecase.search_history.InsertSearchHistoryUseCase
 import com.chocolatecake.usecase.search_history.SearchHistoryUseCase
+import com.chocolatecake.viewmodel.common.model.MovieHorizontalUIState
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.search.mappers.GenreUiStateMapper
+import com.chocolatecake.viewmodel.search.mappers.MovieUiMapper
+import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
+import com.chocolatecake.viewmodel.search.mappers.TvUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +27,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val getAllGenresMoviesUseCase: GetAllGenresMoviesUseCase,
+    private val getAllGenresTvsUseCase: GetAllGenresTvsUseCase,
     private val searchMoviesUseCase: SearchMoviesUseCase,
-    private val genreUiStateMapper: GenreUiStateMapper,
-    private val movieUiMapper: MovieUiMapper,
+    private val searchTvsUseCase: SearchTvsUseCase,
+    private val searchPeopleUseCase: SearchPeopleUseCase,
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
+    private val genreUiStateMapper: GenreUiStateMapper,
+    private val movieUiMapper: MovieUiMapper,
+    private val tvUiMapper: TvUiMapper,
+    private val peopleUiMapper: PeopleUiMapper
 ) : BaseViewModel<SearchUiState, SearchUiEvent>(SearchUiState()), SearchListener {
 
     val query = MutableStateFlow("")
@@ -44,7 +58,6 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun saveSearchHistoryInLocal(query: String) {
-        _state.update { it.copy(isLoading = true) }
         insertSearchHistoryUseCase(query)
     }
 
@@ -55,11 +68,56 @@ class SearchViewModel @Inject constructor(
 
 
     fun getData() {
-        onSearchForMovie()
+        when (_state.value.mediaType) {
+            SearchUiState.SearchMedia.MOVIE -> onSearchForMovie()
+            SearchUiState.SearchMedia.TV -> onSearchForTv()
+            SearchUiState.SearchMedia.PEOPLE -> onSearchForPeople()
+        }
     }
 
-    private fun onSearchForMovie() {
-        _state.update { it.copy(isLoading = true) }
+    fun onSearchForPeople() {
+        tryToExecute(
+            call = { searchPeopleUseCase(query.value) },
+            mapper = peopleUiMapper,
+            onSuccess = ::onSuccessPeople,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessPeople(people: List<PeopleUIState>) {
+        _state.update {
+            it.copy(
+                mediaType = SearchUiState.SearchMedia.PEOPLE,
+                searchPeopleResult = people,
+                isSelectedPeople = true,
+                isLoading = false,
+                error = null
+            )
+        }
+    }
+
+    fun onSearchForTv() {
+        tryToExecute(
+            call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
+            mapper = tvUiMapper,
+            onSuccess = ::onSuccessTv,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessTv(tv: List<MovieHorizontalUIState>) {
+        _state.update {
+            it.copy(
+                mediaType = SearchUiState.SearchMedia.TV,
+                searchMediaResult = tv,
+                isSelectedPeople = false,
+                isLoading = false,
+                error = null
+            )
+        }
+    }
+
+    fun onSearchForMovie() {
         tryToExecute(
             call = {
                 searchMoviesUseCase(
@@ -73,27 +131,39 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessMovies(moviesUiStates: List<SearchUiState.MoviesUiState>) {
+    private fun onSuccessMovies(mediaUIState: List<MovieHorizontalUIState>) {
         _state.update {
             it.copy(
-                searchMovieResultEntity = moviesUiStates,
+                mediaType = SearchUiState.SearchMedia.MOVIE,
+                searchMediaResult = mediaUIState,
+                isSelectedPeople = false,
                 isLoading = false,
                 error = null
             )
         }
     }
 
-
     ///region events
     override fun onClickFilter() {
+        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            getAllGenresMovies()
-            _event.emit(SearchUiEvent.FilterEvent)
+            when (_state.value.mediaType) {
+                SearchUiState.SearchMedia.MOVIE -> getAllGenresMovies()
+                else -> getAllGenresTv()
+            }
+            _event.emit(SearchUiEvent.OpenFilterBottomSheet)
         }
     }
 
+    private suspend fun getAllGenresTv() {
+        tryToExecute(
+            call = { getAllGenresTvsUseCase() },
+            onSuccess = ::onSuccessGenres,
+            onError = ::onError
+        )
+    }
+
     private suspend fun getAllGenresMovies() {
-        _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getAllGenresMoviesUseCase() },
             onSuccess = ::onSuccessGenres,
@@ -111,7 +181,7 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             it.copy(
-                genresMovies = updatedGenres,
+                genresMovie = updatedGenres,
                 isLoading = false,
                 error = null
             )
@@ -119,16 +189,36 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickGenre(genresId: Int) {
-        val updatedGenres = _state.value.genresMovies?.map { genre ->
+        val updatedGenres = _state.value.genresMovie.map { genre ->
             genre.copy(isSelected = genre.genreId == genresId)
         }
         _state.update {
             it.copy(
                 selectedMovieGenresId = genresId,
                 isLoading = false,
-                genresMovies = updatedGenres
+                genresMovie = updatedGenres
             )
         }
+    }
+
+    override fun showResultMovie() {
+        sendEvent(SearchUiEvent.ShowMovieResult)
+    }
+
+    override fun showResultTv() {
+        sendEvent(SearchUiEvent.ShowTvResult)
+    }
+
+    override fun showResultPeople() {
+        sendEvent(SearchUiEvent.ShowPeopleResult)
+    }
+
+    override fun onClickMovie(id: Int) {
+        sendEvent(SearchUiEvent.NavigateToMovie(id))
+    }
+
+    override fun onClickPeople(id: Int) {
+        sendEvent(SearchUiEvent.NavigateToPeople(id))
     }
     ///endregion
 
