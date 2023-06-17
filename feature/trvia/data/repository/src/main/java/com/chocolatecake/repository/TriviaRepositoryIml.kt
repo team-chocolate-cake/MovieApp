@@ -53,9 +53,9 @@ class TriviaRepositoryIml @Inject constructor(
 
     private fun getPopularityRange(level: Int): ClosedFloatingPointRange<Double> {
         return when (level) {
-            1 -> 20.0..Double.MAX_VALUE
-            2 -> 10.0..20.0
-            else -> 0.0..10.0
+            1 -> 300.0..Double.MAX_VALUE
+            2 -> 200.0..300.0
+            else -> 0.0..200.0
         }
     }
 
