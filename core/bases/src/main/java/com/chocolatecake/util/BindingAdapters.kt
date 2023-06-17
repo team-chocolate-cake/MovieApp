@@ -1,8 +1,10 @@
 package com.chocolatecake.util
 
+import android.app.UiModeManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -31,11 +33,19 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    Glide.with(context)
+    if (imageUrl=="https://image.tmdb.org/t/p/w500null"){
+        Glide.with(context)
+            .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+            .fitCenter()
+            .centerCrop()
+            .into(this)
+    }
+    else Glide.with(context)
         .load(imageUrl)
         .fitCenter()
         .centerCrop()
         .into(this)
+
 }
 
 @BindingAdapter(value = ["app:hideResult", "app:query"])
@@ -80,5 +90,16 @@ fun <T> View.showWhenError(list: List<T>?){
         this.visibility = View.VISIBLE
     }else{
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("app:toggleUiMode")
+fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
+    this.setOnCheckedChangeListener { _, isChecked ->
+        if (isChecked) {
+            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_NO
+        } else {
+            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
+import com.chocolatecake.entities.ProfileEntity
 
 
 interface MovieRepository {

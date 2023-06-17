@@ -9,6 +9,7 @@ import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -103,5 +104,12 @@ interface MovieService {
     suspend fun getListOfGenresForTvs(
         @Query("language") language: String = "en"
     ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
+    ///endregion
+
+    /// region account
+    @GET("account")
+    suspend fun getAccountDetails(
+        @Query("session_id") sessionId : String = " "
+    ) : Response<ProfileRemoteDto>
     ///endregion
 }

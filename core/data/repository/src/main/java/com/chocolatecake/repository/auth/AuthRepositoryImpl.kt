@@ -1,5 +1,6 @@
 package com.chocolatecake.repository.auth
 
+import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.TriviaDao
 import com.chocolatecake.local.database.dto.UserLocalDto
@@ -8,12 +9,14 @@ import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.AuthRepository
 import com.chocolatecake.repository.BaseRepository
 import com.chocolatecake.repository.UnauthorizedThrowable
+import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val prefs: PreferenceStorage,
     private val triviaDao: TriviaDao
+    private val domainProfileMapper: DomainProfileMapper
 ) : BaseRepository(), AuthRepository {
 
     override suspend fun login(username: String, password: String): Boolean {
@@ -46,6 +49,12 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentUsername(): String? {
         return prefs.currentUserName
+    }
+
+    override suspend fun getAccountDetails(): ProfileEntity {
+        val sessionId=prefs.sessionId
+        val profileData=movieService.getAccountDetails(sessionId!!).body()
+        return domainProfileMapper.map(profileData!!)
     }
 }
 
