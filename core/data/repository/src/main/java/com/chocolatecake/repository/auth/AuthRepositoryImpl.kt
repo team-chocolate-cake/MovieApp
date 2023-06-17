@@ -15,7 +15,7 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val prefs: PreferenceStorage,
-    private val triviaDao: TriviaDao
+    private val triviaDao: TriviaDao,
     private val domainProfileMapper: DomainProfileMapper
 ) : BaseRepository(), AuthRepository {
 

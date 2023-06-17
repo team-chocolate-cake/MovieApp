@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.profile
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.profile.GetAccountDetailsUseCase
@@ -65,15 +64,10 @@ class ProfileViewModel @Inject constructor(
 
     override fun onClickLogout() {
         viewModelScope.launch {
-            _state.update { it.copy(
-                isLogout = true
-            ) }
-                if (_state.value.isLogout){
-                    Log.d("123123123", "onClickLogout: ${_state.value.isLogout}")
-                    logoutUseCase()
-                    sendEvent(ProfileUiEvent.LogoutEvent)
-                }
-
+            _state.update { it.copy(isLogout = true) }
+            if (_state.value.isLogout == logoutUseCase()) {
+                sendEvent(ProfileUiEvent.LogoutEvent)
+            }
         }
     }
 }

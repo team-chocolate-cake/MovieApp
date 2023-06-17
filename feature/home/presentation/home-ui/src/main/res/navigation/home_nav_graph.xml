@@ -29,10 +29,11 @@
         <action
             android:id="@+id/action_profileFragment_to_game_nav_graph"
             app:destination="@id/game_nav_graph" />
+
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />
-  
+
     <fragment
         android:id="@+id/watchHistoryFragment"
         tools:layout="@layout/fragment_watch_history"

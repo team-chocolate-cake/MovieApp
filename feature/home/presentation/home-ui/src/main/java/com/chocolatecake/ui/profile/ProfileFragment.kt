@@ -1,10 +1,9 @@
 package com.chocolatecake.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
@@ -12,7 +11,6 @@ import com.chocolatecake.viewmodel.profile.ProfileUIState
 import com.chocolatecake.viewmodel.profile.ProfileUiEvent
 import com.chocolatecake.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, ProfileUiEvent>() {
@@ -25,22 +23,20 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, Prof
         super.onViewCreated(view, savedInstanceState)
 //        uiModeManager = requireContext().getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 //        binding.uiMode = uiModeManager
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect{
-                Log.d("123123123", "onViewCreated: $it")
-            }
-        }
     }
 
     override fun onEvent(event: ProfileUiEvent) {
         when (event) {
             ProfileUiEvent.FavoriteEvent -> TODO()
             ProfileUiEvent.LogoutEvent -> {
-               activity?.finish()
-                Log.d("123123123", "onEvent: ")
+                showSnackBar("Logout!")
             }
+
             ProfileUiEvent.MyListsEvent -> TODO()
-            ProfileUiEvent.PopcornPuzzlesEvent -> TODO()
+            ProfileUiEvent.PopcornPuzzlesEvent -> {
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
+            }
+
             ProfileUiEvent.RatingEvent -> TODO()
             ProfileUiEvent.ThemeEvent -> TODO()
             ProfileUiEvent.WatchHistoryEvent -> TODO()
