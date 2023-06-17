@@ -58,31 +58,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.PopularMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.PopularPeopleEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.TopRatedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.TrendingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
 
             is HomeUiEvent.UpComingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
             }
         }
     }

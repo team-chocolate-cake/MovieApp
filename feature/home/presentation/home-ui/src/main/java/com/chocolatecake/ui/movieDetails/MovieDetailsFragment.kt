@@ -1,21 +1,17 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.home.HomeFragmentDirections
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -76,7 +72,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                 bottomSheet.setMovieID(movieId)
             }
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragment2Self(event.movieId))
+//                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragment2Self(event.movieId))
             }
             is MovieDetailsUiEvent.onSuccessRateEvent -> {
                 //todo
