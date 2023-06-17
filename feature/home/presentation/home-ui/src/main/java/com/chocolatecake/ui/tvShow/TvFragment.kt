@@ -12,11 +12,11 @@ import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvBinding
-import com.chocolatecake.viewmodel.tv_shows.TVShowUIState
-import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
-import com.chocolatecake.viewmodel.tv_shows.TVShowsType
-import com.chocolatecake.viewmodel.tv_shows.TVShowsUI
-import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowUIState
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsInteraction
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsType
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsUI
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +38,7 @@ class TvFragment :
 
     private fun setAdapter() {
         val footerAdapter = BaseFooterAdapter { tvShowsAdapter.retry() }
-        binding.rvTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
+        binding.recyclerViewTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
 
 
         collect(flow = tvShowsAdapter.loadStateFlow,
@@ -97,7 +97,6 @@ class TvFragment :
 
     override fun onEvent(event: TVShowsInteraction) {
         when (event) {
-            is TVShowsInteraction.OpenFilterBottomSheet -> showBottomSheet()
             is TVShowsInteraction.ShowOnTheAirTVShowsResult -> showOnTheAirResult()
             is TVShowsInteraction.ShowAiringTodayTVShowsResult -> showAiringTodayResult()
             is TVShowsInteraction.ShowTopRatedTVShowsResult -> showTopRatedResult()
@@ -125,8 +124,5 @@ class TvFragment :
     private fun showPopularResult() {
         //    viewModel.getPopularTVShows()
         //    Log.d("chips-----Fragment", "Popular")
-    }
-    private fun showBottomSheet() {
-        FilterTVShowsBottomSheetFragment().show(childFragmentManager, "BOTTOM")
     }
 }

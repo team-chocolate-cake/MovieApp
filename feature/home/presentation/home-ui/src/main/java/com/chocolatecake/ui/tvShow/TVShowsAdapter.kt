@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.ItemTvShowBinding
-import com.chocolatecake.viewmodel.tv_shows.TVShowsUI
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsUI
 import javax.inject.Inject
 
 class TVShowsAdapter @Inject constructor() : PagingDataAdapter<TVShowsUI, TVShowsViewHolder>(Comparator) {

@@ -2,7 +2,7 @@ package com.chocolatecake.ui.tvShow
 
 import androidx.databinding.BindingAdapter
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.viewmodel.tv_shows.TVShowsType
+import com.chocolatecake.viewmodel.profile.tv_shows.TVShowsType
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter(value = ["app:selectedTVShowType"])

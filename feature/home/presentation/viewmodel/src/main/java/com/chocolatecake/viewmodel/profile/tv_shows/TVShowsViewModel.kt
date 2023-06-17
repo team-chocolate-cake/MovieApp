@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.tv_shows
+package com.chocolatecake.viewmodel.profile.tv_shows
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -22,13 +22,11 @@ import javax.inject.Inject
 @HiltViewModel
 class TVShowsViewModel @Inject constructor(
     private val getAiringTodayTVShowsUseCase: GetAiringTodayTVShowsUseCase,
-    private val getAllGenresTvsUseCase: GetAllGenresTvsUseCase,
     private val getOnTheAirTVShowsUseCase: GetOnTheAirTVShowsUseCase,
     private val getPopularTVShowsUseCase: GetPopularTVShowsUseCase,
-    private val genTvMapper: GenreTVUiMapper,
     private val getGetTopRatedTVShowsUseCase: GetTopRatedTVShowsUseCase,
     private val tvShowsMapper: TVShowsMapper
-) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener{
+) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener {
 
 
     init {
@@ -133,57 +131,6 @@ class TVShowsViewModel @Inject constructor(
 
     override fun showPopularTVShowsResult() {
         sendEvent(TVShowsInteraction.ShowPopularTVShowsResult)
-    }
-
-    override fun onClickGenre(genresId: Int) {
-
-    }
-
-    override fun onClickFilter() {
-        _state.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            getAllGenresTv()
-            _event.emit(TVShowsInteraction.OpenFilterBottomSheet)
-        }
-    }
-
-    private suspend fun getAllGenresTv() {
-        tryToExecute(
-            call = { getAllGenresTvsUseCase() },
-            onSuccess = ::onSuccessGenres,
-            onError = ::onError
-        )
-    }
-
-    private fun onSuccessGenres(genreEntities: List<GenreEntity>) {
-        _state.update {
-            val updatedGenres =
-                genreEntities.map { genre ->
-                    genTvMapper.map(
-                        genre,
-                        genre.genreID == it.selectedMovieGenresId
-                    )
-                }
-            it.copy(
-                genresTvShows = updatedGenres,
-                isLoading = false,
-                error = null
-            )
-        }
-    }
-
-    private fun onError(throwable: Throwable) {
-        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
-        _state.update {
-            it.copy(
-                error = listOf(throwable.message ?: "No Network Connection"),
-                isLoading = false
-            )
-        }
-    }
-
-    private fun showErrorWithSnackBar(messages: String) {
-        sendEvent(TVShowsInteraction.ShowSnackBar(messages))
     }
     /// endregion
 }

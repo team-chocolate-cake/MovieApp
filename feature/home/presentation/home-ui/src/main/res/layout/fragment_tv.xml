@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel" />
+            type="com.chocolatecake.viewmodel.profile.tv_shows.TVShowsViewModel" />
     </data>
 
 
@@ -14,38 +15,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/image_button_filter"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@null"
-            android:onClick="@{() -> viewModel.onClickFilter()}"
-            android:src="@drawable/ic_filter"
-            app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontalScrollView"
-            app:tint="@color/on_background_60" />
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            tools:text="Explore The Best TV Shows"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:text="@string/explore_the_best_tv_shows"
+            style="@style/TextStyle.BodyMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:clipToPadding="false"
-            android:paddingStart="@dimen/spacing_medium_16dp"
-            android:paddingEnd="@dimen/spacing_small_8dp"
             android:scrollbars="none"
-            app:layout_constraintEnd_toStartOf="@+id/image_button_filter"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/spacing_medium_16dp"
                 app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 app:singleSelection="true">
 
@@ -56,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:onClick="@{()-> viewModel.getAiringTodayTVShows()}"
-                    android:text="Airing Today" />
+                    android:text="@string/airing_today" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_on_the_air"
@@ -64,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.getOnTheAirTVShows()}"
-                    android:text="On The Air" />
+                    android:text="@string/on_the_air" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_top_rated"
@@ -72,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.getTopRatedTVShows()}"
-                    android:text="Top Rated" />
+                    android:text="@string/top_rated" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_popular"
@@ -80,18 +79,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.getPopularTVShows()}"
-                    android:text="Popular" />
+                    android:text="@string/popular" />
 
             </com.google.android.material.chip.ChipGroup>
 
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tv_shows"
+            android:id="@+id/recycler_view_tv_shows"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
