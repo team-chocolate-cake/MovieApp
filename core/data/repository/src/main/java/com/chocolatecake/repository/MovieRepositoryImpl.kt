@@ -1,5 +1,7 @@
 package com.chocolatecake.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
@@ -9,6 +11,7 @@ import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RatingRequest
@@ -34,11 +37,19 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMappe
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
+import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
+import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
+import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
+import com.chocolatecake.repository.tv_shows.TopRatedTVShowsPagingSource
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDao: MovieDao,
+    private val airingTodayTvShowsPagingSource: AiringTodayTVShowsPagingSource,
+    private val topRatedTvShowsPagingSource: TopRatedTVShowsPagingSource,
+    private val onTheAirTVShowsPagingSource: OnTheAirTVShowsPagingSource,
+    private val popularTVShowsPagingSource: PopularTVShowsPagingSource,
     private val preferenceStorage: PreferenceStorage,
     private val localGenresMovieMapper: LocalGenresMovieMapper,
     private val localGenresTvMapper: LocalGenresTvMapper,
@@ -260,6 +271,34 @@ class MovieRepositoryImpl @Inject constructor(
         refreshTopRatedMovies()
         refreshTrendingMovies()
         refreshUpcomingMovies()
+    }
+
+    /// endregion
+
+    /// region tv
+
+    override suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20), pagingSourceFactory = { airingTodayTvShowsPagingSource }
+        )
+    }
+
+    override suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20), pagingSourceFactory = { topRatedTvShowsPagingSource }
+        )
+    }
+
+    override suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20), pagingSourceFactory = { popularTVShowsPagingSource }
+        )
+    }
+
+    override suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20), pagingSourceFactory = { onTheAirTVShowsPagingSource }
+        )
     }
     /// endregion
 
