@@ -16,9 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MemorizeGameFragment :
     BaseFragment<FragmentMemorizeBinding, MemorizeGameUIState, MemorizeGameUIEvent>() {
+
     override val layoutIdFragment: Int = R.layout.fragment_memorize
     override val viewModel: MemorizeGameViewModel by viewModels()
     private lateinit var memorizeGameAdapter: MemorizeGameAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("123123123", "onViewCreated: $123123123")
@@ -49,6 +51,8 @@ class MemorizeGameFragment :
                     )
                 )
             }
+
+            is MemorizeGameUIEvent.ShowSnackbar -> showSnackBar(event.message)
         }
     }
 }

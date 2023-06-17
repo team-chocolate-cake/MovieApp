@@ -71,10 +71,26 @@
     </fragment>
     <fragment
         android:id="@+id/congratsFragment"
+        tools:layout="@layout/fragment_congrats"
         android:name="com.chocolatecake.ui.congrats.CongratsFragment"
         android:label="CongratsFragment" >
         <argument
             android:name="gameType"
             app:argType="com.chocolatecake.viewmodel.common.model.GameType" />
+        <action
+            android:id="@+id/action_congratsFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment" />
+        <action
+            android:id="@+id/action_congratsFragment_to_movieGuessingFragment"
+            app:destination="@id/movieGuessingFragment" />
+        <action
+            android:id="@+id/action_congratsFragment_to_tvShowGuessingFragment"
+            app:destination="@id/tvShowGuessingFragment" />
+        <action
+            android:id="@+id/action_congratsFragment_to_peopleGuessingFragment"
+            app:destination="@id/peopleGuessingFragment" />
+        <action
+            android:id="@+id/action_congratsFragment_to_memorizeGameFragment"
+            app:destination="@id/memorizeGameFragment" />
     </fragment>
 </navigation>

@@ -15,12 +15,12 @@ class TvShowGuessingFragment: BaseFragment<FragmentTvShowGuessingBinding, GameUi
     override val viewModel: TvShowGuessingViewModel by viewModels()
 
     override fun onEvent(event: GameUIEvent) {
-        when(event){
-            GameUIEvent.NavigateToLoserScreen -> navigateToWelcomeGameScreen()
-            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.level,event.points)
-            GameUIEvent.ShowTimeOut -> showTimeOut()
-            is GameUIEvent.UpdateQuestion -> updateQuestion(event.questionNumber)
-        }
+//        when(event){
+//            GameUIEvent.NavigateToLoserScreen -> navigateToWelcomeGameScreen()
+//            is GameUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen(event.level,event.points)
+//            GameUIEvent.ShowTimeOut -> showTimeOut()
+//            is GameUIEvent.UpdateQuestion -> updateQuestion(event.questionNumber)
+//        }
     }
 
     private fun navigateToWelcomeGameScreen() {

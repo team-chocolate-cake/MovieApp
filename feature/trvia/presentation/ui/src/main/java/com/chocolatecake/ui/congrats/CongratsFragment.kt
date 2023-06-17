@@ -1,9 +1,11 @@
 package com.chocolatecake.ui.congrats
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentCongratsBinding
+import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.congrats.CongratsUIEvent
 import com.chocolatecake.viewmodel.congrats.CongratsUIState
 import com.chocolatecake.viewmodel.congrats.CongratsViewModel
@@ -17,42 +19,22 @@ class CongratsFragment :
 
     override fun onEvent(event: CongratsUIEvent) {
         when (event) {
-            CongratsUIEvent.NavigateToLoserScreen -> navigateToLoserScreen()
-            CongratsUIEvent.NavigateToWelcomeGameScreen -> navigateToWelcomeGameScreen()
-            CongratsUIEvent.NavigateToWinnerScreen -> navigateToWinnerScreen()
-            is CongratsUIEvent.ToggleItemGame -> toggleItemGame()
-            CongratsUIEvent.NavigateToHome -> navigateToHome()
-            CongratsUIEvent.NavigateToNextLevel -> navigateToNextLevel()
-            is CongratsUIEvent.UpdateLevel -> updateLevel()
+            CongratsUIEvent.NavigateToGameTypeScreen -> navigateToGameTypeScreen()
+            is CongratsUIEvent.NavigateToNextLevel -> navigateToNextLevel(event.gameType)
         }
     }
 
-    private fun navigateToLoserScreen() {
-        // Navigate To Loser Screen
+    private fun navigateToGameTypeScreen() {
+        findNavController().navigate(CongratsFragmentDirections.actionCongratsFragmentToTypeGameFragment())
     }
 
-    private fun navigateToWelcomeGameScreen() {
-        // Navigate To Welcome Game Screen
-    }
-
-    private fun navigateToWinnerScreen() {
-        // Navigate To Winner Screen
-    }
-
-    private fun toggleItemGame() {
-        // Toggle Item Game
-    }
-
-    private fun navigateToHome() {
-        // Navigate To Home Screen
-    }
-
-    private fun navigateToNextLevel() {
-        // Navigate To Next Level Screen
-    }
-
-    private fun updateLevel() {
-        // Update Level
-
+    private fun navigateToNextLevel(gameType: GameType) {
+        val action = when (gameType) {
+            GameType.PEOPLE -> CongratsFragmentDirections.actionCongratsFragmentToPeopleGuessingFragment()
+            GameType.MOVIE -> CongratsFragmentDirections.actionCongratsFragmentToMovieGuessingFragment()
+            GameType.TV_SHOW -> CongratsFragmentDirections.actionCongratsFragmentToTvShowGuessingFragment()
+            GameType.MEMORIZE -> CongratsFragmentDirections.actionCongratsFragmentToMemorizeGameFragment()
+        }
+        findNavController().navigate(action)
     }
 }

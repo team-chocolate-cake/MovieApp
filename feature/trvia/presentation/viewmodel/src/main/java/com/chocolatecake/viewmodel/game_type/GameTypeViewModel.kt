@@ -1,38 +1,29 @@
 package com.chocolatecake.viewmodel.game_type
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import com.chocolatecake.bases.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class GameTypeViewModel: ViewModel(),GameTypeListener {
+@HiltViewModel
+class GameTypeViewModel @Inject constructor() : BaseViewModel<Unit, GameTypeUIEvent>(Unit) {
 
-    private val _event = MutableSharedFlow<GameTypeUIEvent>()
-    val event = _event.asSharedFlow()
-
-    private fun sendEvent(event: GameTypeUIEvent) {
-        viewModelScope.launch { _event.emit(event) }
+    fun onClickGamePeople() {
+        sendEvent(GameTypeUIEvent.NavigateToPeopleGame)
     }
 
-    override fun onClickGamePeople() {
-        sendEvent(GameTypeUIEvent.NavigateToPeopleGameBoard)
+    fun onClickGameTvShows() {
+        sendEvent(GameTypeUIEvent.NavigateToTvGame)
     }
 
-    override fun onClickGameTvShows() {
-        sendEvent(GameTypeUIEvent.NavigateToTvGameBoard)
+    fun onClickGameMovie() {
+        sendEvent(GameTypeUIEvent.NavigateToMovieGame)
     }
 
-    override fun onClickGameMovie() {
-        sendEvent(GameTypeUIEvent.NavigateToMovieGameBoard)
-    }
-
-    override fun onClickGameMemorize() {
+    fun onClickGameMemorize() {
         sendEvent(GameTypeUIEvent.NavigateToMemorizeBoard)
     }
 
-    override fun onClickCommingSoon() {
+    fun onClickCommingSoon() {
         sendEvent(GameTypeUIEvent.ShowSnackbar)
-
     }
 }

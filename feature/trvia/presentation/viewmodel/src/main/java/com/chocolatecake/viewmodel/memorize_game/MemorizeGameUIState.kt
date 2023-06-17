@@ -9,7 +9,9 @@ data class MemorizeGameUIState(
     val points: Int = 0,
     val CorrectPairPositions: Pair<Int,Int> = Pair(0,1),
     val firstUserPosition: Int? = null,
-    val secondUserPosition: Int? = null
+    val secondUserPosition: Int? = null,
+    val isLoading: Boolean = true,
+    val isError: Boolean = false
 
 )
 

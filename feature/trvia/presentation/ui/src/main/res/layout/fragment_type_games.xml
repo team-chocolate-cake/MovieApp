@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.game_type.GameTypeViewModel" />
-        <variable
-            name="listener"
-            type="com.chocolatecake.viewmodel.game_type.GameTypeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,10 +30,10 @@
             android:id="@+id/view_card_type_game_characters"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:onClick="@{() -> listener.onClickGamePeople()}"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_large"
             android:background="@drawable/card_type_game_background"
+            android:onClick="@{() -> viewModel.onClickGamePeople()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_type_games" />
@@ -67,10 +65,10 @@
             android:id="@+id/view_card_type_game_tv_shows"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:onClick="@{() -> listener.onClickGameTvShows()}"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:background="@drawable/card_type_game_background"
+            android:onClick="@{() -> viewModel.onClickGameTvShows()}"
             app:layout_constraintEnd_toEndOf="@id/view_card_type_game_characters"
             app:layout_constraintStart_toStartOf="@id/view_card_type_game_characters"
             app:layout_constraintTop_toBottomOf="@id/view_card_type_game_characters" />
@@ -102,10 +100,10 @@
             android:id="@+id/view_card_type_game_movie"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:onClick="@{() -> listener.onClickGameMovie()}"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:background="@drawable/card_type_game_background"
+            android:onClick="@{() -> viewModel.onClickGameMovie()}"
             app:layout_constraintEnd_toEndOf="@id/view_card_type_game_tv_shows"
             app:layout_constraintStart_toStartOf="@id/view_card_type_game_tv_shows"
             app:layout_constraintTop_toBottomOf="@id/view_card_type_game_tv_shows" />
@@ -137,10 +135,10 @@
             android:id="@+id/view_card_type_game_memorize"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:onClick="@{() -> listener.onClickGameMemorize()}"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:background="@drawable/card_type_game_background"
+            android:onClick="@{() -> viewModel.onClickGameMemorize()}"
             app:layout_constraintEnd_toEndOf="@id/view_card_type_game_movie"
             app:layout_constraintStart_toStartOf="@id/view_card_type_game_movie"
             app:layout_constraintTop_toBottomOf="@id/view_card_type_game_movie" />
@@ -172,10 +170,10 @@
             android:id="@+id/view_card_type_game_comming_soon"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:onClick="@{() -> listener.onClickCommingSoon()}"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:background="@drawable/card_comming_coon_game"
+            android:onClick="@{() -> viewModel.onClickCommingSoon()}"
             app:layout_constraintEnd_toEndOf="@id/view_card_type_game_memorize"
             app:layout_constraintStart_toStartOf="@id/view_card_type_game_memorize"
             app:layout_constraintTop_toBottomOf="@id/view_card_type_game_memorize" />

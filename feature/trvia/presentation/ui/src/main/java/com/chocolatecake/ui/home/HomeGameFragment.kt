@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentGameHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ class HomeGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.buttonStart.setOnClickListener {
+            findNavController().navigate(HomeGameFragmentDirections.actionHomeGameFragmentToTypeGameFragment())
+        }
     }
 }

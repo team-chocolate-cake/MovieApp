@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.people_guessing.AnswerListener" />
+            type="com.chocolatecake.viewmodel.common.AnswerListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

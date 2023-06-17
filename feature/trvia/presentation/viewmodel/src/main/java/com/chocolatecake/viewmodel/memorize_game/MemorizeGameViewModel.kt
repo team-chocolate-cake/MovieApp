@@ -3,12 +3,15 @@ package com.chocolatecake.viewmodel.memorize_game
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.BoardEntity
+import com.chocolatecake.entities.UserEntity
 import com.chocolatecake.usecase.GetCurrentUserUseCase
 import com.chocolatecake.usecase.game.GetCurrentBoardUseCase
 import com.chocolatecake.usecase.game.UpdateUserPointsUseCase
 import com.chocolatecake.usecase.game.levelup.LevelUpMemorizeUseCase
 import com.chocolatecake.viewmodel.common.model.GameType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,38 +31,55 @@ class MemorizeGameViewModel @Inject constructor(
     }
 
     private fun getData() {
-        viewModelScope.launch {
-            getCurrentUserUseCase().let { user ->
-                _state.update {
-                    it.copy(
-                        level = user.memorizeGameLevel,
-                        points = user.totalPoints
-                    )
-                }
-            }
-            getCurrentBoardUseCase().let { boardEntity ->
-                _state.update {
-                    val board = boardEntity.itemsEntity.toUIState()
-                    it.copy(
-                        boardSize = boardEntity.itemsEntity.size,
-                        CorrectPairPositions = boardEntity.pairOfCorrectPositions,
-                        board = board,
-                        initialBoard = board
+        tryToExecute(
+            getCurrentUserUseCase::invoke,
+            ::onSuccessUser,
+            ::onError
+        )
+        tryToExecute(
+            getCurrentBoardUseCase::invoke,
+            ::onSuccessBoard,
+            ::onError
+        )
+    }
 
-                    )
-                }
-            }
-            initTimer()
+    private fun onSuccessBoard(boardEntity: BoardEntity) {
+        _state.update {
+            val board = boardEntity.itemsEntity.toUIState()
+            it.copy(
+                boardSize = boardEntity.itemsEntity.size,
+                CorrectPairPositions = boardEntity.pairOfCorrectPositions,
+                board = board,
+                initialBoard = board,
+                isLoading = false,
+                isError = false
+            )
+        }
+        initTimer()
+    }
+
+    private fun onSuccessUser(user: UserEntity) {
+        _state.update {
+            it.copy(
+                level = user.moviesGameLevel,
+                points = user.totalPoints,
+                isError = false,
+                isLoading = false
+            )
         }
     }
 
-    private fun initTimer() {
 
-        viewModelScope.launch {
+    private var timerJob: Job? = null
+    private fun initTimer() {
+        _state.update { it.copy(countDownTimer = 30) }
+        timerJob?.cancel()
+        timerJob = viewModelScope.launch {
             while (true) {
                 if (_state.value.countDownTimer == 0) {
                     onUserLose()
-                    break
+                    timerJob = null
+                    cancel()
                 }
                 delay(1000)
                 _state.update { it.copy(countDownTimer = it.countDownTimer - 1) }
@@ -124,6 +144,11 @@ class MemorizeGameViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private fun onError(throwable: Throwable) {
+        _state.update { it.copy(isError = true) }
+        sendEvent(MemorizeGameUIEvent.ShowSnackbar(throwable.message.toString()))
     }
 }
 
