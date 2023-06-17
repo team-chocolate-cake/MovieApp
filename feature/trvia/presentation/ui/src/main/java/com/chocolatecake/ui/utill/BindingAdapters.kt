@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.chocolatecake.ui.trivia.R
-import com.github.guilhe.views.CircularProgressView
 
 @BindingAdapter(value = ["app:timerColor", "app:maxTime"])
 fun TextView.setTimerColor(time: Int?, maxTime: Int?) {
@@ -23,16 +22,16 @@ fun TextView.setTimerColor(time: Int?, maxTime: Int?) {
     }
 }
 
-@BindingAdapter("app:progressColors")
-fun CircularProgressView.setProgressAnimated(progress: Int) {
-    val colorRes = if (progress < max / 2) {
-        R.array.error_array_colors
-    } else {
-        R.array.correct_array_colors
-    }
-    val colors = context.resources.getIntArray(colorRes)
-    setProgressColors(colors, floatArrayOf(), true)
-}
+//@BindingAdapter("app:progressColors")
+//fun CircularProgressView.setProgressAnimated(progress: Int) {
+//    val colorRes = if (progress < max / 2) {
+//        R.array.error_array_colors
+//    } else {
+//        R.array.correct_array_colors
+//    }
+//    val colors = context.resources.getIntArray(colorRes)
+//    setProgressColors(colors, floatArrayOf(), true)
+//}
 
 
 @BindingAdapter("app:hearCount")
