@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.profile.ProfileListener" />
 
     </data>
 
@@ -56,7 +59,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username"
+            android:onClick="@{()->listener.onClickFavorite()}"/>
 
         <TextView
             android:id="@+id/text_view_watchlist"
@@ -75,7 +79,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_favorite" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_favorite"
+            android:onClick="@{()->listener.onClickWatchlist()}"/>
 
         <TextView
             android:id="@+id/text_view_watch_history"
@@ -94,7 +99,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist"
+            android:onClick="@{()->listener.onClickWatchHistory()}"/>
 
         <TextView
             android:id="@+id/text_view_mylists"
@@ -113,7 +119,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history"
+            android:onClick="@{()->listener.onClickMyLists()}"/>
 
         <TextView
             android:id="@+id/text_view_rating"
@@ -132,7 +139,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_mylists" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"
+            android:onClick="@{()->listener.onClickRating()}"/>
 
         <TextView
             android:id="@+id/text_view_puzzle"
@@ -151,7 +159,10 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_rating" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_rating"
+            android:onClick="@{()->listener.onClickPopcornPuzzles()}"/>
+
+
 
         <TextView
             android:id="@+id/text_view_theme"
@@ -170,7 +181,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"
+            android:onClick="@{()->listener.onClickTheme()}"/>
 
         <TextView
             android:id="@+id/text_view_logout"
@@ -188,7 +200,8 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_theme" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_theme"
+            android:onClick="@{()->listener.onClickLogout()}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

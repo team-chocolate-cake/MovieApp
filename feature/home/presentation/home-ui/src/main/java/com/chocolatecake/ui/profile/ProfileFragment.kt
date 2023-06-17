@@ -13,19 +13,25 @@ import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
 import com.chocolatecake.viewmodel.profile.ProfileUIState
 import com.chocolatecake.viewmodel.profile.ProfileUiEvent
 import com.chocolatecake.viewmodel.home.HomeViewModel
+import com.chocolatecake.viewmodel.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, ProfileUiEvent>() {
 
-    override val layoutIdFragment: Int,
-    override val viewModel:  by viewModels()
+    override val layoutIdFragment: Int =R.layout.fragment_profile
+    override val viewModel: ProfileViewModel by viewModels()
+    override fun onEvent(event: ProfileUiEvent) {
+        when(event){
+            ProfileUiEvent.FavoriteEvent -> TODO()
+            ProfileUiEvent.LogoutEvent -> TODO()
+            ProfileUiEvent.MyListsEvent -> TODO()
+            ProfileUiEvent.PopcornPuzzlesEvent -> TODO()
+            ProfileUiEvent.RatingEvent -> TODO()
+            ProfileUiEvent.ThemeEvent -> TODO()
+            ProfileUiEvent.WatchHistoryEvent -> TODO()
+            ProfileUiEvent.WatchlistEvent -> TODO()
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
+}
 }
