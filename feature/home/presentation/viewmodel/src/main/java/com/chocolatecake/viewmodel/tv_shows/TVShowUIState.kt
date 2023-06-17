@@ -12,7 +12,7 @@ data class TVShowUIState(
     val selectedMovieGenresId: Int? = null,
     val tvShowOnTheAir: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val tvShowPopular: Flow<PagingData<TVShowsUI>> = emptyFlow(),
-    val onErrors: List<String> = emptyList(),
+    val error: List<String>? = null,
     val isLoading: Boolean = false
 )
 
@@ -20,11 +20,13 @@ data class TVShowsUI(
     val id: Int?,
     val imageUrl: String?,
 )
+
 data class GenresTVShowsUiState(
     val genreId: Int = 0,
     val genresName: String = "",
     val isSelected: Boolean = false
 )
+
 enum class TVShowsType {
     AIRING_TODAY,
     ON_THE_AIR,

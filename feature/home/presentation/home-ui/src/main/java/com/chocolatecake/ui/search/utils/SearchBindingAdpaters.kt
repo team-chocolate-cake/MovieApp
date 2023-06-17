@@ -28,6 +28,21 @@ fun ChipGroup.setGenres(
     this.getChildAt(chipIndex)?.id?.let { this.check(it) }
 }
 
+@BindingAdapter(value = ["app:setTVGenres", "app:listener", "app:chipSelected"])
+fun ChipGroup.setTVGenres(
+    items: List<GenresTVShowsUiState>?,
+    listener: TVShowsListener,
+    chipSelected: Int?
+) {
+    this.removeAllViews()
+    items?.let {
+        it.forEach { genre -> this.addView(this.createTVChip(genre, listener)) }
+    }
+
+    val chipIndex = items?.indexOf(items.find { it.genreId == chipSelected }) ?: 0
+    this.getChildAt(chipIndex)?.id?.let { this.check(it) }
+}
+
 @BindingAdapter(value = ["app:selectedMedia"])
 fun ChipGroup.setSelectedMedia(media: SearchUiState.SearchMedia) {
     when (media) {
@@ -56,20 +71,4 @@ fun RecyclerView.setSearchLayoutManager(searchUiState: SearchUiState?) {
         }
     }
     this.layoutManager = layoutManager
-}
-
-
-@BindingAdapter(value = ["app:setTVGenres", "app:listener", "app:chipSelected"])
-fun ChipGroup.setTVGenres(
-    items: List<GenresTVShowsUiState>?,
-    listener: TVShowsListener,
-    chipSelected: Int?
-) {
-    this.removeAllViews()
-    items?.let {
-        it.forEach { genre -> this.addView(this.createTVChip(genre, listener)) }
-    }
-
-    val chipIndex = items?.indexOf(items.find { it.genreId == chipSelected }) ?: 0
-    this.getChildAt(chipIndex)?.id?.let { this.check(it) }
 }

@@ -42,7 +42,7 @@ class TvFragment :
 
 
         collect(flow = tvShowsAdapter.loadStateFlow,
-            action = { viewModel.state.value.onErrors })
+            action = { viewModel.state.value.error })
 
         collectLatest {
             viewModel.state.collectLatest {
@@ -97,11 +97,13 @@ class TvFragment :
 
     override fun onEvent(event: TVShowsInteraction) {
         when (event) {
+            is TVShowsInteraction.OpenFilterBottomSheet -> showBottomSheet()
             is TVShowsInteraction.ShowOnTheAirTVShowsResult -> showOnTheAirResult()
             is TVShowsInteraction.ShowAiringTodayTVShowsResult -> showAiringTodayResult()
             is TVShowsInteraction.ShowTopRatedTVShowsResult -> showTopRatedResult()
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
             is TVShowsInteraction.NavigateToTVShowDetails -> TODO()
+            else -> {}
         }
     }
 
@@ -123,5 +125,8 @@ class TvFragment :
     private fun showPopularResult() {
         //    viewModel.getPopularTVShows()
         //    Log.d("chips-----Fragment", "Popular")
+    }
+    private fun showBottomSheet() {
+        FilterTVShowsBottomSheetFragment().show(childFragmentManager, "BOTTOM")
     }
 }

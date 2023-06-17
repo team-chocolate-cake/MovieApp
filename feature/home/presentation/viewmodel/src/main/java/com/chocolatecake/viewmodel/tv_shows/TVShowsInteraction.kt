@@ -7,5 +7,6 @@ sealed interface TVShowsInteraction {
     object ShowAiringTodayTVShowsResult : TVShowsInteraction
     object ShowTopRatedTVShowsResult : TVShowsInteraction
     object ShowPopularTVShowsResult : TVShowsInteraction
+    data class ShowSnackBar(val messages: String) : TVShowsInteraction
 
 }

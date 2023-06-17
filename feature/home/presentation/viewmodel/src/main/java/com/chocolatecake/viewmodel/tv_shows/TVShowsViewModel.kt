@@ -5,10 +5,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.GenreEntity
+import com.chocolatecake.usecase.GetAllGenresTvsUseCase
 import com.chocolatecake.usecase.tv_shows.GetAiringTodayTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
+import com.chocolatecake.viewmodel.search.mappers.GenreUiStateMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -18,10 +21,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TVShowsViewModel @Inject constructor(
-    val getAiringTodayTVShowsUseCase: GetAiringTodayTVShowsUseCase,
-    val getOnTheAirTVShowsUseCase: GetOnTheAirTVShowsUseCase,
-    val getPopularTVShowsUseCase: GetPopularTVShowsUseCase,
-    val getGetTopRatedTVShowsUseCase: GetTopRatedTVShowsUseCase,
+    private val getAiringTodayTVShowsUseCase: GetAiringTodayTVShowsUseCase,
+    private val getAllGenresTvsUseCase: GetAllGenresTvsUseCase,
+    private val getOnTheAirTVShowsUseCase: GetOnTheAirTVShowsUseCase,
+    private val getPopularTVShowsUseCase: GetPopularTVShowsUseCase,
+    private val genTvMapper: GenreTVUiMapper,
+    private val getGetTopRatedTVShowsUseCase: GetTopRatedTVShowsUseCase,
     private val tvShowsMapper: TVShowsMapper
 ) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener{
 
@@ -49,7 +54,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.AIRING_TODAY,
                     tvShowAiringToday = items,
                     isLoading = false,
-                    onErrors = emptyList()
+                    error = emptyList()
                 )
             }
             Log.d("chips-----ViewModel", "AiringToday---- ${items.collect()} ")
@@ -66,7 +71,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.ON_THE_AIR,
                     tvShowOnTheAir = items,
                     isLoading = false,
-                    onErrors = emptyList()
+                    error = emptyList()
                 )
             }
             Log.d("chips-----ViewModel", "OnTheAir---- $items ")
@@ -83,7 +88,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.POPULAR,
                     tvShowPopular = items,
                     isLoading = false,
-                    onErrors = emptyList()
+                    error = emptyList()
                 )
             }
             Log.d("chips-----ViewModel", "Popular---- $items ")
@@ -100,7 +105,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.TOP_RATED,
                     tvShowTopRated = items,
                     isLoading = false,
-                    onErrors = emptyList()
+                    error = emptyList()
                 )
             }
             Log.d("chips-----ViewModel", "TopRated---- $items ")
@@ -150,5 +155,35 @@ class TVShowsViewModel @Inject constructor(
         )
     }
 
+    private fun onSuccessGenres(genreEntities: List<GenreEntity>) {
+        _state.update {
+            val updatedGenres =
+                genreEntities.map { genre ->
+                    genTvMapper.map(
+                        genre,
+                        genre.genreID == it.selectedMovieGenresId
+                    )
+                }
+            it.copy(
+                genresTvShows = updatedGenres,
+                isLoading = false,
+                error = null
+            )
+        }
+    }
+
+    private fun onError(throwable: Throwable) {
+        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false
+            )
+        }
+    }
+
+    private fun showErrorWithSnackBar(messages: String) {
+        sendEvent(TVShowsInteraction.ShowSnackBar(messages))
+    }
     /// endregion
 }

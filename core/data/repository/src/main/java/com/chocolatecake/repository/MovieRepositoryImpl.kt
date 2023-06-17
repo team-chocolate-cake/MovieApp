@@ -232,10 +232,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshGenresTv() {
         try {
-            wrapApiCall { movieService.getListOfGenresForTvs() }.results
+        /*    wrapApiCall { movieService.getListOfGenresForTvs() }.results
                 ?.let { remoteGenres ->
                     movieDao.insertGenresTvs(localGenresTvMapper.map(remoteGenres))
-                }
+                }*/
 
         } catch (_: Throwable) {
         }
