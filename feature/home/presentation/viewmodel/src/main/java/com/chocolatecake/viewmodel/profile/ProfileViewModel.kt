@@ -2,9 +2,11 @@ package com.chocolatecake.viewmodel.profile
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.usecase.profile.GetAccountDetailsUseCase
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -12,11 +14,22 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val getAccountDetailsUseCase: GetAccountDetailsUseCase,
     private val profileUiMapper: ProfileUiMapper
-): BaseViewModel <ProfileUIState, ProfileUiEvent>(ProfileUIState()),ProfileListener
-{
-    private fun getAccountDetails(){
+) : BaseViewModel<ProfileUIState, ProfileUiEvent>(ProfileUIState()), ProfileListener {
+
+    init {
+        getAccountDetails()
+    }
+
+    private fun getAccountDetails() {
         viewModelScope.launch {
-            profileUiMapper.map(getAccountDetailsUseCase())
+            val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
+            _state.update {
+                it.copy(
+                    username = profileEntity.username,
+                    avatarUrl = profileEntity.avatarUrl,
+                    error = null
+                )
+            }
         }
     }
 
@@ -29,20 +42,26 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onClickWatchHistory() {
-        sendEvent(ProfileUiEvent.WatchHistoryEvent)    }
+        sendEvent(ProfileUiEvent.WatchHistoryEvent)
+    }
 
     override fun onClickMyLists() {
-        sendEvent(ProfileUiEvent.MyListsEvent)    }
+        sendEvent(ProfileUiEvent.MyListsEvent)
+    }
 
     override fun onClickRating() {
-        sendEvent(ProfileUiEvent.RatingEvent)    }
+        sendEvent(ProfileUiEvent.RatingEvent)
+    }
 
     override fun onClickPopcornPuzzles() {
-        sendEvent(ProfileUiEvent.PopcornPuzzlesEvent)    }
+        sendEvent(ProfileUiEvent.PopcornPuzzlesEvent)
+    }
 
     override fun onClickTheme() {
-        sendEvent(ProfileUiEvent.ThemeEvent)    }
+        sendEvent(ProfileUiEvent.ThemeEvent)
+    }
 
     override fun onClickLogout() {
-        sendEvent(ProfileUiEvent.LogoutEvent)    }
+        sendEvent(ProfileUiEvent.LogoutEvent)
+    }
 }
