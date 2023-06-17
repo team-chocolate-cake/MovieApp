@@ -1,68 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.people_guessing.PeopleGuessingViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        >
 
-        <include
-            android:id="@+id/include_item_header_game"
-            layout="@layout/item_header_game"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            app:isVisible="@{!viewModel.state.error}">
 
-        <TextView
-            android:id="@+id/text_view_questions"
-            style="@style/TextStyle.TitleMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:textColor="@color/on_background_87"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{viewModel.state.question}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include_item_header_game"
-            tools:text="Which of the following names for this actor are correct?" />
+            <include
+                android:id="@+id/include_item_header_game"
+                layout="@layout/item_header_game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:isVisible="@{!viewModel.state.loading}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_view_people"
-            android:layout_width="match_parent"
-            android:layout_height="225dp"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.state.imageUrl}"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_questions"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            <TextView
+                android:id="@+id/text_view_questions"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="@{viewModel.state.question}"
+                android:textColor="@color/on_background_87"
+                app:isVisible="@{!viewModel.state.loading}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/include_item_header_game"
+                tools:text="Which of the following names for this actor are correct?" />
 
-        <include
-            android:id="@+id/include_item_card_choose_people"
-            layout="@layout/item_card_choose"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:layout_marginHorizontal="@dimen/spacing_medium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_view_people" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_view_people"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.state.imageUrl}"
+                app:isVisible="@{!viewModel.state.loading}"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_questions"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/include_item_card_choose_people"
+                layout="@layout/item_card_choose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_large"
+                app:isVisible="@{!viewModel.state.loading}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_people" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/primary"
+                app:isVisible="@{viewModel.state.loading}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </layout>

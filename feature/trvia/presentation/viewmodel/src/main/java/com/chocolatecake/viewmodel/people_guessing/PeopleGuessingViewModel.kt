@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.people_guessing
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.QuestionEntity
@@ -30,11 +29,13 @@ class PeopleGuessingViewModel @Inject constructor(
     private val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpPeopleUseCase: LevelUpPeopleUseCase,
 ) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState()), AnswerListener {
+
     init {
         getData()
     }
 
     private fun getData() {
+        _state.update { it.copy(isLoading = true) }
         tryToExecute(
             getCurrentUserUseCase::invoke,
             ::onSuccessUser,
@@ -54,24 +55,28 @@ class PeopleGuessingViewModel @Inject constructor(
                 answers = questionEntity.choices,
                 correctAnswerPosition = questionEntity.correctAnswerPosition,
                 imageUrl = questionEntity.imageUrl,
+                isError = false,
+                isLoading = false
             )
         }
         initTimer()
     }
 
     private fun onSuccessUser(user: UserEntity) {
-        Log.e("TAGTAG", "onSuccessUser: $user")
         _state.update {
             it.copy(
                 level = user.peopleGameLevel,
                 points = user.totalPoints,
                 questionCount = user.numPeopleQuestionsPassed + 1,
+                isError = false,
+                isLoading = false
             )
         }
     }
 
     private fun onError(throwable: Throwable) {
-        Log.e("TAGTAG", "onError: $throwable")
+        _state.update { it.copy(isError = true) }
+        sendEvent(GameUIEvent.ShowSnackbar(throwable.message.toString()))
     }
 
     private var timerJob: Job? = null
@@ -106,18 +111,13 @@ class PeopleGuessingViewModel @Inject constructor(
     }
 
     override fun onClickAnswer(position: Int) {
-        Log.d("TAGTAG", "onClickAnswer: $position")
         val heartCount = _state.value.heartCount
         val correctAnswer = _state.value.correctAnswerPosition
         if (correctAnswer != position) {
             if (heartCount - 1 == 0) {
                 onUserLose()
             } else {
-                _state.update {
-                    it.copy(
-                        heartCount = heartCount - 1
-                    )
-                }
+                _state.update { it.copy(heartCount = heartCount - 1) }
                 updateCurrentQuestion()
             }
             return

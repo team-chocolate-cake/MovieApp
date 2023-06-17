@@ -11,9 +11,9 @@ data class GameUiState(
     val answers: List<String> = emptyList(),
     val correctAnswerPosition: Int = 0,
     val imageUrl: String = "",
-    val userAnswer: Int? = null
-
-
+    val userAnswer: Int? = null,
+    val isLoading: Boolean = true,
+    val isError: Boolean = false
 ) {
     val totalQuestions: Int
         get() = when (level) {

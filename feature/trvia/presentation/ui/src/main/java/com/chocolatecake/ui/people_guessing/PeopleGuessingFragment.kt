@@ -52,6 +52,8 @@ class PeopleGuessingFragment :
             GameUIEvent.ShowTimeOut -> {
                 showSnackBar(getString(R.string.time_out))
             }
+
+            is GameUIEvent.ShowSnackbar -> showSnackBar(event.message)
         }
     }
 }
