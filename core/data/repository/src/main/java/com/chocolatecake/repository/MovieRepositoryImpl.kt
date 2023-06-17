@@ -4,6 +4,7 @@ import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
+import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.service.MovieService
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDao: MovieDao,
+    private val preferenceStorage: PreferenceStorage,
     private val localGenresMovieMapper: LocalGenresMovieMapper,
     private val localGenresTvMapper: LocalGenresTvMapper,
     private val localPopularMovieMapper: LocalPopularMovieMapper,
@@ -226,6 +228,27 @@ class MovieRepositoryImpl @Inject constructor(
 
         } catch (_: Throwable) {
         }
+    }
+    /// endregion
+
+
+    /// region refresh time
+    override suspend fun getLastRefreshTime(): Long? {
+        return preferenceStorage.lastRefreshTime
+    }
+
+    override suspend fun setLastRefreshTime(time: Long) {
+        preferenceStorage.setLastRefreshTime(time)
+    }
+
+    override suspend fun refreshAll() {
+        refreshGenres()
+        refreshPopularMovies()
+        refreshPopularPeople()
+        refreshNowPlayingMovies()
+        refreshTopRatedMovies()
+        refreshTrendingMovies()
+        refreshUpcomingMovies()
     }
     /// endregion
 }

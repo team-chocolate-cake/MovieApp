@@ -42,5 +42,8 @@ interface MovieRepository {
 
     suspend fun getGenresTvs(): List<GenreEntity>
     suspend fun refreshGenresTv()
+    suspend fun getLastRefreshTime(): Long?
+    suspend fun setLastRefreshTime(time: Long)
+    suspend fun refreshAll()
 
 }

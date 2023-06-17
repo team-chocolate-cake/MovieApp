@@ -23,7 +23,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPopularMovies(movies: List<PopularMovieLocalDto>)
 
-    @Query("select * from POPULAR_MOVIE_TABLE")
+    @Query("select * from POPULAR_MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getPopularMovies(): List<PopularMovieLocalDto>
 
     @Query("delete from POPULAR_MOVIE_TABLE")
@@ -32,7 +32,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNowPlayingMovies(movies: List<NowPlayingMovieLocalDto>)
 
-    @Query("select * from NOW_PLAYING_MOVIE_TABLE")
+    @Query("select * from NOW_PLAYING_MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getNowPlayingMovies(): List<NowPlayingMovieLocalDto>
 
     @Query("delete from NOW_PLAYING_MOVIE_TABLE")
@@ -41,7 +41,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTopRatedMovies(movies: List<TopRatedMovieLocalDto>)
 
-    @Query("select * from TOP_RATED_MOVIE_TABLE")
+    @Query("select * from TOP_RATED_MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getTopRatedMovies(): List<TopRatedMovieLocalDto>
 
     @Query("delete from TOP_RATED_MOVIE_TABLE")
@@ -51,13 +51,13 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUpcomingMovies(movies: List<UpcomingMovieLocalDto>)
 
-    @Query("select * from UPCOMING_MOVIE_TABLE")
+    @Query("select * from UPCOMING_MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getUpcomingMovies(): List<UpcomingMovieLocalDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecommendedMovies(movies: List<RecommendedMovieLocalDto>)
 
-    @Query("select * from RECOMMENDED_MOVIE_TABLE")
+    @Query("select * from RECOMMENDED_MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getRecommendedMovie(): List<RecommendedMovieLocalDto>
 
     @Query("delete from UPCOMING_MOVIE_TABLE")
@@ -66,7 +66,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrendingMovies(movies: List<TrendingMoviesLocalDto>)
 
-    @Query("select * from TRENDING_MOVIES_TABLE")
+    @Query("select * from TRENDING_MOVIES_TABLE ORDER BY RANDOM()")
     suspend fun getTrendingMovies(): List<TrendingMoviesLocalDto>
 
     @Query("delete from TRENDING_MOVIES_TABLE")
@@ -75,7 +75,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSearchMovies(movies: List<MovieLocalDto>)
 
-    @Query("select * from MOVIE_TABLE")
+    @Query("select * from MOVIE_TABLE ORDER BY RANDOM()")
     suspend fun getSearchMovie(): List<MovieLocalDto>
     /// endregion
 
@@ -84,7 +84,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPopularPeople(people: List<PopularPeopleLocalDto>)
 
-    @Query("select * from POPULAR_PEOPLE_TABLE")
+    @Query("select * from POPULAR_PEOPLE_TABLE ORDER BY RANDOM()")
     suspend fun getPopularPeople(): List<PopularPeopleLocalDto>
 
     @Query("delete from POPULAR_PEOPLE_TABLE")

@@ -3,6 +3,7 @@ package com.chocolatecake.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -16,13 +17,21 @@ class PreferenceStorageIml @Inject constructor(
 
     private object PreferencesKeys {
         val SESSION_ID = stringPreferencesKey("SESSION_ID")
+        val LAST_REFRESH = longPreferencesKey("LAST_REFRESH")
     }
 
     override val sessionId: String?
         get() = runBlocking { dataStore.data.map { it[PreferencesKeys.SESSION_ID] }.first() }
 
+    override val lastRefreshTime: Long?
+        get() = runBlocking { dataStore.data.map { it[PreferencesKeys.LAST_REFRESH] }.first() }
+
     override suspend fun setSessionId(sessionId: String) {
         dataStore.setValue(PreferencesKeys.SESSION_ID, sessionId)
+    }
+
+    override suspend fun setLastRefreshTime(lastRefreshTime: Long) {
+        dataStore.setValue(PreferencesKeys.LAST_REFRESH, lastRefreshTime)
     }
 
     override suspend fun clearPreferenceStorage() {
