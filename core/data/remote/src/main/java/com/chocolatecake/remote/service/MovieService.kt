@@ -10,9 +10,9 @@ import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
-import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
-import com.chocolatecake.remote.response.dto.TvRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
+import com.chocolatecake.remote.response.dto.TvRemoteDto
+import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.RatingDto
 import retrofit2.Response
@@ -81,10 +81,10 @@ interface MovieService {
     @GET("tv/popular")
     suspend fun getPopularTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
 
-    @GET("genre/tv/list")
-    suspend fun getListOfGenresForTvs(
-        @Query("page") page: Int = 1,
-    ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
+//    @GET("genre/tv/list")
+//    suspend fun getListOfGenresForTvs(
+//        @Query("page") page: Int = 1,
+//    ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
 
     /// endregion
 
