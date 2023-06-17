@@ -24,7 +24,9 @@ class PreferenceStorageIml @Inject constructor(
     override val sessionId: String?
         get() = runBlocking { dataStore.data.map { it[PreferencesKeys.SESSION_ID] }.first() }
     override val currentUserName: String?
-        get() = runBlocking { dataStore.data.map { it[PreferencesKeys.CURRENT_USERNAME_ID] }.first() }
+        get() = runBlocking {
+            dataStore.data.map { it[PreferencesKeys.CURRENT_USERNAME_ID] }.first()
+        }
 
     override val lastRefreshTime: Long?
         get() = runBlocking { dataStore.data.map { it[PreferencesKeys.LAST_REFRESH] }.first() }
@@ -35,6 +37,8 @@ class PreferenceStorageIml @Inject constructor(
 
     override suspend fun setCurrentUserName(currentUserName: String) {
         dataStore.setValue(PreferencesKeys.CURRENT_USERNAME_ID, currentUserName)
+    }
+
     override suspend fun setLastRefreshTime(lastRefreshTime: Long) {
         dataStore.setValue(PreferencesKeys.LAST_REFRESH, lastRefreshTime)
     }
