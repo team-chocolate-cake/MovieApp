@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
+import com.chocolatecake.ui.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleIsAuthorized(navController: NavController) {
         if (!preferenceStorage.sessionId.isNullOrBlank()) {
             navController
-                .navigate(R.id.action_loginFragment_to_home_nav_graph)
+                .navigate(LoginFragmentDirections.actionLoginFragmentToHomeNavGraph())
         }
     }
 

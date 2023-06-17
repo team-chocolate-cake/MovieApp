@@ -55,6 +55,7 @@ dependencies {
     implementation project(path: ':feature:home:presentation:home-ui')
     implementation project(path: ':feature:home:presentation:viewmodel')
     implementation project(path: ':feature:trvia:domain:usecase')
+    implementation project(path: ':feature:trvia:data:repository')
     implementation project(path: ':feature:trvia:presentation:ui')
     implementation project(path: ':feature:trvia:presentation:viewmodel')
 

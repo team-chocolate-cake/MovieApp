@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation project(path: ':core:domain:usecase')
+    api project(path: ':feature:trvia:domain:entities')
 
 
     implementation "androidx.core:core-ktx:$androidXVersion"

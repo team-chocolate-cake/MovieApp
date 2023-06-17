@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="String" />
+    </data>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Today"
+        android:text="@{item}"
+        style="@style/TextStyle.BodySmall"
+        android:layout_marginHorizontal="@dimen/spacing_x_medium"
+        android:layout_marginTop="@dimen/spacing_medium" />
+</layout>

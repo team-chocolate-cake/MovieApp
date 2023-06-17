@@ -6,9 +6,11 @@ import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
+import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTVRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.TvRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -84,13 +86,28 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun getSearchMovies(
+     suspend fun searchForMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
         @Query("region") region: String? = null,
         @Query("page") page: Int = 1,
     ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @GET("search/tv")
+    suspend fun searchForTv(
+        @Query("query") query: String,
+        @Query("year") year: Int? = null,
+        @Query("first_air_date_year") firstAirDateYear: String? = null,
+        @Query("region") region: String? = null,
+        @Query("page") page: Int = 1,
+    ): Response<DataWrapperResponse<TvRemoteDto>>
+
+    @GET("search/person")
+    suspend fun searchForPeople(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+    ): Response<DataWrapperResponse<PeopleRemoteDto>>
 
     /// endregion
 
@@ -104,5 +121,10 @@ interface MovieService {
     suspend fun getListOfGenresForMovies(
         @Query("language") language: String = "en"
     ): Response<GenresWrapperResponse<GenreMovieRemoteDto>>
+
+    @GET("genre/tv/list")
+    suspend fun getListOfGenresForTvs(
+        @Query("language") language: String = "en"
+    ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
     ///endregion
 }

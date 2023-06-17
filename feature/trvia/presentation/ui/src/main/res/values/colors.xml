@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="card_memorize">#E4D3FF</color>
+    <color name="error">#99FF0000</color>
+    <color name="correct">#32CD32</color>
+
+    <array name="error_array_colors">
+        <item>#F0A9A9</item>
+        <item>#FA7878</item>
+        <item>#FA7878</item>
+        <item>#FF0000</item>
+    </array>
+
+    <array name="correct_array_colors">
+        <item>#88E688</item>
+        <item>#31B831</item>
+        <item>#317C31</item>
+        <item>#00FF00</item>
+    </array>
+</resources>

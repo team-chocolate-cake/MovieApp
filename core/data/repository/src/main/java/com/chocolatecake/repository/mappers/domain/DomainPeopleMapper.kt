@@ -10,7 +10,8 @@ class DomainPeopleMapper @Inject constructor() : Mapper<PopularPeopleLocalDto, P
         return PeopleEntity(
             id =  input.id,
             name = input.name,
-            imageUrl = input.imagerUrl
+            imageUrl = input.imagerUrl,
+            popularity = input.popularity
         )
     }
 }
