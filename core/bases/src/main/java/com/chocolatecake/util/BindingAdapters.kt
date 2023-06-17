@@ -31,11 +31,19 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    Glide.with(context)
+    if (imageUrl=="https://image.tmdb.org/t/p/w500null"){
+        Glide.with(context)
+            .load("https://www.google.com/search?client=firefox-b-d&q=imge+no+profile#imgrc=H6pHpB03ZEAgeM")
+            .fitCenter()
+            .centerCrop()
+            .into(this)
+    }
+    else Glide.with(context)
         .load(imageUrl)
         .fitCenter()
         .centerCrop()
         .into(this)
+
 }
 
 @BindingAdapter(value = ["app:hideResult", "app:query"])
