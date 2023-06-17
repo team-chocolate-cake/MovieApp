@@ -10,9 +10,9 @@ import com.chocolatecake.ui.trivia.R
 import com.github.guilhe.views.CircularProgressView
 
 @BindingAdapter(value = ["app:timerColor", "app:maxTime"])
-fun TextView.setTimerColor(time: Int?, max: Int?) {
-    if (time != null && max != null) {
-        val colorRes = if (time < max / 2) {
+fun TextView.setTimerColor(time: Int?, maxTime: Int?) {
+    if (time != null && maxTime != null) {
+        val colorRes = if (time < maxTime / 2) {
             R.color.error
         } else {
             R.color.correct
