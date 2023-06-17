@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:onClick="@{()-> viewModel.getAiringTodayTVShows()}"
+                    android:onClick="@{()-> viewModel.showAiringTodayTVShowsResult()}"
                     android:text="@string/airing_today" />
 
                 <com.google.android.material.chip.Chip
@@ -62,7 +62,7 @@
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getOnTheAirTVShows()}"
+                    android:onClick="@{()-> viewModel.showOnTheAiringTVShowsResult()}"
                     android:text="@string/on_the_air" />
 
                 <com.google.android.material.chip.Chip
@@ -70,7 +70,7 @@
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getTopRatedTVShows()}"
+                    android:onClick="@{()-> viewModel.showTopRatedTVShowsResult()}"
                     android:text="@string/top_rated" />
 
                 <com.google.android.material.chip.Chip
@@ -78,7 +78,7 @@
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getPopularTVShows()}"
+                    android:onClick="@{()-> viewModel.showPopularTVShowsResult()}"
                     android:text="@string/popular" />
 
             </com.google.android.material.chip.ChipGroup>

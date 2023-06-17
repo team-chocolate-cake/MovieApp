@@ -107,22 +107,18 @@ class TvFragment :
     }
 
     private fun showOnTheAirResult() {
-        //   viewModel.getOnTheAirTVShows()
-        //   Log.d("chips-----Fragment", "OnTheAirTVShows")
+          viewModel.getOnTheAirTVShows()
     }
 
     private fun showAiringTodayResult() {
-        //    viewModel.getAiringTodayTVShows()
-        //    Log.d("chips-----Fragment", "AiringToday")
+           viewModel.getAiringTodayTVShows()
     }
 
     private fun showTopRatedResult() {
-        //  viewModel.getTopRatedTVShows()
-        //     Log.d("chips-----Fragment", "TopRated")
+          viewModel.getTopRatedTVShows()
     }
 
     private fun showPopularResult() {
-        //    viewModel.getPopularTVShows()
-        //    Log.d("chips-----Fragment", "Popular")
+           viewModel.getPopularTVShows()
     }
 }
