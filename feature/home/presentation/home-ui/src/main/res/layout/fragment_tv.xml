@@ -14,24 +14,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/image_button_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@null"
+            android:onClick="@{() -> viewModel.onClickFilter()}"
+            android:src="@drawable/ic_filter"
+            app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/horizontalScrollView"
+            app:tint="@color/on_background_60" />
+
+
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:clipToPadding="false"
             android:paddingStart="@dimen/spacing_medium"
             android:paddingEnd="@dimen/spacing_small"
             android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/image_button_filter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
                 android:layout_width="wrap_content"
-                app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 android:layout_height="wrap_content"
+                app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip

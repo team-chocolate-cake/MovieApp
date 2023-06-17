@@ -6,6 +6,7 @@ import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
+import com.chocolatecake.remote.response.dto.GenreTVRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
@@ -73,6 +74,12 @@ interface MovieService {
 
     @GET("tv/popular")
     suspend fun getPopularTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("genre/tv/list")
+    suspend fun getListOfGenresForTvs(
+        @Query("page") page: Int = 1,
+    ): Response<GenresWrapperResponse<GenreTVRemoteDto>>
+
     /// endregion
 
     /// region search

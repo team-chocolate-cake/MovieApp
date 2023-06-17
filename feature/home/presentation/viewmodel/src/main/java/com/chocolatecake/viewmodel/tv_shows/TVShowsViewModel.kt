@@ -23,14 +23,14 @@ class TVShowsViewModel @Inject constructor(
     val getPopularTVShowsUseCase: GetPopularTVShowsUseCase,
     val getGetTopRatedTVShowsUseCase: GetTopRatedTVShowsUseCase,
     private val tvShowsMapper: TVShowsMapper
-) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener {
+) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener{
 
 
     init {
         getData()
     }
 
-    private fun getData() {
+    fun getData() {
         when (_state.value.tvShowsType) {
             TVShowsType.ON_THE_AIR -> getOnTheAirTVShows()
             TVShowsType.AIRING_TODAY -> getAiringTodayTVShows()
@@ -129,5 +129,26 @@ class TVShowsViewModel @Inject constructor(
     override fun showPopularTVShowsResult() {
         sendEvent(TVShowsInteraction.ShowPopularTVShowsResult)
     }
+
+    override fun onClickGenre(genresId: Int) {
+
+    }
+
+    override fun onClickFilter() {
+        _state.update { it.copy(isLoading = true) }
+        viewModelScope.launch {
+            getAllGenresTv()
+            _event.emit(TVShowsInteraction.OpenFilterBottomSheet)
+        }
+    }
+
+    private suspend fun getAllGenresTv() {
+        tryToExecute(
+            call = { getAllGenresTvsUseCase() },
+            onSuccess = ::onSuccessGenres,
+            onError = ::onError
+        )
+    }
+
     /// endregion
 }

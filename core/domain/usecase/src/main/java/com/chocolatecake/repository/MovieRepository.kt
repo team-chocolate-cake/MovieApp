@@ -36,7 +36,6 @@ interface MovieRepository {
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
-
     suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity>
     suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity>
     suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity>

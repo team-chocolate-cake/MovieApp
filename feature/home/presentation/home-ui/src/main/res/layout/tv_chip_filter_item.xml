@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.tv_shows.GenresTVShowsUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.tv_shows.TVShowsListener" />
+    </data>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chipMovie"
+        style="@style/TextStyle.LabelMedium.ChipStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="@{item.selected}"
+        android:onClick="@{() -> listener.onClickGenre(item.genreId)}"
+        android:padding="@dimen/spacing_small"
+        android:text="@{item.genresName}" />
+
+</layout>

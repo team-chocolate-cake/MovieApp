@@ -8,4 +8,6 @@ interface TVShowsListener : BaseInteractionListener {
     fun showAiringTodayTVShowsResult()
     fun showTopRatedTVShowsResult()
     fun showPopularTVShowsResult()
+    fun onClickGenre(genresId: Int)
+    fun onClickFilter()
 }
