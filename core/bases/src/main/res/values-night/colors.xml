@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="secondary_text_87">#dedadada</color>
-    <color name="primary">#845ec2</color>
-    <color name="secondary">#fbeaff</color>
-    <color name="on_primary">#deffffff</color>
-    <color name="background">#1A1A1A</color>
-    <color name="on_background_87">#def6f6f6</color>
-    <color name="on_background_60">#99f6f6f6</color>
-    <color name="on_background_38">#61f6f6f6</color>
     <color name="secondary_text_60">#99dadada</color>
-    <color name="card">#403E42</color>
-    <color name="border">#149c99a1</color>
+    <color name="primary">#845EC2</color>
+    <color name="secondary">#262626</color>
+    <color name="on_secondary">#E4D3FF</color>
+    <color name="on_primary">#ffffff</color>
+    <color name="background">#1F1F1F</color>
+    <color name="on_background_87">#DEF6F6F6</color>
+    <color name="on_background_60">#99F6F6F6</color>
+    <color name="on_background_38">#61F6F6F6</color>
+    <color name="card">#403e42</color>
+    <color name="border">#149C99A1</color>
     <color name="login_form_background">#1d1b1e</color>
     <color name="edittext_background">#403E42</color>
     <color name="login_button_background">#845EC2</color>
     <color name="bottom_navigation_indicator">@color/primary</color>
     <color name="bottom_navigation_background">#262626</color>
+    <color name="chip_unselected_background">#403e42</color>
+    <color name="rating_color">#fff</color>
+    <color name="ic_launcher_background">#000</color>
     <color name="star">#DEF8C33C</color>
 
     <color name="gradient1">#1F1F1F</color>
