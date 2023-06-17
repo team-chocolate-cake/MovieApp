@@ -5,6 +5,6 @@ data class MovieHorizontalUIState(
     val imageUrl: String,
     val title: String,
     val genres: String,
-    val year: Int,
+    val year: String,
     val rate: Double
 )

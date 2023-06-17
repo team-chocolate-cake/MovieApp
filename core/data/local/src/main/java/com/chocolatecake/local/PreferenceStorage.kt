@@ -7,6 +7,10 @@ interface PreferenceStorage {
 
     suspend fun setSessionId(sessionId: String)
     suspend fun setCurrentUserName(currentUserName: String)
+    val lastRefreshTime: Long?
+
+    suspend fun setSessionId(sessionId: String)
+    suspend fun setLastRefreshTime(lastRefreshTime: Long)
 
     suspend fun clearPreferenceStorage()
 }
