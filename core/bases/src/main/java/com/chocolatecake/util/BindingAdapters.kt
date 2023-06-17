@@ -33,7 +33,7 @@ fun EditText.setTipError(errorMessage: String?) {
 fun ImageView.loadImage(imageUrl: String?) {
     if (imageUrl=="https://image.tmdb.org/t/p/w500null"){
         Glide.with(context)
-            .load("https://www.google.com/search?client=firefox-b-d&q=imge+no+profile#imgrc=H6pHpB03ZEAgeM")
+            .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
             .fitCenter()
             .centerCrop()
             .into(this)
