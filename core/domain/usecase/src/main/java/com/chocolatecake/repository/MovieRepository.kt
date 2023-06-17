@@ -5,6 +5,8 @@ import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.entities.ProfileEntity
+import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
+import com.chocolatecake.entities.movieDetails.RatingEntity
 
 
 interface MovieRepository {
@@ -40,6 +42,9 @@ interface MovieRepository {
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
+
+    suspend fun getMoviesDetails(movieId:Int): MovieDetailsEntity
+    suspend fun setMovieRate(movieId:Int , rate:Float): RatingEntity
 
     suspend fun getGenresTvs(): List<GenreEntity>
     suspend fun refreshGenresTv()

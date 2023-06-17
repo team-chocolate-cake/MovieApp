@@ -3,6 +3,7 @@ package com.chocolatecake.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.adapter.HomeAdapter
 import com.chocolatecake.ui.home.databinding.FragmentHomeBinding
@@ -57,31 +58,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.PopularMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.PopularPeopleEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.TopRatedMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.TrendingMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
 
             is HomeUiEvent.UpComingMovieEvent -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment2(event.itemId))
             }
         }
     }

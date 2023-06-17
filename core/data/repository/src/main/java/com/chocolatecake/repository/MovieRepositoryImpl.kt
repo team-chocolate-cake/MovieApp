@@ -1,13 +1,17 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
+import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
+import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
@@ -19,8 +23,10 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
+import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
@@ -49,6 +55,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTrendingMovieMapper: DomainTrendingMoviesMapper,
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
+    private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
+    private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
 ) : BaseRepository(), MovieRepository {
@@ -254,4 +262,12 @@ class MovieRepositoryImpl @Inject constructor(
         refreshUpcomingMovies()
     }
     /// endregion
+
+    override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+    }
+
+    override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
+        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+    }
 }

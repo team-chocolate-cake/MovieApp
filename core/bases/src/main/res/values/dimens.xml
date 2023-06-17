@@ -66,4 +66,6 @@
     <dimen name="width_image_media_vertical">140dp</dimen>
     <dimen name="width_image_people">80dp</dimen>
     <dimen name="height_image_people">80dp</dimen>
+    <dimen name="width_image_review">35dp</dimen>
+    <dimen name="height_image_review">35dp</dimen>
 </resources>

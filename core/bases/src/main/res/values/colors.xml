@@ -23,4 +23,9 @@
     <color name="red">#FF0000</color>
     <color name="orangeRed">#FF3D00</color>
 
+    <color name="gradient1">#B3FFFFFF</color>
+    <color name="gradient2">#00FFFFFF</color>
+    <color name="gradient3">#00FFFFFF</color>
+    <color name="gradient4">#F5F5F5</color>
+
 </resources>
