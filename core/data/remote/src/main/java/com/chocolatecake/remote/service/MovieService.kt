@@ -1,6 +1,7 @@
 package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.LoginRequest
+import com.chocolatecake.remote.request.RateRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
@@ -11,6 +12,7 @@ import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -87,15 +89,29 @@ interface MovieService {
     ///endregion
 
     /// region tv
-    @GET("/3/tv/{tv_id}")
+    @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") tvShowId: Int
     ): Response<TvDetailsRemoteDto>
 
-    @GET("/3/tv/{tv_id}/aggregate_credits")
+    @GET("tv/{tv_id}/aggregate_credits")
     suspend fun getTvDetailsCredit(
         @Path("tv_id") tvShowId: Int
     ): Response<TvDetailsCreditRemoteDto>
 
+    @POST("tv/{tv_id}/rating?")
+    suspend fun rateTvShow(
+        @Body rateRequest: RateRequest, @Path("tv_id") tvShowId: Int,
+    ):Response<TvRatingRemoteDto>
+
+    @GET("tv/{tv_id}/reviews")
+    suspend fun getTvShowReviews(
+        @Path("tv_id") tvShowId: Int
+    ):Response<GenresWrapperResponse<TvReviewRemoteDto>>
+
+    @GET("tv/{tv_id}/recommendations")
+    suspend fun getTvShowRecomendations(
+        @Path("tv_id") tvShowId: Int
+    )
     /// endregion
 }
