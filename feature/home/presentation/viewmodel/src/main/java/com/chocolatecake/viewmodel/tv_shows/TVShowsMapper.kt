@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.profile.tv_shows
+package com.chocolatecake.viewmodel.tv_shows
 
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.mapper.Mapper
@@ -10,7 +10,8 @@ class TVShowsMapper @Inject constructor() :
     override fun map(input: TVShowsEntity?): TVShowsUI {
         return TVShowsUI(
             id = input?.id,
-            imageUrl = input?.imageUrl
+            imageUrl = input?.imageUrl,
+            rate = input?.rate
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.profile.tv_shows
+package com.chocolatecake.viewmodel.tv_shows
 
 sealed interface TVShowsInteraction {
     data class NavigateToTVShowDetails(val itemId: Int) : TVShowsInteraction

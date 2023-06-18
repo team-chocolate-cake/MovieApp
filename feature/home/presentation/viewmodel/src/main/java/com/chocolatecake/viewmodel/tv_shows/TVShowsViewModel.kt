@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.profile.tv_shows
+package com.chocolatecake.viewmodel.tv_shows
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
@@ -28,12 +28,12 @@ class TVShowsViewModel @Inject constructor(
     private val tvShowsMapper: TVShowsMapper
 ) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener {
 
-
     init {
         getData()
     }
 
-    fun getData() {
+    ///region get data
+    private fun getData() {
         when (_state.value.tvShowsType) {
             TVShowsType.ON_THE_AIR -> getOnTheAirTVShows()
             TVShowsType.AIRING_TODAY -> getAiringTodayTVShows()
@@ -55,7 +55,6 @@ class TVShowsViewModel @Inject constructor(
                     error = emptyList()
                 )
             }
-            Log.d("chips-----ViewModel", "AiringToday---- ${items.collect()} ")
         }
     }
 
@@ -72,7 +71,6 @@ class TVShowsViewModel @Inject constructor(
                     error = emptyList()
                 )
             }
-            Log.d("chips-----ViewModel", "OnTheAir---- $items ")
         }
     }
 
@@ -89,7 +87,6 @@ class TVShowsViewModel @Inject constructor(
                     error = emptyList()
                 )
             }
-            Log.d("chips-----ViewModel", "Popular---- $items ")
         }
     }
 
@@ -106,11 +103,9 @@ class TVShowsViewModel @Inject constructor(
                     error = emptyList()
                 )
             }
-            Log.d("chips-----ViewModel", "TopRated---- $items ")
         }
     }
-
-
+    /// endregion
 
     ///region event
     override fun onClickTVShows(itemId: Int) {

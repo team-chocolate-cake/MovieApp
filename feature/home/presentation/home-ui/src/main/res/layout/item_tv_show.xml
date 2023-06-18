@@ -6,11 +6,11 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.profile.tv_shows.TVShowsUI" />
+            type="com.chocolatecake.viewmodel.tv_shows.TVShowsUI" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.profile.tv_shows.TVShowsListener" />
+            type="com.chocolatecake.viewmodel.tv_shows.TVShowsListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +32,23 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_rates_number"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_tiny_4dp"
+            android:gravity="center"
+            android:text="@{String.valueOf(item.rate)}"
+            android:textColor="#f6f6f6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="9.6" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.profile.tv_shows
+package com.chocolatecake.viewmodel.tv_shows
 
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +17,7 @@ data class TVShowUIState(
 data class TVShowsUI(
     val id: Int?,
     val imageUrl: String?,
+    val rate: Double?
 )
 
 enum class TVShowsType {

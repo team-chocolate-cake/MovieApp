@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.profile.tv_shows
+package com.chocolatecake.viewmodel.tv_shows
 
 import com.chocolatecake.bases.BaseInteractionListener
 
