@@ -94,11 +94,13 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_movie"
             android:layout_width="@dimen/custom_width_image"
-            android:layout_height="@dimen/custom_height_image"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
     </androidx.constraintlayout.widget.ConstraintLayout>
