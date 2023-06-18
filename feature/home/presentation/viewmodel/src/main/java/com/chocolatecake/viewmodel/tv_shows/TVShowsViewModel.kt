@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.tv_shows
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
@@ -49,7 +48,7 @@ class TVShowsViewModel @Inject constructor(
                         tvShowsType = TVShowsType.AIRING_TODAY,
                         tvShowAiringToday = items,
                         isLoading = false,
-                        error = emptyList()
+                        errorList = emptyList()
                     )
                 }
             }
@@ -62,7 +61,7 @@ class TVShowsViewModel @Inject constructor(
     private fun onError(throwable: Throwable) {
         _state.update {
             it.copy(
-                error = listOf(throwable.message.toString()),
+                errorList = listOf(throwable.message.toString()),
                 isLoading = false
             )
         }
@@ -77,7 +76,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.ON_THE_AIR,
                     tvShowOnTheAir = items,
                     isLoading = false,
-                    error = emptyList()
+                    errorList = emptyList()
                 )
             }
         }
@@ -93,7 +92,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.POPULAR,
                     tvShowPopular = items,
                     isLoading = false,
-                    error = emptyList()
+                    errorList = emptyList()
                 )
             }
         }
@@ -109,7 +108,7 @@ class TVShowsViewModel @Inject constructor(
                     tvShowsType = TVShowsType.TOP_RATED,
                     tvShowTopRated = items,
                     isLoading = false,
-                    error = emptyList()
+                    errorList = emptyList()
                 )
             }
         }

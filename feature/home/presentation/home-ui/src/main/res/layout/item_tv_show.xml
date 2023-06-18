@@ -20,7 +20,8 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeable_ImageView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/custom_height_card"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:4"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:foregroundGravity="center"
@@ -35,9 +36,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/custom_height_card"
+            android:layout_height="0dp"
             android:background="@drawable/shadow_layer"
             android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="3:4"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:layout_marginEnd="@dimen/spacing_small_8dp"
             app:layout_constraintBottom_toBottomOf="parent"
