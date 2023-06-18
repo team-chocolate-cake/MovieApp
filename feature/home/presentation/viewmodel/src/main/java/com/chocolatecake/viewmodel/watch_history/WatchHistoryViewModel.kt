@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.watch_history
 
+import android.graphics.Movie
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.MovieInWatchHistoryEntity
@@ -31,15 +32,64 @@ class WatchHistoryViewModel @Inject constructor(
     private val deleteMovieFromWatchHistoryUseCase: DeleteMovieFromWatchHistoryUseCase,
     private val searchWatchHistoryUseCase: SearchWatchHistoryUseCase,
     private val movieDomainMapper: MovieDomainMapper,
+    private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val movieUiStateMapper: MovieUiStateMapper
-)
-    : BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(WatchHistoryUiState()),MediaListener
-
-{
-
+) : BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(WatchHistoryUiState()), MediaListener {
     init {
         getAllMovies()
         initSearchCallBacks()
+//        testing()
+    }
+
+    private fun testing() {
+        viewModelScope.launch {
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 1,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "ronaldo",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 2,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "messi",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 3,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "ake",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            for (i in 5..20) {
+                insertMovieToWatchHistoryUseCase(
+                    MovieInWatchHistoryEntity(
+                        id = i,
+                        posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                        dateWatched = Date(),
+                        title = "ronaldo",
+                        description = "batata for sale ",
+                        voteAverage = 9.3,
+                        year = 2012
+                    )
+                )
+            }
+        }
     }
 
     private fun getAllMovies() {
@@ -143,5 +193,33 @@ class WatchHistoryViewModel @Inject constructor(
         )
     }
 
+    fun deleteItemFromDataBase() {
+        viewModelScope.launch {
+            state.value.tempMovie?.let {
+                deleteMovieFromWatchHistoryUseCase(movieDomainMapper.map(it))
+            }
+        }
+    }
+    fun deleteItemFromUi(position: Int) {
+        val newList = _state.value.movies.toMutableList()
+        val  tempMovie = newList[position]
+        newList.removeAt(position)
+        _state.update {
+            it.copy(
+                movies = newList,
+                tempMovie = tempMovie
+            )
+        }
+    }
+
+    fun addItemToUI(position: Int) {
+        val newList = _state.value.movies.toMutableList()
+       state.value.tempMovie?.let { newList.add(position, it) }
+        _state.update {
+            it.copy(
+                movies = newList
+            )
+        }
+    }
 
 }

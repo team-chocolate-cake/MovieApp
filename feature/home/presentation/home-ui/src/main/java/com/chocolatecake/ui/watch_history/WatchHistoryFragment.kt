@@ -2,19 +2,21 @@ package com.chocolatecake.ui.watch_history
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentWatchHistoryBinding
 import com.chocolatecake.viewmodel.watch_history.WatchHistoryViewModel
-import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
 import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiEvent
 import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiState
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import java.util.Date
-import kotlin.math.abs
 
 @AndroidEntryPoint
 class WatchHistoryFragment
@@ -29,6 +31,7 @@ class WatchHistoryFragment
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         collectMovies()
+        swipeToGestureAttachment(binding.watchHistoryRecyclerView)
     }
 
     private fun collectMovies() {
@@ -49,5 +52,90 @@ class WatchHistoryFragment
     override fun onEvent(event: WatchHistoryUiEvent) {
 
     }
+
+    private fun swipeToGestureAttachment(itemRv: RecyclerView?) {
+        val swipeGesture = swipeGestureAnonymousObject()
+        val touchHelper = ItemTouchHelper(swipeGesture)
+        touchHelper.attachToRecyclerView(itemRv)
+    }
+
+    private fun swipeGestureAnonymousObject() = object : SwipeGesture(requireContext()) {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            try {
+                handleSwipeAction(direction, viewHolder.absoluteAdapterPosition)
+            } catch (e: Exception) {
+                createToast(e.message.toString())
+            }
+        }
+    }
+
+    private fun handleSwipeAction(direction: Int, position: Int) {
+        when (direction) {
+            ItemTouchHelper.LEFT -> {
+                deleteItemFromUi(position)
+                setupDeleteSnackBar(position)
+            }
+        }
+    }
+
+
+    private var isUndo = false
+    private fun setupDeleteSnackBar(position: Int) {
+        val snackBar = Snackbar.make(
+            binding.root,
+            "Item Deleted",
+            Snackbar.LENGTH_LONG
+        )
+        snackBar.addCallback(getCallback(position))
+        snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
+        snackBar.setActionTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                com.chocolatecake.bases.R.color.orangeRed
+            )
+        )
+        snackBar.show()
+    }
+
+    private fun getCallback(
+        position: Int
+    ) = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+        override fun onDismissed(
+            transientBottomBar: Snackbar?,
+            event: Int
+        ) {
+            if (!isUndo) {
+                deleteItemFromDataBase()
+                createToast("item deleted")
+            }
+            super.onDismissed(transientBottomBar, event)
+        }
+
+        override fun onShown(transientBottomBar: Snackbar?) {
+            isUndo = false
+            transientBottomBar?.setAction("UNDO") {
+                isUndo = true
+                addItemToUI(position)
+            }
+            super.onShown(transientBottomBar)
+        }
+    }
+
+    private fun deleteItemFromDataBase() {
+        viewModel.deleteItemFromDataBase()
+    }
+
+    private fun deleteItemFromUi(position: Int) {
+        viewModel.deleteItemFromUi(position - 1)
+    }
+
+    private fun addItemToUI(position: Int) {
+        viewModel.addItemToUI(position - 1)
+    }
+
+    private fun createToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
 
 }
