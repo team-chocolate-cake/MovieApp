@@ -125,7 +125,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
     private fun toastMessage(message: String, id: Int) {
         Toast.makeText(
             binding.root.context,
-            "$message To People: $id",
+            "$message $id",
             Toast.LENGTH_SHORT
         )
             .show()

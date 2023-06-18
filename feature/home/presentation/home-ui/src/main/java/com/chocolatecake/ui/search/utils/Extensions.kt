@@ -9,7 +9,6 @@ import com.chocolatecake.ui.home.databinding.TvChipFilterItemBinding
 import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.chocolatecake.viewmodel.tv_shows.GenresTVShowsUiState
-import com.chocolatecake.viewmodel.tv_shows.TVShowUIState
 import com.chocolatecake.viewmodel.tv_shows.TVShowsListener
 import com.google.android.material.chip.ChipGroup
 

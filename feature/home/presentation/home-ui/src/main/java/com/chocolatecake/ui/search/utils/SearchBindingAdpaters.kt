@@ -52,9 +52,9 @@ fun ChipGroup.setSelectedMedia(media: SearchUiState.SearchMedia) {
     }
 }
 
-@BindingAdapter(value = ["app:hideImageButton"])
-fun ImageButton.setHideImageButton(hide: Boolean?) {
-    this.visibility = if (hide == true) View.GONE else View.VISIBLE
+@BindingAdapter(value = ["app:hideImageButton","app:query"])
+fun ImageButton.setHideImageButton(hide: Boolean?, query: String?) {
+    this.visibility = if (hide == true || query.isNullOrEmpty()) View.GONE else View.VISIBLE
 }
 
 @BindingAdapter(value = ["app:searchLayoutManager"])
