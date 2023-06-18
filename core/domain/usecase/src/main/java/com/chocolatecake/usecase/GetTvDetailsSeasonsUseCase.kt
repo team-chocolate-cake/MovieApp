@@ -5,10 +5,10 @@ import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
-class GetTVDetailsInfoUseCase @Inject constructor(
+class GetTvDetailsSeasonsUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
-    suspend operator fun invoke(): TvDetailsInfoEntity{
-        return movieRepository.getTvDetailsInfo()
+    suspend operator fun invoke(): List<SeasonEntity> {
+        return movieRepository.getTvDetailsSeasons()
     }
 }

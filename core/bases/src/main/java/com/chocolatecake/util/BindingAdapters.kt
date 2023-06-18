@@ -96,7 +96,7 @@ fun ChipGroup.setChips(chips: List<String>) {
         val chip = inflater.inflate(R.layout.tv_details_item_chip, this, false) as Chip
         chip.apply {
             text = chipText
-            isCheckable = false
+            isEnabled = false
         }
         addView(chip)
     }

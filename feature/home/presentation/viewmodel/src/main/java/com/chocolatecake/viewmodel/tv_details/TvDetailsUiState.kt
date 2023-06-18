@@ -1,30 +1,27 @@
 package com.chocolatecake.viewmodel.tv_details
 
+import com.chocolatecake.viewmodel.common.model.CommentUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
+import com.chocolatecake.viewmodel.home.RecommendedUiState
 
 data class TvDetailsUiState(
-    val backdropImageUrl: String = "",
-    val name: String = "",
-    val rating: Float = 0.0f,
-    val description: String = "",
-    val youtubeKeyId: String = "",
+    val info: Info = Info(),
     val cast: List<PeopleUIState> = emptyList(),
-    val recommended: List<RecommendedTvUiState> = emptyList(),
-    val seasons: List<Season> = emptyList(),
-    val genres: List<String> = emptyList(),
+    val recommended: List<RecommendedUiState> = emptyList(),
+    val seasons: List<SeasonHorizontalUIState> = emptyList(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = true,
+    val reviews:List<CommentUIState> = emptyList(),
     val ratingSuccess: String = ""
 ) {
-    data class RecommendedTvUiState(
-        val id: Int,
-        val imageUrl: String,
-        val rate: Double
+    data class Info(
+        val backdropImageUrl: String = "",
+        val name: String = "",
+        val rating: Float = 0.0f,
+        val description: String = "",
+        val genres: List<String> = emptyList(),
+        val youtubeKeyId: String = "",
     )
 
-    data class Season(
-        val number: Int,
-        val episodeCount: Int,
-        val airDate: String
-    )
 }

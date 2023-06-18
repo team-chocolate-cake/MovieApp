@@ -15,17 +15,7 @@ class DomainTvDetailsMapper @Inject constructor() :
             name = input.name ?: "",
             rating = input.voteAverage?.toFloat()?.times(0.5f) ?: 0.0f,
             description = input.overview ?: "",
-            seasons = input.seasons?.map(::mapSeasonToEntity) ?: emptyList(),
             genres = mapGenereToEntity(input.genres)
-        )
-    }
-
-    private fun mapSeasonToEntity(seasonRemoteDto: TvDetailsRemoteDto.Season?)
-            : TvDetailsInfoEntity.Season {
-        return TvDetailsInfoEntity.Season(
-            number = seasonRemoteDto?.seasonNumber ?: 0,
-            episodeCount = seasonRemoteDto?.episodeCount ?: 0,
-            airDate = seasonRemoteDto?.airDate ?: ""
         )
     }
 
