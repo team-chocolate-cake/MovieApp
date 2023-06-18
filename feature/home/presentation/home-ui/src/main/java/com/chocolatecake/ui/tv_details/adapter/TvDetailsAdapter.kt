@@ -9,6 +9,7 @@ import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.ItemSeasonHorizontalBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemPeopleRvBinding
+import com.chocolatecake.ui.home.databinding.TvDetailsItemRecommendedRvBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemUpperBinding
 import com.chocolatecake.ui.tv_details.TvDetailsItem
 import com.chocolatecake.viewmodel.tv_details.TvDetailsListeners
@@ -36,6 +37,13 @@ class TvDetailsAdapter(
                 )
             )
 
+            TvDetailsType.RECOMMENDED.ordinal -> RecommendedViewHolder(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.tv_details_item_recommended_rv, parent, false
+                )
+            )
+
             TvDetailsType.Seasons.ordinal -> SeasonViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -52,9 +60,11 @@ class TvDetailsAdapter(
         when (holder) {
             is UpperViewHolder -> bindUpper(holder, position)
             is PeopleViewHolder -> bindPeople(holder, position)
+            is RecommendedViewHolder -> bindRecommended(holder, position)
             is SeasonViewHolder -> bindSeason(holder, position)
         }
     }
+
 
     fun setItem(item: TvDetailsItem) {
         val newItems = tvDetailsItems.apply {
@@ -70,25 +80,32 @@ class TvDetailsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int = tvDetailsItems[position].type.ordinal
-    private fun bindPeople(holder: PeopleViewHolder, position: Int) {
-        val people = tvDetailsItems[position] as TvDetailsItem.People
-        val adapter = PeopleAdapter(people.people, listener)
-        holder.binding.recyclerViewPeople.adapter = adapter
-        Log.i("people","people are $people")
-        holder.binding.item = people
-    }
-
-    private fun bindSeason(holder: SeasonViewHolder, position: Int) {
-        val season = tvDetailsItems[position] as TvDetailsItem.Season
-        Log.i("people","seasons are $season")
-        holder.binding.item = season.season
-        holder.binding.listener = listener
-    }
 
     private fun bindUpper(holder: UpperViewHolder, position: Int) {
         val upper = tvDetailsItems[position] as TvDetailsItem.Upper
         holder.binding.item = upper
     }
+
+    private fun bindPeople(holder: PeopleViewHolder, position: Int) {
+        val people = tvDetailsItems[position] as TvDetailsItem.People
+        val adapter = PeopleAdapter(people.people, listener)
+        holder.binding.recyclerViewPeople.adapter = adapter
+        holder.binding.item = people
+    }
+
+    private fun bindSeason(holder: SeasonViewHolder, position: Int) {
+        val season = tvDetailsItems[position] as TvDetailsItem.Season
+        holder.binding.item = season.season
+        holder.binding.listener = listener
+    }
+
+    private fun bindRecommended(holder: RecommendedViewHolder, position: Int) {
+        val recommendedItems = tvDetailsItems[position] as TvDetailsItem.Recommended
+        val adapter = RecommendedAdapter(recommendedItems.recommended, listener)
+        holder.binding.recyclerViewRecommended.adapter = adapter
+        holder.binding.items = recommendedItems
+    }
+
 
     class UpperViewHolder(val binding: TvDetailsItemUpperBinding) : BaseViewHolder(binding)
 
@@ -96,4 +113,7 @@ class TvDetailsAdapter(
         BaseViewHolder(binding)
 
     class SeasonViewHolder(val binding: ItemSeasonHorizontalBinding) : BaseViewHolder(binding)
+
+    class RecommendedViewHolder(val binding: TvDetailsItemRecommendedRvBinding) :
+        BaseViewHolder(binding)
 }

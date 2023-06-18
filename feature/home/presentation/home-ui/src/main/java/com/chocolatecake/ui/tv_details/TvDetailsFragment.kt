@@ -31,7 +31,6 @@ class TvDetailsFragment :
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
             is TvDetailsUiEvent.Rate -> showBottomSheet()
-//            is TvDetailsUiEvent.ApplyRating
             else -> {}
         }
     }
@@ -45,12 +44,11 @@ class TvDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
-                val items = state.seasons.map { TvDetailsItem.Season(it) }
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),
-                )
-                tvDetailsItems.addAll(items)
+                    TvDetailsItem.Recommended(state.recommended)
+                ) + state.seasons.map { TvDetailsItem.Season(it) }
                 tvDetailsAdapter.setItems(tvDetailsItems)
             }
         }

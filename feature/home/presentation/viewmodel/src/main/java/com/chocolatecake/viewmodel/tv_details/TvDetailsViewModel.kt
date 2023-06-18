@@ -10,16 +10,19 @@ import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvRatingEntity
+import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.usecase.GetTVDetailsInfoUseCase
 import com.chocolatecake.usecase.GetTvDetailsCreditUseCase
 import com.chocolatecake.usecase.GetTvDetailsReviewsUseCase
 import com.chocolatecake.usecase.GetTvDetailsSeasonsUseCase
+import com.chocolatecake.usecase.GetTvShowRecommendations
 import com.chocolatecake.usecase.RateTvShowUseCase
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsInfoUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsReviewUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsSeasonMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvRatingUiMapper
+import com.chocolatecake.viewmodel.tv_details.mappers.TvShowUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -32,7 +35,9 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvDetailsCreditUseCase: GetTvDetailsCreditUseCase,
     private val getTvDetailsSeasonsUseCase: GetTvDetailsSeasonsUseCase,
     private val tvShowUseCase: RateTvShowUseCase,
-    private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase
+    private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
+    private val getTvShowRecommendations: GetTvShowRecommendations,
+    private val tvShowUiMapper: TvShowUiMapper
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     init {
         getData()
@@ -42,7 +47,25 @@ class TvDetailsViewModel @Inject constructor(
         getTvShowInfo()
         getTvShowCast()
         getTvSeasons()
+        getTvRecommendations()
         getTvReviews()
+    }
+
+    private fun getTvRecommendations() {
+        tryToExecute(
+            call = getTvShowRecommendations::invoke,
+            onSuccess = ::onTvShowRecommendationsSuccess,
+            onError = {}
+        )
+    }
+
+    private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
+        val item = tvShowUiMapper.map(recommendations)
+        _state.update {
+            it.copy(
+                recommended = item.recommended
+            )
+        }
     }
 
     private fun getTvShowInfo() {
@@ -50,14 +73,13 @@ class TvDetailsViewModel @Inject constructor(
             call = tvDetailsInfoUseCase::invoke,
             onSuccess = ::onSuccessTvShowInfo,
             onError = {
-                Log.i("Spider", "the error is $it")
             }
         )
 
     }
 
     private fun onSuccessTvShowInfo(tvShowInfoEntity: TvDetailsInfoEntity) {
-        Log.i("Spider", "the state is ${state.value.info.name}")
+//        Log.i("Spider", "the state is ${state.value.info.name}")
         val item = tvDetailsInfoUiMapper.map(tvShowInfoEntity)
         _state.update {
             it.copy(
@@ -85,7 +107,7 @@ class TvDetailsViewModel @Inject constructor(
                 info = it.info.copy(rating = ratingBar.rating.times(2))
             )
         }
-        Log.i("rate", "the rating is ${state.value.info.rating}")
+//        Log.i("rate", "the rating is ${state.value.info.rating}")
         return ratingBar.rating
     }
 
@@ -93,7 +115,9 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { tvShowUseCase(_state.value.info.rating.toDouble(), 44217) },
             onSuccess = ::onRatingSuccess,
-            onError = { Log.i("rate", "something went wrong ${it}") }
+            onError = {
+//                Log.i("rate", "something went wrong ${it}")
+            }
         )
     }
 
@@ -105,7 +129,7 @@ class TvDetailsViewModel @Inject constructor(
                 ratingSuccess = item.ratingSuccess
             )
         }
-        Log.i("rate", "rating was successfull ${state.value.ratingSuccess}")
+//        Log.i("rate", "rating was successfull ${state.value.ratingSuccess}")
     }
 
     private fun getTvShowCast() {
@@ -123,7 +147,7 @@ class TvDetailsViewModel @Inject constructor(
                 cast = item.cast
             )
         }
-        Log.i("rate", "cast was successfull ${state.value.cast}")
+//        Log.i("rate", "cast was successfull ${state.value.cast}")
     }
 
     private fun getTvSeasons() {
@@ -136,22 +160,20 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
         val item = TvDetailsSeasonMapper().map(seasons)
-        _state.update {
-            it.copy(
-                seasons = item.seasons
-            )
-        }
-        Log.i("rate", "seasons ->\n ${state.value.seasons}")
+        _state.update { it.copy(seasons = item.seasons) }
+//        Log.i("rate", "seasons ->\n ${state.value.seasons}")
     }
-    private fun getTvReviews(){
+
+    private fun getTvReviews() {
         tryToExecute(
-            call = {getTvDetailsReviewsUseCase()},
+            call = { getTvDetailsReviewsUseCase() },
             onSuccess = ::onTvDetailsReviewsSuccess,
             onError = {
-                Log.i("rate", "review was failed $it")
+//                Log.i("rate", "review was failed $it")
             }
         )
     }
+
     private fun onTvDetailsReviewsSuccess(seasons: List<ReviewEntity>) {
         val item = TvDetailsReviewUiMapper().map(seasons)
         _state.update {
@@ -159,13 +181,18 @@ class TvDetailsViewModel @Inject constructor(
                 reviews = item
             )
         }
-        Log.i("rate", "reviews ->\n ${state.value.reviews}")
+//        Log.i("rate", "reviews ->\n ${state.value.reviews}")
     }
+
     override fun onClickPeople(personId: Int) {
         TODO("Not yet implemented")
     }
 
     override fun onClickMedia(id: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onClick() {
         TODO("Not yet implemented")
     }
 

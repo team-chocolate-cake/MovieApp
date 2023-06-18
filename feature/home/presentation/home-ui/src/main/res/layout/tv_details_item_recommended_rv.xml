@@ -11,7 +11,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        >
 
         <TextView
             android:id="@+id/text_view_recommended_section_title"
@@ -37,9 +39,9 @@
             android:id="@+id/recycler_view_recommended"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:paddingStart="16dp"
+            android:clipToPadding="false"
             android:layout_marginTop="8dp"
-            app:items="@{items.recommended}"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/text_view_recommended_section_title"
