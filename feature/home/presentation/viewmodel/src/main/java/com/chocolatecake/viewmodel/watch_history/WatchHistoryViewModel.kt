@@ -38,7 +38,7 @@ class WatchHistoryViewModel @Inject constructor(
     init {
         getAllMovies()
         initSearchCallBacks()
-//        testing()
+        testing()
     }
 
     private fun testing() {

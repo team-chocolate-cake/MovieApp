@@ -31,7 +31,7 @@ class WatchHistoryFragment
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
         collectMovies()
-        swipeToGestureAttachment(binding.watchHistoryRecyclerView)
+        swipeToGestureSetup(binding.watchHistoryRecyclerView)
     }
 
     private fun collectMovies() {
@@ -53,13 +53,13 @@ class WatchHistoryFragment
 
     }
 
-    private fun swipeToGestureAttachment(itemRv: RecyclerView?) {
+    private fun swipeToGestureSetup(itemRv: RecyclerView?) {
         val swipeGesture = swipeGestureAnonymousObject()
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(itemRv)
     }
 
-    private fun swipeGestureAnonymousObject() = object : SwipeGesture(requireContext()) {
+    private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
                 handleSwipeAction(direction, viewHolder.absoluteAdapterPosition)
@@ -83,9 +83,10 @@ class WatchHistoryFragment
     private fun setupDeleteSnackBar(position: Int) {
         val snackBar = Snackbar.make(
             binding.root,
-            "Item Deleted",
+            getString(com.chocolatecake.bases.R.string.item_deleted),
             Snackbar.LENGTH_LONG
         )
+
         snackBar.addCallback(getCallback(position))
         snackBar.animationMode = Snackbar.ANIMATION_MODE_FADE
         snackBar.setActionTextColor(
@@ -106,14 +107,13 @@ class WatchHistoryFragment
         ) {
             if (!isUndo) {
                 deleteItemFromDataBase()
-                createToast("item deleted")
             }
             super.onDismissed(transientBottomBar, event)
         }
 
         override fun onShown(transientBottomBar: Snackbar?) {
             isUndo = false
-            transientBottomBar?.setAction("UNDO") {
+            transientBottomBar?.setAction(getString(com.chocolatecake.bases.R.string.undo)) {
                 isUndo = true
                 addItemToUI(position)
             }
