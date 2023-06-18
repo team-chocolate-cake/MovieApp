@@ -3,8 +3,14 @@ package com.chocolatecake.repository
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.ReviewEntity
+import com.chocolatecake.entities.SeasonEntity
+import com.chocolatecake.entities.TvDetailsInfoEntity
+import com.chocolatecake.entities.TvRatingEntity
+import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.RateRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -15,6 +21,12 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvDetailsCreditMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvDetailsMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvDetailsReviewMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvDetailsSeasonMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvRatingMapper
+import com.chocolatecake.repository.mappers.domain.DomainTvShowMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -175,5 +187,49 @@ class MovieRepositoryImpl @Inject constructor(
         } catch (_: Throwable) {
         }
     }
+
+
+    /// endregion
+
+    ///region tv
+    override suspend fun getTvDetailsInfo(tvShowID: Int): TvDetailsInfoEntity {
+        return DomainTvDetailsMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+    }
+
+    override suspend fun getTvDetailsCredit(tvShowID: Int): List<PeopleEntity> {
+        return DomainTvDetailsCreditMapper().map(
+            wrapApiCall {
+                movieService.getTvDetailsCredit(tvShowID)
+            })
+    }
+
+    override suspend fun rateTvShow(rate: Double, tvShowID: Int): TvRatingEntity {
+        val newRate = RateRequest(value = rate)
+        return DomainTvRatingMapper().map(wrapApiCall {
+            movieService.rateTvShow(
+                newRate,
+                tvShowID
+            )
+        })
+    }
+
+    override suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity> {
+        val call = wrapApiCall { movieService.getTvShowReviews(44217) }.results?.filterNotNull()
+            ?: emptyList()
+        return DomainTvDetailsReviewMapper().map(call)
+
+    }
+
+    override suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity> {
+        val call =
+            wrapApiCall { movieService.getTvShowRecomendations(44217) }.results?.filterNotNull()
+                ?: emptyList()
+        return DomainTvShowMapper().map(call)
+    }
+
+    override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {
+        return DomainTvDetailsSeasonMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+    }
+
     /// endregion
 }

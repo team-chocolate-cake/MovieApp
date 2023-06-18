@@ -48,7 +48,11 @@ class TvDetailsFragment :
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),
                     TvDetailsItem.Recommended(state.recommended)
-                ) + state.seasons.map { TvDetailsItem.Season(it) }
+                ) + state.seasons.map { TvDetailsItem.Season(it) } + state.reviews.map {
+                    TvDetailsItem.Review(
+                        it
+                    )
+                }
                 tvDetailsAdapter.setItems(tvDetailsItems)
             }
         }

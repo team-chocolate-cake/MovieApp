@@ -1,14 +1,14 @@
 package com.chocolatecake.viewmodel.tv_details
 
 import com.chocolatecake.viewmodel.common.model.CommentUIState
+import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
-import com.chocolatecake.viewmodel.home.RecommendedUiState
 
 data class TvDetailsUiState(
     val info: Info = Info(),
     val cast: List<PeopleUIState> = emptyList(),
-    val recommended: List<RecommendedUiState> = emptyList(),
+    val recommended: List<MediaVerticalUIState> = emptyList(),
     val seasons: List<SeasonHorizontalUIState> = emptyList(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = true,

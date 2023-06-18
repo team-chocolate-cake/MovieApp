@@ -1,12 +1,12 @@
 package com.chocolatecake.ui.tv_details.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.ItemCommentBinding
 import com.chocolatecake.ui.home.databinding.ItemSeasonHorizontalBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemPeopleRvBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemRecommendedRvBinding
@@ -37,13 +37,6 @@ class TvDetailsAdapter(
                 )
             )
 
-            TvDetailsType.RECOMMENDED.ordinal -> RecommendedViewHolder(
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.tv_details_item_recommended_rv, parent, false
-                )
-            )
-
             TvDetailsType.Seasons.ordinal -> SeasonViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -51,6 +44,19 @@ class TvDetailsAdapter(
                 )
             )
 
+            TvDetailsType.RECOMMENDED.ordinal -> RecommendedViewHolder(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.tv_details_item_recommended_rv, parent, false
+                )
+            )
+
+            TvDetailsType.REVIEWS.ordinal -> ReviewViewHolder(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.item_comment, parent, false
+                )
+            )
 
             else -> throw IllegalStateException("Unkown ID ${parent}")
         }
@@ -60,8 +66,9 @@ class TvDetailsAdapter(
         when (holder) {
             is UpperViewHolder -> bindUpper(holder, position)
             is PeopleViewHolder -> bindPeople(holder, position)
-            is RecommendedViewHolder -> bindRecommended(holder, position)
             is SeasonViewHolder -> bindSeason(holder, position)
+            is RecommendedViewHolder -> bindRecommended(holder, position)
+            is ReviewViewHolder -> bindReview(holder, position)
         }
     }
 
@@ -106,6 +113,11 @@ class TvDetailsAdapter(
         holder.binding.items = recommendedItems
     }
 
+    private fun bindReview(holder: ReviewViewHolder, position: Int) {
+        val review = tvDetailsItems[position] as TvDetailsItem.Review
+        holder.binding.item = review.review
+    }
+
 
     class UpperViewHolder(val binding: TvDetailsItemUpperBinding) : BaseViewHolder(binding)
 
@@ -116,4 +128,6 @@ class TvDetailsAdapter(
 
     class RecommendedViewHolder(val binding: TvDetailsItemRecommendedRvBinding) :
         BaseViewHolder(binding)
+
+    class ReviewViewHolder(val binding: ItemCommentBinding) : BaseViewHolder(binding)
 }
