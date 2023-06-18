@@ -9,6 +9,7 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
@@ -102,16 +103,16 @@ interface MovieService {
     @POST("tv/{tv_id}/rating?")
     suspend fun rateTvShow(
         @Body rateRequest: RateRequest, @Path("tv_id") tvShowId: Int,
-    ):Response<TvRatingRemoteDto>
+    ): Response<TvRatingRemoteDto>
 
     @GET("tv/{tv_id}/reviews")
     suspend fun getTvShowReviews(
         @Path("tv_id") tvShowId: Int
-    ):Response<GenresWrapperResponse<TvReviewRemoteDto>>
+    ): Response<DataWrapperResponse<TvReviewRemoteDto>>
 
     @GET("tv/{tv_id}/recommendations")
     suspend fun getTvShowRecomendations(
         @Path("tv_id") tvShowId: Int
-    )
+    ): Response<DataWrapperResponse<TVShowsRemoteDto>>
     /// endregion
 }
