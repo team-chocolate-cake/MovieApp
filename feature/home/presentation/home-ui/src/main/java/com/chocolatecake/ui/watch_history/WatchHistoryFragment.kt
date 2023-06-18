@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
@@ -50,7 +51,17 @@ class WatchHistoryFragment
     }
 
     override fun onEvent(event: WatchHistoryUiEvent) {
+        when(event){
+            is WatchHistoryUiEvent.NavigateToMovieDetails -> navigateToMovieDetails(event.movieId)
+            is WatchHistoryUiEvent.ShowSnackBar -> showSnackBar(event.message)
+        }
+    }
 
+    private fun navigateToMovieDetails(movieId: Int) {
+       findNavController()
+           .navigate(WatchHistoryFragmentDirections
+               .actionWatchHistoryFragmentToMovieDetailsFragment(movieId)
+           )
     }
 
     private fun swipeToGestureSetup(itemRv: RecyclerView?) {
