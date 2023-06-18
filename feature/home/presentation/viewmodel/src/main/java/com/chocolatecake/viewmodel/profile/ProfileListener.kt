@@ -7,6 +7,5 @@ interface ProfileListener {
     fun onClickMyLists()
     fun onClickRating()
     fun onClickPopcornPuzzles()
-    fun onClickTheme()
     fun onClickLogout()
 }

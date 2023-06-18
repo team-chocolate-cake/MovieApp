@@ -58,10 +58,6 @@ class ProfileViewModel @Inject constructor(
         sendEvent(ProfileUiEvent.PopcornPuzzlesEvent)
     }
 
-    override fun onClickTheme() {
-        sendEvent(ProfileUiEvent.ThemeEvent)
-    }
-
     override fun onClickLogout() {
         viewModelScope.launch {
             _state.update { it.copy(isLogout = true) }
