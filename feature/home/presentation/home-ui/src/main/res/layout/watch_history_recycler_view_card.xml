@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.common.listener.MediaListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+        android:layout_marginVertical="@dimen/spacing_tiny_4dp"
+        android:onClick="@{() -> listener.onClickMedia(item.id)}">
+
+        <View
+            android:id="@+id/view_card_background"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero_height"
+            android:layout_marginVertical="@dimen/spacing_small_8dp"
+            android:background="@drawable/custom_card_background"
+            app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_movie"
+            app:layout_constraintTop_toTopOf="@+id/shape_image_view_movie" />
+
+        <TextView
+            android:id="@+id/text_view_movie_title"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_small_8dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:maxLines="1"
+            android:text="@{item.title}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/view_card_background"
+            app:layout_constraintStart_toEndOf="@+id/shape_image_view_movie"
+            app:layout_constraintTop_toTopOf="@id/view_card_background"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/text_view_genres"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.description}"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="@id/text_view_movie_title"
+            app:layout_constraintStart_toStartOf="@id/text_view_movie_title"
+            app:layout_constraintTop_toBottomOf="@id/text_view_movie_title"
+            tools:text="@tools:sample/lorem/random" />
+
+
+        <TextView
+            android:id="@+id/text_view_year"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginBottom="@dimen/spacing_small_8dp"
+            android:drawableStart="@drawable/ic_date"
+            android:drawablePadding="@dimen/spacing_tiny_4dp"
+            android:drawableTint="@color/on_background_38"
+            android:text="@{String.valueOf(item.year)}"
+            android:textColor="@color/on_background_38"
+            app:layout_constraintBottom_toBottomOf="@id/view_card_background"
+            app:layout_constraintStart_toStartOf="@+id/text_view_genres"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_genres"
+            tools:text="2019" />
+
+        <TextView
+            android:id="@+id/text_view_count_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_tiny_4dp"
+            android:drawableTint="@color/star"
+            android:text="@{String.valueOf(item.rating)}"
+            android:textColor="@color/star"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_genres"
+            app:layout_constraintTop_toTopOf="@+id/text_view_year"
+            tools:text="9.9" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shape_image_view_movie"
+            android:layout_width="@dimen/custom_width_image"
+            android:layout_height="@dimen/custom_height_image"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            tools:src="@tools:sample/backgrounds/scenic" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

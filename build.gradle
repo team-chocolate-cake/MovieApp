@@ -13,3 +13,40 @@ plugins {
     id 'com.android.library' version '8.0.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.20' apply false
 }
+ext {
+    // Sdk and tools
+    // Support library and architecture components support minSdk 14 and above.
+    minSdkVersion = 24
+    targetSdkVersion = 33
+    compileSdkVersion = 33
+
+    // App dependencies
+    androidXVersion = '1.10.1'
+    appcompatVersion = '1.6.1'
+    materialVersion = '1.9.0'
+    junitVersion = '4.13.2'
+    junitTestVersion = '1.1.5'
+    espressoTestVersion = '3.5.1'
+
+    hiltVersion = '2.44'
+
+    androidxFragmentVersion = '1.6.0'
+    androidxActivityVersion = '1.7.2'
+    androidxLifecycleExtensionsVersion = '2.2.0'
+    androidxNavigationVersion = '2.6.0'
+
+    coroutineVersion = '1.7.1'
+
+    glideVersion = '4.15.1'
+    lottieVersion = '6.0.0'
+
+    roomVersion = '2.5.1'
+    preferencesDataStoreVersion = '1.1.0-alpha04'
+
+    retrofitVersion = '2.9.0'
+    retrofitLoggingVersion = '4.10.0'
+    okhttpVersion = '5.0.0-alpha.3'
+
+    autoimagesliderVersion = '1.4.0'
+
+}

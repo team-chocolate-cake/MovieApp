@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_sheet_background"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp">
+
+            <View
+                android:id="@+id/divider"
+                style="@style/ViewDividerStyle"
+                android:layout_width="32dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:background="#79747E"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_categories"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text="Categories"
+                android:textColor="#DE270D04"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                app:chipSelected="@{viewModel.state.selectedMovieGenresId}"
+                app:layout_constraintBottom_toTopOf="@+id/button_apply_filter"
+                app:layout_constraintTop_toBottomOf="@id/text_view_categories"
+                app:listener="@{viewModel}"
+                app:setTVGenres="@{viewModel.state.genresTvShows}"
+                app:singleSelection="true" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_apply_filter"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_large_24dp"
+                android:text="@string/apply"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_filter" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

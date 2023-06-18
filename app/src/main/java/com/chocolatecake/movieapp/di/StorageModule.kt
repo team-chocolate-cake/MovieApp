@@ -5,8 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorage
-import com.chocolatecake.movieapp.data.local.prefs.PreferenceStorageIml
+import com.chocolatecake.local.PreferenceStorage
+import com.chocolatecake.local.PreferenceStorageIml
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +20,7 @@ object StorageModule {
 
     @Provides
     @Singleton
-    fun providePreferenceStorage(dataStore: DataStore<Preferences>): PreferenceStorage{
+    fun providePreferenceStorage(dataStore: DataStore<Preferences>): PreferenceStorage {
         return PreferenceStorageIml(dataStore)
     }
 

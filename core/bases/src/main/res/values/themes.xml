@@ -1,0 +1,52 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MovieApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="background">@color/background</item>
+        <item name="android:windowBackground">?attr/background</item>
+       <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+
+    <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation duration. -->
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+
+        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
+             animated drawable. One of these is required. -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- Required for animated icons -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.MovieApp</item>
+    </style>
+
+    <style name="MovieDetailsChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+    <item name="chipStrokeColor">@color/on_background_38</item>
+    <item name="chipStrokeWidth">1dp</item>
+    <item name="android:textColor">@color/on_background_38</item>
+    </style>
+    <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
+        <item name="android:minHeight">24dp</item>
+        <item name="android:maxHeight">24dp</item>
+        <item name="colorControlNormal">@color/secondary</item>
+        <item name="colorControlActivated">@color/secondary</item>
+    </style>
+    <style name="ShapeAppearanceOverlay_bottom_sheet" parent="Widget.MaterialComponents.CardView">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+
+    </style>
+
+</resources>

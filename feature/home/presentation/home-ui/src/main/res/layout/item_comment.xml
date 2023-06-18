@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.common.model.CommentUIState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacing_medium_16dp"
+        android:layout_marginTop="@dimen/spacing_small_8dp">
+
+        <TextView
+            android:id="@+id/text_view_image_person"
+            android:layout_width="@dimen/width_text_image_person"
+            android:layout_height="@dimen/height_text_image_person"
+            android:background="@drawable/box_background"
+            android:backgroundTint="@color/primary"
+            android:gravity="center"
+            android:text="@{item.firstTwoCharsFromName}"
+            android:textColor="@color/on_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="MS" />
+
+        <TextView
+            android:id="@+id/text_view_username"
+            style="@style/TextStyle.LabelLarge"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:maxLines="1"
+            android:text="@{item.name}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_view_image_person"
+            app:layout_constraintTop_toTopOf="@+id/text_view_image_person"
+            tools:text="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_view_comment"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="@dimen/zero_width"
+            android:layout_height="@dimen/height_text_comment"
+            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@{item.content}"
+            tools:text="@tools:sample/avatars"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_username"
+            app:layout_constraintStart_toStartOf="@+id/text_view_username"
+            app:layout_constraintTop_toBottomOf="@id/text_view_username" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

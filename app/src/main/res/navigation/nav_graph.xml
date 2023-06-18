@@ -6,34 +6,17 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        tools:layout="@layout/fragment_home"
-        android:name="com.chocolatecake.movieapp.ui.home.HomeFragment"
-        android:label="HomeFragment" />
-    <fragment
-        android:id="@+id/profileFragment"
-        tools:layout="@layout/fragment_profile"
-        android:name="com.chocolatecake.movieapp.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" />
-    <fragment
-        android:id="@+id/searchFragment"
-        tools:layout="@layout/fragment_search"
-        android:name="com.chocolatecake.movieapp.ui.search.view.SearchFragment"
-        android:label="SearchFragment" />
-    <fragment
-        android:id="@+id/tvFragment"
-        tools:layout="@layout/fragment_tv"
-        android:name="com.chocolatecake.movieapp.ui.tvShow.TvFragment"
-        android:label="TvFragment" />
-    <fragment
         android:id="@+id/loginFragment"
-        tools:layout="@layout/fragment_login"
-        android:name="com.chocolatecake.movieapp.ui.login.LoginFragment"
-        android:label="LoginFragment">
+        android:name="com.chocolatecake.ui.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_loginFragment_to_home_nav_graph"
+            app:destination="@id/home_nav_graph"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+    <include app:graph="@navigation/home_nav_graph" />
+
 </navigation>

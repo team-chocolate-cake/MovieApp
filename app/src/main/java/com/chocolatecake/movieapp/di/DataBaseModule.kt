@@ -2,8 +2,9 @@ package com.chocolatecake.movieapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.chocolatecake.movieapp.data.local.database.MovieDataBase
-import com.chocolatecake.movieapp.data.local.database.MovieDao
+import com.chocolatecake.local.database.MovieDao
+import com.chocolatecake.local.database.MovieDataBase
+import com.chocolatecake.local.database.TriviaDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +32,12 @@ object DataBaseModule {
     @Provides
     fun provideMovieDao(movieDataBase: MovieDataBase): MovieDao {
         return movieDataBase.movieDao
+    }
+
+    @Singleton
+    @Provides
+    fun provideTriviaDao(movieDataBase: MovieDataBase): TriviaDao {
+        return movieDataBase.triviaDao
     }
 
 }

@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="trending">Trending</string>
+    <string name="recommended">Recommended</string>
+    <string name="show_more">Show More</string>
+    <string name="popular_people">Popular People</string>
+    <string name="popular">Popular</string>
+    <string name="don_t_have_an_account">Don’t have an account?</string>
+    <string name="signup">Signup</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="login">Login</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="username_is_required">Username is required</string>
+    <string name="chocolate">chocolate</string>
+    <string name="password_hint">2131321</string>
+    <string name="the_request_failed">The Request sadly failed 😢</string>
+    <string name="movie">Movie</string>
+    <string name="tv">TV</string>
+    <string name="person">People</string>
+    <string name="collection">Collection</string>
+    <string name="company">Company</string>
+    <string name="apply">Apply</string>
+    <string name="Popular_Movies">Popular Movies</string>
+    <string name="retry">retry</string>
+</resources>
