@@ -134,7 +134,8 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
             app:lottie_rawRes="@raw/empty_state"
-            app:showWhenQueryEmpty="@{viewModel.query}" />
+            app:showWhenQueryEmpty="@{viewModel.query}"
+            app:showWhenFailure="@{viewModel.state.error}" />
 
         <include
             android:id="@+id/lottie_animation_view_no_network"
@@ -145,7 +146,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:showWhenError="@{viewModel.state.error}" />
+            app:showWhenFailure="@{viewModel.state.error}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

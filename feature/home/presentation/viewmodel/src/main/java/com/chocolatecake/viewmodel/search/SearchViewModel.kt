@@ -41,13 +41,16 @@ class SearchViewModel @Inject constructor(
 
     val query = MutableStateFlow("")
 
+    //region init
     init {
         viewModelScope.launch {
             query.debounce(1000)
                 .collect { onSearchInputChanged(it) }
         }
     }
+    // endregion
 
+    //region search input
     private fun onSearchInputChanged(newQuery: String) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +59,9 @@ class SearchViewModel @Inject constructor(
             getData()
         }
     }
+    // endregion
 
+    //region search history
     private suspend fun saveSearchHistoryInLocal(query: String) {
         insertSearchHistoryUseCase(query)
     }
@@ -65,8 +70,9 @@ class SearchViewModel @Inject constructor(
         val result = searchHistoryUseCase(query)
         _state.update { it.copy(searchHistory = result) }
     }
+    // endregion
 
-
+    // region get data
     fun getData() {
         when (_state.value.mediaType) {
             SearchUiState.SearchMedia.MOVIE -> onSearchForMovie()
@@ -74,7 +80,9 @@ class SearchViewModel @Inject constructor(
             SearchUiState.SearchMedia.PEOPLE -> onSearchForPeople()
         }
     }
+    // endregion
 
+    // region people
     fun onSearchForPeople() {
         tryToExecute(
             call = { searchPeopleUseCase(query.value) },
@@ -95,7 +103,9 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region tv
     fun onSearchForTv() {
         tryToExecute(
             call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
@@ -116,7 +126,9 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region movie
     fun onSearchForMovie() {
         tryToExecute(
             call = {
@@ -142,6 +154,7 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
     ///region events
     override fun onClickFilter() {
@@ -214,7 +227,11 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickMovie(id: Int) {
-        sendEvent(SearchUiEvent.NavigateToMovie(id))
+        if (_state.value.mediaType == SearchUiState.SearchMedia.MOVIE) {
+            sendEvent(SearchUiEvent.NavigateToMovie(id))
+        } else if (_state.value.mediaType == SearchUiState.SearchMedia.TV) {
+            sendEvent(SearchUiEvent.NavigateToTv(id))
+        }
     }
 
     override fun onClickPeople(id: Int) {

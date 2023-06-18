@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chocolatecake.bases.BaseAdapter
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 @BindingAdapter(value = ["app:items"])
@@ -86,11 +85,32 @@ fun <T> View.showWhenNoResult(list: List<T>?){
 }
 
 @BindingAdapter("app:showWhenError")
-fun <T> View.showWhenError(list: List<T>?){
-    if(list?.isNotEmpty() == true){
+fun <T> View.showWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter(value = ["app:showWhenQueryEmpty", "app:showWhenFailure"])
+fun View.showBasedOnState(
+    query: String?,
+    error: List<String>?
+) {
+    visibility = when {
+        query.isNullOrEmpty() && error.isNullOrEmpty() -> View.VISIBLE
+        else -> View.GONE
+    }
+}
+
+@BindingAdapter(value = ["app:showWhenFailure"])
+fun View.showBasedOnState(
+    error: List<String>?
+) {
+    visibility = when {
+        error?.isNotEmpty() == true -> View.VISIBLE
+        else -> View.GONE
     }
 }
 
