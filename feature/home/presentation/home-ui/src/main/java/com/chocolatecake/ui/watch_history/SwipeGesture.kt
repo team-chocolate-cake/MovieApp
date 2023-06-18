@@ -1,10 +1,13 @@
 package com.chocolatecake.ui.watch_history
+
 import android.graphics.Canvas
+import android.util.TypedValue
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.chocolatecake.ui.home.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
-abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val deleteIcon = com.chocolatecake.bases.R.drawable.ic_delete
 
     override fun onChildDraw(
@@ -25,8 +28,11 @@ abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
             actionState,
             isCurrentlyActive
         )
-            .addSwipeLeftLabel("swipe to delete")
             .addSwipeLeftActionIcon(deleteIcon)
+            .addCornerRadius(TypedValue.COMPLEX_UNIT_DIP,12)
+            .setActionIconTint(recyclerView.context.getColor(com.chocolatecake.bases.R.color.white))
+            .addBackgroundColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.red))
+            .addPadding(TypedValue.COMPLEX_UNIT_DIP,16f,0f,16f)
             .create()
             .decorate()
 
