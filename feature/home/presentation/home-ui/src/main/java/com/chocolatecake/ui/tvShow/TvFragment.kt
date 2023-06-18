@@ -1,7 +1,9 @@
 package com.chocolatecake.ui.tvShow
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -38,6 +40,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest { state ->
+                Log.d("state", state.toString())
                 val flow = when (state.tvShowsType) {
                     TVShowsType.AIRING_TODAY -> state.tvShowAiringToday
                     TVShowsType.ON_THE_AIR -> state.tvShowOnTheAir
@@ -67,8 +70,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
             is TVShowsInteraction.ShowAiringTodayTVShowsResult -> showAiringTodayResult()
             is TVShowsInteraction.ShowTopRatedTVShowsResult -> showTopRatedResult()
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
-            is TVShowsInteraction.NavigateToTVShowDetails -> TODO()
-            else -> {}
+            is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.itemId)
         }
     }
 
@@ -76,4 +78,8 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun showAiringTodayResult() = viewModel.getAiringTodayTVShows()
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
+    private fun navigateToTv(tvId: Int) {
+        Toast.makeText(requireContext(), tvId, Toast.LENGTH_SHORT).show()
+
+    }
 }

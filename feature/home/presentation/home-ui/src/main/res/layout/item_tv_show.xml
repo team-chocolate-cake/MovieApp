@@ -20,9 +20,9 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeable_ImageView"
             android:layout_width="match_parent"
-            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:layout_height="@dimen/custom_height_card"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:foregroundGravity="center"
             android:onClick="@{()-> listener.onClickTVShows(item.id)}"
             android:scaleType="centerCrop"
@@ -33,22 +33,34 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             tools:src="@tools:sample/backgrounds/scenic" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/custom_height_card"
+            android:background="@drawable/shadow_layer"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <TextView
             android:id="@+id/text_view_rates_number"
             style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:gravity="center"
             android:text="@{String.valueOf(item.rate)}"
-            android:textColor="#f6f6f6"
+            android:textColor="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="9.6" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

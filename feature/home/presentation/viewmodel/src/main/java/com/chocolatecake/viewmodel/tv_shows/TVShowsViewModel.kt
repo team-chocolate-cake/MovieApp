@@ -5,15 +5,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.entities.GenreEntity
-import com.chocolatecake.usecase.GetAllGenresTvsUseCase
 import com.chocolatecake.usecase.tv_shows.GetAiringTodayTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
-import com.chocolatecake.viewmodel.search.mappers.GenreUiStateMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -43,21 +39,34 @@ class TVShowsViewModel @Inject constructor(
     }
 
     fun getAiringTodayTVShows() {
-        viewModelScope.launch {
-            val items = getAiringTodayTVShowsUseCase().map { pagingData ->
-                pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-            }.cachedIn(viewModelScope)
-            _state.update {
-                it.copy(
-                    tvShowsType = TVShowsType.AIRING_TODAY,
-                    tvShowAiringToday = items,
-                    isLoading = false,
-                    error = emptyList()
-                )
+        try {
+            viewModelScope.launch {
+                val items = getAiringTodayTVShowsUseCase().map { pagingData ->
+                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+                }.cachedIn(viewModelScope)
+                _state.update {
+                    it.copy(
+                        tvShowsType = TVShowsType.AIRING_TODAY,
+                        tvShowAiringToday = items,
+                        isLoading = false,
+                        error = emptyList()
+                    )
+                }
             }
+        } catch (throwable: Throwable) {
+            onError(throwable)
         }
+
     }
 
+    private fun onError(throwable: Throwable) {
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message.toString()),
+                isLoading = false
+            )
+        }
+    }
     fun getOnTheAirTVShows() {
         viewModelScope.launch {
             val items = getOnTheAirTVShowsUseCase().map { pagingData ->
@@ -105,6 +114,7 @@ class TVShowsViewModel @Inject constructor(
             }
         }
     }
+
     /// endregion
 
     ///region event
