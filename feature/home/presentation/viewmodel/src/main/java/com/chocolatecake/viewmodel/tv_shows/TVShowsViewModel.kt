@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,13 +53,13 @@ class TVShowsViewModel @Inject constructor(
                     )
                 }
             }
-        } catch (throwable: Throwable) {
+        } catch (throwable: UnknownHostException) {
             onError(throwable)
         }
 
     }
 
-    private fun onError(throwable: Throwable) {
+    private fun onError(throwable: UnknownHostException) {
         _state.update {
             it.copy(
                 errorList = listOf(throwable.message.toString()),
@@ -66,52 +67,68 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
+
     fun getOnTheAirTVShows() {
-        viewModelScope.launch {
-            val items = getOnTheAirTVShowsUseCase().map { pagingData ->
-                pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-            }.cachedIn(viewModelScope)
-            _state.update {
-                it.copy(
-                    tvShowsType = TVShowsType.ON_THE_AIR,
-                    tvShowOnTheAir = items,
-                    isLoading = false,
-                    errorList = emptyList()
-                )
+        try {
+            viewModelScope.launch {
+                val items = getOnTheAirTVShowsUseCase().map { pagingData ->
+                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+                }.cachedIn(viewModelScope)
+                _state.update {
+                    it.copy(
+                        tvShowsType = TVShowsType.ON_THE_AIR,
+                        tvShowOnTheAir = items,
+                        isLoading = false,
+                        errorList = emptyList()
+                    )
+                }
             }
+        } catch (throwable: UnknownHostException) {
+            onError(throwable)
         }
+
     }
 
     fun getPopularTVShows() {
-        viewModelScope.launch {
-            val items = getPopularTVShowsUseCase().map { pagingData ->
-                pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-            }.cachedIn(viewModelScope)
-            _state.update {
-                it.copy(
-                    tvShowsType = TVShowsType.POPULAR,
-                    tvShowPopular = items,
-                    isLoading = false,
-                    errorList = emptyList()
-                )
+        try {
+            viewModelScope.launch {
+                val items = getPopularTVShowsUseCase().map { pagingData ->
+                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+                }.cachedIn(viewModelScope)
+                _state.update {
+                    it.copy(
+                        tvShowsType = TVShowsType.POPULAR,
+                        tvShowPopular = items,
+                        isLoading = false,
+                        errorList = emptyList()
+                    )
+                }
             }
+        } catch (throwable: UnknownHostException) {
+            onError(throwable)
         }
+
     }
 
     fun getTopRatedTVShows() {
-        viewModelScope.launch {
-            val items = getGetTopRatedTVShowsUseCase().map { pagingData ->
-                pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-            }.cachedIn(viewModelScope)
-            _state.update {
-                it.copy(
-                    tvShowsType = TVShowsType.TOP_RATED,
-                    tvShowTopRated = items,
-                    isLoading = false,
-                    errorList = emptyList()
-                )
+        try {
+            viewModelScope.launch {
+                val items = getGetTopRatedTVShowsUseCase().map { pagingData ->
+                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+                }.cachedIn(viewModelScope)
+                _state.update {
+                    it.copy(
+                        tvShowsType = TVShowsType.TOP_RATED,
+                        tvShowTopRated = items,
+                        isLoading = false,
+                        errorList = emptyList()
+                    )
+                }
             }
+        } catch (throwable: UnknownHostException) {
+            onError(throwable)
         }
+
     }
 
     /// endregion
