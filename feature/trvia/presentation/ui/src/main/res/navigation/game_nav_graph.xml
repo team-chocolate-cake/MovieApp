@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/memorizeGameFragment"
-        tools:layout="@layout/fragment_moive_guessing"
+        tools:layout="@layout/fragment_memorize"
         android:name="com.chocolatecake.ui.memorize_game.MemorizeGameFragment"
         android:label="MemorizeGameFragment" >
         <action
@@ -56,18 +56,10 @@
         tools:layout="@layout/fragment_type_games"
         android:name="com.chocolatecake.ui.type_game.TypeGameFragment"
         android:label="TypeGameFragment" >
+
         <action
-            android:id="@+id/action_typeGameFragment_to_tvShowGuessingFragment"
-            app:destination="@id/tvShowGuessingFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_memorizeGameFragment"
-            app:destination="@id/memorizeGameFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_movieGuessingFragment"
-            app:destination="@id/movieGuessingFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_peopleGuessingFragment"
-            app:destination="@id/peopleGuessingFragment" />
+            android:id="@+id/action_typeGameFragment_to_gameLevelFragment"
+            app:destination="@id/gameLevelFragment" />
     </fragment>
     <fragment
         android:id="@+id/congratsFragment"
@@ -92,5 +84,26 @@
         <action
             android:id="@+id/action_congratsFragment_to_memorizeGameFragment"
             app:destination="@id/memorizeGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameLevelFragment"
+        tools:layout="@layout/fragment_level_game"
+        android:name="com.chocolatecake.ui.game_level.GameLevelFragment"
+        android:label="GameLevelFragment" >
+        <action
+            android:id="@+id/action_gameLevelFragment_to_movieGuessingFragment"
+            app:destination="@id/movieGuessingFragment" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_peopleGuessingFragment"
+            app:destination="@id/peopleGuessingFragment" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_tvShowGuessingFragment"
+            app:destination="@id/tvShowGuessingFragment" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_memorizeGameFragment"
+            app:destination="@id/memorizeGameFragment" />
+        <argument
+            android:name="game_level_type"
+            app:argType="com.chocolatecake.viewmodel.common.model.GameType" />
     </fragment>
 </navigation>
