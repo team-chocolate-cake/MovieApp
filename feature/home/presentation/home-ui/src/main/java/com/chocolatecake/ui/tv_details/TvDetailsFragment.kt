@@ -32,7 +32,8 @@ class TvDetailsFragment :
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
             is TvDetailsUiEvent.Rate -> showBottomSheet()
-            is TvDetailsUiEvent.onPersonClick ->showSnackBar("Actor id ${event.id}")
+            is TvDetailsUiEvent.OnPersonClick ->showSnackBar("Actor id ${event.id}")
+            is TvDetailsUiEvent.OnSeasonClick ->showSnackBar("season id ${event.id}")
             else -> {
                 Log.i("Click", "the event is $event")
             }

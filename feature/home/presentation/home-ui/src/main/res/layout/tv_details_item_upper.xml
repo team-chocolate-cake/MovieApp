@@ -10,7 +10,7 @@
         
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.tv_details.RateListener" />
+            type="com.chocolatecake.viewmodel.tv_details.listener.RateListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

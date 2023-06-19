@@ -12,7 +12,7 @@ import com.chocolatecake.ui.home.databinding.TvDetailsItemPeopleRvBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemRecommendedRvBinding
 import com.chocolatecake.ui.home.databinding.TvDetailsItemUpperBinding
 import com.chocolatecake.ui.tv_details.TvDetailsItem
-import com.chocolatecake.viewmodel.tv_details.TvDetailsListeners
+import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.ui.tv_details.TvDetailsType
 
 class TvDetailsAdapter(

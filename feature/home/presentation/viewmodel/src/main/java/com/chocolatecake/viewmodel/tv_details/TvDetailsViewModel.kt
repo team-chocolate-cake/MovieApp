@@ -16,6 +16,7 @@ import com.chocolatecake.usecase.GetTvDetailsReviewsUseCase
 import com.chocolatecake.usecase.GetTvDetailsSeasonsUseCase
 import com.chocolatecake.usecase.GetTvShowRecommendations
 import com.chocolatecake.usecase.RateTvShowUseCase
+import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsInfoUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsReviewUiMapper
@@ -178,7 +179,7 @@ class TvDetailsViewModel @Inject constructor(
 
     override fun onClickPeople(personId: Int) {
         viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.onPersonClick(personId))
+            _event.emit(TvDetailsUiEvent.OnPersonClick(personId))
         }
     }
 
@@ -188,6 +189,12 @@ class TvDetailsViewModel @Inject constructor(
 
     override fun onRecommendedClick() {
         TODO("Not yet implemented")
+    }
+
+    override fun onClickSeason(seasonId: Int) {
+        viewModelScope.launch {
+            _event.emit(TvDetailsUiEvent.OnSeasonClick(seasonId))
+        }
     }
 }
 
