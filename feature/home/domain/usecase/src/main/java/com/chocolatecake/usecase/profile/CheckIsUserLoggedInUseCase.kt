@@ -3,15 +3,14 @@ package com.chocolatecake.usecase.profile
 import com.chocolatecake.repository.AuthRepository
 import javax.inject.Inject
 
-class LogoutUseCase @Inject constructor(
+class CheckIsUserLoggedInUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(): Boolean {
-        return try {
-            authRepository.logout()
-            true
-        } catch (_: Throwable) {
-            false
+        val loginState = authRepository.isUserLoggedIn()
+        if (!loginState) {
+            return true
         }
+        return false
     }
 }
