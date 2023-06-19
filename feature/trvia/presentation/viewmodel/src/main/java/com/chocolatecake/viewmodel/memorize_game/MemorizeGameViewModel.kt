@@ -45,10 +45,9 @@ class MemorizeGameViewModel @Inject constructor(
     }
 
     private fun onSuccessBoard(boardEntity: BoardEntity) {
-        Log.e("TAGTAG", "onSuccessBoard: $boardEntity", )
         _state.update {
             val board = boardEntity.itemsEntity.toUIState()
-            Log.e("TAGTAG", "board: $board", )
+            Log.e("TAGTAG", "board: ${board.size}", )
             it.copy(
                 boardSize = boardEntity.itemsEntity.size,
                 CorrectPairPositions = boardEntity.pairOfCorrectPositions,
@@ -64,7 +63,7 @@ class MemorizeGameViewModel @Inject constructor(
     private fun onSuccessUser(user: UserEntity) {
         _state.update {
             it.copy(
-                level = user.moviesGameLevel,
+                level = user.memorizeGameLevel,
                 points = user.totalPoints,
                 isError = false,
                 isLoading = false
