@@ -9,6 +9,8 @@ import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.WatchlistRequestEntity
 
 
 interface MovieRepository {
@@ -57,5 +59,17 @@ interface MovieRepository {
     suspend fun getLastRefreshTime(): Long?
     suspend fun setLastRefreshTime(time: Long)
     suspend fun refreshAll()
+
+
+
+    suspend fun getFavoriteMovies(): List<MovieEntity>
+    suspend fun refreshFavoriteMovies()
+    suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean
+
+
+    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity>
+
+    suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity>
+    suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean
 
 }

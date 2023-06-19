@@ -33,7 +33,19 @@
         <action
             android:id="@+id/action_profileFragment_to_game_nav_graph"
             app:destination="@id/game_nav_graph" />
+        <action
+            android:id="@+id/action_profileFragment_to_myListDetailsFragment"
+            app:destination="@id/myListDetailsFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/myListDetailsFragment"
+        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
+        android:label="MyListDetailsFragment" >
+        <argument
+            android:name="mediaType"
+            app:argType="string" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />

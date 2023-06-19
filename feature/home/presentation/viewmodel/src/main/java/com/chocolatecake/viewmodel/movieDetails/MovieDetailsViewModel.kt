@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
+import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
+import com.chocolatecake.viewmodel.movieDetails.mapper.FavoriteBodyUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
@@ -21,11 +24,14 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase,
     private val ratingUseCase: GetRatingUseCase,
-    private val savedStateHandle: SavedStateHandle
-) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
+    private val savedStateHandle: SavedStateHandle,
+    private val makeAsFavoriteUseCase: MakeAsFavoriteUseCase,
+    private val favoriteBodyUiMapper: FavoriteBodyUiMapper,
+
+    ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener {
 
-    private val movieId = savedStateHandle.get<Int>("movieId") ?:502356
+    private val movieId = savedStateHandle.get<Int>("movieId") ?: 502356
 
     init {
         _state.update { it.copy(isLoading = true) }
@@ -110,6 +116,8 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
 
+
+
     override fun onClickPeople(itemId: Int) {
         sendEvent(MovieDetailsUiEvent.PeopleEvent(itemId))
     }
@@ -132,7 +140,40 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onClickSaveButton(id: Int) {
-        sendEvent(MovieDetailsUiEvent.SaveToEvent(id))
+
+        tryToExecute(
+            call = {
+                makeAsFavoriteUseCase.invoke(
+                        FavoriteBodyRequestEntity(
+                            true,
+                            20,
+                            "movie"
+                    )
+                )
+            },
+            onSuccess = { true },
+            onError = ::onError
+        )
     }
 
+
+//        private fun getAccountDetails() {
+//        viewModelScope.launch {
+//            val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
+//            _state.update {
+//                it.copy(
+//                    username = profileEntity.username,
+//                    avatarUrl = profileEntity.avatarUrl,
+//                    error = null,
+//                    isLogout = false
+//                )
+//            }
+//        }
+//    }
+
+//    private fun onSuccessAsFav() : Boolean {
+//        //todo
+//      return true
+//
+//    }
 }

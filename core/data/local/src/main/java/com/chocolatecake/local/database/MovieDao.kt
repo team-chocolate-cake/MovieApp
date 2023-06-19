@@ -18,6 +18,7 @@ import com.chocolatecake.local.database.dto.movie.RecommendedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TopRatedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TrendingMoviesLocalDto
 import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
+import com.chocolatecake.local.database.dto.movie.WatchlistLocalDto
 
 @Dao
 interface MovieDao {
@@ -145,4 +146,30 @@ interface MovieDao {
     suspend fun searchWatchHistory(keyword: String): List<MovieInWatchHistoryLocalDto>
 
     // endregion
+
+
+    //region my list
+    @Query("select * from MOVIE_TABLE")
+    suspend fun getFavoriteMovies(): List<MovieLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavoriteMovie(movies: List<MovieLocalDto>)
+
+    @Query("select * from MOVIE_TABLE  where mediaType like :mediaType ")
+    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieLocalDto>
+
+//    @Query("select * from TV_TABLE")
+//    suspend fun getFavoriteTv(): List<TvLocalDto>
+
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertFavoriteTv(movies: List<TvLocalDto>)
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWatchlist(movies: List<WatchlistLocalDto>)
+
+    @Query("select * from WATCHLIST_TABLE  where mediaType like :mediaType ")
+    suspend fun getWatchlistByMediaType(mediaType: String): List<WatchlistLocalDto>
+
+    //endregion
 }

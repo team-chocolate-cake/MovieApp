@@ -1,8 +1,11 @@
 package com.chocolatecake.remote.service
 
+import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
+import com.chocolatecake.remote.response.FavoriteResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
@@ -90,7 +93,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun searchForMovies(
+    suspend fun searchForMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
@@ -135,8 +138,8 @@ interface MovieService {
     /// region account
     @GET("account")
     suspend fun getAccountDetails(
-        @Query("session_id") sessionId : String = " "
-    ) : Response<ProfileRemoteDto>
+        @Query("session_id") sessionId: String = " "
+    ): Response<ProfileRemoteDto>
     ///endregion
 
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
@@ -149,5 +152,34 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<RatingDto>
+    ): Response<RatingDto>
+
+
+    //region my list
+    @GET("account/{account_id}/favorite/movies")
+    suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+//    @GET("account/{account_id}/favorite/tv")
+//    suspend fun getFavoriteTv(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @GET("account/{account_id}/favorite/{media_type}")
+    suspend fun getFavoriteByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+
+    @POST("account/{account_id}/favorite")
+    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<FavoriteResponse>
+
+
+    @GET("account/{account_id}/watchlist/{media_type}")
+    suspend fun getWatchlistByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @POST("account/{account_id}/watchlist")
+    suspend fun addWatchlist(
+        @Body watchlistRequest: WatchlistRequest,
+    ): Response<FavoriteResponse>
+    //endregion
 }

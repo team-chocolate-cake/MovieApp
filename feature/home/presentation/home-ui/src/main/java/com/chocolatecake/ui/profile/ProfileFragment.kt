@@ -27,7 +27,9 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, Prof
 
     override fun onEvent(event: ProfileUiEvent) {
         when (event) {
-            ProfileUiEvent.FavoriteEvent -> TODO()
+            ProfileUiEvent.FavoriteEvent -> {
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(""))
+            }
             ProfileUiEvent.LogoutEvent -> {
                 showSnackBar("Logout!")
             }

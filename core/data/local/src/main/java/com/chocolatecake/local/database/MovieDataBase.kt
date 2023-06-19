@@ -17,6 +17,7 @@ import com.chocolatecake.local.database.dto.movie.RecommendedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TopRatedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TrendingMoviesLocalDto
 import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
+import com.chocolatecake.local.database.dto.movie.WatchlistLocalDto
 
 @Database(
     entities = [
@@ -33,7 +34,8 @@ import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
         GenresTvsLocalDto::class,
         MovieLocalDto::class,
         UserLocalDto::class,
-        MovieInWatchHistoryLocalDto::class
+        MovieInWatchHistoryLocalDto::class,
+        WatchlistLocalDto::class,
     ],
     version = 1,
     exportSchema = false

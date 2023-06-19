@@ -2,21 +2,20 @@ package com.chocolatecake.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
-import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -25,18 +24,23 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalPopularMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
+import com.chocolatecake.repository.mappers.cash.myList.LocalFavoriteMoviesMapper
+import com.chocolatecake.repository.mappers.cash.myList.LocalWatchlistMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
 import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
-import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
+import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
+import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
 import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
@@ -59,6 +63,10 @@ class MovieRepositoryImpl @Inject constructor(
     private val localTopRatedMovieMapper: LocalTopRatedMovieMapper,
     private val localTrendingMoviesMapper: LocalTrendingMoviesMapper,
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
+    private val localFavoriteMoviesMapper: LocalFavoriteMoviesMapper,
+    private val localWatchlistMapper: LocalWatchlistMapper,
+    private val domainFavoriteMoviesMapper: DomainFavoriteMoviesMapper,
+    private val domainWatchlistMapper: DomainWatchlistMapper,
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
     private val domainNowPlayingMovieMapper: DomainNowPlayingMovieMapper,
     private val domainTopRatedMovieMapper: DomainTopRatedMovieMapper,
@@ -69,8 +77,11 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
-    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
-) : BaseRepository(), MovieRepository {
+    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
+    private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
+    private val watchlistMapper: WatchlistRequestMapper,
+
+    ) : BaseRepository(), MovieRepository {
 
     /// region movies
     override suspend fun getPopularMovies(): List<MovieEntity> {
@@ -271,6 +282,7 @@ class MovieRepositoryImpl @Inject constructor(
         refreshTopRatedMovies()
         refreshTrendingMovies()
         refreshUpcomingMovies()
+        refreshFavoriteMovies()
     }
 
     /// endregion
@@ -309,4 +321,57 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
         return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
     }
+
+
+    //region my list
+    override suspend fun getFavoriteMovies(): List<MovieEntity> {
+        return  domainFavoriteMoviesMapper.map(movieDao.getFavoriteMovies())
+    }
+
+    override suspend fun refreshFavoriteMovies() {
+        refreshWrapper(
+            movieService::getFavoriteMovies,
+            localFavoriteMoviesMapper::map,
+            movieDao::insertFavoriteMovie
+        )
+    }
+
+    override suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean {
+        return  movieService.addFavoriteMovie(
+            favoriteMoviesMapper.map(favoriteBody)
+        ).isSuccessful
+    }
+
+    override suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity> {
+        return  domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType(mediaType))
+    }
+
+
+    override suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity> {
+        return  domainWatchlistMapper.map(movieDao.getWatchlistByMediaType(mediaType))
+    }
+
+
+    override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
+
+        val result =  movieService.addWatchlist(
+            watchlistMapper.map(watchlistRequest)
+        ).isSuccessful
+
+        if (result) {
+            refreshWatchlistByMediaType(watchlistRequest.mediaType)
+        }
+
+        return result
+    }
+
+     suspend fun refreshWatchlistByMediaType(mediaType: String) {
+        refreshWrapper(
+          apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType )},
+            localWatchlistMapper::map,
+            movieDao::insertWatchlist
+        )
+    }
+
+    //endregion
 }
