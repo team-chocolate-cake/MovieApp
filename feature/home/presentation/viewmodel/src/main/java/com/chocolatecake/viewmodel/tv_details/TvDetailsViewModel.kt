@@ -200,5 +200,11 @@ class TvDetailsViewModel @Inject constructor(
             _event.emit(TvDetailsUiEvent.OnSeasonClick(seasonId))
         }
     }
+
+    fun onBack(){
+        viewModelScope.launch {
+            _event.emit(TvDetailsUiEvent.Back)
+        }
+    }
 }
 

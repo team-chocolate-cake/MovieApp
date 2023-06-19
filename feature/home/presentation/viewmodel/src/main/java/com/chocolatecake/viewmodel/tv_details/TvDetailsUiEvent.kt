@@ -7,4 +7,5 @@ sealed interface TvDetailsUiEvent {
     data class OnPersonClick(val id: Int) : TvDetailsUiEvent
     data class OnSeasonClick(val id: Int) : TvDetailsUiEvent
     data class OnRecommended(val id: Int) : TvDetailsUiEvent
+    object Back:TvDetailsUiEvent
 }

@@ -36,6 +36,7 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnPersonClick -> showSnackBar("Actor id ${event.id}")
             is TvDetailsUiEvent.OnSeasonClick -> showSnackBar("season id ${event.id}")
             is TvDetailsUiEvent.OnRecommended -> navigateToSeasonDetails(event.id)
+            is TvDetailsUiEvent.Back -> navigateBack()
             else -> {
                 Log.i("Click", "the event is $event")
             }
@@ -51,9 +52,11 @@ class TvDetailsFragment :
     private fun navigateToSeasonDetails(seasonId: Int) {
         findNavController().navigate(TvDetailsFragmentDirections.actionHomeFragmentSelf(seasonId))
     }
-    private fun navigateBack(){
+
+    private fun navigateBack() {
         findNavController().popBackStack()
     }
+
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
