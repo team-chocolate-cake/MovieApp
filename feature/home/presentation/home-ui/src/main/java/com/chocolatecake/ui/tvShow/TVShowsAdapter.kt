@@ -26,7 +26,7 @@ class TVShowsAdapter @Inject constructor() : PagingDataAdapter<TVShowsUI, TVShow
 
     object Comparator : DiffUtil.ItemCallback<TVShowsUI>() {
         override fun areItemsTheSame(oldItem: TVShowsUI, newItem: TVShowsUI): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.tvId == newItem.tvId
         }
 
         override fun areContentsTheSame(

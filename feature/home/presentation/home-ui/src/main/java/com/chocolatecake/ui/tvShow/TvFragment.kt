@@ -70,7 +70,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
             is TVShowsInteraction.ShowAiringTodayTVShowsResult -> showAiringTodayResult()
             is TVShowsInteraction.ShowTopRatedTVShowsResult -> showTopRatedResult()
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
-            is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.itemId)
+            is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.tvId)
         }
     }
 
@@ -79,7 +79,8 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
     private fun navigateToTv(tvId: Int) {
-        Toast.makeText(requireContext(), tvId, Toast.LENGTH_SHORT).show()
-
+        Log.d("nav", "----------------$tvId-----------------")
+        Toast.makeText(requireActivity(), tvId.toString(), Toast.LENGTH_SHORT).show()
     }
+
 }

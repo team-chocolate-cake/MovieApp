@@ -9,7 +9,7 @@ class TVShowsMapper @Inject constructor() :
     Mapper<TVShowsEntity?, TVShowsUI> {
     override fun map(input: TVShowsEntity?): TVShowsUI {
         return TVShowsUI(
-            id = input?.id,
+            tvId = input?.id,
             imageUrl = input?.imageUrl,
             rate = input?.rate
         )

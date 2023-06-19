@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.tv_shows.TVShowsUI" />
@@ -15,19 +16,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> listener.onClickTVShows(item.tvId)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeable_ImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="3:4"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:foregroundGravity="center"
-            android:onClick="@{()-> listener.onClickTVShows(item.id)}"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,12 +38,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/shadow_layer"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="3:4"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:background="@drawable/shadow_layer"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

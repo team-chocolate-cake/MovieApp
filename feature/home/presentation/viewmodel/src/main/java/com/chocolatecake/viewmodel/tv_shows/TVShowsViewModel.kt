@@ -134,8 +134,8 @@ class TVShowsViewModel @Inject constructor(
     /// endregion
 
     ///region event
-    override fun onClickTVShows(itemId: Int) {
-        sendEvent(TVShowsInteraction.NavigateToTVShowDetails(itemId))
+    override fun onClickTVShows(tvId: Int) {
+        sendEvent(TVShowsInteraction.NavigateToTVShowDetails(tvId))
     }
 
     override fun showOnTheAiringTVShowsResult() {

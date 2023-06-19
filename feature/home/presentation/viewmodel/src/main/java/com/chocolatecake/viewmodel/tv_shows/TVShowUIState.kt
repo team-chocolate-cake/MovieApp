@@ -18,7 +18,7 @@ data class TVShowUIState(
 }
 
 data class TVShowsUI(
-    val id: Int?,
+    val tvId: Int?,
     val imageUrl: String?,
     val rate: Double?
 )
