@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.search.SearchListener" />
+            type="com.chocolatecake.viewmodel.common.listener.PeopleListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
