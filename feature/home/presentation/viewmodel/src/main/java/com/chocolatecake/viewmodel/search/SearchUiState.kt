@@ -25,4 +25,7 @@ data class SearchUiState(
         TV,
         PEOPLE
     }
+
+    val isFailure: Boolean get() =
+        error?.isNotEmpty() == true
 }
