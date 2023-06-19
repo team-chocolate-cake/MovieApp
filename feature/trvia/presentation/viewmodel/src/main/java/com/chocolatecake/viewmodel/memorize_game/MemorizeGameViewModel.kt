@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.memorize_game
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.BoardEntity
@@ -44,8 +45,10 @@ class MemorizeGameViewModel @Inject constructor(
     }
 
     private fun onSuccessBoard(boardEntity: BoardEntity) {
+        Log.e("TAGTAG", "onSuccessBoard: $boardEntity", )
         _state.update {
             val board = boardEntity.itemsEntity.toUIState()
+            Log.e("TAGTAG", "board: $board", )
             it.copy(
                 boardSize = boardEntity.itemsEntity.size,
                 CorrectPairPositions = boardEntity.pairOfCorrectPositions,
@@ -93,17 +96,16 @@ class MemorizeGameViewModel @Inject constructor(
 
     override fun onItemClick(itemGameImageUiState: ItemGameImageUiState) {
         toggleGameItem(itemGameImageUiState)
-        saveUserPosition(itemGameImageUiState.position)
     }
 
     private fun toggleGameItem(itemGameImageUiState: ItemGameImageUiState) {
-        val modifyItem = itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
-        val modifyBoard = (_state.value.board - itemGameImageUiState).toMutableList()
-        modifyBoard.add(modifyItem.position, modifyItem)
-        _state.update {
-            it.copy(
-                board = modifyBoard
-            )
+        viewModelScope.launch {
+            val modifyItem = itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
+            val modifyBoard = (_state.value.board - itemGameImageUiState).toMutableList()
+            modifyBoard.add(modifyItem.position, modifyItem)
+            _state.update { it.copy(board = modifyBoard) }
+            delay(500)
+            saveUserPosition(itemGameImageUiState.position)
         }
     }
 
@@ -132,7 +134,6 @@ class MemorizeGameViewModel @Inject constructor(
                 }
                 updateUserPointsUseCase(_state.value.points)
                 levelUpMemorizeUseCase()
-                delay(1000)
                 sendEvent(MemorizeGameUIEvent.NavigateToWinnerScreen(GameType.MEMORIZE))
             }
         } else {
