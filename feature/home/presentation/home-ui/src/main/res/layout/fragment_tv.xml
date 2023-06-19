@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                app:selectionRequired="true"
                 app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 app:singleSelection="true">
 

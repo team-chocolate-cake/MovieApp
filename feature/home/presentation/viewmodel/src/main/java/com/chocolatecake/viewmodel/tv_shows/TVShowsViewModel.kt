@@ -3,6 +3,7 @@ package com.chocolatecake.viewmodel.tv_shows
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
@@ -62,7 +63,7 @@ class TVShowsViewModel @Inject constructor(
 
     }
 
-    private fun onError(throwable: UnknownHostException) {
+    private fun onError(throwable: Throwable) {
         _state.update {
             it.copy(
                 errorList = listOf(throwable.message.toString()), isLoading = false
@@ -87,6 +88,8 @@ class TVShowsViewModel @Inject constructor(
             }
         } catch (throwable: UnknownHostException) {
             onError(throwable)
+        } catch (e: Exception) {
+            onError(e)
         }
 
     }
