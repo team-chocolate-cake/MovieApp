@@ -14,6 +14,7 @@ import com.chocolatecake.viewmodel.search.SearchItem
 import com.chocolatecake.viewmodel.search.SearchUiEvent
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.chocolatecake.viewmodel.search.SearchViewModel
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         super.onViewCreated(view, savedInstanceState)
         setupHomeAdapter()
         collectChange()
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip?.isChecked == true) {
+                // Do nothing when the same chip is reselected
+            }
+        }
     }
 
     private fun setupHomeAdapter() {
