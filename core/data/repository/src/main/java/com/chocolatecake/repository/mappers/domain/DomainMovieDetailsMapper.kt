@@ -14,6 +14,7 @@ import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.Recommendations
 import com.chocolatecake.remote.response.movieDetails.Reviews
 import com.chocolatecake.remote.response.movieDetails.Videos
+import com.chocolatecake.repository.BuildConfig
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
 
@@ -49,7 +50,7 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
                     order = it.order,
                     originalName = it.originalName,
                     popularity = it.popularity,
-                    profilePath = it.profilePath
+                    profilePath = BuildConfig.IMAGE_BASE_PATH+it.profilePath
                 )
             },
             crew = credits.crew.map {
@@ -76,7 +77,7 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
             recommendedMovies = recommendations.recommendedMovies.map {
                 RecommendedMovieEntity(
                     adult = it.adult,
-                    backdropPath = it.backdropPath,
+                    backdropPath = BuildConfig.IMAGE_BASE_PATH+it.backdropPath,
                     genreIds = it.genreIds,
                     id = it.id,
                     mediaType = it.mediaType,

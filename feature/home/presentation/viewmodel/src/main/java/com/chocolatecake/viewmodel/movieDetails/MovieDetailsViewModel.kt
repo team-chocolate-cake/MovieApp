@@ -1,19 +1,18 @@
 package com.chocolatecake.viewmodel.movieDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
+import com.chocolatecake.viewmodel.common.listener.MediaListener
+import com.chocolatecake.viewmodel.common.listener.PeopleListener
+import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 
@@ -23,7 +22,7 @@ class MovieDetailsViewModel @Inject constructor(
     private val ratingUseCase: GetRatingUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
-    MovieDetailsListener {
+    MovieDetailsListener ,MediaListener , PeopleListener  {
 
     private val movieId = savedStateHandle.get<Int>("movieId") ?:502356
 
@@ -64,10 +63,10 @@ class MovieDetailsViewModel @Inject constructor(
                 ),
                 recommendedUiState = MovieDetailsItem.Recommended(
                     movieDetails.recommendations?.recommendedMovies?.map {
-                        RecommendedMoviesUiState(
-                            id = it?.id,
-                            voteAverage = it?.voteAverage,
-                            backdropPath = it?.backdropPath,
+                        MediaVerticalUIState(
+                            id = it?.id ?:0,
+                            rate = it?.voteAverage?:0.0,
+                            imageUrl = it?.backdropPath?:"",
                         )
                     },
                 ),
@@ -83,10 +82,10 @@ class MovieDetailsViewModel @Inject constructor(
                 ),
                 castUiState = MovieDetailsItem.People(
                     movieDetails.credits?.cast?.map {
-                        CastUiState(
-                            id = it?.id,
-                            name = it?.name,
-                            profilePath = it?.profilePath
+                        PeopleUIState(
+                            id = it?.id?:0,
+                            name = it?.name?:"",
+                            imageUrl = it?.profilePath?:""
                         )
                     }
                 ),
@@ -110,13 +109,10 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
 
-    override fun onClickPeople(itemId: Int) {
-        sendEvent(MovieDetailsUiEvent.PeopleEvent(itemId))
+    override fun onClickPeople(id: Int) {
+        sendEvent(MovieDetailsUiEvent.PeopleEvent(id))
     }
 
-    override fun onClickRecommendedMovie(itemId: Int) {
-        sendEvent(MovieDetailsUiEvent.RecommendedMovieEvent(itemId))
-    }
 
     override fun onClickPlayTrailer(keys: List<String>) {
         sendEvent(MovieDetailsUiEvent.PlayVideoEvent(keys))
@@ -133,6 +129,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     override fun onClickSaveButton(id: Int) {
         sendEvent(MovieDetailsUiEvent.SaveToEvent(id))
+    }
+
+    override fun onClickMedia(id: Int) {
+        sendEvent(MovieDetailsUiEvent.RecommendedMovieEvent(id))
     }
 
 }

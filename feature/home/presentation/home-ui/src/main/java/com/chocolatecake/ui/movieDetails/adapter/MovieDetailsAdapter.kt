@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.airbnb.lottie.L
 import com.chocolatecake.bases.BaseAdapter
+import com.chocolatecake.ui.common.adapters.MediaVerticalAdapter
+import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemPopularPeopleBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemRecommendedBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemReviewsBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemUpperBinding
+import com.chocolatecake.viewmodel.common.listener.MediaListener
+import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsType
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener
@@ -17,6 +21,8 @@ import com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener
 class MovieDetailsAdapter(
     private var itemsMovie: MutableList<MovieDetailsItem>,
     private val listener: MovieDetailsListener,
+    private val movieListener: MediaListener,
+    private val peopleListener: PeopleListener,
 ) : BaseAdapter<MovieDetailsItem>(itemsMovie, listener) {
     override val layoutID: Int = 0
 
@@ -94,14 +100,14 @@ class MovieDetailsAdapter(
     }
     private fun bindPeople(holder: PeopleViewHolder, position: Int) {
         val people = itemsMovie[position] as MovieDetailsItem.People
-        val adapter = PeopleAdapter(people.list!! ,listener)
+        val adapter = PeopleAdapter(people.list!! ,peopleListener)
         holder.binding.recyclerViewPeople.adapter = adapter
         holder.binding.item = people
     }
 
     private fun bindRecommended(holder: RecommendedViewHolder, position: Int) {
         val recommended = itemsMovie[position] as MovieDetailsItem.Recommended
-        val adapter = RecommendedMoviesAdapter(recommended.list!!, listener)
+        val adapter = MediaVerticalAdapter(recommended.list!!, movieListener)
         holder.binding.recyclerViewRecommened.adapter = adapter
         holder.binding.item = recommended
     }

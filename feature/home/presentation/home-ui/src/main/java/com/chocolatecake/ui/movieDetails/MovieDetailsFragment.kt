@@ -32,7 +32,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
     }
 
     private fun setAdapter() {
-        movieDetailsAdapter = MovieDetailsAdapter(mutableListOf(), viewModel)
+        movieDetailsAdapter = MovieDetailsAdapter(mutableListOf(), viewModel , viewModel , viewModel)
         binding.nestedRecycler.adapter = movieDetailsAdapter
     }
 
