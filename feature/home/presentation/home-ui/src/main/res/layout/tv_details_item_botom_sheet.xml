@@ -11,7 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#F5F5F5"
+        android:backgroundTint="@color/background"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_bottom_sheet">
 
         <LinearLayout
@@ -34,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_giant"
                 android:gravity="center"
-                android:text="Home much you love this movie ?"
+                android:text="Home much you love this tv show ?"
                 android:textColor="@color/secondary_text_87"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/description"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="Rate it with stars your satisfaction level "
-                android:textColor="@color/on_background_60"
+                android:textColor="@color/on_background_87"
                 android:textSize="16sp" />
 
             <RatingBar
@@ -70,7 +70,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Apply"
                 android:backgroundTint="@color/primary"
-                android:textColor="@color/card"
+                android:textColor="#fff"
                 />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
