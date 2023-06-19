@@ -1,5 +1,7 @@
 package com.chocolatecake.viewmodel.tv_shows
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import androidx.paging.map
@@ -24,6 +26,7 @@ class TVShowsViewModel @Inject constructor(
     private val tvShowsMapper: TVShowsMapper
 ) : BaseViewModel<TVShowUIState, TVShowsInteraction>(TVShowUIState()), TVShowsListener {
 
+
     init {
         getData()
     }
@@ -31,8 +34,8 @@ class TVShowsViewModel @Inject constructor(
     ///region get data
     private fun getData() {
         when (_state.value.tvShowsType) {
-            TVShowsType.ON_THE_AIR -> getOnTheAirTVShows()
             TVShowsType.AIRING_TODAY -> getAiringTodayTVShows()
+            TVShowsType.ON_THE_AIR -> getOnTheAirTVShows()
             TVShowsType.TOP_RATED -> getTopRatedTVShows()
             TVShowsType.POPULAR -> getPopularTVShows()
         }
@@ -62,8 +65,7 @@ class TVShowsViewModel @Inject constructor(
     private fun onError(throwable: UnknownHostException) {
         _state.update {
             it.copy(
-                errorList = listOf(throwable.message.toString()),
-                isLoading = false
+                errorList = listOf(throwable.message.toString()), isLoading = false
             )
         }
     }
@@ -133,17 +135,18 @@ class TVShowsViewModel @Inject constructor(
 
     /// endregion
 
+
     ///region event
     override fun onClickTVShows(tvId: Int) {
         sendEvent(TVShowsInteraction.NavigateToTVShowDetails(tvId))
     }
 
-    override fun showOnTheAiringTVShowsResult() {
-        sendEvent(TVShowsInteraction.ShowOnTheAirTVShowsResult)
-    }
-
     override fun showAiringTodayTVShowsResult() {
         sendEvent(TVShowsInteraction.ShowAiringTodayTVShowsResult)
+    }
+
+    override fun showOnTheAiringTVShowsResult() {
+        sendEvent(TVShowsInteraction.ShowOnTheAirTVShowsResult)
     }
 
     override fun showTopRatedTVShowsResult() {

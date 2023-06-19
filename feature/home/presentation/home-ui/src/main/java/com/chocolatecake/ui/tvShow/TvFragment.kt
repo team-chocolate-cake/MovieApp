@@ -17,6 +17,7 @@ import com.chocolatecake.viewmodel.tv_shows.TVShowUIState
 import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -27,11 +28,18 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
 
     override val layoutIdFragment = R.layout.fragment_tv
     override val viewModel: TVShowsViewModel by viewModels()
-    private val tvShowsAdapter by lazy { TVShowsAdapter() }
+    private val tvShowsAdapter by lazy { TVShowsAdapter(viewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
+
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip?.isChecked == true) {
+                // Do nothing when the same chip is reselected
+            }
+        }
     }
 
     private fun setAdapter() {
