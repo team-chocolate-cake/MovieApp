@@ -15,35 +15,30 @@
         android:paddingLeft="16dp"
         app:isVisible="@{!item.list.empty}">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textViewReviews"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:text="Reviews"
+            android:textColor="@color/on_background_87"
+            style="@style/TextStyle.TitleMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReviews"
+            tools:listitem="@layout/item_review"
+            android:layout_width="match_parent"
+            android:paddingBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textViewReviews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reviews"
-                android:textColor="@color/on_background_87"
-                style="@style/TextStyle.TitleMedium"
-                android:textStyle="bold"
-                android:paddingBottom="8dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewReviews"
-                tools:listitem="@layout/item_review"
-                android:layout_width="match_parent"
-                android:paddingBottom="8dp"
-                app:items="@{item.list}"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textViewReviews"
+            app:items="@{item.list}"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

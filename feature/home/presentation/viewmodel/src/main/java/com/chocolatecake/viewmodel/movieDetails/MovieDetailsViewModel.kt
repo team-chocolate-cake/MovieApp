@@ -103,9 +103,7 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     private fun onSuccessRating(ratingEntity: RatingEntity) {
-        //todo
         sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingEntity.statusMessage))
-
     }
 
 

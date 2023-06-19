@@ -47,11 +47,9 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                         state.reviewUiState
                     )
                 )
-
+                binding.nestedRecycler.smoothScrollToPosition(0)
             }
-
         }
-        binding.nestedRecycler.smoothScrollToPosition(0)
     }
 
     override fun onEvent(event: MovieDetailsUiEvent) {
@@ -72,7 +70,7 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                 bottomSheet.setMovieID(movieId)
             }
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
-//                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragment2Self(event.movieId))
+               // findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
             }
             is MovieDetailsUiEvent.onSuccessRateEvent -> {
                 //todo
