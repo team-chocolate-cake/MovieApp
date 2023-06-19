@@ -134,25 +134,25 @@
             app:layout_constraintTop_toBottomOf="@id/text_view_watch_history"
             android:onClick="@{()->viewModel.onClickMyLists()}"/>
 
-        <TextView
-            android:id="@+id/text_view_rating"
-            style="@style/TextStyle.TitleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
-            android:background="@drawable/custom_card_background"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
-            android:padding="@dimen/spacing_small_8dp"
-            android:text="@string/rating"
-            android:textColor="@color/on_background_60"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"
-            android:onClick="@{()->viewModel.onClickRating()}"/>
+<!--        <TextView-->
+<!--            android:id="@+id/text_view_rating"-->
+<!--            style="@style/TextStyle.TitleSmall"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/spacing_medium_16dp"-->
+<!--            android:layout_marginTop="@dimen/spacing_custom_12dp"-->
+<!--            android:layout_marginEnd="@dimen/spacing_medium_16dp"-->
+<!--            android:background="@drawable/custom_card_background"-->
+<!--            android:drawableStart="@drawable/ic_star"-->
+<!--            android:drawablePadding="@dimen/spacing_small_8dp"-->
+<!--            android:drawableTint="@color/on_background_38"-->
+<!--            android:padding="@dimen/spacing_small_8dp"-->
+<!--            android:text="@string/rating"-->
+<!--            android:textColor="@color/on_background_60"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"-->
+<!--            android:onClick="@{()->viewModel.onClickRating()}"/>-->
 
         <TextView
             android:id="@+id/text_view_popcorn_puzzles"
@@ -171,7 +171,7 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_rating"
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"
             android:onClick="@{()-> viewModel.onClickPopcornPuzzles()}"/>
 
         <TextView
@@ -216,16 +216,15 @@
             android:id="@+id/switch_botton_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:layout_margin="@dimen/spacing_extra_large_28dp"
             android:thumb="@drawable/switch_thumb_selector"
             android:visibility="visible"
-            app:layout_constraintTop_toTopOf="@id/text_view_theme"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/spacing_extra_large_28dp"
             app:layout_constraintBottom_toBottomOf="@id/text_view_theme"
-            app:track="@drawable/switch_track_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_view_theme"
             app:showText="false"
-            app:toggleUiMode="@{uiMode}"/>
+            app:toggleUiMode="@{uiMode}"
+            app:track="switch_track"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
