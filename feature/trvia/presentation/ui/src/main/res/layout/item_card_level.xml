@@ -8,6 +8,8 @@
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.common.model.ItemGameCardUIState" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_tiny_4dp"
-            android:text="@{item.title}"
+            android:text="@{@string/level_text(item.level)}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon_lock"
@@ -75,7 +77,7 @@
             style="@style/TextStyle.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.getFormattedProgress()}"
+            android:text="@{item.formattedProgress}"
             android:textColor="@color/on_background_38"
             app:isVisible="@{item.isOpenLevel}"
             app:layout_constraintBottom_toBottomOf="@+id/animatedProgressBar"
@@ -90,14 +92,13 @@
             android:layout_width="@dimen/zero_height"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
-            android:text="@{item.caption}"
+            android:text="@{@string/game_level_caption(item.missedQuestionsCount)}"
             android:textColor="@color/on_background_38"
             app:isVisible="@{!item.isOpenLevel}"
             app:layout_constraintEnd_toEndOf="@+id/animatedProgressBar"
             app:layout_constraintStart_toStartOf="@+id/animatedProgressBar"
             app:layout_constraintTop_toBottomOf="@id/animatedProgressBar"
-            tools:text="The level is currently locked. To unlock it - you
-need to guess 5 question" />
+            tools:text="@string/game_level_caption" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

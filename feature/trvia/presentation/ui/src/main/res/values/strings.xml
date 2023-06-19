@@ -21,5 +21,6 @@
     <string name="memorize">Memorize</string>
     <string name="comming_soon">Coming Soon</string>
     <string name="time_out">Time Out! 😥</string>
+    <string name="game_level_caption">The level is currently locked. To unlock it - you need to guess %1$d question</string>
 
 </resources>

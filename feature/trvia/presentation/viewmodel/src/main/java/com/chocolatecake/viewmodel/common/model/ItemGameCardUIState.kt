@@ -3,11 +3,17 @@ package com.chocolatecake.viewmodel.common.model
 data class ItemGameCardUIState(
     val title: String = "Level 1",
     val level: String = "Easy",
-    val progress: Int = 0,
+    val questionsCount: Int = 0,
+    val max: Int = 5,
     val caption: String? = null,
     val isOpenLevel: Boolean,
 ) {
-    fun getFormattedProgress(): String {
-        return "$progress%"
-    }
+    val progress
+        get() = questionsCount / max
+
+    val missedQuestionsCount
+        get() = max - progress
+
+    val formattedProgress
+        get() = "$progress%"
 }
