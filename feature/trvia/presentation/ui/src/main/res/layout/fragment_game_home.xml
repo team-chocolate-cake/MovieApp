@@ -51,18 +51,20 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_start"
             style="@style/PrimaryButton"
-            android:layout_width="200dp"
-            android:layout_height="48dp"
-            android:drawableRight="@drawable/ic_play"
-            android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_primary"
-            android:paddingHorizontal="@dimen/spacing_extra_giant_48dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_giant_48dp"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginBottom="@dimen/spacing_giant_32dp"
             android:text="@string/lets_start"
             android:textAllCaps="false"
-            app:layout_constraintVertical_bias="0.5"
+            app:icon="@drawable/ic_play"
+            app:iconGravity="textEnd"
+            app:iconPadding="@dimen/spacing_small_8dp"
+            app:iconTint="@color/on_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_details" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_details"
+            app:layout_constraintVertical_bias="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
