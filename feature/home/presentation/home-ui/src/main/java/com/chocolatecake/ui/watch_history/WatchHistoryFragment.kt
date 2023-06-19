@@ -40,17 +40,20 @@ class WatchHistoryFragment
         adapter = WatchHistoryAdapter(mutableListOf(), viewModel)
         binding.watchHistoryRecyclerView.adapter = adapter
     }
+
     private fun collectMovies() = collectLatest {
         viewModel.state.collect {
             adapter.setMoviesUiState(it.movies)
         }
     }
+
     override fun onEvent(event: WatchHistoryUiEvent) {
         when (event) {
             is WatchHistoryUiEvent.NavigateToMovieDetails -> navigateToMovieDetails(event.movieId)
             is WatchHistoryUiEvent.ShowSnackBar -> showSnackBar(event.message)
         }
     }
+
     private fun navigateToMovieDetails(movieId: Int) {
         findNavController()
             .navigate(
@@ -58,11 +61,13 @@ class WatchHistoryFragment
                     .actionWatchHistoryFragmentToMovieDetailsFragment(movieId)
             )
     }
+
     private fun swipeToDeleteItemSetup(itemRv: RecyclerView) {
         val swipeGesture = swipeGestureAnonymousObject()
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(itemRv)
     }
+
     private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
@@ -72,6 +77,7 @@ class WatchHistoryFragment
             }
         }
     }
+
     private fun handleSwipes(direction: Int, position: Int) {
         when (direction) {
             ItemTouchHelper.LEFT -> {
@@ -79,6 +85,7 @@ class WatchHistoryFragment
             }
         }
     }
+
     private fun onSwipeLeftActions(position: Int) {
         viewModel.setPosition(position - 1)
         viewModel.deleteItemFromUi()
@@ -101,6 +108,7 @@ class WatchHistoryFragment
                 viewModel.addItemToUi()
             }
     }
+
     private fun setupSnackBarCallback() = object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
         override fun onDismissed(
             transientBottomBar: Snackbar?,
