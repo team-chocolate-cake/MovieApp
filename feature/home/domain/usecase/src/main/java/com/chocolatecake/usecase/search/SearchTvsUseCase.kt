@@ -12,7 +12,6 @@ class SearchTvsUseCase @Inject constructor(
         keyword: String,
         genreId: Int? = null
     ): List<TvEntity> {
-
         return movieRepository.searchForTv(keyword).filter { tv ->
             tv.genreEntities.takeIf { genreId != null }
                 ?.map { it.genreID }
