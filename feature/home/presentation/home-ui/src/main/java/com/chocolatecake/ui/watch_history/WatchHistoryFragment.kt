@@ -21,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WatchHistoryFragment
-    : BaseFragment<FragmentWatchHistoryBinding, WatchHistoryUiState, WatchHistoryUiEvent>() {
+    : BaseFragment<FragmentWatchHistoryBinding, WatchHistoryUiState, WatchHistoryUiEvent>(),
+    SearchBarTextCallBack {
 
     override val layoutIdFragment = R.layout.fragment_watch_history
     override val viewModel by viewModels<WatchHistoryViewModel>()
@@ -33,17 +34,11 @@ class WatchHistoryFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
-
         swipeToDeleteItemSetup(binding.watchHistoryRecyclerView)
     }
 
     private fun setupAdapter() {
-        adapter = WatchHistoryAdapter(mutableListOf(), viewModel, object : SearchBarTextCallBack {
-            override fun setSearchQuery(text: String) {
-                viewModel.setSearchQuery(text)
-            }
-
-        })
+        adapter = WatchHistoryAdapter(mutableListOf(), viewModel, this)
         binding.watchHistoryRecyclerView.adapter = adapter
     }
 
@@ -129,5 +124,9 @@ class WatchHistoryFragment
 
     private fun createToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun setSearchQuery(query: CharSequence?) {
+        viewModel.setSearchQuery(query)
     }
 }

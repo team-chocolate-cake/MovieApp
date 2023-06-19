@@ -17,7 +17,7 @@
         android:maxLines="1"
         android:layout_margin="@dimen/spacing_medium_16dp"
         android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
-        android:afterTextChanged="@{(text) -> searchCallBack.setSearchQuery(String.valueOf(text))}"
+        android:afterTextChanged="@{(text) -> searchCallBack.setSearchQuery(text)}"
         android:background="@drawable/edittext_background"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="@dimen/spacing_small_8dp"

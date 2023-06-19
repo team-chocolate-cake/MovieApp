@@ -19,8 +19,6 @@ class WatchHistoryAdapter(
 ) : BaseAdapter<WatchHistoryRecyclerItem>(items, listener) {
     override val layoutID = -1
 
-
-
     class TitleViewHolder(val binding: WatchHistoryRecyclerViewTitleBinding) :
         BaseViewHolder(binding)
 

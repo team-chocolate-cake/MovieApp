@@ -11,18 +11,16 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/watchHistoryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
-        android:id="@+id/watchHistoryFragment">
-
+        android:background="@color/background">
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/watch_history_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/spacing_medium_16dp"
             app:items="@{viewModel.state.movies}"
@@ -31,21 +29,19 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/watch_history_recycler_view_card" />
 
-
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation_view_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:isVisible="@{(!viewModel.state.loading)  &amp;&amp;  (viewModel.state.movies.size()==0)}"
+            app:isVisible="@{(!viewModel.state.loading) &amp;&amp; (viewModel.state.movies.size() &lt;= 1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edittext_search"
+            app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/empty_state" />
+            app:lottie_rawRes="@raw/empty_state"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/textview_no_items_found"
@@ -54,7 +50,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/no_items_found"
-            app:isVisible="@{(!viewModel.state.loading) &amp;&amp;  (viewModel.state.movies.size()==0)}"
+            app:isVisible="@{(!viewModel.state.loading) &amp;&amp; (viewModel.state.movies.size() &lt;= 1)}"
             app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
             app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
             app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty" />
@@ -65,11 +61,11 @@
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/primary"
             app:isVisible="@{viewModel.state.isLoading}"
-            tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
