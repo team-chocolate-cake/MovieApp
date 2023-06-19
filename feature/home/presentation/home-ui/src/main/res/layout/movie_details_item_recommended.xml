@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.Recommended" />
@@ -12,42 +13,50 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingBottom="16dp"
-        app:isVisible="@{!item.list.empty}"
-        >
 
-        <LinearLayout
+        android:paddingBottom="16dp"
+        app:isVisible="@{!item.list.empty}">
+
+
+        <TextView
+            android:id="@+id/textViewRecommended"
+            style="@style/TextStyle.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingBottom="8dp"
+            android:text="Recommended"
+            android:textColor="@color/on_background_87"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewRecommened"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            app:items="@{item.list}"
+            android:paddingLeft="16dp"
+            android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingBottom="16dp"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/textViewRecommended"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_media_vertical" />
 
-            <TextView
-                android:id="@+id/textViewRecommended"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recommended"
-                android:paddingBottom="8dp"
+        <TextView
+            android:id="@+id/text_view_comments_section_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:text="Reviews"
+            style="@style/TextStyle.TitleMedium"
+            android:textColor="@color/on_background_87"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewRecommened" />
 
-                android:textColor="@color/on_background_87"
-                style="@style/TextStyle.TitleMedium"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewRecommened"
-                tools:listitem="@layout/item_media_vertical"
-                android:layout_width="match_parent"
-                app:items="@{item.list}"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

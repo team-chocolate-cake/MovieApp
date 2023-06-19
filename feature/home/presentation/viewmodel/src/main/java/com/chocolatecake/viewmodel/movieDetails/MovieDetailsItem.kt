@@ -9,7 +9,7 @@ sealed class MovieDetailsItem(val type: MovieDetailsType) {
 
     data class Recommended(val list: List<MediaVerticalUIState>?) : MovieDetailsItem(MovieDetailsType.RECOMMENDED)
 
-    data class Reviews(val list: List<ReviewUiState>?) : MovieDetailsItem(MovieDetailsType.REVIEWS)
+    data class Reviews(val list: ReviewUiState?) : MovieDetailsItem(MovieDetailsType.REVIEWS)
 }
 
 enum class MovieDetailsType {UPPER, PEOPLE, RECOMMENDED, REVIEWS }

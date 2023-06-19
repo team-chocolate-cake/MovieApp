@@ -22,9 +22,9 @@ class MovieDetailsViewModel @Inject constructor(
     private val ratingUseCase: GetRatingUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
-    MovieDetailsListener ,MediaListener , PeopleListener  {
+    MovieDetailsListener, MediaListener, PeopleListener {
 
-    private val movieId = savedStateHandle.get<Int>("movieId") ?:502356
+    private val movieId = savedStateHandle.get<Int>("movieId") ?: 502356
 
     init {
         _state.update { it.copy(isLoading = true) }
@@ -64,28 +64,29 @@ class MovieDetailsViewModel @Inject constructor(
                 recommendedUiState = MovieDetailsItem.Recommended(
                     movieDetails.recommendations?.recommendedMovies?.map {
                         MediaVerticalUIState(
-                            id = it?.id ?:0,
-                            rate = it?.voteAverage?:0.0,
-                            imageUrl = it?.backdropPath?:"",
+                            id = it?.id ?: 0,
+                            rate = it?.voteAverage ?: 0.0,
+                            imageUrl = it?.backdropPath ?: "",
                         )
                     },
                 ),
-                reviewUiState = MovieDetailsItem.Reviews(
-                    movieDetails.reviewEntities?.map {
+                reviewUiState =
+                movieDetails.reviewEntities?.map {
+                    MovieDetailsItem.Reviews(
                         ReviewUiState(
                             name = it.name,
                             avatar_path = it.avatar_path,
                             content = it.content,
                             created_at = it.created_at
                         )
-                    }
-                ),
+                    )
+                }?: emptyList(),
                 castUiState = MovieDetailsItem.People(
                     movieDetails.credits?.cast?.map {
                         PeopleUIState(
-                            id = it?.id?:0,
-                            name = it?.name?:"",
-                            imageUrl = it?.profilePath?:""
+                            id = it?.id ?: 0,
+                            name = it?.name ?: "",
+                            imageUrl = it?.profilePath ?: ""
                         )
                     }
                 ),

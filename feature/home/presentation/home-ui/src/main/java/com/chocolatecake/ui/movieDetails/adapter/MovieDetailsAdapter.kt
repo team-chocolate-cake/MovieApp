@@ -8,9 +8,9 @@ import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.common.adapters.MediaVerticalAdapter
 import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
+import com.chocolatecake.ui.home.databinding.ItemReviewBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemPopularPeopleBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemRecommendedBinding
-import com.chocolatecake.ui.home.databinding.MovieDetailsItemReviewsBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemUpperBinding
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
@@ -58,7 +58,7 @@ class MovieDetailsAdapter(
                 ReviewsViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.movie_details_item_reviews, parent, false
+                        R.layout.item_review, parent, false
                     )
                 )
             }
@@ -74,9 +74,6 @@ class MovieDetailsAdapter(
             is PeopleViewHolder -> bindPeople(holder, position)
             is RecommendedViewHolder -> bindRecommended(holder, position)
             is ReviewsViewHolder -> bindReviews(holder, position)
-
-
-
         }
     }
 
@@ -113,10 +110,8 @@ class MovieDetailsAdapter(
     }
 
     private fun bindReviews(holder: ReviewsViewHolder, position: Int) {
-        val topRated = itemsMovie[position] as MovieDetailsItem.Reviews
-        val adapter = ReviewsAdapter(topRated.list!!, listener)
-        holder.binding.recyclerViewReviews.adapter = adapter
-        holder.binding.item = topRated
+        val review = itemsMovie[position] as MovieDetailsItem.Reviews
+        holder.binding.item = review.list
     }
 
 
@@ -130,7 +125,7 @@ class MovieDetailsAdapter(
     class RecommendedViewHolder(val binding: MovieDetailsItemRecommendedBinding) :
         BaseViewHolder(binding)
 
-    class ReviewsViewHolder(val binding: MovieDetailsItemReviewsBinding) : BaseViewHolder(binding)
+    class ReviewsViewHolder(val binding: ItemReviewBinding) : BaseViewHolder(binding)
 
 
 }

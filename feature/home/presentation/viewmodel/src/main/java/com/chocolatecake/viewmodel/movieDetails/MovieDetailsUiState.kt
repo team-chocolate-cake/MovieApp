@@ -6,7 +6,7 @@ data class MovieDetailsUiState(
     val movieUiState: MovieDetailsItem = MovieDetailsItem.Upper(null),
     val recommendedUiState: MovieDetailsItem = MovieDetailsItem.Recommended(emptyList()),
     val castUiState: MovieDetailsItem = MovieDetailsItem.People(emptyList()),
-    val reviewUiState: MovieDetailsItem = MovieDetailsItem.Reviews(emptyList()),
+    val reviewUiState: List<MovieDetailsItem.Reviews> = emptyList(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
 )
