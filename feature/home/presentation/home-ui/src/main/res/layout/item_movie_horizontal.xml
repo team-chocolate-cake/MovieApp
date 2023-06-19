@@ -71,6 +71,7 @@
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/on_background_38"
             android:text="@{item.year}"
+            android:maxLength="3"
             android:textColor="@color/on_background_38"
             app:layout_constraintBottom_toBottomOf="@id/view_card_background"
             app:layout_constraintStart_toStartOf="@+id/text_view_genres"
