@@ -8,7 +8,7 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.WatchHistoryRecyclerViewCardBinding
 import com.chocolatecake.ui.home.databinding.WatchHistoryRecyclerViewTitleBinding
 import com.chocolatecake.viewmodel.common.listener.MediaListener
-import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryOnEventListeners
+import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
 
 class WatchHistoryAdapter(
     private var items: List<WatchHistoryRecyclerItem>,
@@ -16,6 +16,7 @@ class WatchHistoryAdapter(
 ) : BaseAdapter<WatchHistoryRecyclerItem>(items, listener) {
     override val layoutID = -1
 
+    private val itemsCreator = WatchHistoryRecyclerItemsCreator()
     class TitleViewHolder(val binding: WatchHistoryRecyclerViewTitleBinding) :
         BaseViewHolder(binding)
 
@@ -72,6 +73,10 @@ class WatchHistoryAdapter(
     }
 
 
+    fun setMoviesUiState(newList: List<MovieUiState>) {
+        setItems(itemsCreator.createItems(newList))
+    }
+
     override fun setItems(newItems: List<WatchHistoryRecyclerItem>) {
         items = newItems
         super.setItems(newItems)
@@ -79,7 +84,6 @@ class WatchHistoryAdapter(
 
 
     private companion object {
-
         const val TITLE_ITEM = 21
         const val CARD_ITEM = 14
     }

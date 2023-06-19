@@ -134,34 +134,56 @@ class WatchHistoryViewModel @Inject constructor(
         )
     }
 
-    fun deleteItemFromDataBase() {
-        viewModelScope.launch {
-            state.value.tempMovie?.let {
+    fun onSnackBarShown() {
+        _state.update {
+            it.copy(
+                snackBarUndoPressed = false
+            )
+        }
+    }
+
+    fun setPosition(position: Int) {
+        _state.update {
+            it.copy(swipePosition = position)
+        }
+    }
+
+    fun deleteItemFromDataBase() = viewModelScope.launch {
+        state.value.tempMovie?.let {
+            if (state.value.snackBarUndoPressed == false) {
                 deleteMovieFromWatchHistoryUseCase(movieDomainMapper.map(it))
             }
         }
     }
 
-    fun deleteItemFromUi(position: Int) {
-        val newList = _state.value.movies.toMutableList()
-        val tempMovie = newList[position]
-        newList.removeAt(position)
-        _state.update {
-            it.copy(
-                movies = newList,
-                tempMovie = tempMovie
-            )
+    fun deleteItemFromUi() {
+        val position = state.value.swipePosition
+        position?.let {
+            val newList = _state.value.movies.toMutableList()
+            val tempMovie = newList[position]
+            newList.removeAt(position)
+            _state.update {
+                it.copy(
+                    movies = newList,
+                    tempMovie = tempMovie
+                )
+            }
         }
     }
 
-    fun addItemToUI(position: Int) {
-        val newList = _state.value.movies.toMutableList()
-        state.value.tempMovie?.let { newList.add(position, it) }
-        _state.update {
-            it.copy(
-                movies = newList
-            )
+    fun addItemToUi() {
+        val position =state.value.swipePosition
+        position?.let {
+            val newList = _state.value.movies.toMutableList()
+            state.value.tempMovie?.let { newList.add(position, it) }
+            _state.update {
+                it.copy(
+                    movies = newList,
+                    snackBarUndoPressed = true
+                )
+            }
         }
+
     }
 
 }

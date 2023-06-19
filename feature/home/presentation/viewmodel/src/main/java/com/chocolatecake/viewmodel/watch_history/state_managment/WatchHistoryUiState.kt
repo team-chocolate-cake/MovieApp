@@ -6,6 +6,8 @@ data class WatchHistoryUiState(
     val movies: List<MovieUiState> = emptyList(),
     val isLoading: Boolean = false,
     val errors: List<Error> = emptyList(),
-    var tempMovie: MovieUiState? = null
+    var tempMovie: MovieUiState? = null,
+    var snackBarUndoPressed: Boolean? = null,
+    var swipePosition: Int? = null
 )
 
