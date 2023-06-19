@@ -50,46 +50,38 @@ class MovieDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 id = movieDetails.id,
-                movieUiState = MovieDetailsItem.Upper(
-                    UpperUiState(
-                        id = movieDetails.id,
-                        backdropPath = movieDetails.backdropPath,
-                        genres = movieDetails.genres,
-                        title = movieDetails.title,
-                        overview = movieDetails.overview,
-                        voteAverage = movieDetails.voteAverage?.toFloat()?.div(2f),
-                        videos = movieDetails.videos?.results?.map { it.key!! },
+                movieUiState = UpperUiState(
+                    id = movieDetails.id,
+                    backdropPath = movieDetails.backdropPath,
+                    genres = movieDetails.genres,
+                    title = movieDetails.title,
+                    overview = movieDetails.overview,
+                    voteAverage = movieDetails.voteAverage.toFloat().div(2f),
+                    videos = movieDetails.videos.results.map { it.key },
+                ),
+                recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
+                    MediaVerticalUIState(
+                        id = it?.id ?: 0,
+                        rate = it?.voteAverage ?: 0.0,
+                        imageUrl = it?.backdropPath ?: "",
                     )
-                ),
-                recommendedUiState = MovieDetailsItem.Recommended(
-                    movieDetails.recommendations?.recommendedMovies?.map {
-                        MediaVerticalUIState(
-                            id = it?.id ?: 0,
-                            rate = it?.voteAverage ?: 0.0,
-                            imageUrl = it?.backdropPath ?: "",
-                        )
-                    },
-                ),
-                reviewUiState =
-                movieDetails.reviewEntities?.map {
-                    MovieDetailsItem.Reviews(
-                        ReviewUiState(
-                            name = it.name,
-                            avatar_path = it.avatar_path,
-                            content = it.content,
-                            created_at = it.created_at
-                        )
+                } ?: emptyList(),
+                reviewUiState = movieDetails.reviewEntities.map {
+                    ReviewUiState(
+                        name = it.name,
+                        avatar_path = it.avatar_path,
+                        content = it.content,
+                        created_at = it.created_at
                     )
-                }?: emptyList(),
-                castUiState = MovieDetailsItem.People(
-                    movieDetails.credits?.cast?.map {
-                        PeopleUIState(
-                            id = it?.id ?: 0,
-                            name = it?.name ?: "",
-                            imageUrl = it?.profilePath ?: ""
-                        )
-                    }
-                ),
+                } ?: emptyList(),
+                castUiState =
+                movieDetails.credits.cast.map {
+                    PeopleUIState(
+                        id = it?.id ?: 0,
+                        name = it?.name ?: "",
+                        imageUrl = it?.profilePath ?: ""
+                    )
+                } ?: emptyList(),
                 isLoading = false
             )
         }

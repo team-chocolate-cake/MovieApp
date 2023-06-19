@@ -3,7 +3,6 @@ package com.chocolatecake.ui.movieDetails.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.airbnb.lottie.L
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.common.adapters.MediaVerticalAdapter
 import com.chocolatecake.ui.common.adapters.PeopleAdapter
@@ -14,8 +13,6 @@ import com.chocolatecake.ui.home.databinding.MovieDetailsItemRecommendedBinding
 import com.chocolatecake.ui.home.databinding.MovieDetailsItemUpperBinding
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsType
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener
 
 class MovieDetailsAdapter(

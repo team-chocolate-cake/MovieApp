@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.Upper" />
+            type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.Upper" />
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener" />

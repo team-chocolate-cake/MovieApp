@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.Recommended" />
+            type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.Recommended" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

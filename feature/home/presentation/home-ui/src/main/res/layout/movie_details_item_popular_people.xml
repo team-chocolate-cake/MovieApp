@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem.People" />
+            type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.People" />
 
         <variable
             name="listener"

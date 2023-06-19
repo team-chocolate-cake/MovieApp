@@ -9,11 +9,10 @@ import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsItem
+import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
-import com.chocolatecake.viewmodel.movieDetails.ReviewUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -43,10 +42,11 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
             viewModel.state.collect { state ->
                 movieDetailsAdapter.setItems(
                     mutableListOf(
-                        state.movieUiState,
-                        state.castUiState,
-                        state.recommendedUiState,
-                    )+ state.reviewUiState
+                        MovieDetailsItem.Upper(state.movieUiState),
+                        MovieDetailsItem.People(state.castUiState),
+                        MovieDetailsItem.Recommended(state.recommendedUiState),
+
+                    )+state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
             }

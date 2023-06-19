@@ -6,7 +6,7 @@ data class MovieVideoEntity(
     val id: String?,
     val iso31661: String?,
     val iso6391: String?,
-    val key: String?,
+    val key: String = "",
     val name: String?,
     val official: Boolean,
     val publishedAt: String?,
