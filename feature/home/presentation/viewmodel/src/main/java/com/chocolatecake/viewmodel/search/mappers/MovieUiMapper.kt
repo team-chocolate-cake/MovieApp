@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.search.mappers
 
+import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.viewmodel.common.model.MovieHorizontalUIState
@@ -12,8 +13,17 @@ class MovieUiMapper @Inject constructor()  : Mapper<MovieEntity, MovieHorizontal
             rate = input.rate,
             title = input.title,
             imageUrl = input.imageUrl,
-            year = input.extractYearFromDate(),
-            genres = input.convertGenreListToString()
+            year = extractYearFromDate(input.year),
+            genres = convertGenreListToString(input.genreEntities),
         )
+    }
+
+    private fun convertGenreListToString(list: List<GenreEntity>): String {
+        return list.joinToString(" | ") { it.genreName }
+    }
+
+    private fun extractYearFromDate(year: String): String {
+        val parts = year.split("-")
+        return parts[0]
     }
 }
