@@ -30,12 +30,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         super.onViewCreated(view, savedInstanceState)
         setupHomeAdapter()
         collectChange()
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
-            if (chip?.isChecked == true) {
-                // Do nothing when the same chip is reselected
-            }
-        }
+        doNothingWhenTheSameChipIsReslected()
     }
 
     private fun setupHomeAdapter() {
@@ -136,5 +131,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
             Toast.LENGTH_SHORT
         )
             .show()
+    }
+
+    private fun doNothingWhenTheSameChipIsReslected() {
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip?.isChecked == true) {
+                // Do nothing when the same chip is reselected
+            }
+        }
     }
 }

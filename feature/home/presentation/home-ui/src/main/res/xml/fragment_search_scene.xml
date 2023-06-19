@@ -13,9 +13,11 @@
             android:id="@+id/linearProgressIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
-            motion:layout_constraintStart_toStartOf="@id/edittext_search"
+            android:layout_marginStart="@dimen/spacing_x_medium_20dp"
+            android:layout_marginEnd="@dimen/spacing_x_medium_20dp"
             motion:layout_constraintTop_toBottomOf="@id/edittext_search"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
             motion:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/image_button_filter"
@@ -77,17 +79,10 @@
             android:layout_height="wrap_content"
             motion:visibilityMode="ignore"
             motion:layout_constraintTop_toBottomOf="@id/edittext_search"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             motion:layout_constraintStart_toStartOf="@id/edittext_search" />
-        <TextView
-            android:id="@+id/text_view_try_again"
-            android:textColor="@color/on_background_60"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:visibilityMode="ignore"
-            android:layout_marginTop="@dimen/spacing_small_8dp"
-            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
-            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
-            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"/>
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -96,8 +91,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0"
-            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
-            motion:layout_constraintStart_toStartOf="@id/edittext_search"
+            android:layout_marginStart="@dimen/spacing_x_medium_20dp"
+            android:layout_marginEnd="@dimen/spacing_x_medium_20dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/edittext_search"
             motion:visibilityMode="ignore" />
         <Constraint
@@ -158,17 +155,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:visibilityMode="ignore"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
             motion:layout_constraintTop_toBottomOf="@id/edittext_search"
             motion:layout_constraintStart_toStartOf="@id/edittext_search" />
-        <TextView
-            android:id="@+id/text_view_try_again"
-            android:textColor="@color/on_background_60"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:visibilityMode="ignore"
-            android:layout_marginTop="@dimen/spacing_small_8dp"
-            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
-            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
-            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"/>
+
     </ConstraintSet>
 </MotionScene>
