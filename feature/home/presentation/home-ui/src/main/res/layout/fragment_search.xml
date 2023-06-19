@@ -153,5 +153,20 @@
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             app:isVisible="@{viewModel.state.isFailure}" />
 
+        <TextView
+            android:id="@+id/text_view_try_again"
+            style="@style/TextStyle.BodyMedium"
+            android:textColor="@color/on_background_60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again"
+            app:showWhenFailure="@{viewModel.state.error}"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            app:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
+            app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
+            app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
+            app:isVisible="@{viewModel.state.isFailure}"
+            android:onClick="@{() -> viewModel.getData()}"/>
+
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

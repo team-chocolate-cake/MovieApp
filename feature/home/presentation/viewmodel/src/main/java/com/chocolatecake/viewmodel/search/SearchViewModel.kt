@@ -74,6 +74,7 @@ class SearchViewModel @Inject constructor(
 
     // region get data
     fun getData() {
+        _state.update { it.copy(isLoading = true) }
         when (_state.value.mediaType) {
             SearchUiState.SearchMedia.MOVIE -> onSearchForMovie()
             SearchUiState.SearchMedia.TV -> onSearchForTv()
