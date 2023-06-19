@@ -1,6 +1,7 @@
 package com.chocolatecake.movieapp
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -10,6 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
 import com.chocolatecake.ui.LoginFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         binding.bottomNavigation.setupWithNavController(navController)
 
+        val reselectedListener = CustomOnNavigationItemReselectedListener(navController)
+        binding.bottomNavigation.setOnNavigationItemReselectedListener(reselectedListener)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 com.chocolatecake.ui.home.R.id.homeFragment,
@@ -43,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 else -> hideBottomNav()
             }
         }
+
         handleIsAuthorized(navController)
     }
 
@@ -70,6 +76,13 @@ class MainActivity : AppCompatActivity() {
                 .setDuration(300)
                 .withEndAction { visibility = View.GONE }
                 .start()
+        }
+    }
+    inner class CustomOnNavigationItemReselectedListener(private val navController: NavController) :
+        BottomNavigationView.OnNavigationItemReselectedListener {
+
+        override fun onNavigationItemReselected(item: MenuItem) {
+            // Do nothing when the same item is reselected
         }
     }
 }
