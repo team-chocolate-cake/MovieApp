@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.memorize_game
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.BoardEntity
@@ -47,7 +46,6 @@ class MemorizeGameViewModel @Inject constructor(
     private fun onSuccessBoard(boardEntity: BoardEntity) {
         _state.update {
             val board = boardEntity.itemsEntity.toUIState()
-            Log.e("TAGTAG", "board: ${board.size}", )
             it.copy(
                 boardSize = boardEntity.itemsEntity.size,
                 CorrectPairPositions = boardEntity.pairOfCorrectPositions,
@@ -99,18 +97,18 @@ class MemorizeGameViewModel @Inject constructor(
 
     private fun toggleGameItem(itemGameImageUiState: ItemGameImageUiState) {
         viewModelScope.launch {
-            val modifyItem = itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
+            val modifyItem =
+                itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
             val modifyBoard = (_state.value.board - itemGameImageUiState).toMutableList()
             modifyBoard.add(modifyItem.position, modifyItem)
             _state.update { it.copy(board = modifyBoard) }
-            delay(500)
+            delay(300)
             saveUserPosition(itemGameImageUiState.position)
         }
     }
 
     private fun saveUserPosition(position: Int) {
-        val uiState = _state.value
-        if (uiState.firstUserPosition == null) {
+        if (state.value.firstUserPosition == null) {
             saveFirstPosition(position)
         } else {
             saveSecondPosition(position)
@@ -123,7 +121,7 @@ class MemorizeGameViewModel @Inject constructor(
 
     private fun saveSecondPosition(position: Int) {
         val firstPosition = _state.value.firstUserPosition!!
-        if (_state.value.CorrectPairPositions == Pair(firstPosition, position)) {
+        if (_state.value.CorrectPairPositions.equalsIgnoreOrder(Pair(firstPosition, position))) {
             viewModelScope.launch {
                 _state.update {
                     it.copy(
@@ -150,6 +148,10 @@ class MemorizeGameViewModel @Inject constructor(
         _state.update { it.copy(isError = true) }
         sendEvent(MemorizeGameUIEvent.ShowSnackbar(throwable.message.toString()))
     }
+}
+
+private fun <A : Comparable<A>> Pair<A, A>.equalsIgnoreOrder(pair: Pair<A, A>): Boolean {
+    return listOf(first, second).sorted() == setOf(pair.first, pair.second).sorted()
 }
 
 

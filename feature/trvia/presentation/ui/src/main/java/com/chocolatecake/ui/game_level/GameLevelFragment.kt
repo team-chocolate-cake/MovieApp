@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.game_level
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,12 +24,7 @@ class GameLevelFragment :
         super.onViewCreated(view, savedInstanceState)
         adapter = GameLevelAdapter(mutableListOf(), viewModel)
         binding.recyclerViewLevelGames.adapter = adapter
-        collectLatest {
-            viewModel.state.collectLatest { state ->
-                Log.e("TAGTAG", "onViewCreated: $state")
-                adapter.setItems(state.gameLevel)
-            }
-        }
+        collectLatest { viewModel.state.collectLatest { state -> adapter.setItems(state.gameLevel) } }
     }
 
     override fun onEvent(event: GameLevelUIEvent) {

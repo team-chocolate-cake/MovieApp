@@ -115,11 +115,10 @@ class TriviaRepositoryIml @Inject constructor(
 
     override suspend fun getBoard(level: Int): BoardEntity {
         val size = when (level) {
-            1 -> 12
-            2 -> 21
-            else -> 36
+            1 -> 9
+            2 -> 12
+            else -> 20
         }
-
         val movies = movieRepository.getPopularMovies().shuffled().take(size - 1)
         val choice = movies.random()
         val modifiedMovies = (movies + choice).shuffled()

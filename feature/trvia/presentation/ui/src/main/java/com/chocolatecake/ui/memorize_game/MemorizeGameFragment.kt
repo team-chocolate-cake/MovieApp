@@ -14,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class MemorizeGameFragment : BaseFragment<FragmentMemorizeBinding, MemorizeGameUIState, MemorizeGameUIEvent>() {
+class MemorizeGameFragment :
+    BaseFragment<FragmentMemorizeBinding, MemorizeGameUIState, MemorizeGameUIEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_memorize
     override val viewModel: MemorizeGameViewModel by viewModels()
@@ -24,11 +25,7 @@ class MemorizeGameFragment : BaseFragment<FragmentMemorizeBinding, MemorizeGameU
         super.onViewCreated(view, savedInstanceState)
         memorizeGameAdapter = MemorizeGameAdapter(mutableListOf(), viewModel)
         binding.recyclerViewMemorizeGame.adapter = memorizeGameAdapter
-        collectLatest {
-            viewModel.state.collectLatest { state ->
-                memorizeGameAdapter.setItems(state.board)
-            }
-        }
+        collectLatest { viewModel.state.collectLatest { state -> memorizeGameAdapter.setItems(state.board) } }
     }
 
     override fun onEvent(event: MemorizeGameUIEvent) {
