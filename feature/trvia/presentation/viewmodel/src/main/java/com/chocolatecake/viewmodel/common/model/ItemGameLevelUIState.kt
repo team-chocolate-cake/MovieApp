@@ -7,12 +7,11 @@ data class ItemGameLevelUIState(
     val questionsCount: Int = 0,
     val max: Int = 5,
     val isOpenLevel: Boolean,
+    val hasProgress: Boolean = true,
 ) {
-    val missedQuestionsCount
-        get() = max - questionsCount
 
     val progress: Int
-        get() = ((questionsCount.toDouble() / max) * 100.0).roundToInt()
+        get() = if (hasProgress) ((questionsCount.toDouble() / max) * 100.0).roundToInt() else 0
 
     val formattedProgress
         get() = "$progress%"

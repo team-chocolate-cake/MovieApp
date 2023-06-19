@@ -21,7 +21,8 @@
     <string name="memorize">Memorize</string>
     <string name="comming_soon">Coming Soon</string>
     <string name="time_out">Time Out! 😥</string>
-    <string name="game_level_caption">The level is currently locked. To unlock it - you need to guess %1$d question</string>
+    <string name="game_level_caption">The level is currently locked. To unlock it - you
+need to pass the last level %1$d</string>
     <string name="pass_prev_level">You must pass previous level first</string>
 
 </resources>

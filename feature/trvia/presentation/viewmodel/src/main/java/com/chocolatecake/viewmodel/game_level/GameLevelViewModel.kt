@@ -6,6 +6,7 @@ import com.chocolatecake.entities.UserEntity
 import com.chocolatecake.usecase.GetCurrentUserUseCase
 import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.ItemGameLevelUIState
+import com.chocolatecake.viewmodel.game_level.utill.GameLevelGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameLevelViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val gameLevelGenerator: GameLevelGenerator,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<GameLevelUIState, GameLevelUIEvent>(GameLevelUIState()), ItemGameLevelListener {
     private val gameType = savedStateHandle.get<GameType>("game_level_type") ?: GameType.PEOPLE
@@ -42,35 +44,10 @@ class GameLevelViewModel @Inject constructor(
 
     private fun getGameLevelFromUser(userEntity: UserEntity): List<ItemGameLevelUIState> {
         return when (gameType) {
-            GameType.PEOPLE -> getPeopleGameLevelUISate(userEntity)
-            GameType.MOVIE -> TODO()
-            GameType.TV_SHOW -> TODO()
-            GameType.MEMORIZE -> TODO()
-        }
-    }
-
-    private fun getPeopleGameLevelUISate(userEntity: UserEntity): List<ItemGameLevelUIState> {
-        return userEntity.run {
-            listOf(
-                ItemGameLevelUIState(
-                    level = 1,
-                    questionsCount = if (peopleGameLevel > 1) 5 else numPeopleQuestionsPassed,
-                    max = 5,
-                    isOpenLevel = peopleGameLevel >= 1
-                ),
-                ItemGameLevelUIState(
-                    level = 2,
-                    questionsCount = if (peopleGameLevel > 2) 10 else numPeopleQuestionsPassed,
-                    max = 10,
-                    isOpenLevel = peopleGameLevel >= 2
-                ),
-                ItemGameLevelUIState(
-                    level = 3,
-                    questionsCount = if (peopleGameLevel > 3) 15 else numPeopleQuestionsPassed,
-                    max = 15,
-                    isOpenLevel = peopleGameLevel >= 3
-                ),
-            )
+            GameType.PEOPLE -> gameLevelGenerator.getPeopleGameLevelUISate(userEntity)
+            GameType.MOVIE -> gameLevelGenerator.getMovieGameLevelUISate(userEntity)
+            GameType.TV_SHOW -> gameLevelGenerator.getTvGameLevelUISate(userEntity)
+            GameType.MEMORIZE -> gameLevelGenerator.getMemorizeGameLevelUISate(userEntity)
         }
     }
 
