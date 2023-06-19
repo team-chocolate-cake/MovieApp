@@ -16,9 +16,9 @@
             style="@style/TextStyle.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
             android:text="@string/popcorn_puzzles"
             android:textColor="@color/on_background_87"
-            android:layout_marginTop="@dimen/spacing_extra_giant_48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,41 +27,42 @@
             android:id="@+id/image_view_game"
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            app:lottie_rawRes="@raw/welcome"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_popcorn_puzzles"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            android:layout_marginTop="@dimen/spacing_large_24dp"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_popcorn_puzzles" />
+            app:lottie_rawRes="@raw/welcome" />
 
         <TextView
             android:id="@+id/text_view_details"
             style="@style/TextStyle.BodyLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large_24dp"
-            android:text="@string/details"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
+            android:gravity="center"
             android:paddingVertical="@dimen/spacing_medium_16dp"
+            android:text="@string/details"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view_game" />
 
         <com.google.android.material.button.MaterialButton
-            style="@style/PrimaryButton"
             android:id="@+id/button_start"
+            style="@style/PrimaryButton"
             android:layout_width="200dp"
             android:layout_height="48dp"
-            android:layout_marginTop="120dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/lets_start"
-            android:textAllCaps="false"
-            android:paddingHorizontal="@dimen/spacing_extra_giant_48dp"
             android:drawableRight="@drawable/ic_play"
             android:drawablePadding="@dimen/spacing_small_8dp"
             android:drawableTint="@color/on_primary"
-            app:layout_constraintStart_toStartOf="@+id/text_view_details"
+            android:paddingHorizontal="@dimen/spacing_extra_giant_48dp"
+            android:text="@string/lets_start"
+            android:textAllCaps="false"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_details" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
