@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.watch_history
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -32,20 +33,20 @@ class WatchHistoryFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
-        collectMovies()
+
         swipeToDeleteItemSetup(binding.watchHistoryRecyclerView)
     }
 
     private fun setupAdapter() {
-        adapter = WatchHistoryAdapter(mutableListOf(), viewModel)
+        adapter = WatchHistoryAdapter(mutableListOf(), viewModel, object : SearchBarTextCallBack {
+            override fun setSearchQuery(text: String) {
+                viewModel.setSearchQuery(text)
+            }
+
+        })
         binding.watchHistoryRecyclerView.adapter = adapter
     }
 
-    private fun collectMovies() = collectLatest {
-        viewModel.state.collect {
-            adapter.setMoviesUiState(it.movies)
-        }
-    }
 
     override fun onEvent(event: WatchHistoryUiEvent) {
         when (event) {
@@ -87,10 +88,12 @@ class WatchHistoryFragment
     }
 
     private fun onSwipeLeftActions(position: Int) {
-        viewModel.setPosition(position - 1)
+        Log.i("batata", "onSwipeLeftActions: $position")
+        viewModel.setPosition(position)
         viewModel.deleteItemFromUi()
         deletionIndicatorSnackBar.show()
     }
+
     private fun setupSnackBar(): Snackbar {
         return Snackbar.make(
             binding.root,
@@ -123,6 +126,7 @@ class WatchHistoryFragment
             super.onShown(snackBar)
         }
     }
+
     private fun createToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }

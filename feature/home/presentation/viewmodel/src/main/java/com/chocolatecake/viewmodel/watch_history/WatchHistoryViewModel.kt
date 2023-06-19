@@ -2,8 +2,10 @@ package com.chocolatecake.viewmodel.watch_history
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.GetAllWatchHistoryMoviesUseCase
+import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieDomainMapper
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,27 +29,97 @@ class WatchHistoryViewModel @Inject constructor(
     private val deleteMovieFromWatchHistoryUseCase: DeleteMovieFromWatchHistoryUseCase,
     private val searchWatchHistoryUseCase: SearchWatchHistoryUseCase,
     private val movieDomainMapper: MovieDomainMapper,
-    private val movieUiStateMapper: MovieUiStateMapper
+    private val movieUiStateMapper: MovieUiStateMapper,
+    private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase
 ) : BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(WatchHistoryUiState()), MediaListener {
+
+    private val itemsCreator = WatchHistoryRecyclerItemsCreator()
+
     init {
         getAllMovies()
         initSearchCallBacks()
+//        testing()
+    }
+
+    private fun testing() {
+        viewModelScope.launch {
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 1,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "ronaldo",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 2,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "messi",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            insertMovieToWatchHistoryUseCase(
+                MovieInWatchHistoryEntity(
+                    id = 3,
+                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                    dateWatched = Date(),
+                    title = "ake",
+                    description = "batata for sale ",
+                    voteAverage = 9.3,
+                    year = 2012
+                )
+            )
+            for (i in 5..10) {
+                insertMovieToWatchHistoryUseCase(
+                    MovieInWatchHistoryEntity(
+                        id = i,
+                        posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-					advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                        dateWatched = Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000),
+                        title = "$i",
+                        description = "batata for sale ",
+                        voteAverage = 9.3,
+                        year = 2012
+                    )
+                )
+            }
+            for (i in 11..20) {
+                insertMovieToWatchHistoryUseCase(
+                    MovieInWatchHistoryEntity(
+                        id = i,
+                        posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-					advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
+                        dateWatched = Date(System.currentTimeMillis() - 2 * 24 * 60 * 60 * 1000),
+                        title = "$i",
+                        description = "batata for sale ",
+                        voteAverage = 9.3,
+                        year = 2012
+                    )
+                )
+            }
+        }
     }
 
     private fun getAllMovies() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = {
-                getAllWatchHistoryMoviesUseCase().map {
+                val m = getAllWatchHistoryMoviesUseCase().map {
                     movieUiStateMapper.map(it)
                 }
+                itemsCreator.createItems(m)
             },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )
     }
 
-    private fun onGetAllMoviesSuccess(items: List<MovieUiState>) {
+    private fun onGetAllMoviesSuccess(items: List<WatchHistoryRecyclerItem>) {
         _state.update {
             it.copy(
                 movies = items,
@@ -109,23 +182,36 @@ class WatchHistoryViewModel @Inject constructor(
     }
 
     private suspend fun searchMovies(searchTerm: String) {
-        var result: List<MovieUiState>
-        runBlocking {
-            result = searchWatchHistoryUseCase(searchTerm).map {
+        _state.update { uiState ->
+            uiState.copy(
+                isLoading = true
+            )
+        }
+
+        var result: List<WatchHistoryRecyclerItem> = emptyList()
+
+        try {
+            val m = getAllWatchHistoryMoviesUseCase().map {
                 movieUiStateMapper.map(it)
             }
+            result = itemsCreator.createItems(m)
+        } catch (e: Exception) {
+            updateStateToError(e)
         }
 
         _state.update { uiState ->
-            uiState.copy(
-                movies = result,
-                isLoading = false
-            )
+            uiState.copy(movies = result, isLoading = false)
         }
     }
 
+
     fun setSearchQuery(query: CharSequence?) {
-        _state.update { it.copy(searchInput = query.toString()) }
+        _state.update {
+            it.copy(
+                isLoading = false,
+                searchInput = query.toString()
+            )
+        }
     }
 
     override fun onClickMedia(id: Int) {
@@ -165,17 +251,20 @@ class WatchHistoryViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     movies = newList,
-                    tempMovie = tempMovie
+                    tempMovie = (tempMovie as WatchHistoryRecyclerItem.MovieCard).movie
                 )
             }
         }
     }
 
     fun addItemToUi() {
-        val position =state.value.swipePosition
+        val position = state.value.swipePosition
         position?.let {
             val newList = _state.value.movies.toMutableList()
-            state.value.tempMovie?.let { newList.add(position, it) }
+            state.value.tempMovie?.let {
+                newList.add(position,
+                WatchHistoryRecyclerItem.MovieCard(it)
+                ) }
             _state.update {
                 it.copy(
                     movies = newList,
