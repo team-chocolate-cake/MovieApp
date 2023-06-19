@@ -13,9 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:paddingBottom="16dp"
-        app:isVisible="@{!item.list.empty}">
+        >
 
 
         <TextView
@@ -23,13 +22,14 @@
             style="@style/TextStyle.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
             android:paddingBottom="8dp"
             android:text="Recommended"
             android:textColor="@color/on_background_87"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisibleOrGone="@{!item.list.empty}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewRecommened"
@@ -37,13 +37,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:items="@{item.list}"
-            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
             android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRecommended"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_media_vertical" />
+            tools:listitem="@layout/item_media_vertical"
+            app:isVisibleOrGone="@{!item.list.empty}"/>
 
         <TextView
             android:id="@+id/text_view_comments_section_title"
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:text="Reviews"
+            app:isVisibleOrGone="@{!item.emptyReviews}"
             style="@style/TextStyle.TitleMedium"
             android:textColor="@color/on_background_87"
             android:textStyle="bold"

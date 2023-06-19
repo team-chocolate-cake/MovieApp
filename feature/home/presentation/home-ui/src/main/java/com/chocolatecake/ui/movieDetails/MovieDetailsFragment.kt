@@ -17,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetailsUiState, MovieDetailsUiEvent>() {
+class MovieDetailsFragment :
+    BaseFragment<FragmentMovieDetailsBinding, MovieDetailsUiState, MovieDetailsUiEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_movie_details
     override val viewModel: MovieDetailsViewModel by viewModels()
@@ -27,13 +28,13 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
-        binding.toolbar.title =""
+        binding.toolbar.title = ""
         setAdapter()
         collectChange()
     }
 
     private fun setAdapter() {
-        movieDetailsAdapter = MovieDetailsAdapter(mutableListOf(), viewModel , viewModel , viewModel)
+        movieDetailsAdapter = MovieDetailsAdapter(mutableListOf(), viewModel, viewModel, viewModel)
         binding.nestedRecycler.adapter = movieDetailsAdapter
     }
 
@@ -44,9 +45,12 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
                     mutableListOf(
                         MovieDetailsItem.Upper(state.movieUiState),
                         MovieDetailsItem.People(state.castUiState),
-                        MovieDetailsItem.Recommended(state.recommendedUiState),
+                        MovieDetailsItem.Recommended(
+                            state.recommendedUiState,
+                            state.reviewUiState.isEmpty()
+                        ),
 
-                    )+state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
+                        ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
             }
@@ -55,27 +59,33 @@ class MovieDetailsFragment: BaseFragment<FragmentMovieDetailsBinding, MovieDetai
 
     override fun onEvent(event: MovieDetailsUiEvent) {
         val bottomSheet = RatingMovieBottomSheet()
-        when(event){
+        when (event) {
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
+
             is MovieDetailsUiEvent.PeopleEvent -> {
                 //todo
             }
+
             is MovieDetailsUiEvent.PlayVideoEvent -> {
                 //todo
             }
+
             is MovieDetailsUiEvent.RateMovieEvent -> {
                 val movieId = event.movieId
                 bottomSheet.show(childFragmentManager, "BOTTOM")
                 bottomSheet.setMovieID(movieId)
             }
+
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
-               // findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
+                // findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
             }
+
             is MovieDetailsUiEvent.onSuccessRateEvent -> {
                 //todo
             }
+
             is MovieDetailsUiEvent.SaveToEvent -> {
                 //todo
             }
