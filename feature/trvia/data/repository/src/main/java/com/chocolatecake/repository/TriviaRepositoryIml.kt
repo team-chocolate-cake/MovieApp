@@ -1,5 +1,6 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import com.chocolatecake.entities.BoardEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.PeopleEntity
@@ -78,9 +79,12 @@ class TriviaRepositoryIml @Inject constructor(
         val movies = movieRepository.getPopularMovies()
             .filter { !it.imageUrl.contains("null") }
             .shuffled().take(4)
+        Log.e("TAGTAG", "getMovieQuestion: $movies", )
         val question = fakeQuestions.getMovieQuestion(level)
         val selectedMovie = movies.random()
-        val selectedGenre = selectedMovie.genreEntities.map { it.genreName }.first()
+        Log.e("TAGTAG", "selectedMovie: $selectedMovie", )
+        val selectedGenre = movieRepository.getMoviesDetails(selectedMovie.id).genres?.first() ?: "Action"
+        Log.e("TAGTAG", "selectedGenre: $selectedGenre", )
 
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> movies.map { it.title }

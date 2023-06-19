@@ -33,7 +33,14 @@
         android:id="@+id/movieGuessingFragment"
         tools:layout="@layout/fragment_moive_guessing"
         android:name="com.chocolatecake.ui.movie_guessing.MovieGuessingFragment"
-        android:label="MovieGuessingFragment" />
+        android:label="MovieGuessingFragment" >
+        <action
+            android:id="@+id/action_movieGuessingFragment_to_congratsFragment"
+            app:destination="@id/congratsFragment" />
+        <action
+            android:id="@+id/action_movieGuessingFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/peopleGuessingFragment"
         tools:layout="@layout/fragment_people_guessing"
