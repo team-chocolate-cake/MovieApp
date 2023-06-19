@@ -1,8 +1,8 @@
 package com.chocolatecake.movieapp.di
 
 import com.chocolatecake.movieapp.BuildConfig
-import com.chocolatecake.movieapp.data.remote.service.AuthInterceptor
-import com.chocolatecake.movieapp.data.remote.service.MovieService
+import com.chocolatecake.remote.service.AuthInterceptor
+import com.chocolatecake.remote.service.MovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMovieService(retrofit: Retrofit): MovieService{
+    fun provideMovieService(retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
     }
 

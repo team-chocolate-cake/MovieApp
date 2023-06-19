@@ -11,21 +11,16 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     namespace 'com.chocolatecake.movieapp'
-    compileSdk 33
-
+    compileSdk rootProject.compileSdkVersion
     defaultConfig {
         applicationId "com.chocolatecake.movieapp"
-        minSdk 28
-        targetSdk 33
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField "String", "API_KEY", localProperties['API_KEY']
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
-        buildConfigField "String", "IMAGE_BASE_PATH", "\"https://image.tmdb.org/t/p/w500\""
-        buildConfigField "String", "TMDB_SIGNUP_URL", "\"https://www.themoviedb.org/signup\""
     }
 
     buildTypes {
@@ -45,71 +40,58 @@ android {
         dataBinding true
         buildConfig true
     }
-    buildFeatures {
-        dataBinding true
-        buildConfig true
-    }
 }
 
 dependencies {
+    implementation project(path: ':core:bases')
+    implementation project(path: ':core:data:local')
+    implementation project(path: ':core:data:remote')
+    implementation project(path: ':core:data:repository')
+    implementation project(path: ':core:domain:usecase')
+    implementation project(path: ':feature:authectication:domain:usecase')
+    implementation project(path: ':feature:authectication:presentation:ui')
+    implementation project(path: ':feature:authectication:presentation:viewmodel')
+    implementation project(path: ':feature:home:domain:usecase')
+    implementation project(path: ':feature:home:presentation:home-ui')
+    implementation project(path: ':feature:home:presentation:viewmodel')
+    implementation project(path: ':feature:trvia:domain:usecase')
+    implementation project(path: ':feature:trvia:data:repository')
+    implementation project(path: ':feature:trvia:presentation:ui')
+    implementation project(path: ':feature:trvia:presentation:viewmodel')
 
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.core:core-ktx:$androidXVersion"
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoTestVersion"
 
     /// navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidxNavigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidxNavigationVersion"
 
     /// coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
 
-    /// retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
-
-    /// room
-    def room_version = "2.5.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    // optional - Paging 3 Integration
-    implementation "androidx.room:room-paging:$room_version"
 
     /// hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    /// glide
-    implementation 'com.github.bumptech.glide:glide:4.15.1'
-
-    /// viewModel
-    implementation 'androidx.fragment:fragment-ktx:1.5.7'
-    implementation 'androidx.activity:activity-ktx:1.7.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-
-    /// Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:1.1.0-alpha04"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-
-    /// lottie
-    implementation 'com.airbnb.android:lottie:6.0.0'
-
-    /// slider
-    implementation 'com.github.smarteist:autoimageslider:1.4.0'
-
+    /// splash
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    /// room
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    /// Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:$preferencesDataStoreVersion"
 
+    /// retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$retrofitLoggingVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 }

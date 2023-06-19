@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.chocolatecake.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.chocolatecake.ui.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/tvFragment"
+        android:name="com.chocolatecake.ui.tvShow.TvFragment"
+        android:label="TvFragment"
+        tools:layout="@layout/fragment_tv" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.chocolatecake.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_game_nav_graph"
+            app:destination="@id/game_nav_graph" />
+
+    </fragment>
+
+    <include app:graph="@navigation/game_nav_graph" />
+
+    <fragment
+        android:id="@+id/watchHistoryFragment"
+        tools:layout="@layout/fragment_watch_history"
+        android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
+        android:label="WatchHistoryFragment" />
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.chocolatecake.ui.movieDetails.MovieDetailsFragment"
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="movieId"
+            app:argType="integer"/>
+    </fragment>
+</navigation>

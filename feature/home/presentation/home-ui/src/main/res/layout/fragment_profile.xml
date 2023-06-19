@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.profile.ProfileListener" />
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.profile.ProfileViewModel" />
+
+        <variable
+            name="uiMode"
+            type="android.app.UiModeManager" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_view_profile"
+            android:layout_width="123dp"
+            android:layout_height="133dp"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="118dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
+            tools:src="@tools:sample/backgrounds/scenic"
+            app:imageUrl="@{viewModel.state.avatarUrl}" />
+
+        <TextView
+            android:id="@+id/text_view_profile_username"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_view_profile"
+            tools:text=" @el-mtarsham"
+            android:text="@{viewModel.state.username}" />
+
+        <TextView
+            android:id="@+id/text_view_favorite"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_extra_large_28dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_heart"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/favorite"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username"
+            android:onClick="@{()->viewModel.onClickFavorite()}"/>
+
+        <TextView
+            android:id="@+id/text_view_watchlist"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_bookmark"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/watchlist"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_favorite"
+            android:onClick="@{()->viewModel.onClickWatchlist()}"/>
+
+        <TextView
+            android:id="@+id/text_view_watch_history"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/watch_history"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist"
+            android:onClick="@{()->viewModel.onClickWatchHistory()}"/>
+
+        <TextView
+            android:id="@+id/text_view_mylists"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_checklist"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/my_lists"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history"
+            android:onClick="@{()->viewModel.onClickMyLists()}"/>
+
+        <TextView
+            android:id="@+id/text_view_rating"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/rating"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"
+            android:onClick="@{()->viewModel.onClickRating()}"/>
+
+        <TextView
+            android:id="@+id/text_view_puzzle"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_gamepad"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/popcorn_puzzles"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_rating"
+            android:onClick="@{()-> viewModel.onClickPopcornPuzzles()}"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/text_view_theme"-->
+<!--            style="@style/TextStyle.TitleSmall"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="@dimen/spacing_medium_16dp"-->
+<!--            android:layout_marginTop="@dimen/spacing_custom_12dp"-->
+<!--            android:layout_marginEnd="@dimen/spacing_medium_16dp"-->
+<!--            android:background="@drawable/custom_card_background"-->
+<!--            android:drawableStart="@drawable/ic_sun"-->
+<!--            android:drawablePadding="@dimen/spacing_small_8dp"-->
+<!--            android:drawableTint="@color/on_background_38"-->
+<!--            android:padding="@dimen/spacing_small_8dp"-->
+<!--            android:text="@string/theme"-->
+<!--            android:textColor="@color/on_background_60"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"-->
+<!--            android:onClick="@{()->listener.onClickTheme()}"/>-->
+
+<!--        <androidx.appcompat.widget.SwitchCompat-->
+<!--            android:id="@+id/switch_theme"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:checked="true"-->
+<!--            android:padding="@dimen/spacing_tiny"-->
+<!--            android:thumb="@drawable/switch_thumb_selector"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintTop_toTopOf="@id/text_view_theme"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/text_view_logout"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/text_view_theme"-->
+<!--            app:track="@drawable/switch_track_selector"-->
+<!--            app:toggleUiMode="@{uiMode}"/>-->
+
+
+        <TextView
+            android:id="@+id/text_view_logout"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:drawableStart="@drawable/ic_logout"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:drawableTint="@color/on_background_38"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/logout"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"
+            android:onClick="@{()->viewModel.onClickLogout()}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
