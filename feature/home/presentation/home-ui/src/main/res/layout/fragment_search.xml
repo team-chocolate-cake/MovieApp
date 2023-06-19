@@ -58,6 +58,7 @@
             app:hideImageButton="@{viewModel.state.isSelectedPeople}"
             android:onClick="@{() -> viewModel.onClickFilter()}"
             app:query="@{viewModel.query}"
+            app:isVisible="@{viewModel.state.hideResult}"
             android:src="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
             app:layout_constraintEnd_toEndOf="@+id/edittext_search"
