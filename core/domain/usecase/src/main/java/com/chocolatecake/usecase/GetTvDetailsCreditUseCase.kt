@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetTvDetailsCreditUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
-    suspend operator fun invoke(): List<PeopleEntity> {
-        return movieRepository.getTvDetailsCredit()
+    suspend operator fun invoke(tvShowId:Int): List<PeopleEntity> {
+        return movieRepository.getTvDetailsCredit(tvShowId)
     }
 }

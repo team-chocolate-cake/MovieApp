@@ -40,10 +40,10 @@ interface MovieRepository {
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
 
-    suspend fun getTvDetailsInfo(tvShowID: Int = 44217): TvDetailsInfoEntity
-    suspend fun getTvDetailsSeasons(tvShowID: Int = 44217): List<SeasonEntity>
-    suspend fun getTvDetailsCredit(tvShowID: Int = 44217): List<PeopleEntity>
-    suspend fun rateTvShow(rate: Double, tvShowID: Int = 44217): TvRatingEntity
-    suspend fun getTvShowReviews(tvShowID: Int = 44217): List<ReviewEntity>
-    suspend fun getTvShowRecommendations(tvShowID: Int = 44217):List<TvShowEntity>
+    suspend fun getTvDetailsInfo(tvShowID: Int ): TvDetailsInfoEntity
+    suspend fun getTvDetailsSeasons(tvShowID: Int ): List<SeasonEntity>
+    suspend fun getTvDetailsCredit(tvShowID: Int ): List<PeopleEntity>
+    suspend fun rateTvShow(rate: Double, tvShowID: Int ): TvRatingEntity
+    suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
+    suspend fun getTvShowRecommendations(tvShowID: Int):List<TvShowEntity>
 }

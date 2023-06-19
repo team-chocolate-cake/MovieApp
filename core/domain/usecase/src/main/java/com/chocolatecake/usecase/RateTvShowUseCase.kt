@@ -5,9 +5,9 @@ import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
 class RateTvShowUseCase @Inject constructor(
-    private val moviewRepository: MovieRepository
+    private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(rate: Double, tvShow: Int): TvRatingEntity {
-        return moviewRepository.rateTvShow(rate, tvShow)
+        return movieRepository.rateTvShow(rate, tvShow)
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvDetailsBinding
@@ -32,8 +33,9 @@ class TvDetailsFragment :
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
             is TvDetailsUiEvent.Rate -> showBottomSheet()
-            is TvDetailsUiEvent.OnPersonClick ->showSnackBar("Actor id ${event.id}")
-            is TvDetailsUiEvent.OnSeasonClick ->showSnackBar("season id ${event.id}")
+            is TvDetailsUiEvent.OnPersonClick -> showSnackBar("Actor id ${event.id}")
+            is TvDetailsUiEvent.OnSeasonClick -> showSnackBar("season id ${event.id}")
+            is TvDetailsUiEvent.OnRecommended -> navigateToSeasonDetails(event.id)
             else -> {
                 Log.i("Click", "the event is $event")
             }
@@ -46,6 +48,12 @@ class TvDetailsFragment :
         binding.nestedRecycler.adapter = tvDetailsAdapter
     }
 
+    private fun navigateToSeasonDetails(seasonId: Int) {
+        findNavController().navigate(TvDetailsFragmentDirections.actionHomeFragmentSelf(seasonId))
+    }
+    private fun navigateBack(){
+        findNavController().popBackStack()
+    }
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
@@ -54,9 +62,7 @@ class TvDetailsFragment :
                     TvDetailsItem.People(state.cast),
                     TvDetailsItem.Recommended(state.recommended)
                 ) + state.seasons.map { TvDetailsItem.Season(it) } + state.reviews.map {
-                    TvDetailsItem.Review(
-                        it
-                    )
+                    TvDetailsItem.Review(it)
                 }
                 tvDetailsAdapter.setItems(tvDetailsItems)
             }
@@ -64,7 +70,6 @@ class TvDetailsFragment :
     }
 
     private fun showBottomSheet() {
-        Log.i("Click", "show bottom sheet")
         RateBottomSheet().show(childFragmentManager, "BOTTOM")
     }
 }

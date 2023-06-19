@@ -214,7 +214,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity> {
-        val call = wrapApiCall { movieService.getTvShowReviews(44217) }.results?.filterNotNull()
+        val call = wrapApiCall { movieService.getTvShowReviews(tvShowID) }.results?.filterNotNull()
             ?: emptyList()
         return DomainTvDetailsReviewMapper().map(call)
 
@@ -222,7 +222,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity> {
         val call =
-            wrapApiCall { movieService.getTvShowRecomendations(44217) }.results?.filterNotNull()
+            wrapApiCall { movieService.getTvShowRecomendations(tvShowID) }.results?.filterNotNull()
                 ?: emptyList()
         return DomainTvShowMapper().map(call)
     }

@@ -2,6 +2,7 @@ package com.chocolatecake.viewmodel.tv_details
 
 import android.util.Log
 import android.widget.RatingBar
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.PeopleEntity
@@ -37,8 +38,12 @@ class TvDetailsViewModel @Inject constructor(
     private val tvShowUseCase: RateTvShowUseCase,
     private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
     private val getTvShowRecommendations: GetTvShowRecommendations,
-    private val tvShowUiMapper: TvShowUiMapper
+    private val tvShowUiMapper: TvShowUiMapper,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
+    private val tvShowId =
+        savedStateHandle.get<Int>("tvShowId") ?: 44217
+
     init {
         getData()
     }
@@ -53,7 +58,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun getTvRecommendations() {
         tryToExecute(
-            call = getTvShowRecommendations::invoke,
+            call = { getTvShowRecommendations(tvShowId) },
             onSuccess = ::onTvShowRecommendationsSuccess,
             onError = {}
         )
@@ -70,7 +75,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun getTvShowInfo() {
         tryToExecute(
-            call = tvDetailsInfoUseCase::invoke,
+            call = { tvDetailsInfoUseCase(tvShowId) },
             onSuccess = ::onSuccessTvShowInfo,
             onError = {
             }
@@ -131,7 +136,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun getTvShowCast() {
         tryToExecute(
-            call = getTvDetailsCreditUseCase::invoke,
+            call = { getTvDetailsCreditUseCase(tvShowId) },
             onSuccess = ::onTvDetailsCreditSuccess,
             onError = {}
         )
@@ -148,7 +153,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun getTvSeasons() {
         tryToExecute(
-            call = getTvDetailsSeasonsUseCase::invoke,
+            call = { getTvDetailsSeasonsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsSeasonSuccess,
             onError = {}
         )
@@ -161,7 +166,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun getTvReviews() {
         tryToExecute(
-            call = { getTvDetailsReviewsUseCase() },
+            call = { getTvDetailsReviewsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsReviewsSuccess,
             onError = {
             }
@@ -184,12 +189,11 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     override fun onClickMedia(id: Int) {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            _event.emit(TvDetailsUiEvent.OnRecommended(id))
+        }
     }
 
-    override fun onRecommendedClick() {
-        TODO("Not yet implemented")
-    }
 
     override fun onClickSeason(seasonId: Int) {
         viewModelScope.launch {

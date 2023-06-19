@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetTvShowRecommendations @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
-    suspend operator fun invoke():List<TvShowEntity>{
-        return movieRepository.getTvShowRecommendations()
+    suspend operator fun invoke(tvShowId:Int):List<TvShowEntity>{
+        return movieRepository.getTvShowRecommendations(tvShowId)
     }
 }
