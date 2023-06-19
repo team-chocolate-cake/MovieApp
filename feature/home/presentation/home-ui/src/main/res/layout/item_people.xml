@@ -37,6 +37,7 @@
             style="@style/TextStyle.BodySmall"
             android:maxLines="1"
             android:text="@{item.name}"
+            android:ellipsize="end"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="@+id/shape_image_view_people"
             app:layout_constraintStart_toStartOf="@+id/shape_image_view_people"
