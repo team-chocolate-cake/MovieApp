@@ -1,6 +1,5 @@
 package com.chocolatecake.repository
 
-import android.util.Log
 import com.chocolatecake.entities.BoardEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.PeopleEntity
@@ -48,8 +47,14 @@ class TriviaRepositoryIml @Inject constructor(
         people: List<PeopleEntity>,
         level: Int,
     ): List<PeopleEntity> {
-        return people.filter { it.popularity in getPopularityRange(level) && !it.imageUrl.contains("null") }
-            .shuffled().take(4)
+        val filteredPeople =
+            people.filter { it.popularity in getPopularityRange(level) && !it.imageUrl.contains("null") }
+                .shuffled().take(4)
+        return if (filteredPeople.size != 4) {
+            filteredPeople + people.minus(filteredPeople.toSet()).take(4 - filteredPeople.size)
+        } else {
+            filteredPeople
+        }
     }
 
     private fun getPopularityRange(level: Int): ClosedFloatingPointRange<Double> {
@@ -79,12 +84,10 @@ class TriviaRepositoryIml @Inject constructor(
         val movies = movieRepository.getPopularMovies()
             .filter { !it.imageUrl.contains("null") }
             .shuffled().take(4)
-        Log.e("TAGTAG", "getMovieQuestion: $movies", )
         val question = fakeQuestions.getMovieQuestion(level)
         val selectedMovie = movies.random()
-        Log.e("TAGTAG", "selectedMovie: $selectedMovie", )
-        val selectedGenre = movieRepository.getMoviesDetails(selectedMovie.id).genres?.first() ?: "Action"
-        Log.e("TAGTAG", "selectedGenre: $selectedGenre", )
+        val selectedGenre =
+            movieRepository.getMoviesDetails(selectedMovie.id).genres?.first() ?: "Action"
 
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> movies.map { it.title }
@@ -112,10 +115,10 @@ class TriviaRepositoryIml @Inject constructor(
         return otherGenres.map { it.genreName }.take(3)
     }
 
+
     override suspend fun getTvShowQuestion(level: Int, questionNumber: Int): QuestionEntity {
         TODO("Not yet implemented")
     }
-
 
     override suspend fun getBoard(level: Int): BoardEntity {
         val size = when (level) {
