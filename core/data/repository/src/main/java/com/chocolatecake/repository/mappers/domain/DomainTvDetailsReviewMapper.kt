@@ -19,5 +19,4 @@ class DomainTvDetailsReviewMapper @Inject constructor() : Mapper<TvReviewRemoteD
         )
     }
 
-
 }

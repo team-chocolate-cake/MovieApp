@@ -24,6 +24,7 @@ class TvDetailsFragment :
     override val viewModel: TvDetailsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setAdapter()
         collectChange()
     }
@@ -31,7 +32,10 @@ class TvDetailsFragment :
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
             is TvDetailsUiEvent.Rate -> showBottomSheet()
-            else -> {}
+            is TvDetailsUiEvent.onPersonClick ->showSnackBar("Actor id ${event.id}")
+            else -> {
+                Log.i("Click", "the event is $event")
+            }
         }
     }
 
@@ -59,6 +63,7 @@ class TvDetailsFragment :
     }
 
     private fun showBottomSheet() {
+        Log.i("Click", "show bottom sheet")
         RateBottomSheet().show(childFragmentManager, "BOTTOM")
     }
 }

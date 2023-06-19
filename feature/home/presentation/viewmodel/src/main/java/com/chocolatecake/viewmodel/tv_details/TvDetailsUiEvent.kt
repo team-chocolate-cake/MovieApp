@@ -4,4 +4,5 @@ sealed interface TvDetailsUiEvent {
     object Rate : TvDetailsUiEvent
     data class PlayButton(val youtubeKey: String) : TvDetailsUiEvent
     object ApplyRating : TvDetailsUiEvent
+    data class onPersonClick(val id:Int):TvDetailsUiEvent
 }

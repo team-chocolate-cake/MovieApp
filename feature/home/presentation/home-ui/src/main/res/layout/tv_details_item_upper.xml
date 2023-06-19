@@ -40,7 +40,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/cardview_light_background"
+            android:backgroundTint="@color/card"
             android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="3dp"

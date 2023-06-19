@@ -4,7 +4,6 @@ import android.util.Log
 import android.widget.RatingBar
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.entities.CastEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
@@ -79,7 +78,6 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onSuccessTvShowInfo(tvShowInfoEntity: TvDetailsInfoEntity) {
-//        Log.i("Spider", "the state is ${state.value.info.name}")
         val item = tvDetailsInfoUiMapper.map(tvShowInfoEntity)
         _state.update {
             it.copy(
@@ -99,6 +97,7 @@ class TvDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _event.emit(TvDetailsUiEvent.Rate)
         }
+        Log.i("Click", "rate button was clicked")
     }
 
     fun updateRating(ratingBar: RatingBar): Float {
@@ -107,7 +106,6 @@ class TvDetailsViewModel @Inject constructor(
                 info = it.info.copy(rating = ratingBar.rating.times(2))
             )
         }
-//        Log.i("rate", "the rating is ${state.value.info.rating}")
         return ratingBar.rating
     }
 
@@ -116,7 +114,6 @@ class TvDetailsViewModel @Inject constructor(
             call = { tvShowUseCase(_state.value.info.rating.toDouble(), 44217) },
             onSuccess = ::onRatingSuccess,
             onError = {
-//                Log.i("rate", "something went wrong ${it}")
             }
         )
     }
@@ -129,7 +126,6 @@ class TvDetailsViewModel @Inject constructor(
                 ratingSuccess = item.ratingSuccess
             )
         }
-//        Log.i("rate", "rating was successfull ${state.value.ratingSuccess}")
     }
 
     private fun getTvShowCast() {
@@ -147,7 +143,6 @@ class TvDetailsViewModel @Inject constructor(
                 cast = item.cast
             )
         }
-//        Log.i("rate", "cast was successfull ${state.value.cast}")
     }
 
     private fun getTvSeasons() {
@@ -161,7 +156,6 @@ class TvDetailsViewModel @Inject constructor(
     private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
         val item = TvDetailsSeasonMapper().map(seasons)
         _state.update { it.copy(seasons = item.seasons) }
-//        Log.i("rate", "seasons ->\n ${state.value.seasons}")
     }
 
     private fun getTvReviews() {
@@ -169,7 +163,6 @@ class TvDetailsViewModel @Inject constructor(
             call = { getTvDetailsReviewsUseCase() },
             onSuccess = ::onTvDetailsReviewsSuccess,
             onError = {
-//                Log.i("rate", "review was failed $it")
             }
         )
     }
@@ -181,21 +174,20 @@ class TvDetailsViewModel @Inject constructor(
                 reviews = item
             )
         }
-//        Log.i("rate", "reviews ->\n ${state.value.reviews}")
     }
 
     override fun onClickPeople(personId: Int) {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            _event.emit(TvDetailsUiEvent.onPersonClick(personId))
+        }
     }
 
     override fun onClickMedia(id: Int) {
         TODO("Not yet implemented")
     }
 
-    override fun onClick() {
+    override fun onRecommendedClick() {
         TODO("Not yet implemented")
     }
-
-
 }
 
