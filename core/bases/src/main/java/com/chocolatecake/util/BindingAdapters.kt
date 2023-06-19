@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chocolatecake.bases.BaseAdapter
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 @BindingAdapter(value = ["app:items"])
@@ -23,6 +22,15 @@ fun View.isVisible(isVisible: Boolean?) {
         this.visibility = View.VISIBLE
     } else {
         this.visibility = View.INVISIBLE
+    }
+}
+
+@BindingAdapter(value = ["app:isVisibleOrGone"])
+fun View.isVisibleOrGone(isVisible: Boolean?) {
+    if (isVisible == true) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
     }
 }
 
