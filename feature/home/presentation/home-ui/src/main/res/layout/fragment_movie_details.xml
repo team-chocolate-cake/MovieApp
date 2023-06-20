@@ -80,6 +80,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <include
+                    android:id="@+id/lottie_animation_view_no_network"
+                    layout="@layout/layout_no_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`noNetwork`)}" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
