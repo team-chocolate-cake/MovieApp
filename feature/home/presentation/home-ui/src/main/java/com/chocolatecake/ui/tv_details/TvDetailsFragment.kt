@@ -43,6 +43,7 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnShowMoreCast ->showSnackBar("Show More Cast")
             is TvDetailsUiEvent.OnShowMoreRecommended ->showSnackBar("Show More Recommended")
             is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
+            is TvDetailsUiEvent.OnSaveButtonClick ->showSnackBar("tv show id is ${event.tvShowId}")
             else -> {
             }
         }

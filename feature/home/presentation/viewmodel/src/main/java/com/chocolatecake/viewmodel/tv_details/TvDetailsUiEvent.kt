@@ -10,4 +10,5 @@ sealed interface TvDetailsUiEvent {
     object Back : TvDetailsUiEvent
     object OnShowMoreCast : TvDetailsUiEvent
     object OnShowMoreRecommended : TvDetailsUiEvent
+    data class OnSaveButtonClick(val tvShowId: Int) : TvDetailsUiEvent
 }
