@@ -11,6 +11,8 @@ import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.ListEntity
+import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
@@ -25,6 +27,9 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.cash.myList.LocalFavoriteMoviesMapper
+import com.chocolatecake.repository.mappers.cash.myList.LocalListMapper
+import com.chocolatecake.repository.mappers.cash.myList.LocalListMovieMapper
+import com.chocolatecake.repository.mappers.cash.myList.LocalMoviesMapper
 import com.chocolatecake.repository.mappers.cash.myList.LocalWatchlistMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
@@ -38,6 +43,9 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapp
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainListMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainListMovieMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
 import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
 import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
@@ -65,6 +73,10 @@ class MovieRepositoryImpl @Inject constructor(
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
     private val localFavoriteMoviesMapper: LocalFavoriteMoviesMapper,
     private val localWatchlistMapper: LocalWatchlistMapper,
+    private val localListMovieMapper: LocalListMovieMapper,
+    private val localListMapper: LocalListMapper,
+    private val localMoviesMapper: LocalMoviesMapper,
+    private val domainListMapper: DomainListMapper,
     private val domainFavoriteMoviesMapper: DomainFavoriteMoviesMapper,
     private val domainWatchlistMapper: DomainWatchlistMapper,
     private val domainPopularMovieMapper: DomainPopularMovieMapper,
@@ -78,6 +90,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
+    private val domainMoviesMapper: DomainMovieMapper,
+    private val domainListMovieMapper: DomainListMovieMapper,
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
     private val watchlistMapper: WatchlistRequestMapper,
 
@@ -283,6 +297,7 @@ class MovieRepositoryImpl @Inject constructor(
         refreshTrendingMovies()
         refreshUpcomingMovies()
         refreshFavoriteMovies()
+        refreshLists()
     }
 
     /// endregion
@@ -319,7 +334,9 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
-        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+        return domainRatingMapper.map(
+            wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) }
+        )
     }
 
 
@@ -365,11 +382,73 @@ class MovieRepositoryImpl @Inject constructor(
         return result
     }
 
-     suspend fun refreshWatchlistByMediaType(mediaType: String) {
+    suspend fun refreshWatchlistByMediaType(mediaType: String) {
         refreshWrapper(
           apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType )},
             localWatchlistMapper::map,
             movieDao::insertWatchlist
+        )
+    }
+
+
+    override suspend fun addList(name: String): Boolean {
+        return movieService.addList(name,).isSuccessful
+    }
+
+    override suspend fun getLists(): List<ListEntity> {
+        return  domainListMapper.map(movieDao.getLists())
+    }
+
+    override suspend fun refreshLists() {
+        refreshWrapper(
+            movieService::getLists,
+            localListMapper::map,
+            movieDao::insertList
+        )
+    }
+
+//    override suspend fun addMovieToList(movie: ListMovieEntity ): Boolean {
+//        val result = movieService.addMovieToList(movie.mediaId,).isSuccessful
+//
+//        if (result){
+//            refreshAddMovieToList(movie)
+//        }
+//        return result
+//    }
+
+     private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
+        movieDao.insertMovieToList(localListMovieMapper.map(movie))
+    }
+
+    override suspend fun addMovieToList(movie: ListMovieEntity): Boolean {
+        return movieService.addMovieToList(movie.mediaId).isSuccessful
+    }
+
+    override suspend fun getMovieList(): List<ListMovieEntity> {
+        return  domainListMovieMapper.map(movieDao.getMoviesList())
+    }
+
+//    override suspend fun refreshMovieList() {
+//        refreshWrapper(
+//            movieService::,
+//            localListMapper::map,
+//            movieDao::insertList
+//        )
+//    }
+
+
+
+
+    override suspend fun getDetailsList(listId: Int): List<MovieEntity> {
+        refreshDetailsList(listId)
+        return domainMoviesMapper.map(movieDao.getDetailsList())
+    }
+
+     private suspend fun refreshDetailsList(listId: Int) {
+        refreshWrapper(
+            apiCall = { movieService.getDetailsList(listId)},
+            localMoviesMapper::map,
+            movieDao::insertDetailsList
         )
     }
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.myList.MyListViewModel" />
+    </data>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                android:paddingBottom="@dimen/spacing_medium_16dp"
+                android:paddingTop="@dimen/spacing_extra_giant_48dp"
+                android:background="@drawable/custom_my_list_border">
+
+                <TextView
+                    android:id="@+id/text_view_season_title"
+                    style="@style/TextStyle.TitleLarge"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="My List"
+                    android:layout_marginEnd="@dimen/spacing_small_8dp"
+                    android:textColor="@color/on_background_87"/>
+
+                <Button
+                    android:id="@+id/button_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                    android:paddingVertical="@dimen/spacing_small_8dp"
+                    android:background="@drawable/button_background"
+                    android:text="New List"
+                    style="@style/TextStyle.TitleSmall"
+                    android:textColor="@color/on_primary"
+                    android:textSize="@dimen/text_medium" />
+<!--                android:onClick="@{()->viewModel.addList()}"-->
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_my_list_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/spacing_medium_16dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/item_my_list" />
+
+
+
+                <TextView
+                    style="@style/TextStyle.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/no_items_have"
+                    app:isVisible="@{(!viewModel.state.loading) &amp;&amp;  (viewModel.state.movieList.size()==0)}"
+                    app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
+                    app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
+                    app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie_animation_view_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:isVisible="@{(!viewModel.state.loading)  &amp;&amp;  (viewModel.state.movieList.size()==0)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/no_item_have" />
+
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/primary"
+                    app:isVisible="@{viewModel.state.isLoading}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="vertical">-->
+<!--                -->
+<!--                <ScrollView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+<!--                    -->
+<!--                    <include-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        layout="@layout/item_my_list"-->
+<!--                        android:onClick="@{()->viewModel.onClickFavoriteList()}"-->
+<!--                        android:id="@+id/favorite"/>-->
+
+<!--                    <include-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        layout="@layout/item_my_list"-->
+<!--                        android:onClick="@{()->viewModel.onClickWatchlist()}"-->
+<!--                        android:id="@+id/watchlist"/>-->
+<!--                    -->
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/recycler_view_my_list"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:clipToPadding="false"-->
+<!--                        app:isVisible="@{!viewModel.state.loading}"-->
+<!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                        tools:listitem="@layout/item_my_list" />-->
+
+
+<!--                </ScrollView>-->
+<!--            </LinearLayout>-->
+
+        </LinearLayout>
+</layout>

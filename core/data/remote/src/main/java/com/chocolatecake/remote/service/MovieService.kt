@@ -1,16 +1,20 @@
 package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.FavoriteRequest
+import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
-import com.chocolatecake.remote.response.FavoriteResponse
+import com.chocolatecake.remote.response.MovieResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
+import com.chocolatecake.remote.response.ListDetailsWrapperResponse
+import com.chocolatecake.remote.response.ListResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
+import com.chocolatecake.remote.response.dto.ListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
@@ -169,7 +173,7 @@ interface MovieService {
 
 
     @POST("account/{account_id}/favorite")
-    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<FavoriteResponse>
+    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<MovieResponse>
 
 
     @GET("account/{account_id}/watchlist/{media_type}")
@@ -180,6 +184,22 @@ interface MovieService {
     @POST("account/{account_id}/watchlist")
     suspend fun addWatchlist(
         @Body watchlistRequest: WatchlistRequest,
-    ): Response<FavoriteResponse>
+    ): Response<MovieResponse>
+
+
+    @POST("list")
+    suspend fun addList(@Body name: String): Response<ListResponse>
+
+    @GET("account/{account_id}/lists")
+    suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
+
+
+    @GET("list/{list_id}/add_item")
+    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
+
+    @GET("list/{list_id}")
+    suspend fun getDetailsList(@Path("list_id") listId: Int)
+    : Response<DataWrapperResponse<MovieRemoteDto>>
+
     //endregion
 }

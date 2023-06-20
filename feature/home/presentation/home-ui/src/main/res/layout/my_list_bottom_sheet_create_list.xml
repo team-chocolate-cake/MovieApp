@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.movieapp.ui" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        android:background="@drawable/bottom_sheet_background">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp">
+
+            <View
+                android:id="@+id/divider"
+                style="@style/ViewDividerStyle"
+                android:layout_width="32dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:background="@color/card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_create_list"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text="Create List"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <TextView
+                android:id="@+id/text_view_name_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_giant_32dp"
+                android:text="List name"
+                android:textColor="@color/secondary_text_60"
+                app:layout_constraintStart_toStartOf="@+id/edit_text_name_list"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_create_list" />
+
+            <EditText
+                android:id="@+id/edit_text_name_list"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_extra_giant_48dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:afterTextChanged="@{(text) -> viewModel.onListNameChanged(text)}"
+                android:background="@drawable/edittext_background"
+                android:drawablePadding="@dimen/spacing_custom_12dp"
+                android:inputType="text"
+                android:hint="anime"
+                android:paddingHorizontal="@dimen/spacing_x_medium_20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_name_list"
+                app:setTipError="@{viewModel.state.nameListError}" />
+
+
+            <Button
+                android:id="@+id/button_create_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/spacing_giant_32dp"
+                android:background="@drawable/button_background"
+                android:onClick="@{()->viewModel.createList()}"
+                android:paddingVertical="@dimen/spacing_custom_12dp"
+                android:text="Create"
+                android:textColor="@color/on_primary"
+                android:textSize="@dimen/text_medium"
+                app:isVisible="@{viewModel.state.isLoading == false}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_name_list" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

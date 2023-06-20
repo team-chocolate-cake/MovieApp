@@ -5,11 +5,12 @@ import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
-import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.ListEntity
+import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
 
 
@@ -65,11 +66,25 @@ interface MovieRepository {
     suspend fun getFavoriteMovies(): List<MovieEntity>
     suspend fun refreshFavoriteMovies()
     suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean
-
-
     suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity>
+
 
     suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity>
     suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean
+
+
+    suspend fun addList(name:String): Boolean
+    suspend fun getLists(): List<ListEntity>
+    suspend fun refreshLists()
+
+    suspend fun getMovieList(): List<ListMovieEntity>
+
+   // suspend fun refreshAddMovieToList(movie: ListMovieEntity)
+
+    suspend fun addMovieToList( movie: ListMovieEntity): Boolean
+
+    suspend fun getDetailsList(listId: Int): List<MovieEntity>
+
+   // suspend fun refreshDetailsList(listId: Int)
 
 }

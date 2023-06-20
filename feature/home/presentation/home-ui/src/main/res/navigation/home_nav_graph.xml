@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/myListDetailsFragment"
-        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
+        android:name="com.chocolatecake.ui.myListDetails.MyListFragment"
         android:label="MyListDetailsFragment" >
         <argument
             android:name="mediaType"

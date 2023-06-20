@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.myList.ListMovieUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.myList.MyListListener" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/material_card_view_my_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium_16dp"
+        android:layout_marginEnd="@dimen/spacing_medium_16dp"
+        android:layout_marginTop="@dimen/spacing_medium_16dp"
+        android:background="@drawable/custom_my_listl_card_background"
+        android:onClick="@{()-> listener.onClickItem(item.listId , item.nameList)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/spacing_small_8dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
+                android:paddingTop="@dimen/spacing_custom_12dp">
+
+                <TextView
+                    android:id="@+id/text_view_season_title"
+                    style="@style/TextStyle.BodyLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{item.nameList}"
+                    android:textColor="@color/on_background_87"
+                    tools:text="My Favourite" />
+
+                <TextView
+                    android:id="@+id/text_view_description"
+                    style="@style/TextStyle.BodySmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_tiny_4dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="9 items"
+                    android:textColor="@color/on_background_60"
+                    app:layout_constraintEnd_toEndOf="@id/text_view_season_title"
+                    app:layout_constraintStart_toStartOf="@id/text_view_season_title"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_season_title"
+                    tools:text="9 item" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_image"
+                    android:layout_marginEnd="@dimen/spacing_tiny_2dp"
+                    android:layout_weight="2.5"
+                    android:scaleType="centerCrop"
+                    style="@style/MyListFirstImage"
+                    app:imageUrlWithUrl="@{item.posterPath}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_image"
+                    android:layout_marginEnd="@dimen/spacing_tiny_2dp"
+                    android:layout_weight="2"
+                    android:scaleType="centerCrop"
+                    app:imageUrlWithUrl="@{item.posterPath}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_image"
+                    android:layout_weight="1.5"
+                    android:scaleType="centerCrop"
+                    astyle="@style/MyListLastImage"
+                    app:imageUrlWithUrl="@{item.posterPath}"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
