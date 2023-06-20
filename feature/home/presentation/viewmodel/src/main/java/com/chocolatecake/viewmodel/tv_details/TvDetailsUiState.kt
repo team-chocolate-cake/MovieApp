@@ -12,8 +12,9 @@ data class TvDetailsUiState(
     val seasons: List<SeasonHorizontalUIState> = emptyList(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = true,
-    val reviews:List<CommentUIState> = emptyList(),
-    val ratingSuccess: String = ""
+    val reviews: List<CommentUIState> = emptyList(),
+    val ratingSuccess: String = "",
+    val userRating: Float = 0.0f
 ) {
     data class Info(
         val backdropImageUrl: String = "",

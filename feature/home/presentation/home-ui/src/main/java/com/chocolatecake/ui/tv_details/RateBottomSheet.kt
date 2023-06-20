@@ -17,6 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class RateBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: TvDetailsItemBotomSheetBinding
     val viewModel by activityViewModels<TvDetailsViewModel>()
+    private var dismissListener: BottomSheetDismissListener? = null
+
+
+    fun setListener(dismissListener: BottomSheetDismissListener) {
+        this.dismissListener = dismissListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +37,7 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                 false
             )
         binding.apply {
-            lifecycleOwner = viewLifecycleOwner
+//            lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel, viewModel)
             return root
         }
@@ -40,10 +46,15 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.buttonApply.setOnClickListener{
-            viewModel.onRatingSubmit()
+//        binding.lifecycleOwner = viewLifecycleOwner
+        binding.buttonApply.setOnClickListener {
+
+            dismissListener?.onBottomSheetDismissed()
             dismiss()
         }
     }
+}
+
+interface BottomSheetDismissListener {
+    fun onBottomSheetDismissed()
 }
