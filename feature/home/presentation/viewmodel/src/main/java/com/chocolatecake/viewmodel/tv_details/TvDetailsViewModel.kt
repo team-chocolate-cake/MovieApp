@@ -36,7 +36,7 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
     private val getTvShowRecommendations: GetTvShowRecommendations,
     private val tvShowUiMapper: TvShowUiMapper,
-    private val savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
@@ -46,7 +46,6 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun getData() {
-
         getTvShowInfo()
         getTvShowCast()
         getTvSeasons()
@@ -104,6 +103,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     //endregion
+
     //region seasons
     private fun getTvSeasons() {
         updateLoading(true)
@@ -121,6 +121,8 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     //endregion
+
+    //region recommendations
     private fun getTvRecommendations() {
         updateLoading(true)
         tryToExecute(
@@ -140,8 +142,9 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
     }
+    //endregion
 
-
+    //region rating
     override fun onRateButtonClick() {
         sendEvent(TvDetailsUiEvent.Rate)
     }
@@ -182,8 +185,9 @@ class TvDetailsViewModel @Inject constructor(
     private fun onApplyRating(message: String) {
         sendEvent(TvDetailsUiEvent.ApplyRating(message))
     }
+    //endregion
 
-
+    //region reviews
     private fun getTvReviews() {
         updateLoading(true)
         tryToExecute(
@@ -202,18 +206,19 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
     }
+    //endregion
 
-    override fun onClickPeople(personId: Int) {
-        sendEvent(TvDetailsUiEvent.OnPersonClick(personId))
+    //region events
+    override fun onClickPeople(id: Int) {
+        sendEvent(TvDetailsUiEvent.OnPersonClick(id))
     }
 
     override fun onClickMedia(id: Int) {
         sendEvent(TvDetailsUiEvent.OnRecommended(id))
     }
 
-
-    override fun onClickSeason(seasonId: Int) {
-        sendEvent(TvDetailsUiEvent.OnSeasonClick(seasonId))
+    override fun onClickSeason(id: Int) {
+        sendEvent(TvDetailsUiEvent.OnSeasonClick(id))
     }
 
     override fun onShowMoreCast() {
@@ -227,14 +232,18 @@ class TvDetailsViewModel @Inject constructor(
     fun onBack() {
         sendEvent(TvDetailsUiEvent.Back)
     }
+    //endregion
 
+    //region util functions
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
         errors.add(th.message.toString())
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
-    private fun updateLoading(value:Boolean){
+
+    private fun updateLoading(value: Boolean) {
         _state.update { it.copy(isLoading = value) }
     }
+    //endregion
 }
 
