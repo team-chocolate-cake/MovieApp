@@ -1,10 +1,8 @@
 package com.chocolatecake.viewmodel.tv_details.mappers
 
 import com.chocolatecake.entities.GenreEntity
-import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.mapper.Mapper
-import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import javax.inject.Inject
 
@@ -18,7 +16,7 @@ class TvDetailsInfoUiMapper @Inject constructor() : Mapper<TvDetailsInfoEntity, 
                 description = input.description,
                 genres = mapGenereToUi(input.genres)
             ),
-            )
+        )
     }
 
 

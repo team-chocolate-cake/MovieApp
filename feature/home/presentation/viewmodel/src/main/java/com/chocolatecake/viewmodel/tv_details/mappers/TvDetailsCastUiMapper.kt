@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.tv_details.mappers
 
-import com.chocolatecake.entities.CastEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.viewmodel.common.model.PeopleUIState

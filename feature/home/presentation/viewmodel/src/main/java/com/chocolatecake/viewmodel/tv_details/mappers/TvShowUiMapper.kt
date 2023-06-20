@@ -3,7 +3,6 @@ package com.chocolatecake.viewmodel.tv_details.mappers
 import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
-import com.chocolatecake.viewmodel.home.RecommendedUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import javax.inject.Inject
 
