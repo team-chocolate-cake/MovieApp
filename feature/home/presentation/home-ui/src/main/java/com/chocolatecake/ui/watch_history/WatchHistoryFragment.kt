@@ -18,6 +18,7 @@ import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiS
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class WatchHistoryFragment
@@ -68,11 +69,19 @@ class WatchHistoryFragment
     private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
+                initTheState()
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
             } catch (e: Exception) {
-                createToast(e.message.toString())
+//                createToast(e.message.toString())
             }
         }
+    }
+
+    private fun initTheState() {
+//        deletionIndicatorSnackBar.dismiss()
+
+        viewModel.deleteItemFromDataBase()
+        viewModel.initTheState()
     }
 
     private fun handleSwipes(direction: Int, position: Int) {
@@ -128,5 +137,10 @@ class WatchHistoryFragment
 
     override fun setSearchQuery(query: CharSequence?) {
         viewModel.setSearchQuery(query)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.deleteItemFromDataBase()
     }
 }
