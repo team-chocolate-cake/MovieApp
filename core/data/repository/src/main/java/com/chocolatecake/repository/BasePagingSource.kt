@@ -22,11 +22,7 @@ abstract class BasePagingSource<Value : Any>(
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = currentPage + 1
             )
-        } catch (e: NoNetworkThrowable) {
-            Log.d("network---base", e.message.toString())
-            LoadResult.Error(e)
-        } catch (e: Exception) {
-            Log.d("network---base", e.message.toString())
+        } catch (e: Throwable) {
             LoadResult.Error(e)
         }
     }
@@ -38,9 +34,8 @@ abstract class BasePagingSource<Value : Any>(
     protected suspend fun <T> wrapPagingApiCall(call: suspend () -> List<T>): List<T> {
         return try {
             call()
-        } catch (e: NoNetworkThrowable) {
-            throw e
+        } catch (e: Exception) {
+            throw Throwable("No network connection", e)
         }
     }
-
 }

@@ -1,9 +1,7 @@
 package com.chocolatecake.viewmodel.tv_shows
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingSource
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
@@ -12,12 +10,11 @@ import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,6 +47,13 @@ class TVShowsViewModel @Inject constructor(
                 val items = getAiringTodayTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
+                if (items.firstOrNull() == null) {
+                    _state.update {
+                        it.copy(
+                            errorList = listOf("No TV shows available")
+                        )
+                    }
+                }
                 _state.update {
                     it.copy(
                         tvShowsType = TVShowsType.AIRING_TODAY,
@@ -67,7 +71,6 @@ class TVShowsViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun getOnTheAirTVShows() {
@@ -167,5 +170,5 @@ class TVShowsViewModel @Inject constructor(
     override fun showPopularTVShowsResult() {
         sendEvent(TVShowsInteraction.ShowPopularTVShowsResult)
     }
-/// endregion
+    /// endregion
 }
