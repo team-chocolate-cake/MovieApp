@@ -18,10 +18,15 @@ import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.io.IOException
+import kotlin.coroutines.coroutineContext
 
 @AndroidEntryPoint
 class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInteraction>() {
@@ -33,13 +38,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
-            if (chip?.isChecked == true) {
-                // Do nothing when the same chip is reselected
-            }
-        }
+        handleMultiClickChip()
     }
 
     private fun setAdapter() {
@@ -48,7 +47,6 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest { state ->
-                Log.d("state", state.toString())
                 val flow = when (state.tvShowsType) {
                     TVShowsType.AIRING_TODAY -> state.tvShowAiringToday
                     TVShowsType.ON_THE_AIR -> state.tvShowOnTheAir
@@ -79,6 +77,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
             is TVShowsInteraction.ShowTopRatedTVShowsResult -> showTopRatedResult()
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
             is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.tvId)
+            is TVShowsInteraction.ShowSnackBar -> showSnackBar(event.messages)
         }
     }
 
@@ -87,8 +86,15 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
     private fun navigateToTv(tvId: Int) {
-        Log.d("nav", "----------------$tvId-----------------")
         Toast.makeText(requireActivity(), tvId.toString(), Toast.LENGTH_SHORT).show()
     }
 
+    private fun handleMultiClickChip() {
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip?.isChecked == true) {
+                // Do nothing when the same chip is reselected
+            }
+        }
+    }
 }

@@ -12,9 +12,11 @@ import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -43,8 +45,8 @@ class TVShowsViewModel @Inject constructor(
     }
 
     fun getAiringTodayTVShows() {
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val items = getAiringTodayTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
@@ -56,24 +58,17 @@ class TVShowsViewModel @Inject constructor(
                         errorList = emptyList()
                     )
                 }
+                Log.d("mimo", _state.value.isError.toString())
+            } catch (throwable: Throwable) {
+                onError(throwable)
+                Log.d("mimo", _state.toString() + throwable.message.toString())
             }
-        } catch (throwable: UnknownHostException) {
-            onError(throwable)
-        }
-
-    }
-
-    private fun onError(throwable: Throwable) {
-        _state.update {
-            it.copy(
-                errorList = listOf(throwable.message.toString()), isLoading = false
-            )
         }
     }
 
     fun getOnTheAirTVShows() {
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val items = getOnTheAirTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
@@ -85,18 +80,15 @@ class TVShowsViewModel @Inject constructor(
                         errorList = emptyList()
                     )
                 }
+            } catch (throwable: Throwable) {
+                onError(throwable)
             }
-        } catch (throwable: UnknownHostException) {
-            onError(throwable)
-        } catch (e: Exception) {
-            onError(e)
         }
-
     }
 
     fun getPopularTVShows() {
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val items = getPopularTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
@@ -108,16 +100,15 @@ class TVShowsViewModel @Inject constructor(
                         errorList = emptyList()
                     )
                 }
+            } catch (throwable: Throwable) {
+                onError(throwable)
             }
-        } catch (throwable: UnknownHostException) {
-            onError(throwable)
         }
-
     }
 
     fun getTopRatedTVShows() {
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 val items = getGetTopRatedTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
@@ -129,15 +120,27 @@ class TVShowsViewModel @Inject constructor(
                         errorList = emptyList()
                     )
                 }
+            } catch (throwable: Throwable) {
+                onError(throwable)
             }
-        } catch (throwable: UnknownHostException) {
-            onError(throwable)
         }
-
     }
-
     /// endregion
 
+    private fun onError(throwable: Throwable) {
+        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        _state.update {
+            it.copy(
+                errorList = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false
+            )
+        }
+        Log.d("mimo", _state.toString())
+    }
+
+    private fun showErrorWithSnackBar(messages: String) {
+        sendEvent(TVShowsInteraction.ShowSnackBar(messages))
+    }
 
     ///region event
     override fun onClickTVShows(tvId: Int) {
@@ -159,5 +162,5 @@ class TVShowsViewModel @Inject constructor(
     override fun showPopularTVShowsResult() {
         sendEvent(TVShowsInteraction.ShowPopularTVShowsResult)
     }
-    /// endregion
+/// endregion
 }
