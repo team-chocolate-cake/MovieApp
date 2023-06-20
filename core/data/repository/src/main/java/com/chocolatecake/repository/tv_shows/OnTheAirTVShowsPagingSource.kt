@@ -12,7 +12,6 @@ class OnTheAirTVShowsPagingSource @Inject constructor(
 ) : BasePagingSource<TVShowsEntity>(service) {
 
     override suspend fun fetchData(page: Int): List<TVShowsEntity> {
-
         val response = service.getOnTheAirTVShows(page).body()?.results?.filterNotNull()
         return response?.map { mapper.map(it) } ?: emptyList()
     }

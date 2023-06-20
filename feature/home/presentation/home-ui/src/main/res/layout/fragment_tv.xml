@@ -131,3 +131,6 @@
 
 
 </layout>
+
+   <!-- app:showWhenNoResult="@{viewModel.state.tvShowAiringToday}"
+    app:showWhenListEmpty="@{viewModel.state.tvShowAiringToday}"-->

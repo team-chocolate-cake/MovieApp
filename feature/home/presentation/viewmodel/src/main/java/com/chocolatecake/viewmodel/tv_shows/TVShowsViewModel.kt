@@ -44,30 +44,6 @@ class TVShowsViewModel @Inject constructor(
         }
     }
 
-    /*fun getAiringTodayTVShows() {
-        viewModelScope.launch {
-            try {
-                val items = getAiringTodayTVShowsUseCase().map { pagingData ->
-                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-                }.cachedIn(viewModelScope)
-                _state.update {
-                    it.copy(
-                        tvShowsType = TVShowsType.AIRING_TODAY,
-                        tvShowAiringToday = items,
-                        isLoading = false,
-                        errorList = emptyList()
-                    )
-                }
-                Log.d("network", _state.value.isError.toString())
-                Log.d("network", _state.value.errorList.toString())
-
-            } catch (throwable: Throwable) {
-                onError(throwable)
-                Log.d("network", _state.toString() + throwable.message.toString())
-            }
-        }
-    }*/
-
     fun getAiringTodayTVShows() {
         viewModelScope.launch {
             try {
@@ -79,7 +55,7 @@ class TVShowsViewModel @Inject constructor(
                         tvShowsType = TVShowsType.AIRING_TODAY,
                         tvShowAiringToday = items,
                         isLoading = false,
-                        errorList = null // Clear the error list when successful
+                        errorList = null
                     )
                 }
                 Log.d("network", _state.value.isError.toString())

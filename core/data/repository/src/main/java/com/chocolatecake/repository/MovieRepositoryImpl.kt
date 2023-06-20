@@ -279,34 +279,43 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { airingTodayTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { airingTodayTvShowsPagingSource }
         )
     }
 
     override suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { topRatedTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { topRatedTvShowsPagingSource }
         )
     }
 
     override suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { popularTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { popularTVShowsPagingSource }
         )
     }
 
     override suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { onTheAirTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { onTheAirTVShowsPagingSource }
         )
     }
     /// endregion
 
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
-        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
 
     override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
-        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+        return domainRatingMapper.map(wrapApiCall {
+            movieService.setMovieRate(
+                RatingRequest(rate),
+                movieId
+            )
+        })
     }
 }

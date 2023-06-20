@@ -3,8 +3,13 @@ package com.chocolatecake.repository.tv_shows
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.BasePagingSource
+import com.chocolatecake.repository.NoNetworkThrowable
+import com.chocolatecake.repository.UnauthorizedThrowable
 import com.chocolatecake.repository.mappers.domain.tv.TVShowsDomainMapper
+import retrofit2.Response
+import java.net.UnknownHostException
 import javax.inject.Inject
+
 
 class AiringTodayTVShowsPagingSource @Inject constructor(
     service: MovieService,
