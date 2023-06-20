@@ -7,4 +7,6 @@ interface MovieDetailsListener : BaseInteractionListener {
     fun onClickRate(id: Int)
     fun onClickBackButton()
     fun onClickSaveButton(id: Int)
+
+    fun onClickShowMore(movieId:Int)
 }

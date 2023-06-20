@@ -5,7 +5,7 @@ import com.chocolatecake.viewmodel.common.model.PeopleUIState
 
 
 data class MovieDetailsUiState(
-    val id: Int?=null,
+    val id: Int=0,
     val movieUiState: UpperUiState = UpperUiState(),
     val recommendedUiState: List<MediaVerticalUIState> = emptyList(),
     val castUiState: List<PeopleUIState> = emptyList(),

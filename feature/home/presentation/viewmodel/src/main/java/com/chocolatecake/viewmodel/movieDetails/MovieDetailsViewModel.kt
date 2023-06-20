@@ -3,7 +3,7 @@ package com.chocolatecake.viewmodel.movieDetails
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.movieDetails.RatingResponseEntity
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
@@ -95,8 +95,8 @@ class MovieDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onSuccessRating(ratingEntity: RatingEntity) {
-        sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingEntity.statusMessage))
+    private fun onSuccessRating(ratingResponseEntity: RatingResponseEntity) {
+        sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingResponseEntity.statusMessage))
     }
 
 
@@ -120,6 +120,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     override fun onClickSaveButton(id: Int) {
         sendEvent(MovieDetailsUiEvent.SaveToEvent(id))
+    }
+
+    override fun onClickShowMore(movieId: Int) {
+        sendEvent(MovieDetailsUiEvent.onShowMoreReviewsEvent(movieId))
     }
 
     override fun onClickMedia(id: Int) {

@@ -104,6 +104,7 @@ class MovieDetailsAdapter(
         val adapter = MediaVerticalAdapter(recommended.list!!, movieListener)
         holder.binding.recyclerViewRecommened.adapter = adapter
         holder.binding.item = recommended
+        holder.binding.listener = listener
     }
 
     private fun bindReviews(holder: ReviewsViewHolder, position: Int) {

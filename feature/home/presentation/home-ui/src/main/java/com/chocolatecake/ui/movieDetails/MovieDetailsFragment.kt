@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -47,7 +48,8 @@ class MovieDetailsFragment :
                         MovieDetailsItem.People(state.castUiState),
                         MovieDetailsItem.Recommended(
                             state.recommendedUiState,
-                            state.reviewUiState.isEmpty()
+                            state.reviewUiState.isEmpty(),
+                            state.id
                         ),
 
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
@@ -88,6 +90,8 @@ class MovieDetailsFragment :
 
             is MovieDetailsUiEvent.SaveToEvent -> {
                 //todo
+            }
+            is MovieDetailsUiEvent.onShowMoreReviewsEvent->{
             }
 
         }

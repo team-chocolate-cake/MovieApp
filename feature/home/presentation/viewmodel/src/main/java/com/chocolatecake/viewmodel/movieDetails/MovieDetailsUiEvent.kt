@@ -9,5 +9,6 @@ sealed interface MovieDetailsUiEvent{
     data class RecommendedMovieEvent(val movieId: Int) : MovieDetailsUiEvent
     data class PlayVideoEvent(val youtubeKeys: List<String>) : MovieDetailsUiEvent
     data class onSuccessRateEvent(val message: String) : MovieDetailsUiEvent
+    data class onShowMoreReviewsEvent(val movieId: Int) : MovieDetailsUiEvent
     object OnClickBack : MovieDetailsUiEvent
 }

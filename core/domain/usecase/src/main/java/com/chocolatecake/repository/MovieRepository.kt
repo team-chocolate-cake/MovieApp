@@ -7,7 +7,7 @@ import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.movieDetails.RatingResponseEntity
 import com.chocolatecake.entities.TVShowsEntity
 
 
@@ -50,7 +50,7 @@ interface MovieRepository {
     suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity>
 
     suspend fun getMoviesDetails(movieId:Int): MovieDetailsEntity
-    suspend fun setMovieRate(movieId:Int , rate:Float): RatingEntity
+    suspend fun setMovieRate(movieId:Int , rate:Float): RatingResponseEntity
 
     suspend fun getGenresTvs(): List<GenreEntity>
     suspend fun refreshGenresTv()
