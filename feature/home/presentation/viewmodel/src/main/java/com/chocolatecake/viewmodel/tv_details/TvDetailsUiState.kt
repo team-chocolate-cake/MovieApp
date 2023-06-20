@@ -14,15 +14,16 @@ data class TvDetailsUiState(
     val isLoading: Boolean = true,
     val reviews: List<CommentUIState> = emptyList(),
     val ratingSuccess: String = "",
-    val userRating: Float = 0.0f
-) {
+    val userRating: Float = 0.0f,
+    val youtubeKeyId: String = "",
+    ) {
     data class Info(
         val backdropImageUrl: String = "",
         val name: String = "",
         val rating: Float = 0.0f,
         val description: String = "",
         val genres: List<String> = emptyList(),
-        val youtubeKeyId: String = "",
-    )
+
+        )
 
 }

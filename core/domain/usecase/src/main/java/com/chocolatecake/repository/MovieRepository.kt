@@ -8,6 +8,7 @@ import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
+import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 
 
 interface MovieRepository {
@@ -46,4 +47,5 @@ interface MovieRepository {
     suspend fun rateTvShow(rate: Double, tvShowID: Int ): TvRatingEntity
     suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
     suspend fun getTvShowRecommendations(tvShowID: Int):List<TvShowEntity>
+    suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity
 }

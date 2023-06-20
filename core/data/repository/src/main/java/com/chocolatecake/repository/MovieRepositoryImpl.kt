@@ -8,9 +8,11 @@ import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
+import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RateRequest
+import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -27,6 +29,7 @@ import com.chocolatecake.repository.mappers.domain.DomainTvDetailsReviewMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvDetailsSeasonMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvShowMapper
+import com.chocolatecake.repository.mappers.domain.DomainYoutubeDetailsMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -224,6 +227,13 @@ class MovieRepositoryImpl @Inject constructor(
             wrapApiCall { movieService.getTvShowRecomendations(tvShowID) }.results?.filterNotNull()
                 ?: emptyList()
         return DomainTvShowMapper().map(call)
+    }
+
+    override suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity {
+        val call =
+            wrapApiCall { movieService.getTvShowYoutubeVideoDetails(tvShowID) }.results?.first()
+                ?: YoutubeVideoDetailsRemoteDto()
+        return DomainYoutubeDetailsMapper().map(call)
     }
 
     override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {

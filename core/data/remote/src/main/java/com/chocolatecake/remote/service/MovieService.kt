@@ -14,6 +14,7 @@ import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
+import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -114,5 +115,10 @@ interface MovieService {
     suspend fun getTvShowRecomendations(
         @Path("tv_id") tvShowId: Int
     ): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTvShowYoutubeVideoDetails(
+        @Path("tv_id") tvShowId: Int
+    ):Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 }
