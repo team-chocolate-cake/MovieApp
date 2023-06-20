@@ -51,7 +51,6 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
-        Log.e("TAG", "onError: ${th} , $movieId", )
         errors.add(th.message.toString())
         when (th) {
             is NoNetworkThrowable -> errors.add("noNetwork")

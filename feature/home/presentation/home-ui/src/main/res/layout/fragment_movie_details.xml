@@ -133,11 +133,13 @@
                 <include
                     android:id="@+id/lottie_animation_view_error"
                     layout="@layout/layout_error"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="@dimen/lottie_error_size"
+                    android:layout_height="@dimen/lottie_error_size" />
 
                 <TextView
                     android:layout_width="wrap_content"
+                    style="@style/TextStyle.TitleMedium"
+                    android:textColor="@color/on_background_87"
                     android:layout_height="wrap_content"
                     android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
                     android:text="@{viewModel.state.onErrors.toString()}" />
