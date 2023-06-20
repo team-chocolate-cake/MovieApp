@@ -24,11 +24,17 @@ class MovieDetailsViewModel @Inject constructor(
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener {
 
-    private val movieId = savedStateHandle.get<Int>("movieId") ?: 502356
+    private val movieId = savedStateHandle.get<Int>("movieId")
 
     init {
         _state.update { it.copy(isLoading = true) }
-        getMovieDetails(movieId)
+        if (movieId != null) {
+            getMovieDetails(movieId)
+        }else{
+            val errors = _state.value.onErrors.toMutableList()
+            errors.add("There are a problem with MovieId")
+            _state.update { it.copy(onErrors = errors, isLoading = false) }
+        }
     }
 
 
