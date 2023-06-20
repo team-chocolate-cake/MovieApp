@@ -49,7 +49,9 @@ class MovieDetailsFragment :
                         MovieDetailsItem.Recommended(
                             state.recommendedUiState,
                             state.reviewUiState.isEmpty(),
-                            state.id
+                            state.id,
+                            state.reviewsDetails.totalReviews,
+                            state.reviewsDetails.totalPages>1
                         ),
 
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
