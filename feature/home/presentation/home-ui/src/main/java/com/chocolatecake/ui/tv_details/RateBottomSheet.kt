@@ -54,14 +54,14 @@ class RateBottomSheet : BottomSheetDialogFragment() {
 
         }
         binding.buttonApply.setOnClickListener {
-            dismissListener?.onBottomSheetDismissed()
-            dismissListener?.passRatingValue(userRating)
+            dismissListener?.onApplyRateBottomSheet()
+            dismissListener?.updateRatingValue(userRating)
             dismiss()
         }
     }
 }
 
 interface BottomSheetDismissListener {
-    fun onBottomSheetDismissed()
-    fun passRatingValue(rate:Float)
+    fun onApplyRateBottomSheet()
+    fun updateRatingValue(rate:Float)
 }
