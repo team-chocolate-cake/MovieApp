@@ -31,7 +31,7 @@
 
         <com.github.guilhe.views.CircularProgressView
             android:id="@+id/circularProgressView"
-            android:layout_width="75dp"
+            android:layout_width="wrap_content"
             android:layout_height="75dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             app:duplicateFirstColorInArray="true"

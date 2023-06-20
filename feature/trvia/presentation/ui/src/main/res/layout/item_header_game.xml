@@ -45,7 +45,7 @@
 
         <com.github.guilhe.views.CircularProgressView
             android:id="@+id/circularProgressView"
-            android:layout_width="75dp"
+            android:layout_width="wrap_content"
             android:layout_height="75dp"
             app:duplicateFirstColorInArray="true"
             app:layout_constraintBottom_toBottomOf="parent"
