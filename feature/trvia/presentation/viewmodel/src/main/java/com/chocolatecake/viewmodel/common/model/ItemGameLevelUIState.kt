@@ -8,6 +8,7 @@ data class ItemGameLevelUIState(
     val max: Int = 5,
     val isOpenLevel: Boolean,
     val hasProgress: Boolean = true,
+    val howToPass: (level: Int) -> Boolean = { true }
 ) {
 
     val progress: Int
@@ -17,7 +18,7 @@ data class ItemGameLevelUIState(
         get() = "$progress%"
 
     val isPassed: Boolean
-        get() = progress == 100
+        get() = if (hasProgress) progress == 100 else howToPass(level)
 
     val title
         get() = when (level) {

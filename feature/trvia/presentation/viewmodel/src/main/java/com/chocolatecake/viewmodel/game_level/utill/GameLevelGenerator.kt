@@ -12,7 +12,7 @@ class GameLevelGenerator @Inject constructor() {
                     level = 1,
                     questionsCount = if (peopleGameLevel > 1) 5 else numPeopleQuestionsPassed,
                     max = 5,
-                    isOpenLevel = peopleGameLevel >= 1
+                    isOpenLevel = peopleGameLevel >= 1,
                 ),
                 ItemGameLevelUIState(
                     level = 2,
@@ -88,22 +88,22 @@ class GameLevelGenerator @Inject constructor() {
                     questionsCount = 0,
                     hasProgress = false,
                     max = 0,
-                    isOpenLevel = memorizeGameLevel >= 1
-                ),
+                    isOpenLevel = memorizeGameLevel >= 1,
+                ) { memorizeGameLevel > it },
                 ItemGameLevelUIState(
                     level = 2,
                     questionsCount = 0,
                     hasProgress = false,
                     max = 0,
                     isOpenLevel = memorizeGameLevel >= 2
-                ),
+                ) { memorizeGameLevel > it },
                 ItemGameLevelUIState(
                     level = 3,
                     questionsCount = 0,
                     hasProgress = false,
                     max = 0,
                     isOpenLevel = memorizeGameLevel >= 3
-                ),
+                ) { memorizeGameLevel > it },
             )
         }
     }
