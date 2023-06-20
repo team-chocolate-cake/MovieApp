@@ -73,7 +73,7 @@
                     android:id="@+id/nestedRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:isVisible="@{!viewModel.state.loading}"
+                    app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.onErrors.empty }"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

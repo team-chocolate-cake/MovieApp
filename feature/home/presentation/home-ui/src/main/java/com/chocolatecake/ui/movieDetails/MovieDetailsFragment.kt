@@ -83,7 +83,7 @@ class MovieDetailsFragment :
             }
 
             is MovieDetailsUiEvent.RecommendedMovieEvent -> {
-                // findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
+                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
             }
 
             is MovieDetailsUiEvent.onSuccessRateEvent -> {
@@ -94,6 +94,7 @@ class MovieDetailsFragment :
                 //todo
             }
             is MovieDetailsUiEvent.onShowMoreReviewsEvent->{
+                //todo
             }
 
         }
