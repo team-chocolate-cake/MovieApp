@@ -44,6 +44,7 @@
         <TextView
             android:id="@+id/textview_no_items_found"
             style="@style/TextStyle.TitleMedium"
+            android:textColor="@color/on_background_60"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"

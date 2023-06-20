@@ -46,7 +46,7 @@ class WatchHistoryFragment
     override fun onEvent(event: WatchHistoryUiEvent) {
         when (event) {
             is WatchHistoryUiEvent.NavigateToMovieDetails -> navigateToMovieDetails(event.movieId)
-            is WatchHistoryUiEvent.ShowSnackBar -> showSnackBar(event.message)
+            is WatchHistoryUiEvent.ShowDeleteSnackBar -> deletionIndicatorSnackBar.show()
             is WatchHistoryUiEvent.Error -> showSnackBar(getString(R.string.cannot_fetch_movies))
         }
     }
@@ -60,6 +60,7 @@ class WatchHistoryFragment
     }
 
     private fun swipeToDeleteItemSetup(itemRv: RecyclerView) {
+        Log.i("batata", "swipeToDeleteItemSetup: ")
         val swipeGesture = swipeGestureAnonymousObject()
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(itemRv)
@@ -68,6 +69,7 @@ class WatchHistoryFragment
     private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
+                Log.i("batata", "onSwiped: ")
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
             } catch (e: Exception) {
                 createToast(e.message.toString())
@@ -84,9 +86,9 @@ class WatchHistoryFragment
     }
 
     private fun onSwipeLeftActions(position: Int) {
+        Log.i("batata", "onSwipeLeftActions: ")
         viewModel.setPosition(position)
         viewModel.deleteItemFromUi()
-        deletionIndicatorSnackBar.show()
     }
 
     private fun setupSnackBar(): Snackbar {

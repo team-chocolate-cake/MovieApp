@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.watch_history
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCase
@@ -147,6 +148,7 @@ class WatchHistoryViewModel @Inject constructor(
     }
 
     fun deleteItemFromDataBase() = viewModelScope.launch {
+        Log.i("batata", "deleteItemFromDataBase: ")
         state.value.tempMovie?.let {
             if (state.value.snackBarUndoPressed == false) {
                 deleteMovieFromWatchHistoryUseCase(movieDomainMapper.map(it))
@@ -157,6 +159,7 @@ class WatchHistoryViewModel @Inject constructor(
     fun deleteItemFromUi() {
         val position = state.value.swipePosition
         position?.let {
+            if (_state.value.movies[position] !is WatchHistoryRecyclerItem.MovieCard) return
             val newList = _state.value.movies.toMutableList()
             val tempMovie = newList[position]
             newList.removeAt(position)
@@ -166,6 +169,7 @@ class WatchHistoryViewModel @Inject constructor(
                     tempMovie = (tempMovie as WatchHistoryRecyclerItem.MovieCard).movie
                 )
             }
+            sendEvent(WatchHistoryUiEvent.ShowDeleteSnackBar)
         }
     }
 

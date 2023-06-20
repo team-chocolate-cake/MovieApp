@@ -19,6 +19,7 @@ abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
+        if(viewHolder !is WatchHistoryAdapter.CardViewHolder) return
         RecyclerViewSwipeDecorator.Builder(
             c,
             recyclerView,
@@ -30,8 +31,8 @@ abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
         )
             .addSwipeLeftActionIcon(deleteIcon)
             .addCornerRadius(TypedValue.COMPLEX_UNIT_DIP,12)
-            .setActionIconTint(recyclerView.context.getColor(com.chocolatecake.bases.R.color.white))
-            .addBackgroundColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.red))
+            .setActionIconTint(recyclerView.context.getColor(com.chocolatecake.bases.R.color.on_background_87))
+//            .addBackgroundColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.orangeRed))
             .addPadding(TypedValue.COMPLEX_UNIT_DIP,16f,0f,16f)
             .create()
             .decorate()

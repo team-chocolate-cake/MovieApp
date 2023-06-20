@@ -5,9 +5,7 @@ sealed interface WatchHistoryUiEvent {
         val movieId: Int
     ) : WatchHistoryUiEvent
 
-    data class ShowSnackBar(
-        val message: String
-    ) : WatchHistoryUiEvent
+    object ShowDeleteSnackBar : WatchHistoryUiEvent
 
     data class Error(
         val message: String
