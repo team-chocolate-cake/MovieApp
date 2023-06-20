@@ -3,6 +3,7 @@ package com.chocolatecake.viewmodel.search
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.GenreEntity
+import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.GetAllGenresMoviesUseCase
 import com.chocolatecake.usecase.GetAllGenresTvsUseCase
 import com.chocolatecake.usecase.search.SearchMoviesUseCase
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -243,8 +245,12 @@ class SearchViewModel @Inject constructor(
 
     /// region error handling
     private fun onError(throwable: Throwable) {
-        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
-        _state.update {
+        if (throwable == NoNetworkThrowable()) {
+            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        }else if(throwable == SocketTimeoutException()){
+
+        }
+            _state.update {
             it.copy(
                 error = listOf(throwable.message ?: "No Network Connection"),
                 isLoading = false
