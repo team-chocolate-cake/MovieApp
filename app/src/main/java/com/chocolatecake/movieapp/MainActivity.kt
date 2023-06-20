@@ -4,21 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
-import com.chocolatecake.ui.LoginFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var preferenceStorage: PreferenceStorage
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +32,9 @@ class MainActivity : AppCompatActivity() {
                 com.chocolatecake.ui.home.R.id.searchFragment,
                 com.chocolatecake.ui.home.R.id.tvFragment,
                 com.chocolatecake.ui.home.R.id.profileFragment -> showBottomNav()
+
                 else -> hideBottomNav()
             }
-        }
-        handleIsAuthorized(navController)
-    }
-
-    private fun handleIsAuthorized(navController: NavController) {
-        if (!preferenceStorage.sessionId.isNullOrBlank()) {
-            navController
-                .navigate(LoginFragmentDirections.actionLoginFragmentToHomeNavGraph())
         }
     }
 
