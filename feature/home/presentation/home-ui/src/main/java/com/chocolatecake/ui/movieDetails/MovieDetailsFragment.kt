@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -51,7 +50,7 @@ class MovieDetailsFragment :
                             state.reviewUiState.isEmpty(),
                             state.id,
                             state.reviewsDetails.totalReviews,
-                            state.reviewsDetails.totalPages>1
+                            state.reviewsDetails.totalPages > 1
                         ),
 
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
@@ -62,41 +61,49 @@ class MovieDetailsFragment :
     }
 
     override fun onEvent(event: MovieDetailsUiEvent) {
-        val bottomSheet = RatingMovieBottomSheet()
         when (event) {
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
 
-            is MovieDetailsUiEvent.PeopleEvent -> {
+            is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
                 //todo
             }
 
-            is MovieDetailsUiEvent.PlayVideoEvent -> {
+            is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 //todo
             }
 
-            is MovieDetailsUiEvent.RateMovieEvent -> {
-                val movieId = event.movieId
-                bottomSheet.show(childFragmentManager, "BOTTOM")
-                bottomSheet.setMovieID(movieId)
+            is MovieDetailsUiEvent.RateMovie -> {
+                showRatingBottomSheet(event.movieId)
             }
 
-            is MovieDetailsUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(event.movieId))
+            is MovieDetailsUiEvent.NavigateToMovie -> {
+                findNavController().navigate(
+                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(
+                        event.movieId
+                    )
+                )
             }
 
-            is MovieDetailsUiEvent.onSuccessRateEvent -> {
+            is MovieDetailsUiEvent.ShowSnackBarRating -> {
                 //todo
             }
 
-            is MovieDetailsUiEvent.SaveToEvent -> {
+            is MovieDetailsUiEvent.SaveToList -> {
                 //todo
             }
-            is MovieDetailsUiEvent.onShowMoreReviewsEvent->{
+
+            is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
 
         }
+    }
+
+    private fun showRatingBottomSheet(movieId: Int) {
+        val bottomSheet = RatingMovieBottomSheet()
+        bottomSheet.show(childFragmentManager, "BOTTOM")
+        bottomSheet.setMovieID(movieId)
     }
 }

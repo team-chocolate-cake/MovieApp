@@ -1,9 +1,11 @@
 package com.chocolatecake.viewmodel.movieDetails
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingResponseEntity
+import com.chocolatecake.repository.NoNetworkThrowable
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
@@ -30,7 +32,7 @@ class MovieDetailsViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
         if (movieId != null) {
             getMovieDetails(movieId)
-        }else{
+        } else {
             val errors = _state.value.onErrors.toMutableList()
             errors.add("There are a problem with MovieId")
             _state.update { it.copy(onErrors = errors, isLoading = false) }
@@ -48,7 +50,12 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
+        Log.e("TAG", "onError: ${th}", )
         errors.add(th.message.toString())
+        when (th) {
+            is NoNetworkThrowable -> errors.add("noNetwork")
+            else ->errors.add(th.message.toString())
+        }
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
@@ -107,22 +114,22 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     private fun onSuccessRating(ratingResponseEntity: RatingResponseEntity) {
-        sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingResponseEntity.statusMessage))
+        sendEvent(MovieDetailsUiEvent.ShowSnackBarRating(ratingResponseEntity.statusMessage))
     }
 
 
     override fun onClickPeople(id: Int) {
-        sendEvent(MovieDetailsUiEvent.PeopleEvent(id))
+        sendEvent(MovieDetailsUiEvent.NavigateToPeopleDetails(id))
     }
 
 
     override fun onClickPlayTrailer(keys: List<String>) {
-        sendEvent(MovieDetailsUiEvent.PlayVideoEvent(keys))
+        sendEvent(MovieDetailsUiEvent.PlayVideoTrailer(keys))
     }
 
 
     override fun onClickRate(id: Int) {
-        sendEvent(MovieDetailsUiEvent.RateMovieEvent(id))
+        sendEvent(MovieDetailsUiEvent.RateMovie(id))
     }
 
     override fun onClickBackButton() {
@@ -130,15 +137,15 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onClickSaveButton(id: Int) {
-        sendEvent(MovieDetailsUiEvent.SaveToEvent(id))
+        sendEvent(MovieDetailsUiEvent.SaveToList(id))
     }
 
     override fun onClickShowMore(movieId: Int) {
-        sendEvent(MovieDetailsUiEvent.onShowMoreReviewsEvent(movieId))
+        sendEvent(MovieDetailsUiEvent.NavigateToShowMore(movieId))
     }
 
     override fun onClickMedia(id: Int) {
-        sendEvent(MovieDetailsUiEvent.RecommendedMovieEvent(id))
+        sendEvent(MovieDetailsUiEvent.NavigateToMovie(id))
     }
 
 }
