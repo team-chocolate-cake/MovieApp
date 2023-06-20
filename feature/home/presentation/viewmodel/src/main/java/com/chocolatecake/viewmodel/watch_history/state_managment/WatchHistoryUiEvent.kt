@@ -6,6 +6,11 @@ sealed interface WatchHistoryUiEvent {
     ) : WatchHistoryUiEvent
 
     data class ShowSnackBar(
-        val message:String
-    ): WatchHistoryUiEvent
+        val message: String
+    ) : WatchHistoryUiEvent
+
+    data class Error(
+        val message: String
+    ) : WatchHistoryUiEvent
+
 }

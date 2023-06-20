@@ -8,10 +8,10 @@ import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieDomainMapper
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieUiStateMapper
-import com.chocolatecake.viewmodel.watch_history.state_managment.Error
 import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiEvent
 import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
@@ -39,10 +39,11 @@ class WatchHistoryViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = {
-                val m = getAllWatchHistoryMoviesUseCase().map {
+                val movies = getAllWatchHistoryMoviesUseCase().map {
                     movieUiStateMapper.map(it)
                 }
-                itemsCreator.createItems(m)
+                itemsCreator.createItems(movies)
+
             },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
@@ -59,32 +60,16 @@ class WatchHistoryViewModel @Inject constructor(
     }
 
     private fun onGetAllMoviesError(throwable: Throwable) {
-        _state.update {
-            it.copy(
-                isLoading = false,
-                errors = listOf(
-                    Error(
-                        2,
-                        throwable.message.toString()
-                    )
-                )
-            )
-        }
+        _state.update { it.copy(isLoading = false) }
+        sendErrorEvent(throwable)
+
     }
 
-    private fun updateStateToError(e: Exception) {
-        _state.update {
-            it.copy(
-                errors = listOf(
-                    Error(
-                        code = 1,
-                        message = e.message.toString()
-                    )
-                )
-            )
-        }
+    private fun sendErrorEvent(th: Throwable) {
+        sendEvent(WatchHistoryUiEvent.Error(th.message.toString()))
     }
 
+    @OptIn(FlowPreview::class)
     private fun initSearchCallBacks() = viewModelScope.launch {
         var oldValue = ""
         state.debounce(600)
@@ -104,8 +89,8 @@ class WatchHistoryViewModel @Inject constructor(
                 } else {
                     searchMovies(newSearchInput)
                 }
-            } catch (e: Exception) {
-                updateStateToError(e)
+            } catch (th: Throwable) {
+                sendErrorEvent(th)
             }
         }
 
@@ -125,8 +110,8 @@ class WatchHistoryViewModel @Inject constructor(
                     isLoading = false
                 )
             }
-        } catch (e: Exception) {
-            updateStateToError(e)
+        } catch (th: Throwable) {
+            sendErrorEvent(th)
         }
 
 

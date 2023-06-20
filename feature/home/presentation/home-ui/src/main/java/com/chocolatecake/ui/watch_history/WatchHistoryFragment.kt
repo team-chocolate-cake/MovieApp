@@ -47,6 +47,7 @@ class WatchHistoryFragment
         when (event) {
             is WatchHistoryUiEvent.NavigateToMovieDetails -> navigateToMovieDetails(event.movieId)
             is WatchHistoryUiEvent.ShowSnackBar -> showSnackBar(event.message)
+            is WatchHistoryUiEvent.Error -> showSnackBar(getString(R.string.cannot_fetch_movies))
         }
     }
 
@@ -83,7 +84,6 @@ class WatchHistoryFragment
     }
 
     private fun onSwipeLeftActions(position: Int) {
-        Log.i("batata", "onSwipeLeftActions: $position")
         viewModel.setPosition(position)
         viewModel.deleteItemFromUi()
         deletionIndicatorSnackBar.show()
