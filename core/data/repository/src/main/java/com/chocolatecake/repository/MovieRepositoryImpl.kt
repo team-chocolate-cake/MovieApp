@@ -3,10 +3,13 @@ package com.chocolatecake.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import android.util.Log
+import com.chocolatecake.entities.CastEpisodeDetailsEntity
+import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ProfileEntity
+import com.chocolatecake.entities.RatingEpisodeDetailsEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
@@ -14,6 +17,7 @@ import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
@@ -32,6 +36,9 @@ import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
 import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainCastMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainEpisodeDetailsMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainRatingEpisodeMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -68,6 +75,9 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainGenreMapper: DomainGenreMapper,
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainRatingMapper: DomainRatingMapper,
+    private val domainRatingEpisodeMapper: DomainRatingEpisodeMapper,
+    private val domainCastMapper: DomainCastMapper,
+    private val domainEpisodeDetailsMapper: DomainEpisodeDetailsMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
 ) : BaseRepository(), MovieRepository {
@@ -279,34 +289,85 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { airingTodayTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { airingTodayTvShowsPagingSource }
         )
     }
 
     override suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { topRatedTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { topRatedTvShowsPagingSource }
         )
     }
 
     override suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { popularTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { popularTVShowsPagingSource }
         )
     }
 
     override suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { onTheAirTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { onTheAirTVShowsPagingSource }
         )
     }
     /// endregion
 
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
-        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
 
     override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
-        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+        return domainRatingMapper.map(wrapApiCall {
+            movieService.setMovieRate(
+                RatingRequest(rate),
+                movieId
+            )
+        })
     }
+
+    /// region episode
+
+    override suspend fun getCastForEpisode(
+        id: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): List<CastEpisodeDetailsEntity> {
+
+        val dataDto = movieService.getEpisodeCast(
+            id,
+            seasonNumber,
+            episodeNumber
+        ).body()?.results?.filterNotNull()
+        return domainCastMapper.map(dataDto!!)
+    }
+
+    override suspend fun getEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): EpisodeDetailsEntity {
+        val episodeDetailsDto =
+            movieService.getEpisodeDetails(seriesId, seasonNumber, episodeNumber).body()
+        return domainEpisodeDetailsMapper.map(episodeDetailsDto!!)
+    }
+
+    override suspend fun setRatingForEpisode(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        value: Int
+    ): RatingEpisodeDetailsEntity {
+        val rateRequest = RatingEpisodeDetailsRequest(value)
+        val ratingDto =
+            movieService.postEpisodeRating(rateRequest, seriesId, seasonNumber, episodeNumber)
+                .body()
+        return domainRatingEpisodeMapper.map(ratingDto!!)
+    }
+
+    /// endregion
+
 }

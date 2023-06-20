@@ -10,7 +10,7 @@ import javax.inject.Inject
 class DomainRatingMapper @Inject constructor() : Mapper<RatingDto, RatingEntity> {
     override fun map(input: RatingDto): RatingEntity {
         return RatingEntity(
-           statusCode = input.statusCode,
+            statusCode = input.statusCode,
             statusMessage = input.statusMessage,
             success = input.success
         )
