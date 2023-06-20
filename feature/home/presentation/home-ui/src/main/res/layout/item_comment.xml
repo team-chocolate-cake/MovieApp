@@ -47,16 +47,16 @@
             android:id="@+id/text_view_comment"
             style="@style/TextStyle.BodySmall"
             android:layout_width="@dimen/zero_width"
-            android:layout_height="@dimen/height_text_comment"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
             android:ellipsize="end"
-            android:maxLines="5"
             android:text="@{item.content}"
-            tools:text="@tools:sample/avatars"
             android:textColor="@color/on_background_87"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/text_view_username"
             app:layout_constraintStart_toStartOf="@+id/text_view_username"
-            app:layout_constraintTop_toBottomOf="@id/text_view_username" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_username"
+            tools:text="@tools:sample/avatars"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
