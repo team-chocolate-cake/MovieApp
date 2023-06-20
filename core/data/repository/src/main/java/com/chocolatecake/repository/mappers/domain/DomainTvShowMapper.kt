@@ -16,7 +16,7 @@ class DomainTvShowMapper @Inject constructor() : Mapper<TVShowsRemoteDto, TvShow
         return TvShowEntity(
             id = input.id ?: 0,
             name = input.name ?: "",
-            imageUrl = (BuildConfig.IMAGE_BASE_PATH + input.backdropPath),
+            imageUrl = (BuildConfig.IMAGE_BASE_PATH + input.posterPath),
             rate = input.voteAverage?.times(0.5) ?: 0.0
         )
     }
