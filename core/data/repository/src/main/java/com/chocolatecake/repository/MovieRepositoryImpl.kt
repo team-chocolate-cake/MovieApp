@@ -334,7 +334,7 @@ class MovieRepositoryImpl @Inject constructor(
         episodeNumber: Int
     ): List<PeopleEntity> {
 
-        val dataDto = wrapApiCall { movieService.getEpisodeCast(1772, 1, 1) }
+        val dataDto = wrapApiCall { movieService.getEpisodeCast(id, seasonNumber, episodeNumber) }
         Log.d("repo-cast", dataDto.toString())
 
         return domainCastMapper.map(dataDto)

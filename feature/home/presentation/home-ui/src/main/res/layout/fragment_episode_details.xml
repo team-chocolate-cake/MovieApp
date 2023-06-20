@@ -119,7 +119,7 @@
                 tools:text="@tools:sample/lorem/random" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/web_view"
+                android:id="@+id/card_view"
                 android:layout_width="0dp"
                 android:layout_height="328dp"
                 android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
@@ -130,9 +130,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_episode_description">
 
-                <WebView
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:videoId="@{viewModel.state.productionCode}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.cardview.widget.CardView>
 
@@ -146,7 +152,7 @@
                 android:text="@string/actors"
                 android:textColor="@color/on_background_87"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/web_view" />
+                app:layout_constraintTop_toBottomOf="@id/card_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_people"

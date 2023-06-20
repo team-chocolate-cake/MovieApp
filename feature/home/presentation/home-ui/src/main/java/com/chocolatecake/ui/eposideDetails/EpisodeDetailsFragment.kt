@@ -1,8 +1,12 @@
 package com.chocolatecake.ui.eposideDetails
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.bases.BaseFragment
@@ -23,6 +27,8 @@ class EpisodeDetailsFragment :
     override val layoutIdFragment = R.layout.fragment_episode_details
     override val viewModel: EpisodeDetailsViewModel by viewModels()
     private val peopleAdapter by lazy { PeopleAdapter(mutableListOf(), viewModel) }
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
@@ -31,21 +37,17 @@ class EpisodeDetailsFragment :
                 binding.item = it
             }
         }
-
+        binding.apply {
+            webView.webViewClient = WebViewClient()
+            webView.loadUrl("https://www.youtube.com/watch?v=up9shHCur44")
+            webView.settings.javaScriptEnabled = true
+            webView.settings.setSupportZoom(true)
+        }
     }
 
     private fun setAdapter() {
-        setItemsInAdapter()
+        collectLatest { peopleAdapter.setItems(viewModel.state.value.cast) }
         binding.recyclerViewPeople.adapter = peopleAdapter
-    }
-
-    private fun setItemsInAdapter() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest { state ->
-                peopleAdapter.setItems(state.cast)
-                Log.d("banan-list",state.cast.toString())
-            }
-        }
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
