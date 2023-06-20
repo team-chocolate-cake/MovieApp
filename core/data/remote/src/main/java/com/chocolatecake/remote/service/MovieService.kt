@@ -1,6 +1,7 @@
 package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.LoginRequest
+import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
@@ -12,6 +13,9 @@ import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.CastRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.RatingDto
@@ -90,7 +94,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun searchForMovies(
+    suspend fun searchForMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
@@ -135,8 +139,8 @@ interface MovieService {
     /// region account
     @GET("account")
     suspend fun getAccountDetails(
-        @Query("session_id") sessionId : String = " "
-    ) : Response<ProfileRemoteDto>
+        @Query("session_id") sessionId: String = " "
+    ): Response<ProfileRemoteDto>
     ///endregion
 
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
@@ -149,5 +153,31 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<RatingDto>
+    ): Response<RatingDto>
+
+    /// region episode
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}")
+    suspend fun getEpisodeDetails(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<EpisodeDetailsRemoteDto>
+
+    @POST("tv/{series_id}/season/{season_number}/episode/{episode_number}/rating")
+    suspend fun postEpisodeRating(
+        @Body rate: RatingEpisodeDetailsRequest,
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<RatingEpisodeDetailsRemoteDto>
+
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}/credits")
+    suspend fun getEpisodeCast(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<DataWrapperResponse<CastRemoteDto>>
+
+///endregion
+
 }
