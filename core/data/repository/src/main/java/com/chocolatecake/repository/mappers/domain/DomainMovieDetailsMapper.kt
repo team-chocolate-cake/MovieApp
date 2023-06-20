@@ -8,11 +8,12 @@ import com.chocolatecake.entities.movieDetails.MovieVideoEntity
 import com.chocolatecake.entities.movieDetails.RecommendationsEntity
 import com.chocolatecake.entities.movieDetails.RecommendedMovieEntity
 import com.chocolatecake.entities.movieDetails.ReviewEntity
+import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.movieDetails.VideosEntity
 import com.chocolatecake.remote.response.movieDetails.Credits
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.Recommendations
-import com.chocolatecake.remote.response.movieDetails.Reviews
+import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import com.chocolatecake.remote.response.movieDetails.Videos
 import com.chocolatecake.repository.BuildConfig
 import com.chocolatecake.repository.mappers.Mapper
@@ -31,7 +32,7 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
             video = input.video,
             videos = mapvideos(input.videos),
             voteAverage = input.voteAverage,
-            reviewEntities = mapReviews(input.reviews)
+            reviewEntity = mapReviews(input.reviews)
         )
     }
 
@@ -117,14 +118,20 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
         )
     }
 
-    private fun mapReviews(reviews: Reviews): List<ReviewEntity> {
-        return reviews.results.map {
-            ReviewEntity(
-                name = it.author,
-                avatar_path = it.authorDetails.avatarPath,
-                content = it.content,
-                created_at = it.createdAt
-            )
-        }
+    private fun mapReviews(reviews: ReviewsDto): ReviewResponseEntity{
+        return ReviewResponseEntity(
+            reviews = reviews.results.map {
+                ReviewEntity(
+                    name = it.author,
+                    avatar_path = it.authorDetails.avatarPath,
+                    content = it.content,
+                    created_at = it.createdAt
+                )
+            },
+            page = reviews.page,
+            totalResults = reviews.totalResults,
+            totalPages = reviews.totalPages
+
+        )
     }
 }

@@ -66,7 +66,7 @@ class MovieDetailsViewModel @Inject constructor(
                         imageUrl = it?.backdropPath ?: "",
                     )
                 } ?: emptyList(),
-                reviewUiState = movieDetails.reviewEntities.map {
+                reviewUiState = movieDetails.reviewEntity.reviews.map {
                     ReviewUiState(
                         name = it.name,
                         avatar_path = it.avatar_path,
@@ -82,6 +82,11 @@ class MovieDetailsViewModel @Inject constructor(
                         imageUrl = it?.profilePath ?: ""
                     )
                 } ?: emptyList(),
+                reviewsDetails = ReviewDetailsUiState(
+                    page = movieDetails.reviewEntity.page,
+                    totalPages = movieDetails.reviewEntity.totalPages,
+                    totalReviews = movieDetails.reviewEntity.totalResults
+                ),
                 isLoading = false
             )
         }

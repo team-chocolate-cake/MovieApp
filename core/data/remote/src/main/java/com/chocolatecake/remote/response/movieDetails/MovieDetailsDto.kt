@@ -60,5 +60,5 @@ data class MovieDetailsDto(
     @SerializedName("vote_count")
     val voteCount: Int,
     @SerializedName("reviews")
-    val reviews: Reviews
+    val reviews: ReviewsDto
 )

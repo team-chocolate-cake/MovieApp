@@ -3,7 +3,7 @@ package com.chocolatecake.remote.response.movieDetails
 
 import com.google.gson.annotations.SerializedName
 
-data class Reviews(
+data class ReviewsDto(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")

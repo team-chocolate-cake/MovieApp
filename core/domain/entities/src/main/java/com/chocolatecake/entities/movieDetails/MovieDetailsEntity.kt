@@ -12,5 +12,5 @@ data class MovieDetailsEntity(
     val video: Boolean,
     val videos: VideosEntity,
     val voteAverage: Double,
-    val reviewEntities:List<ReviewEntity>
+    val reviewEntity:ReviewResponseEntity
 )

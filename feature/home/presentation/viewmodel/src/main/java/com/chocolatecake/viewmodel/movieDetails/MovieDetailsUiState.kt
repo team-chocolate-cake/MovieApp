@@ -10,6 +10,7 @@ data class MovieDetailsUiState(
     val recommendedUiState: List<MediaVerticalUIState> = emptyList(),
     val castUiState: List<PeopleUIState> = emptyList(),
     val reviewUiState: List<ReviewUiState> = emptyList(),
+    val reviewsDetails:ReviewDetailsUiState = ReviewDetailsUiState(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
 )
@@ -30,4 +31,9 @@ data class ReviewUiState(
     val avatar_path:String?,
     val content:String?,
     val created_at:String?,
+)
+data class ReviewDetailsUiState(
+    val page:Int = 1,
+    val totalPages:Int = 1,
+    val totalReviews:Int = 1
 )
