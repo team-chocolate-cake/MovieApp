@@ -1,10 +1,9 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.chocolatecake.remote.service.MovieService
-import retrofit2.Response
-import java.io.IOException
 import java.net.UnknownHostException
 
 abstract class BasePagingSource<Value : Any>(
@@ -23,8 +22,10 @@ abstract class BasePagingSource<Value : Any>(
                 nextKey = currentPage + 1
             )
         } catch (e: UnknownHostException) {
-            LoadResult.Error(NoNetworkException())
+            Log.d("network---base",NoNetworkThrowablee().message.toString())
+            LoadResult.Error(NoNetworkThrowablee())
         } catch (e: Exception) {
+            Log.d("network---base2",e.message.toString())
             LoadResult.Error(e)
         }
     }
@@ -33,4 +34,4 @@ abstract class BasePagingSource<Value : Any>(
         return null
     }
 }
-class NoNetworkException : IOException("No network available. Please check your internet connection.")
+class NoNetworkThrowablee : Throwable("No network connection")

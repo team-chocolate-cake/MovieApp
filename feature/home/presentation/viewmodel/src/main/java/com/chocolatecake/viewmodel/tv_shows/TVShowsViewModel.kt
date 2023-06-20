@@ -44,7 +44,7 @@ class TVShowsViewModel @Inject constructor(
         }
     }
 
-    fun getAiringTodayTVShows() {
+    /*fun getAiringTodayTVShows() {
         viewModelScope.launch {
             try {
                 val items = getAiringTodayTVShowsUseCase().map { pagingData ->
@@ -58,13 +58,41 @@ class TVShowsViewModel @Inject constructor(
                         errorList = emptyList()
                     )
                 }
-                Log.d("mimo", _state.value.isError.toString())
+                Log.d("network", _state.value.isError.toString())
+                Log.d("network", _state.value.errorList.toString())
+
             } catch (throwable: Throwable) {
                 onError(throwable)
-                Log.d("mimo", _state.toString() + throwable.message.toString())
+                Log.d("network", _state.toString() + throwable.message.toString())
+            }
+        }
+    }*/
+
+    fun getAiringTodayTVShows() {
+        viewModelScope.launch {
+            try {
+                val items = getAiringTodayTVShowsUseCase().map { pagingData ->
+                    pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+                }.cachedIn(viewModelScope)
+                _state.update {
+                    it.copy(
+                        tvShowsType = TVShowsType.AIRING_TODAY,
+                        tvShowAiringToday = items,
+                        isLoading = false,
+                        errorList = null // Clear the error list when successful
+                    )
+                }
+                Log.d("network", _state.value.isError.toString())
+                Log.d("network", _state.value.errorList.toString())
+
+            } catch (throwable: Throwable) {
+                onError(throwable)
+                Log.d("network", _state.toString() + throwable.message.toString())
             }
         }
     }
+
+
 
     fun getOnTheAirTVShows() {
         viewModelScope.launch {
@@ -128,14 +156,15 @@ class TVShowsViewModel @Inject constructor(
     /// endregion
 
     private fun onError(throwable: Throwable) {
-        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        val errorMessage = throwable.message ?: "No network connection"
+        showErrorWithSnackBar(errorMessage)
         _state.update {
             it.copy(
-                errorList = listOf(throwable.message ?: "No Network Connection"),
+                errorList = listOf(errorMessage),
                 isLoading = false
             )
         }
-        Log.d("mimo", _state.toString())
+        Log.d("network", _state.toString())
     }
 
     private fun showErrorWithSnackBar(messages: String) {

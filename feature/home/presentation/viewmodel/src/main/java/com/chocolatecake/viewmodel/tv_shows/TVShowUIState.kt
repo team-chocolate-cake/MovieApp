@@ -10,7 +10,7 @@ data class TVShowUIState(
     val tvShowTopRated: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val tvShowOnTheAir: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val tvShowPopular: Flow<PagingData<TVShowsUI>> = emptyFlow(),
-    val errorList: List<String>? = null,
+    val errorList: List<String>? = emptyList(),
     val isLoading: Boolean = false
 ) {
     val isError: Boolean
