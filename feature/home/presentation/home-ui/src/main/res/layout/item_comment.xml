@@ -12,7 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small">
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginHorizontal="16dp"
+        >
 
         <TextView
             android:id="@+id/text_view_image_person"
@@ -23,8 +25,9 @@
             android:gravity="center"
             android:text="@{item.firstTwoCharsFromName}"
             android:textColor="@color/on_primary"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_username"
+            app:layout_constraintEnd_toStartOf="@+id/text_view_username"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="MS" />
 
         <TextView
@@ -48,16 +51,14 @@
             android:id="@+id/text_view_comment"
             style="@style/TextStyle.BodySmall"
             android:layout_width="@dimen/zero_width"
-            android:layout_height="@dimen/height_text_comment"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny"
-            android:ellipsize="end"
-            android:maxLines="5"
+            app:layout_constraintEnd_toEndOf="parent"
             android:text="@{item.content}"
-            tools:text="@tools:sample/lorem/random"
             android:textColor="@color/on_background_87"
-            app:layout_constraintEnd_toEndOf="@+id/text_view_username"
             app:layout_constraintStart_toStartOf="@+id/text_view_username"
-            app:layout_constraintTop_toBottomOf="@id/text_view_username" />
+            app:layout_constraintTop_toBottomOf="@id/text_view_username"
+            tools:text="@tools:sample/lorem/random" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -13,7 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nestedRecycler"
@@ -22,20 +23,45 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
+            />
+
+        <ImageButton
+            app:isVisible="@{!viewModel.state.isLoading}"
+            android:id="@+id/image_button_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:onClick="@{()-> viewModel.onBack()}"
+            android:src="@drawable/arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!--region loading-->
-        <!--            <ProgressBar-->
-        <!--                android:id="@+id/progressBar"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:indeterminateTint="@color/primary"-->
-        <!--                app:isVisible="@{viewModel.state.loading}"-->
-        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toTopOf="parent"-->
-        <!--                tools:visibility="invisible" />-->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary"
+            app:isVisible="@{viewModel.state.isLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--endregion-->
+
+        <include
+            android:id="@+id/lottie_animation_view_no_network"
+            layout="@layout/layout_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showWhenError="@{viewModel.state.onErrors}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -38,7 +38,6 @@ class TvDetailsViewModel @Inject constructor(
     private val tvShowUiMapper: TvShowUiMapper,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
-    var rate = 0.0f
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
 
@@ -47,6 +46,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun getData() {
+
         getTvShowInfo()
         getTvShowCast()
         getTvSeasons()
@@ -56,7 +56,7 @@ class TvDetailsViewModel @Inject constructor(
 
     //region info
     private fun getTvShowInfo() {
-        _state.update { it.copy(isLoading = true) }
+        updateLoading(true)
         tryToExecute(
             call = { tvDetailsInfoUseCase(tvShowId) },
             onSuccess = ::onSuccessTvShowInfo,
@@ -65,7 +65,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onSuccessTvShowInfo(tvShowInfoEntity: TvDetailsInfoEntity) {
-        _state.update { it.copy(isLoading = false) }
+        updateLoading(false)
         val item = tvDetailsInfoUiMapper.map(tvShowInfoEntity)
         _state.update {
             it.copy(
@@ -84,6 +84,7 @@ class TvDetailsViewModel @Inject constructor(
 
     //region cast
     private fun getTvShowCast() {
+        updateLoading(true)
         tryToExecute(
             call = { getTvDetailsCreditUseCase(tvShowId) },
             onSuccess = ::onTvDetailsCastSuccess,
@@ -93,6 +94,7 @@ class TvDetailsViewModel @Inject constructor(
 
 
     private fun onTvDetailsCastSuccess(castEntity: List<PeopleEntity>) {
+        updateLoading(false)
         val item = TvDetailsCastUiMapper().map(castEntity)
         _state.update {
             it.copy(
@@ -100,9 +102,11 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
     }
+
     //endregion
     //region seasons
     private fun getTvSeasons() {
+        updateLoading(true)
         tryToExecute(
             call = { getTvDetailsSeasonsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsSeasonSuccess,
@@ -111,11 +115,14 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
+        updateLoading(false)
         val item = TvDetailsSeasonMapper().map(seasons)
         _state.update { it.copy(seasons = item.seasons) }
     }
+
     //endregion
     private fun getTvRecommendations() {
+        updateLoading(true)
         tryToExecute(
             call = { getTvShowRecommendations(tvShowId) },
             onSuccess = ::onTvShowRecommendationsSuccess,
@@ -125,6 +132,7 @@ class TvDetailsViewModel @Inject constructor(
 
 
     private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
+        updateLoading(false)
         val item = tvShowUiMapper.map(recommendations)
         _state.update {
             it.copy(
@@ -162,10 +170,8 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onRatingSuccess(tvRatingEntity: TvRatingEntity) {
-        Log.i("Click", "${state.value.userRating}")
         onApplyRating("rating was successful")
         val item = TvRatingUiMapper().map(tvRatingEntity)
-
         _state.update {
             it.copy(
                 ratingSuccess = item.ratingSuccess
@@ -178,8 +184,8 @@ class TvDetailsViewModel @Inject constructor(
     }
 
 
-
     private fun getTvReviews() {
+        updateLoading(true)
         tryToExecute(
             call = { getTvDetailsReviewsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsReviewsSuccess,
@@ -188,6 +194,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onTvDetailsReviewsSuccess(seasons: List<ReviewEntity>) {
+        updateLoading(false)
         val item = TvDetailsReviewUiMapper().map(seasons)
         _state.update {
             it.copy(
@@ -225,6 +232,9 @@ class TvDetailsViewModel @Inject constructor(
         val errors = _state.value.onErrors.toMutableList()
         errors.add(th.message.toString())
         _state.update { it.copy(onErrors = errors, isLoading = false) }
+    }
+    private fun updateLoading(value:Boolean){
+        _state.update { it.copy(isLoading = value) }
     }
 }
 
