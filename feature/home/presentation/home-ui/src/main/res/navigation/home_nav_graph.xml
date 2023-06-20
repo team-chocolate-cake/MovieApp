@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/episodeDetailsFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -52,4 +52,9 @@
             android:name="movieId"
             app:argType="integer"/>
     </fragment>
+    <fragment
+        android:id="@+id/episodeDetailsFragment"
+        tools:layout="@layout/fragment_episode_details"
+        android:name="com.chocolatecake.ui.eposideDetails.EpisodeDetailsFragment"
+        android:label="EpisodeDetailsFragment" />
 </navigation>

@@ -36,12 +36,11 @@
                 android:layout_height="@dimen/height_image_details"
                 android:foreground="@drawable/gradient_background"
                 android:scaleType="centerCrop"
-                android:src="@{item.imageUrl}"
+                app:imageUrl="@{item.imageUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
-
             <ImageView
                 android:id="@+id/image_view_back"
                 android:layout_width="wrap_content"
@@ -150,7 +149,7 @@
                 app:layout_constraintTop_toBottomOf="@id/web_view" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recycler_view_people"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
@@ -160,11 +159,13 @@
                 android:contentDescription="@string/rate_the_episode"
                 android:orientation="horizontal"
                 android:padding="@dimen/spacing_small_8dp"
+                app:items="@{item.cast}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_actors"
                 tools:listitem="@layout/item_people" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

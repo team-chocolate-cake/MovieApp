@@ -1,10 +1,12 @@
 package com.chocolatecake.viewmodel.eposideDetails
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.episodeDetails.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episodeDetails.GetEpisodeDetailsUseCase
 import com.chocolatecake.usecase.episodeDetails.SetEpisodeRatingUseCase
+import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -16,25 +18,21 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val castUseCase: GetCastForEpisodeUseCase,
     private val setEpisodeRatingUseCase: SetEpisodeRatingUseCase,
     private val castUiMapper: CastUiMapper,
-    private val episodeDetailsUiMapper: EpisodeDetailsUiMapper
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
-    EpisodeDetailsListener {
+    EpisodeDetailsListener, PeopleListener {
 
     init {
-        getData(14784, 1, 1)
+        getData(1772, 1, 1)
     }
 
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         viewModelScope.launch {
             try {
-                _state.update {
-                    it.copy(isLoading = true)
-                }
                 val episodeDetails = episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber)
                 val castItems = castUseCase(seriesId, seasonNumber, episodeNumber)
                     .map { castEntity -> castUiMapper.map(castEntity) }
-                _state.update {
-                    it.copy(
+                _state.update { currentState ->
+                    currentState.copy(
                         imageUrl = episodeDetails.imageUrl,
                         episodeName = episodeDetails.episodeName,
                         episodeNumber = episodeDetails.episodeNumber,
@@ -43,11 +41,14 @@ class EpisodeDetailsViewModel @Inject constructor(
                         episodeOverview = episodeDetails.overview,
                         productionCode = episodeDetails.productionCode,
                         cast = castItems,
-                        isLoading = false
+                        isLoading = false,
+                        onErrors = emptyList()
                     )
                 }
+                Log.d("banan-data-viewmodel", _state.value.cast.toString())
             } catch (th: Throwable) {
                 onError(th)
+                Log.d("banan-error", th.message.toString())
             }
         }
     }
@@ -59,12 +60,12 @@ class EpisodeDetailsViewModel @Inject constructor(
     }
 
     /// region event
-    override fun onClickActor(id: Int) {}
 
     override fun clickToRate() {}
 
     override fun playEpisode() {}
 
     override fun applyRating() {}
+    override fun onClickPeople(id: Int) {}
     /// endregion
 }

@@ -5,7 +5,7 @@ import com.chocolatecake.viewmodel.common.model.PeopleUIState
 data class EpisodeDetailsUiState(
     val imageUrl: String = "",
     val episodeName: String = "",
-    val episodeRate: Int = 0,
+    val episodeRate: Float = 0.0F,
     val episodeOverview: String = "",
     val episodeNumber: Int = 0,
     val seasonNumber: Int = 0,

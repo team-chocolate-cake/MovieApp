@@ -1,6 +1,7 @@
 package com.chocolatecake.usecase.episodeDetails
 
-import com.chocolatecake.entities.CastEpisodeDetailsEntity
+import android.util.Log
+import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
@@ -11,7 +12,8 @@ class GetCastForEpisodeUseCase @Inject constructor(
         id: Int,
         seasonNumber: Int,
         episodeNumber: Int
-    ): List<CastEpisodeDetailsEntity> {
+    ): List<PeopleEntity> {
+        Log.d("useCase-cast",movieRepository.getCastForEpisode(id, seasonNumber, episodeNumber).toString())
         return movieRepository.getCastForEpisode(id, seasonNumber, episodeNumber)
     }
 }

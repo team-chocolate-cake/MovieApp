@@ -1,5 +1,6 @@
 package com.chocolatecake.usecase.episodeDetails
 
+import android.util.Log
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
@@ -12,6 +13,10 @@ class GetEpisodeDetailsUseCase @Inject constructor(
         seasonNumber: Int,
         episodeNumber: Int
     ): EpisodeDetailsEntity {
-        return movieRepository.getEpisodeDetails(seriesId,seasonNumber,episodeNumber)
+        Log.d(
+            "banan-data-usecase",
+            movieRepository.getEpisodeDetails(seriesId, seasonNumber, episodeNumber).episodeName
+        )
+        return movieRepository.getEpisodeDetails(seriesId, seasonNumber, episodeNumber)
     }
 }

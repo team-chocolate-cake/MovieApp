@@ -1,7 +1,6 @@
 package com.chocolatecake.repository
 
 import androidx.paging.Pager
-import com.chocolatecake.entities.CastEpisodeDetailsEntity
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
@@ -63,7 +62,7 @@ interface MovieRepository {
         id: Int,
         seasonNumber: Int,
         episodeNumber: Int
-    ): List<CastEpisodeDetailsEntity>
+    ): List<PeopleEntity>
 
     suspend fun getEpisodeDetails(
         seriesId: Int,

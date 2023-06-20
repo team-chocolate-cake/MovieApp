@@ -34,20 +34,21 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    if (imageUrl=="https://image.tmdb.org/t/p/w500null"){
+    if (imageUrl == "https://image.tmdb.org/t/p/w500null") {
         Glide.with(context)
             .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
             .fitCenter()
             .centerCrop()
             .into(this)
+    } else {
+        Glide.with(context)
+            .load(imageUrl)
+            .fitCenter()
+            .centerCrop()
+            .into(this)
     }
-    else Glide.with(context)
-        .load(imageUrl)
-        .fitCenter()
-        .centerCrop()
-        .into(this)
-
 }
+
 
 @BindingAdapter(value = ["app:hideResult", "app:query"])
 fun <T> View.hideResult(list: List<T>?, text: String) {

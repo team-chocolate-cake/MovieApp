@@ -13,7 +13,7 @@ import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
-import com.chocolatecake.remote.response.dto.episode_details.CastRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
@@ -176,7 +176,7 @@ interface MovieService {
         @Path("series_id") seriesId: Int,
         @Path("season_number") seasonNumber: Int,
         @Path("episode_number") episodeNumber: Int
-    ): Response<DataWrapperResponse<CastRemoteDto>>
+    ): Response<EpisodeDetailsCastRemoteDto>
 
 ///endregion
 

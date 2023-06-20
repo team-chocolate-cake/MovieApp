@@ -3,12 +3,10 @@ package com.chocolatecake.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import android.util.Log
-import com.chocolatecake.entities.CastEpisodeDetailsEntity
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.RatingEpisodeDetailsEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
@@ -19,8 +17,8 @@ import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.service.MovieService
-import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -35,7 +33,6 @@ import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
 import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
-import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
 import com.chocolatecake.repository.mappers.domain.episode.DomainCastMapper
 import com.chocolatecake.repository.mappers.domain.episode.DomainEpisodeDetailsMapper
 import com.chocolatecake.repository.mappers.domain.episode.DomainRatingEpisodeMapper
@@ -335,14 +332,13 @@ class MovieRepositoryImpl @Inject constructor(
         id: Int,
         seasonNumber: Int,
         episodeNumber: Int
-    ): List<CastEpisodeDetailsEntity> {
+    ): List<PeopleEntity> {
 
-        val dataDto = movieService.getEpisodeCast(
-            id,
-            seasonNumber,
-            episodeNumber
-        ).body()?.results?.filterNotNull()
-        return domainCastMapper.map(dataDto!!)
+        val dataDto = wrapApiCall { movieService.getEpisodeCast(1772, 1, 1) }
+        Log.d("repo-cast", dataDto.toString())
+
+        return domainCastMapper.map(dataDto)
+
     }
 
     override suspend fun getEpisodeDetails(

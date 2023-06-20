@@ -8,5 +8,5 @@ data class EpisodeDetailsEntity(
     val episodeNumber: Int,
     val overview: String,
     val productionCode: String,
-    val episodeRate: Int
+    val episodeRate: Float
 )
