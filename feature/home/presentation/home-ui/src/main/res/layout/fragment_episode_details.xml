@@ -136,7 +136,7 @@
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:videoId="@{viewModel.state.productionCode}"
+                    app:setVideoId="@{viewModel.state.productionCode}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

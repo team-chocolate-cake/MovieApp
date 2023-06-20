@@ -37,12 +37,7 @@ class EpisodeDetailsFragment :
                 binding.item = it
             }
         }
-        binding.apply {
-            webView.webViewClient = WebViewClient()
-            webView.loadUrl("https://www.youtube.com/watch?v=up9shHCur44")
-            webView.settings.javaScriptEnabled = true
-            webView.settings.setSupportZoom(true)
-        }
+      // binding.youtubePlayer.
     }
 
     private fun setAdapter() {

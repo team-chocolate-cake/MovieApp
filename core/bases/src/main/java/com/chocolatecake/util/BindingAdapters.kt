@@ -48,7 +48,6 @@ fun ImageView.loadImage(imageUrl: String?) {
             .into(this)
     }
 }
-
 @BindingAdapter(value = ["app:hideResult", "app:query"])
 fun <T> View.hideResult(list: List<T>?, text: String) {
     if (list.isNullOrEmpty() && text.isNotBlank()) {
