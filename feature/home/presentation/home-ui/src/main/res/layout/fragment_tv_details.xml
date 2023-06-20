@@ -12,31 +12,28 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nestedRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            app:isVisible="@{!viewModel.state.isLoading}"
             android:id="@+id/image_button_back"
-            android:layout_width="24dp"
+            android:layout_width="@dimen/spacing_large_24dp"
             android:layout_height="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@null"
             android:onClick="@{()-> viewModel.onBack()}"
             android:src="@drawable/arrow_left"
+            app:isVisible="@{!viewModel.state.isLoading}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
