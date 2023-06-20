@@ -93,7 +93,7 @@ class TvDetailsViewModel @Inject constructor(
             call = { getTvShowYoutubeDetailsUseCase(tvShowId) },
             onSuccess = ::onYoutubeDetailsSuccess,
             onError = {
-                Log.i("err","the error $it")
+                Log.i("err", "the error $it")
             }
         )
     }
@@ -255,17 +255,26 @@ class TvDetailsViewModel @Inject constructor(
     fun onBack() {
         sendEvent(TvDetailsUiEvent.Back)
     }
+
+    fun onClickSaveButton() {
+        sendEvent(TvDetailsUiEvent.OnSaveButtonClick(tvShowId))
+    }
     //endregion
 
     //region util
     private fun onError(th: Throwable) {
-        val errors = _state.value.onErrors.toMutableList()
+        val errors = _state.value.errors.toMutableList()
         errors.add(th.message.toString())
-        _state.update { it.copy(onErrors = errors, isLoading = false) }
+        _state.update { it.copy(errors = errors, isLoading = false) }
     }
 
     private fun updateLoading(value: Boolean) {
         _state.update { it.copy(isLoading = value) }
+    }
+
+    fun refreshScreen() {
+        getData()
+        _state.update { it.copy(errors = emptyList()) }
     }
     //endregion
 }
