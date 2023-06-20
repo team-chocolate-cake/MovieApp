@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/background"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_bottom_sheet">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="24dp">
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/drag_handle" />
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_giant_32dp"
+                android:gravity="center"
+                android:text="Home much you love this tv show ?"
+                android:textColor="@color/secondary_text_87"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Rate it with stars your satisfaction level "
+                android:textColor="@color/on_background_87"
+                android:textSize="16sp" />
+
+            <RatingBar
+                android:id="@+id/rating"
+                style="@style/CustomRatingBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_genere" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_apply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/primary"
+                android:text="Apply"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

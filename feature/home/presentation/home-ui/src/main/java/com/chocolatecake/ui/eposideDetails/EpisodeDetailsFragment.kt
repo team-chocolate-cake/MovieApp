@@ -45,6 +45,14 @@ class EpisodeDetailsFragment :
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
-
+        when (event) {
+            is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
+            is EpisodeDetailsUiEvent.ApplyRating -> TODO()
+            is EpisodeDetailsUiEvent.PlayEpisode -> TODO()
+            is EpisodeDetailsUiEvent.ClickCast -> TODO()
+        }
+    }
+    private fun showBottomSheet() {
+        EpisodeRateBottomSheet().show(childFragmentManager, "BOTTOM")
     }
 }

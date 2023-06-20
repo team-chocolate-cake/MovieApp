@@ -1,6 +1,7 @@
 package com.chocolatecake.viewmodel.eposideDetails
 
 import android.util.Log
+import android.widget.RatingBar
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.episodeDetails.GetCastForEpisodeUseCase
@@ -59,9 +60,16 @@ class EpisodeDetailsViewModel @Inject constructor(
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
+    fun submitRating() {
+
+    }
+
     /// region event
 
-    override fun clickToRate() {}
+    override fun clickToRate() {
+        sendEvent(EpisodeDetailsUiEvent.ClickToRate)
+        Log.i("Click", "rate button was clicked")
+    }
 
     override fun playEpisode() {}
 
