@@ -37,6 +37,9 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMappe
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
+import com.chocolatecake.repository.showmore.PopularMoviesShowMorePagingSource
+import com.chocolatecake.repository.showmore.TopRatedShowMorePagingSource
+import com.chocolatecake.repository.showmore.TrendingShowMorePagingSource
 import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
@@ -69,8 +72,32 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
-    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
+    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
+    private val popularMovieMapperShowMore: PopularMoviesShowMorePagingSource,
+    private val topRatedShowMorePagingSource: TopRatedShowMorePagingSource,
+    private val trendingShowMorePagingSource: TrendingShowMorePagingSource,
 ) : BaseRepository(), MovieRepository {
+//showMore
+override suspend fun getPopularMoviesPaging(): Pager<Int, MovieEntity> {
+    return Pager(
+        config = PagingConfig(pageSize = 20),
+        pagingSourceFactory =  {popularMovieMapperShowMore}
+    )
+}
+
+    override suspend fun getTopRateMoviesPaging(): Pager<Int, MovieEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { topRatedShowMorePagingSource }
+        )
+    }
+
+    override suspend fun getTrendingMoviesPaging(): Pager<Int, MovieEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { trendingShowMorePagingSource }
+        )
+    }
 
     /// region movies
     override suspend fun getPopularMovies(): List<MovieEntity> {

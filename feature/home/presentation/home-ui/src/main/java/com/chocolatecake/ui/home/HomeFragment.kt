@@ -54,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
             HomeUiEvent.ClickShowMore -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToShowMoreFragment())
             }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {

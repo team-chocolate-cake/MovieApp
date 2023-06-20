@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_homeFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_showMoreFragment"
+            app:destination="@id/showMoreFragment" />
     </fragment>
 
     <fragment
@@ -51,5 +55,25 @@
         <argument
             android:name="movieId"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_showMoreFragment"
+            app:destination="@id/showMoreFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_showMoreFragment2"
+            app:destination="@id/showMoreFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/showMoreFragment"
+        android:name="com.chocolatecake.ui.showMore.ShowMoreFragment"
+        android:label="ShowMoreFragment"
+        tools:layout="@layout/fragment_show_more">
+
+
+        <argument
+            android:name="showMoreType"
+            app:argType="com.chocolatecake.viewmodel.showmore.ShowMoreType"
+            android:defaultValue="POPULAR_MOVIES" />
     </fragment>
 </navigation>

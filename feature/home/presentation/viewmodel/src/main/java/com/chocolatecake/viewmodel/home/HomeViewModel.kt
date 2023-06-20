@@ -196,6 +196,10 @@ class HomeViewModel @Inject constructor(
     override fun onClickPopularPeople(itemId: Int) {
         sendEvent(HomeUiEvent.PopularPeopleEvent(itemId))
     }
+
+    override fun onClickShowMore() {
+        sendEvent(HomeUiEvent.ClickShowMore)
+    }
     /// endregion
 
 }
