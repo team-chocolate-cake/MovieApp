@@ -6,6 +6,7 @@ import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingResponseEntity
 import com.chocolatecake.repository.NoNetworkThrowable
+import com.chocolatecake.repository.UnauthorizedThrowable
 
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
@@ -50,10 +51,11 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
-        Log.e("TAG", "onError: ${th}", )
+        Log.e("TAG", "onError: ${th} , $movieId", )
         errors.add(th.message.toString())
         when (th) {
             is NoNetworkThrowable -> errors.add("noNetwork")
+            is UnauthorizedThrowable -> errors.add("noNetwork")
             else ->errors.add(th.message.toString())
         }
         _state.update { it.copy(onErrors = errors, isLoading = false) }
@@ -74,11 +76,11 @@ class MovieDetailsViewModel @Inject constructor(
                 ),
                 recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
                     MediaVerticalUIState(
-                        id = it?.id ?: 0,
-                        rate = it?.voteAverage ?: 0.0,
-                        imageUrl = it?.backdropPath ?: "",
+                        id = it.id ,
+                        rate = it.voteAverage ,
+                        imageUrl = it.backdropPath,
                     )
-                } ?: emptyList(),
+                },
                 reviewUiState = movieDetails.reviewEntity.reviews.map {
                     ReviewUiState(
                         name = it.name,
@@ -86,15 +88,15 @@ class MovieDetailsViewModel @Inject constructor(
                         content = it.content,
                         created_at = it.created_at
                     )
-                } ?: emptyList(),
+                },
                 castUiState =
                 movieDetails.credits.cast.map {
                     PeopleUIState(
-                        id = it?.id ?: 0,
-                        name = it?.name ?: "",
-                        imageUrl = it?.profilePath ?: ""
+                        id = it.id ,
+                        name = it.name,
+                        imageUrl = it.profilePath
                     )
-                } ?: emptyList(),
+                },
                 reviewsDetails = ReviewDetailsUiState(
                     page = movieDetails.reviewEntity.page,
                     totalPages = movieDetails.reviewEntity.totalPages,
@@ -146,6 +148,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     override fun onClickMedia(id: Int) {
         sendEvent(MovieDetailsUiEvent.NavigateToMovie(id))
+    }
+    fun tryAgain(movieId: Int){
+        _state.update { it.copy(isLoading = true , onErrors = emptyList()) }
+        getMovieDetails(movieId)
     }
 
 }

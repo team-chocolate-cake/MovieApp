@@ -16,82 +16,135 @@
         tools:context=".ui.movieDetails.MovieDetailsFragment">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?android:attr/actionBarSize"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:elevation="2dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <ImageButton
-                        android:id="@+id/backButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@null"
-                        android:scaleType="centerCrop"
-                        android:onClick="@{()->viewModel.onClickBackButton()}"
-                        android:src="@drawable/arrow_left"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/saveButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="end"
-                        android:background="@null"
-                        android:onClick="@{()-> viewModel.onClickSaveButton(viewModel.state.id)}"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/save_icon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.appcompat.widget.Toolbar>
-
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminateTint="@color/primary"
-                    android:visibility="gone"
-                    app:isVisible="@{viewModel.state.loading}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@null"
+                    android:onClick="@{()->viewModel.onClickBackButton()}"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/arrow_left"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/nestedRecycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.onErrors.empty }"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <ImageButton
+                    android:id="@+id/saveButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:onClick="@{()-> viewModel.onClickSaveButton(viewModel.state.id)}"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/save_icon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/primary"
+                android:visibility="gone"
+                app:isVisible="@{viewModel.state.loading}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nestedRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.onErrors.empty }"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/lottie_animation_view_no_network"
+                layout="@layout/layout_no_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`noNetwork`)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`timeout`)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
                 <include
-                    android:id="@+id/lottie_animation_view_no_network"
-                    layout="@layout/layout_no_connection"
+                    android:id="@+id/lottie_animation_view_timeout"
+                    layout="@layout/layout_timeout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/PrimaryButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`noNetwork`)}" />
+                    android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
+                    android:text="Try Again" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:isVisibleOrGone="@{!viewModel.state.onErrors.contains(`noNetwork`) &amp; !viewModel.state.onErrors.contains(`timeout`)&amp; !viewModel.state.onErrors.empty }"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <include
+                    android:id="@+id/lottie_animation_view_error"
+                    layout="@layout/layout_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
+                    android:text="@{viewModel.state.onErrors.toString()}" />
+            </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
