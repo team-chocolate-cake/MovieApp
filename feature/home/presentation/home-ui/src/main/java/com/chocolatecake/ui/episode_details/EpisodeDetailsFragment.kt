@@ -1,21 +1,16 @@
-package com.chocolatecake.ui.eposideDetails
+package com.chocolatecake.ui.episode_details
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentEpisodeDetailsBinding
-import com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsUiEvent
-import com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsUiState
-import com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsViewModel
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsUiEvent
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsUiState
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -28,7 +23,6 @@ class EpisodeDetailsFragment :
     override val viewModel: EpisodeDetailsViewModel by viewModels()
     private val peopleAdapter by lazy { PeopleAdapter(mutableListOf(), viewModel) }
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()

@@ -1,4 +1,4 @@
-package com.chocolatecake.usecase.episodeDetails
+package com.chocolatecake.usecase.episode_details
 
 import android.util.Log
 import com.chocolatecake.entities.PeopleEntity

@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.eposideDetails
+package com.chocolatecake.ui.episode_details
 
 import androidx.databinding.BindingAdapter
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer

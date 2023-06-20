@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.eposideDetails
+package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.ItemEpisodeDetailsRateBottomSheetBinding
-import com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsViewModel
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +41,7 @@ class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.buttonApply.setOnClickListener{
+        binding.buttonApply.setOnClickListener {
             viewModel.submitRating()
             dismiss()
         }

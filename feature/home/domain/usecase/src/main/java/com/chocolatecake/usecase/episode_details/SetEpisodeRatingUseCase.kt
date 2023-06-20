@@ -1,4 +1,4 @@
-package com.chocolatecake.usecase.episodeDetails
+package com.chocolatecake.usecase.episode_details
 
 import com.chocolatecake.entities.RatingEpisodeDetailsEntity
 import com.chocolatecake.repository.MovieRepository

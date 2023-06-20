@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsViewModel" />
+            type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -20,11 +20,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="24dp">
+            android:paddingHorizontal="@dimen/spacing_medium_16dp"
+            android:paddingBottom="@dimen/spacing_large_24dp">
 
             <View
-                android:layout_width="32dp"
+                android:layout_width="@dimen/spacing_giant_32dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:background="@drawable/drag_handle" />
@@ -33,11 +33,11 @@
                 android:id="@+id/text_view_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_giant_32dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:gravity="center"
-                android:text="Home much you love this tv show ?"
+                android:text="@string/share_your_love_for_this_episode"
                 android:textColor="@color/secondary_text_87"
-                android:textSize="16sp" />
+               style="@style/TextStyle.TitleMedium" />
 
             <TextView
                 android:id="@+id/description"
@@ -45,16 +45,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Rate it with stars your satisfaction level "
-                android:textColor="@color/on_background_87"
-                android:textSize="16sp" />
+                android:text="@string/rating_description"
+                android:textColor="@color/secondary_text_60"
+                style="@style/TextStyle.TitleSmall" />
+
 
             <RatingBar
                 android:id="@+id/rating"
                 style="@style/CustomRatingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:contentDescription="@string/rate_the_episode"
                 android:isIndicator="false"
                 android:numStars="5"
                 android:rating="0"
@@ -66,10 +68,10 @@
                 android:id="@+id/button_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:backgroundTint="@color/primary"
-                android:text="Apply"
-                android:textColor="#fff" />
+                android:text="@string/apply"
+                android:textColor="@color/on_primary"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

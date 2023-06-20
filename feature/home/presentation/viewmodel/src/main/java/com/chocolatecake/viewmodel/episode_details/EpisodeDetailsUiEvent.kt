@@ -1,6 +1,4 @@
-package com.chocolatecake.viewmodel.eposideDetails
-
-import com.chocolatecake.viewmodel.home.HomeUiEvent
+package com.chocolatecake.viewmodel.episode_details
 
 sealed interface EpisodeDetailsUiEvent {
     object ClickToRate : EpisodeDetailsUiEvent

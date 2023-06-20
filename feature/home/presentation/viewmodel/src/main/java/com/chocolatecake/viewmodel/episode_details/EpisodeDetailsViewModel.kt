@@ -1,12 +1,11 @@
-package com.chocolatecake.viewmodel.eposideDetails
+package com.chocolatecake.viewmodel.episode_details
 
 import android.util.Log
-import android.widget.RatingBar
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.usecase.episodeDetails.GetCastForEpisodeUseCase
-import com.chocolatecake.usecase.episodeDetails.GetEpisodeDetailsUseCase
-import com.chocolatecake.usecase.episodeDetails.SetEpisodeRatingUseCase
+import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
+import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
+import com.chocolatecake.usecase.episode_details.SetEpisodeRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update

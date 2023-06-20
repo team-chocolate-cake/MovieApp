@@ -55,6 +55,6 @@
     <fragment
         android:id="@+id/episodeDetailsFragment"
         tools:layout="@layout/fragment_episode_details"
-        android:name="com.chocolatecake.ui.eposideDetails.EpisodeDetailsFragment"
+        android:name="com.chocolatecake.ui.episode_details.EpisodeDetailsFragment"
         android:label="EpisodeDetailsFragment" />
 </navigation>

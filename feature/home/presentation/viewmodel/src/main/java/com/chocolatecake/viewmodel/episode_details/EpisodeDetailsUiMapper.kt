@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.eposideDetails
+package com.chocolatecake.viewmodel.episode_details
 
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.mapper.Mapper
