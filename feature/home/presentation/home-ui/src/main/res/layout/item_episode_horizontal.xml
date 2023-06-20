@@ -86,10 +86,12 @@
             android:drawableTint="@color/star"
             android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
+            android:maxLength="3"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_time_episode"
             app:layout_constraintEnd_toEndOf="@+id/text_view_description"
             app:layout_constraintTop_toTopOf="@+id/text_view_time_episode"
-            tools:text="19" />
+            tools:text="1.98259" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_episode"
