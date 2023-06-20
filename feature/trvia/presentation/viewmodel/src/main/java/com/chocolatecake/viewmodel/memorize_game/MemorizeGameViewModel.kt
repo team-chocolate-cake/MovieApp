@@ -126,7 +126,7 @@ class MemorizeGameViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         secondUserPosition = position,
-                        points = it.points + 100
+                        points = it.points + (it.level * 20)
                     )
                 }
                 updateUserPointsUseCase(_state.value.points)

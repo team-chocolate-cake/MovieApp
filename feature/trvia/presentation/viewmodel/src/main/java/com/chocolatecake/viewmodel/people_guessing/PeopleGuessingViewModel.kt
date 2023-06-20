@@ -147,7 +147,7 @@ class PeopleGuessingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 updatePeopleQuestionCountUseCase(_state.value.questionCount)
-                _state.update { it.copy(points = it.points + 100) }
+                _state.update { it.copy(points = it.points + (it.level * 10)) }
                 updateUserPointsUseCase(_state.value.points)
                 getData()
             }.onFailure(::onError)

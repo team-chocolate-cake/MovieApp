@@ -29,7 +29,8 @@ class MovieGuessingViewModel @Inject constructor(
     private val updateMovieQuestionCountUseCase: UpdateMoviesQuestionCountUseCase,
     private val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpMovieUseCase: LevelUpMoviesUseCase,
-) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState(gameType = GameType.MOVIE)), AnswerListener {
+) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState(gameType = GameType.MOVIE)),
+    AnswerListener {
 
     init {
         getData()
@@ -142,7 +143,7 @@ class MovieGuessingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 updateMovieQuestionCountUseCase(_state.value.questionCount)
-                _state.update { it.copy(points = it.points + 100) }
+                _state.update { it.copy(points = it.points + (it.level * 10)) }
                 updateUserPointsUseCase(_state.value.points)
                 getData()
             }.onFailure(::onError)
