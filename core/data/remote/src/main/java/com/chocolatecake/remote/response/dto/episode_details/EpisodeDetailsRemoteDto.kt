@@ -10,8 +10,6 @@ data class EpisodeDetailsRemoteDto(
     val crew: List<Any?>?,
     @SerializedName("episode_number")
     val episodeNumber: Int?,
-    @SerializedName("guest_stars")
-    val guestStars: List<Any?>?,
     @SerializedName("id")
     val id: Int?,
     @SerializedName("name")
@@ -21,13 +19,13 @@ data class EpisodeDetailsRemoteDto(
     @SerializedName("production_code")
     val productionCode: String?,
     @SerializedName("runtime")
-    val runtime: Int?,
+    val runtime: Any?,
     @SerializedName("season_number")
     val seasonNumber: Int?,
     @SerializedName("still_path")
     val stillPath: String?,
     @SerializedName("vote_average")
-    val voteAverage: Int?,
+    val voteAverage: Float?,
     @SerializedName("vote_count")
     val voteCount: Int?
 )
