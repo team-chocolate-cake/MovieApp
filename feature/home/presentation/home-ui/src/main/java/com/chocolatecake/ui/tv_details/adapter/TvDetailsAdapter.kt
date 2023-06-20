@@ -91,7 +91,8 @@ class TvDetailsAdapter(
     private fun bindUpper(holder: UpperViewHolder, position: Int) {
         val upper = tvDetailsItems[position] as TvDetailsItem.Upper
         holder.binding.item = upper
-        holder.binding.listener = listener
+        holder.binding.playButtonListener = listener
+        holder.binding.rateListener = listener
     }
 
     private fun bindPeople(holder: PeopleViewHolder, position: Int) {

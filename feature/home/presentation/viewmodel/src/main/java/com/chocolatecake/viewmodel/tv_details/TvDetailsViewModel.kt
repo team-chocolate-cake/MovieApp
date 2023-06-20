@@ -9,11 +9,13 @@ import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
+import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.usecase.GetTVDetailsInfoUseCase
 import com.chocolatecake.usecase.GetTvDetailsCreditUseCase
 import com.chocolatecake.usecase.GetTvDetailsReviewsUseCase
 import com.chocolatecake.usecase.GetTvDetailsSeasonsUseCase
-import com.chocolatecake.usecase.GetTvShowRecommendations
+import com.chocolatecake.usecase.GetTvShowRecommendationsUseCase
+import com.chocolatecake.usecase.GetTvShowYoutubeDetailsUseCase
 import com.chocolatecake.usecase.RateTvShowUseCase
 import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
@@ -22,6 +24,7 @@ import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsReviewUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsSeasonMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvRatingUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvShowUiMapper
+import com.chocolatecake.viewmodel.tv_details.mappers.TvShowYoutubeVideoDetailsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -34,7 +37,8 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvDetailsSeasonsUseCase: GetTvDetailsSeasonsUseCase,
     private val tvShowUseCase: RateTvShowUseCase,
     private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
-    private val getTvShowRecommendations: GetTvShowRecommendations,
+    private val getTvShowRecommendationsUseCase: GetTvShowRecommendationsUseCase,
+    private val getTvShowYoutubeDetailsUseCase: GetTvShowYoutubeDetailsUseCase,
     private val tvShowUiMapper: TvShowUiMapper,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
@@ -46,6 +50,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun getData() {
+        getYoutubeDetails()
         getTvShowInfo()
         getTvShowCast()
         getTvSeasons()
@@ -79,6 +84,28 @@ class TvDetailsViewModel @Inject constructor(
         }
     }
 
+    //endregion
+
+    //region youtube
+    private fun getYoutubeDetails() {
+        updateLoading(true)
+        tryToExecute(
+            call = { getTvShowYoutubeDetailsUseCase(tvShowId) },
+            onSuccess = ::onYoutubeDetailsSuccess,
+            onError = {
+                Log.i("err","the error $it")
+            }
+        )
+    }
+
+    private fun onYoutubeDetailsSuccess(youtubeVideoEntity: YoutubeVideoDetailsEntity) {
+        val item = TvShowYoutubeVideoDetailsUiMapper().map(youtubeVideoEntity)
+        _state.update {
+            it.copy(
+                youtubeKeyId = item.youtubeKeyId
+            )
+        }
+    }
     //endregion
 
     //region cast
@@ -126,7 +153,7 @@ class TvDetailsViewModel @Inject constructor(
     private fun getTvRecommendations() {
         updateLoading(true)
         tryToExecute(
-            call = { getTvShowRecommendations(tvShowId) },
+            call = { getTvShowRecommendationsUseCase(tvShowId) },
             onSuccess = ::onTvShowRecommendationsSuccess,
             onError = ::onError
         )
@@ -145,10 +172,6 @@ class TvDetailsViewModel @Inject constructor(
     //endregion
 
     //region rating
-    override fun onRateButtonClick() {
-        sendEvent(TvDetailsUiEvent.Rate)
-    }
-
     fun updateRatingUiState(rate: Float) {
         _state.update {
             it.copy(
@@ -201,6 +224,10 @@ class TvDetailsViewModel @Inject constructor(
     //endregion
 
     //region events
+    override fun onRateButtonClick() {
+        sendEvent(TvDetailsUiEvent.Rate)
+    }
+
     override fun onClickPeople(id: Int) {
         sendEvent(TvDetailsUiEvent.OnPersonClick(id))
     }
@@ -219,6 +246,10 @@ class TvDetailsViewModel @Inject constructor(
 
     override fun onShowMoreRecommended() {
         sendEvent(TvDetailsUiEvent.OnShowMoreRecommended)
+    }
+
+    override fun onClickPlayButton() {
+        sendEvent(TvDetailsUiEvent.PlayButton(state.value.youtubeKeyId))
     }
 
     fun onBack() {
