@@ -1,15 +1,13 @@
-package com.chocolatecake.movieapp.ui.tv_details
+package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvDetailsBinding
-import com.chocolatecake.ui.tv_details.RateBottomSheet
-import com.chocolatecake.ui.tv_details.TvDetailsItem
 import com.chocolatecake.ui.tv_details.adapter.TvDetailsAdapter
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
@@ -18,17 +16,22 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TvDetailsFragment :
-    BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>() {
+    BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>(),
+    BottomSheetDismissListener {
 
+    private lateinit var bottomSheet: RateBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
     override val layoutIdFragment: Int = R.layout.fragment_tv_details
     override val viewModel: TvDetailsViewModel by viewModels()
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setAdapter()
         collectChange()
     }
+
 
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
@@ -37,12 +40,13 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnSeasonClick -> showSnackBar("season id ${event.id}")
             is TvDetailsUiEvent.OnRecommended -> navigateToSeasonDetails(event.id)
             is TvDetailsUiEvent.Back -> navigateBack()
+            is TvDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
+            is TvDetailsUiEvent.OnShowMoreCast ->showSnackBar("Show More Cast")
+            is TvDetailsUiEvent.OnShowMoreRecommended ->showSnackBar("Show More Recommended")
             else -> {
-                Log.i("Click", "the event is $event")
             }
         }
     }
-
 
     private fun setAdapter() {
         tvDetailsAdapter = TvDetailsAdapter(mutableListOf(), viewModel)
@@ -64,15 +68,21 @@ class TvDetailsFragment :
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),
                     TvDetailsItem.Recommended(state.recommended)
-                ) + state.seasons.map { TvDetailsItem.Season(it) } + state.reviews.map {
-                    TvDetailsItem.Review(it)
-                }
+                ) + state.seasons.map { TvDetailsItem.Season(it) } +
+                        state.reviews.map { TvDetailsItem.Review(it) }
                 tvDetailsAdapter.setItems(tvDetailsItems)
             }
         }
     }
 
     private fun showBottomSheet() {
-        RateBottomSheet().show(childFragmentManager, "BOTTOM")
+        bottomSheet = RateBottomSheet()
+        bottomSheet.setListener(this)
+        bottomSheet.show(childFragmentManager, "BOTTOM")
     }
+
+    override fun onBottomSheetDismissed() {
+        viewModel.onRatingSubmit()
+    }
+
 }

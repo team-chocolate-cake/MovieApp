@@ -3,7 +3,6 @@ package com.chocolatecake.viewmodel.tv_details
 import android.util.Log
 import android.widget.RatingBar
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
@@ -26,7 +25,6 @@ import com.chocolatecake.viewmodel.tv_details.mappers.TvRatingUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvShowUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,13 +37,15 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
     private val getTvShowRecommendations: GetTvShowRecommendations,
     private val tvShowUiMapper: TvShowUiMapper,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
+    var rate =0.0f
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
 
     init {
         getData()
+
     }
 
     private fun getData() {
@@ -60,8 +60,13 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getTvShowRecommendations(tvShowId) },
             onSuccess = ::onTvShowRecommendationsSuccess,
-            onError = {}
+            onError = ::onError
         )
+    }
+    private fun onError(th: Throwable) {
+        val errors = _state.value.onErrors.toMutableList()
+        errors.add(th.message.toString())
+        _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
     private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
@@ -74,16 +79,17 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun getTvShowInfo() {
+        _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { tvDetailsInfoUseCase(tvShowId) },
             onSuccess = ::onSuccessTvShowInfo,
-            onError = {
-            }
+            onError = ::onError
         )
 
     }
 
     private fun onSuccessTvShowInfo(tvShowInfoEntity: TvDetailsInfoEntity) {
+        _state.update { it.copy(isLoading = false) }
         val item = tvDetailsInfoUiMapper.map(tvShowInfoEntity)
         _state.update {
             it.copy(
@@ -100,31 +106,36 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     override fun onRateButtonClick() {
-        viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.Rate)
-        }
-        Log.i("Click", "rate button was clicked")
+        sendEvent(TvDetailsUiEvent.Rate)
     }
 
     fun updateRating(ratingBar: RatingBar): Float {
+        updateRatingState(ratingBar.rating.times(2))
+        return ratingBar.rating.times(2)
+    }
+    private fun updateRatingState(rate:Float){
         _state.update {
             it.copy(
-                info = it.info.copy(rating = ratingBar.rating.times(2))
+                userRating =  rate
             )
         }
-        return ratingBar.rating
+        Log.i("Click","${rate}")
     }
-
     fun onRatingSubmit() {
-        tryToExecute(
-            call = { tvShowUseCase(_state.value.info.rating.toDouble(), 44217) },
-            onSuccess = ::onRatingSuccess,
-            onError = {
-            }
-        )
+
+        Log.i("Click","${state.value.userRating}")
+//        tryToExecute(
+//            call = { tvShowUseCase(_state.value.info.userRating.toDouble(), 44217) },
+//            onSuccess = ::onRatingSuccess,
+//            onError = {
+//                Log.i("Click","${_state.value.info.rating.toDouble()}")
+//                onApplyRating("something went wrong :(")
+//            }
+//        )
     }
 
     private fun onRatingSuccess(tvRatingEntity: TvRatingEntity) {
+        onApplyRating("rating was successful")
         val item = TvRatingUiMapper().map(tvRatingEntity)
 
         _state.update {
@@ -134,11 +145,15 @@ class TvDetailsViewModel @Inject constructor(
         }
     }
 
+    private fun onApplyRating(message: String) {
+        sendEvent(TvDetailsUiEvent.ApplyRating(message))
+    }
+
     private fun getTvShowCast() {
         tryToExecute(
             call = { getTvDetailsCreditUseCase(tvShowId) },
             onSuccess = ::onTvDetailsCreditSuccess,
-            onError = {}
+            onError = ::onError
         )
     }
 
@@ -155,7 +170,7 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getTvDetailsSeasonsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsSeasonSuccess,
-            onError = {}
+            onError = ::onError
         )
     }
 
@@ -168,8 +183,7 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getTvDetailsReviewsUseCase(tvShowId) },
             onSuccess = ::onTvDetailsReviewsSuccess,
-            onError = {
-            }
+            onError = ::onError
         )
     }
 
@@ -183,28 +197,28 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     override fun onClickPeople(personId: Int) {
-        viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.OnPersonClick(personId))
-        }
+        sendEvent(TvDetailsUiEvent.OnPersonClick(personId))
     }
 
     override fun onClickMedia(id: Int) {
-        viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.OnRecommended(id))
-        }
+        sendEvent(TvDetailsUiEvent.OnRecommended(id))
     }
 
 
     override fun onClickSeason(seasonId: Int) {
-        viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.OnSeasonClick(seasonId))
-        }
+        sendEvent(TvDetailsUiEvent.OnSeasonClick(seasonId))
     }
 
-    fun onBack(){
-        viewModelScope.launch {
-            _event.emit(TvDetailsUiEvent.Back)
-        }
+    override fun onShowMoreCast() {
+        sendEvent(TvDetailsUiEvent.OnShowMoreCast)
+    }
+
+    override fun onShowMoreRecommended() {
+        sendEvent(TvDetailsUiEvent.OnShowMoreRecommended)
+    }
+
+    fun onBack() {
+        sendEvent(TvDetailsUiEvent.Back)
     }
 }
 

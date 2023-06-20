@@ -97,6 +97,7 @@ class TvDetailsAdapter(
     private fun bindPeople(holder: PeopleViewHolder, position: Int) {
         val people = tvDetailsItems[position] as TvDetailsItem.People
         val adapter = PeopleAdapter(people.people, listener)
+        holder.binding.listener = listener
         holder.binding.recyclerViewPeople.adapter = adapter
         holder.binding.item = people
     }
@@ -110,6 +111,7 @@ class TvDetailsAdapter(
     private fun bindRecommended(holder: RecommendedViewHolder, position: Int) {
         val recommendedItems = tvDetailsItems[position] as TvDetailsItem.Recommended
         val adapter = RecommendedAdapter(recommendedItems.recommended, listener)
+        holder.binding.listener = listener
         holder.binding.recyclerViewRecommended.adapter = adapter
         holder.binding.items = recommendedItems
     }
