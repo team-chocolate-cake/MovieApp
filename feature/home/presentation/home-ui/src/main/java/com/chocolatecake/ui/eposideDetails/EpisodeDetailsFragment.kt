@@ -37,7 +37,6 @@ class EpisodeDetailsFragment :
                 binding.item = it
             }
         }
-      // binding.youtubePlayer.
     }
 
     private fun setAdapter() {
