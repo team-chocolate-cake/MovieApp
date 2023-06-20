@@ -85,4 +85,8 @@ class TvDetailsFragment :
         viewModel.onRatingSubmit()
     }
 
+    override fun passRatingValue(rate: Float) {
+        viewModel.passRatingValue(rate)
+    }
+
 }

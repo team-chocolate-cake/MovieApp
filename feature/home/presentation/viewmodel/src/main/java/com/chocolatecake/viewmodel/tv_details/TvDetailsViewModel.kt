@@ -1,7 +1,6 @@
 package com.chocolatecake.viewmodel.tv_details
 
 import android.util.Log
-import android.widget.RatingBar
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.PeopleEntity
@@ -39,13 +38,12 @@ class TvDetailsViewModel @Inject constructor(
     private val tvShowUiMapper: TvShowUiMapper,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
-    var rate =0.0f
+    var rate = 0.0f
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
 
     init {
         getData()
-
     }
 
     private fun getData() {
@@ -56,28 +54,7 @@ class TvDetailsViewModel @Inject constructor(
         getTvReviews()
     }
 
-    private fun getTvRecommendations() {
-        tryToExecute(
-            call = { getTvShowRecommendations(tvShowId) },
-            onSuccess = ::onTvShowRecommendationsSuccess,
-            onError = ::onError
-        )
-    }
-    private fun onError(th: Throwable) {
-        val errors = _state.value.onErrors.toMutableList()
-        errors.add(th.message.toString())
-        _state.update { it.copy(onErrors = errors, isLoading = false) }
-    }
-
-    private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
-        val item = tvShowUiMapper.map(recommendations)
-        _state.update {
-            it.copy(
-                recommended = item.recommended
-            )
-        }
-    }
-
+    //region info
     private fun getTvShowInfo() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
@@ -85,7 +62,6 @@ class TvDetailsViewModel @Inject constructor(
             onSuccess = ::onSuccessTvShowInfo,
             onError = ::onError
         )
-
     }
 
     private fun onSuccessTvShowInfo(tvShowInfoEntity: TvDetailsInfoEntity) {
@@ -100,41 +76,93 @@ class TvDetailsViewModel @Inject constructor(
                     description = item.info.description,
                     genres = item.info.genres
                 ),
-
-                )
+            )
         }
     }
+
+    //endregion
+
+    //region cast
+    private fun getTvShowCast() {
+        tryToExecute(
+            call = { getTvDetailsCreditUseCase(tvShowId) },
+            onSuccess = ::onTvDetailsCastSuccess,
+            onError = ::onError
+        )
+    }
+
+
+    private fun onTvDetailsCastSuccess(castEntity: List<PeopleEntity>) {
+        val item = TvDetailsCastUiMapper().map(castEntity)
+        _state.update {
+            it.copy(
+                cast = item.cast
+            )
+        }
+    }
+    //endregion
+    //region seasons
+    private fun getTvSeasons() {
+        tryToExecute(
+            call = { getTvDetailsSeasonsUseCase(tvShowId) },
+            onSuccess = ::onTvDetailsSeasonSuccess,
+            onError = ::onError
+        )
+    }
+
+    private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
+        val item = TvDetailsSeasonMapper().map(seasons)
+        _state.update { it.copy(seasons = item.seasons) }
+    }
+    //endregion
+    private fun getTvRecommendations() {
+        tryToExecute(
+            call = { getTvShowRecommendations(tvShowId) },
+            onSuccess = ::onTvShowRecommendationsSuccess,
+            onError = ::onError
+        )
+    }
+
+
+    private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
+        val item = tvShowUiMapper.map(recommendations)
+        _state.update {
+            it.copy(
+                recommended = item.recommended
+            )
+        }
+    }
+
 
     override fun onRateButtonClick() {
         sendEvent(TvDetailsUiEvent.Rate)
     }
 
-    fun updateRating(ratingBar: RatingBar): Float {
-        updateRatingState(ratingBar.rating.times(2))
-        return ratingBar.rating.times(2)
+    fun passRatingValue(rate: Float) {
+        updateRatingState(rate)
     }
-    private fun updateRatingState(rate:Float){
+
+    private fun updateRatingState(rate: Float) {
         _state.update {
             it.copy(
-                userRating =  rate
+                userRating = rate
             )
         }
-        Log.i("Click","${rate}")
     }
-    fun onRatingSubmit() {
 
-        Log.i("Click","${state.value.userRating}")
-//        tryToExecute(
-//            call = { tvShowUseCase(_state.value.info.userRating.toDouble(), 44217) },
-//            onSuccess = ::onRatingSuccess,
-//            onError = {
-//                Log.i("Click","${_state.value.info.rating.toDouble()}")
-//                onApplyRating("something went wrong :(")
-//            }
-//        )
+    fun onRatingSubmit() {
+        tryToExecute(
+            call = { tvShowUseCase(_state.value.userRating.toDouble(), 44217) },
+            onSuccess = ::onRatingSuccess,
+            onError = {
+                Log.i("Click", "${_state.value.userRating.toDouble()}")
+                onApplyRating("something went wrong :(")
+            }
+        )
     }
 
     private fun onRatingSuccess(tvRatingEntity: TvRatingEntity) {
+        Log.i("Click", "${state.value.userRating}")
         onApplyRating("rating was successful")
         val item = TvRatingUiMapper().map(tvRatingEntity)
 
@@ -149,35 +177,7 @@ class TvDetailsViewModel @Inject constructor(
         sendEvent(TvDetailsUiEvent.ApplyRating(message))
     }
 
-    private fun getTvShowCast() {
-        tryToExecute(
-            call = { getTvDetailsCreditUseCase(tvShowId) },
-            onSuccess = ::onTvDetailsCreditSuccess,
-            onError = ::onError
-        )
-    }
 
-    private fun onTvDetailsCreditSuccess(castEntity: List<PeopleEntity>) {
-        val item = TvDetailsCastUiMapper().map(castEntity)
-        _state.update {
-            it.copy(
-                cast = item.cast
-            )
-        }
-    }
-
-    private fun getTvSeasons() {
-        tryToExecute(
-            call = { getTvDetailsSeasonsUseCase(tvShowId) },
-            onSuccess = ::onTvDetailsSeasonSuccess,
-            onError = ::onError
-        )
-    }
-
-    private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
-        val item = TvDetailsSeasonMapper().map(seasons)
-        _state.update { it.copy(seasons = item.seasons) }
-    }
 
     private fun getTvReviews() {
         tryToExecute(
@@ -219,6 +219,12 @@ class TvDetailsViewModel @Inject constructor(
 
     fun onBack() {
         sendEvent(TvDetailsUiEvent.Back)
+    }
+
+    private fun onError(th: Throwable) {
+        val errors = _state.value.onErrors.toMutableList()
+        errors.add(th.message.toString())
+        _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 }
 

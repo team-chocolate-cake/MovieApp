@@ -37,7 +37,7 @@ class RateBottomSheet : BottomSheetDialogFragment() {
                 false
             )
         binding.apply {
-//            lifecycleOwner = viewLifecycleOwner
+            lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel, viewModel)
             return root
         }
@@ -46,10 +46,16 @@ class RateBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-//        binding.lifecycleOwner = viewLifecycleOwner
-        binding.buttonApply.setOnClickListener {
+        binding.lifecycleOwner = viewLifecycleOwner
+        var userRating = 0f
+        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+            // Access the rating value here
+            userRating = rating * 2
 
+        }
+        binding.buttonApply.setOnClickListener {
             dismissListener?.onBottomSheetDismissed()
+            dismissListener?.passRatingValue(userRating)
             dismiss()
         }
     }
@@ -57,4 +63,5 @@ class RateBottomSheet : BottomSheetDialogFragment() {
 
 interface BottomSheetDismissListener {
     fun onBottomSheetDismissed()
+    fun passRatingValue(rate:Float)
 }
