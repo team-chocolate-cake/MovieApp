@@ -10,13 +10,13 @@ data class TvDetailsUiState(
     val cast: List<PeopleUIState> = emptyList(),
     val recommended: List<MediaVerticalUIState> = emptyList(),
     val seasons: List<SeasonHorizontalUIState> = emptyList(),
-    val onErrors: List<String> = emptyList(),
+    val errors: List<String> = emptyList(),
     val isLoading: Boolean = true,
     val reviews: List<CommentUIState> = emptyList(),
     val ratingSuccess: String = "",
     val userRating: Float = 0.0f,
     val youtubeKeyId: String = "",
-    ) {
+) {
     data class Info(
         val backdropImageUrl: String = "",
         val name: String = "",
