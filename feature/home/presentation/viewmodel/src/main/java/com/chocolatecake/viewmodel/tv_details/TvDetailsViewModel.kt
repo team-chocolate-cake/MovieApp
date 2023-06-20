@@ -149,11 +149,7 @@ class TvDetailsViewModel @Inject constructor(
         sendEvent(TvDetailsUiEvent.Rate)
     }
 
-    fun passRatingValue(rate: Float) {
-        updateRatingState(rate)
-    }
-
-    private fun updateRatingState(rate: Float) {
+    fun updateRatingUiState(rate: Float) {
         _state.update {
             it.copy(
                 userRating = rate
@@ -167,23 +163,19 @@ class TvDetailsViewModel @Inject constructor(
             onSuccess = ::onRatingSuccess,
             onError = {
                 Log.i("Click", "${_state.value.userRating.toDouble()}")
-                onApplyRating("something went wrong :(")
+                sendEvent(TvDetailsUiEvent.ApplyRating("something went wrong :("))
             }
         )
     }
 
     private fun onRatingSuccess(tvRatingEntity: TvRatingEntity) {
-        onApplyRating("rating was successful")
+        sendEvent(TvDetailsUiEvent.ApplyRating("rating was successful"))
         val item = TvRatingUiMapper().map(tvRatingEntity)
         _state.update {
             it.copy(
                 ratingSuccess = item.ratingSuccess
             )
         }
-    }
-
-    private fun onApplyRating(message: String) {
-        sendEvent(TvDetailsUiEvent.ApplyRating(message))
     }
     //endregion
 
@@ -234,7 +226,7 @@ class TvDetailsViewModel @Inject constructor(
     }
     //endregion
 
-    //region util functions
+    //region util
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
         errors.add(th.message.toString())

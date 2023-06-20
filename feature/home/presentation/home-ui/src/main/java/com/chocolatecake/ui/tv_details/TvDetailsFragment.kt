@@ -2,7 +2,6 @@ package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
@@ -81,12 +80,12 @@ class TvDetailsFragment :
         bottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
-    override fun onBottomSheetDismissed() {
+    override fun onApplyRateBottomSheet() {
         viewModel.onRatingSubmit()
     }
 
-    override fun passRatingValue(rate: Float) {
-        viewModel.passRatingValue(rate)
+    override fun updateRatingValue(rate: Float) {
+        viewModel.updateRatingUiState(rate)
     }
 
 }
