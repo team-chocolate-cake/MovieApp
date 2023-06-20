@@ -7,8 +7,9 @@ data class WatchHistoryUiState(
     val searchInput: String = "",
     val movies: List<WatchHistoryRecyclerItem> = emptyList(),
     val isLoading: Boolean = false,
-    var tempMovie: MovieUiState? = null,
-    var snackBarUndoPressed: Boolean? = null,
-    var swipePosition: Int? = null
+    val deletedMovie: MovieUiState? = null,
+    val deletedTitle: String? = null,
+    val snackBarUndoPressed: Boolean? = null,
+    val swipePosition: Int? = null
 )
 

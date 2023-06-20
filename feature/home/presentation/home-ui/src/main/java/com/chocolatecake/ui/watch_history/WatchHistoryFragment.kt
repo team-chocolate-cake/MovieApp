@@ -60,7 +60,6 @@ class WatchHistoryFragment
     }
 
     private fun swipeToDeleteItemSetup(itemRv: RecyclerView) {
-        Log.i("batata", "swipeToDeleteItemSetup: ")
         val swipeGesture = swipeGestureAnonymousObject()
         val touchHelper = ItemTouchHelper(swipeGesture)
         touchHelper.attachToRecyclerView(itemRv)
@@ -69,7 +68,6 @@ class WatchHistoryFragment
     private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
-                Log.i("batata", "onSwiped: ")
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
             } catch (e: Exception) {
                 createToast(e.message.toString())
@@ -86,7 +84,6 @@ class WatchHistoryFragment
     }
 
     private fun onSwipeLeftActions(position: Int) {
-        Log.i("batata", "onSwipeLeftActions: ")
         viewModel.setPosition(position)
         viewModel.deleteItemFromUi()
     }
@@ -125,6 +122,7 @@ class WatchHistoryFragment
     }
 
     private fun createToast(message: String) {
+        Log.i("batata", "createToast: $message ")
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
