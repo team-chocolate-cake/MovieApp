@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsViewModel" />
+
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.eposideDetails.EpisodeDetailsListener" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            tools:context=".ui.episodeDetails.EpisodeDetailsFragment">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_view_episode_image"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_image_details"
+                android:foreground="@drawable/gradient_background"
+                android:scaleType="centerCrop"
+                android:src="@{item.imageUrl}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/image_view_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_large_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image_view_episode_image"
+                app:srcCompat="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/text_view_episode_name"
+                style="@style/TextStyle.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text="@{item.episodeName}"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_view_episode_image"
+                tools:text="The Super Mario Bros." />
+
+            <TextView
+                android:id="@+id/text_view_season"
+                style="@style/TextStyle.BodyMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text='@{@string/season + String.valueOf(item.seasonNumber )+ " | "+ @string/episode+ String.valueOf(item.episodeNumber)}'
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_episode_name"
+                tools:text="Season 1 | Episode 1 " />
+
+            <TextView
+                android:id="@+id/text_view_rate"
+                style="@style/TextStyle.LabelBody"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                android:text="@string/rate_the_episode"
+                android:textColor="@color/primary"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/CustomRatingBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:contentDescription="@string/rate_the_episode"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="@{item.episodeRate}"
+                android:stepSize="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_season" />
+
+            <TextView
+                android:id="@+id/text_view_episode_description"
+                style="@style/TextStyle.BodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="28dp"
+                android:maxLines="5"
+                android:text="@{item.episodeOverview}"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                tools:text="@tools:sample/lorem/random" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/web_view"
+                android:layout_width="0dp"
+                android:layout_height="328dp"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:elevation="0dp"
+                app:cardCornerRadius="@dimen/spacing_medium_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_episode_description">
+
+                <WebView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/text_view_actors"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text="@string/actors"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/web_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                android:clipToPadding="false"
+                android:contentDescription="@string/rate_the_episode"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_small_8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_actors"
+                tools:listitem="@layout/item_people" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

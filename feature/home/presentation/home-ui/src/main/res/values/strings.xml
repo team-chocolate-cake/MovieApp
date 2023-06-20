@@ -10,4 +10,8 @@
     <string name="popcorn_puzzles">Popcorn Puzzles!</string>
     <string name="theme">Theme</string>
     <string name="logout">Logout</string>
+    <string name="season">Season</string>
+    <string name="episode">Episode</string>
+    <string name="rate_the_episode">ٌRate The Episode</string>
+    <string name="actors">Actors</string>
 </resources>
