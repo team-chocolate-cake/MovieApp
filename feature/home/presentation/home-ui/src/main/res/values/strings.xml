@@ -11,4 +11,5 @@
     <string name="theme">Theme</string>
     <string name="logout">Logout</string>
     <string name="cannot_fetch_movies">cannot fetch movies 😢</string>
+    <string name="swipe_to_delete">swipe to delete\n</string>
 </resources>

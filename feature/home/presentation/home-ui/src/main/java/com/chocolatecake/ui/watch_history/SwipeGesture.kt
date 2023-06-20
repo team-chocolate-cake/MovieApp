@@ -29,10 +29,11 @@ abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
             actionState,
             isCurrentlyActive
         )
+            .addSwipeLeftLabel(recyclerView.context.getString(R.string.swipe_to_delete))
+            .setSwipeLeftLabelColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.on_background_38))
             .addSwipeLeftActionIcon(deleteIcon)
             .addCornerRadius(TypedValue.COMPLEX_UNIT_DIP,12)
             .setActionIconTint(recyclerView.context.getColor(com.chocolatecake.bases.R.color.on_background_87))
-//            .addBackgroundColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.orangeRed))
             .addPadding(TypedValue.COMPLEX_UNIT_DIP,16f,0f,16f)
             .create()
             .decorate()

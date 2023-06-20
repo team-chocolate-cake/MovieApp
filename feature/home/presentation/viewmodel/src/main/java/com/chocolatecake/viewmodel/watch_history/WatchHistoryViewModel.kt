@@ -38,57 +38,6 @@ class WatchHistoryViewModel @Inject constructor(
     init {
         getAllMovies()
         initSearchCallBacks()
-        testing()
-    }
-    private fun testing() {
-        viewModelScope.launch {
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 1,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "ronaldo",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 2,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "messi",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 3,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "ake",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            for (i in 5..20) {
-                insertMovieToWatchHistoryUseCase(
-                    MovieInWatchHistoryEntity(
-                        id = i,
-                        posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                        dateWatched = Date(System.currentTimeMillis() - i* 24 * 60 * 60 * 1000),
-                        title = "$i",
-                        description = "batata for sale ",
-                        voteAverage = 9.3,
-                        year = 2012
-                    )
-                )
-            }
-        }
     }
 
     private fun getAllMovies() {
@@ -233,7 +182,7 @@ class WatchHistoryViewModel @Inject constructor(
         val position = state.value.swipePosition
         position?.let {
             if (state.value.movies[position - 1] is WatchHistoryRecyclerItem.Title
-                || state.value.movies[position - 1] is WatchHistoryRecyclerItem.Title
+                && state.value.movies[position] is WatchHistoryRecyclerItem.Title
             )
                 return true
         }
