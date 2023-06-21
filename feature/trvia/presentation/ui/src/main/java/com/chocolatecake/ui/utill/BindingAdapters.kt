@@ -2,6 +2,8 @@ package com.chocolatecake.ui.utill
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -55,4 +57,16 @@ fun RecyclerView.spanWhenLevel(level: Int) {
         1, 2 -> 3
         else -> 4
     }
+}
+
+@BindingAdapter(value = ["app:isVisibleAnimated"])
+fun View.isVisibleAnimated(isVisible: Boolean) {
+    animate().apply {
+        val newAlpha = if (isVisible) 1f else 0f
+        scaleX(-scaleX)
+        alpha(newAlpha)
+        duration = 300
+        interpolator = AccelerateDecelerateInterpolator() // Animation interpolator
+        withEndAction { this@isVisibleAnimated.alpha = newAlpha }
+    }.start()
 }
