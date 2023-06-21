@@ -73,7 +73,12 @@
 
         <argument
             android:name="showMoreType"
-            app:argType="com.chocolatecake.viewmodel.showmore.ShowMoreType"
-            android:defaultValue="POPULAR_MOVIES" />
+            app:argType="com.chocolatecake.viewmodel.showmore.ShowMoreType" />
+        <action
+            android:id="@+id/action_showMoreFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_showMoreFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>
