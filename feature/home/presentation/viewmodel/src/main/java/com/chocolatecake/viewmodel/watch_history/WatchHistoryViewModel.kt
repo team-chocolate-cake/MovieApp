@@ -15,7 +15,6 @@ import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiE
 import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
@@ -40,58 +39,6 @@ class WatchHistoryViewModel @Inject constructor(
     init {
         getAllMovies()
         initSearchCallBacks()
-//       testing()
-    }
-
-    private fun testing() {
-        viewModelScope.launch {
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 1,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "ronaldo",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 2,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "messi",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            insertMovieToWatchHistoryUseCase(
-                MovieInWatchHistoryEntity(
-                    id = 3,
-                    posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                    dateWatched = Date(),
-                    title = "ake",
-                    description = "batata for sale ",
-                    voteAverage = 9.3,
-                    year = 2012
-                )
-            )
-            for (i in 5..20) {
-                insertMovieToWatchHistoryUseCase(
-                    MovieInWatchHistoryEntity(
-                        id = i,
-                        posterPath = "https://www.cleveland.com/resizer/4IGudEjrP3cao2OTDbnPW8vAfJI=/arc-anglerfish-arc2-prod-advancelocal/public/S4POABLORVD4HACPBPPHAMOFNQ.jpg",
-                        dateWatched = Date(System.currentTimeMillis() - i * 24 * 60 * 60 * 1000),
-                        title = "$i",
-                        description = "batata for sale ",
-                        voteAverage = 9.3,
-                        year = 2012
-                    )
-                )
-            }
-        }
     }
 
     private fun getAllMovies() {
@@ -291,12 +238,12 @@ class WatchHistoryViewModel @Inject constructor(
 
     }
 
-    fun initTheState() {
+    fun initTheDeletionStates() {
         _state.update {
             it.copy(
                 deletedTitle = null,
                 deletedMovie = null,
-                snackBarUndoPressed = null
+                snackBarUndoPressed = false
             )
         }
     }

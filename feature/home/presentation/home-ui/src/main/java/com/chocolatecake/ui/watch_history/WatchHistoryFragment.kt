@@ -18,7 +18,6 @@ import com.chocolatecake.viewmodel.watch_history.state_managment.WatchHistoryUiS
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class WatchHistoryFragment
@@ -72,16 +71,14 @@ class WatchHistoryFragment
                 initTheState()
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
             } catch (e: Exception) {
-//                createToast(e.message.toString())
+                createToast(getString(R.string.error_occured))
             }
         }
     }
 
     private fun initTheState() {
-//        deletionIndicatorSnackBar.dismiss()
-
         viewModel.deleteItemFromDataBase()
-        viewModel.initTheState()
+        viewModel.initTheDeletionStates()
     }
 
     private fun handleSwipes(direction: Int, position: Int) {
