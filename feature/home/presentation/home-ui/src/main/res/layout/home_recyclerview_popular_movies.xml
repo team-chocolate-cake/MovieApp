@@ -12,8 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small_8dp"
-        android:layout_height="wrap_content">
+        app:hideWhenNoResult="@{item.list}">
 
         <TextView
             android:id="@+id/text_view_popular_movies"
@@ -43,12 +44,12 @@
             android:id="@+id/recycler_view_popular_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/spacing_medium_16dp"
-            android:clipToPadding="false"
             android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_medium_16dp"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_popular_movies"

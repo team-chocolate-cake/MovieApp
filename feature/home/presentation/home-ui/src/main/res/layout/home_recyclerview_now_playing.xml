@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.ui.home.HomeItem.NowPlaying" />
@@ -11,16 +12,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small_8dp"
-        android:layout_height="wrap_content">
+        app:hideWhenNoResult="@{item.list}">
 
         <TextView
             android:id="@+id/text_view_now_playing"
             style="@style/TextStyle.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:text="@string/now_playing"
             android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,10 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
-            android:paddingHorizontal="@dimen/spacing_medium_16dp"
             android:clipToPadding="false"
             android:contentDescription="@string/now_playing"
             android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_medium_16dp"
             app:items="@{item.list}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"

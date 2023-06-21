@@ -1,5 +1,7 @@
 package com.chocolatecake.viewmodel.home
 
+import kotlin.math.roundToInt
+
 data class HomeUiState(
     val upComingMovies: List<UpComingMoviesUiState> = emptyList(),
     val nowPlayingMovies: List<NowPlayingUiState> = emptyList(),
@@ -25,7 +27,9 @@ data class TrendingMoviesUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
-)
+) {
+    fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
+}
 
 data class PopularPeopleUiState(
     val id: Int,
@@ -37,10 +41,15 @@ data class PopularMoviesUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
-)
+) {
+    fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
+}
+
 
 data class TopRatedUiState(
     val id: Int,
     val imageUrl: String,
     val rate: Double
-)
+) {
+    fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
+}

@@ -34,14 +34,13 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    if (imageUrl=="https://image.tmdb.org/t/p/w500null"){
+    if (imageUrl == "https://image.tmdb.org/t/p/w500null") {
         Glide.with(context)
             .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
             .fitCenter()
             .centerCrop()
             .into(this)
-    }
-    else Glide.with(context)
+    } else Glide.with(context)
         .load(imageUrl)
         .fitCenter()
         .centerCrop()
@@ -58,6 +57,15 @@ fun <T> View.hideResult(list: List<T>?, text: String) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenNoResult"])
+fun <T> View.hideWhenNoResult(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter(value = ["app:loading"])
 fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
     if (isLoading == true) {
@@ -68,28 +76,28 @@ fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
 }
 
 @BindingAdapter(value = ["app:showWhenQueryEmpty"])
-fun View.showWhenEmptyData(query: String?){
-    if(query?.isEmpty() == true){
+fun View.showWhenEmptyData(query: String?) {
+    if (query?.isEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter(value = ["app:showWhenNoResult"])
-fun <T> View.showWhenNoResult(list: List<T>?){
-    if (list.isNullOrEmpty()){
+fun <T> View.showWhenNoResult(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter("app:showWhenError")
-fun <T> View.showWhenError(list: List<T>?){
-    if(list?.isNotEmpty() == true){
+fun <T> View.showWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }

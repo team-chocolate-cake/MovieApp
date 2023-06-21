@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.home.PopularPeopleUiState" />
@@ -23,18 +24,34 @@
             android:id="@+id/shapeableImageView"
             android:layout_width="@dimen/image_width"
             android:layout_height="@dimen/zero_height"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:adjustViewBounds="true"
+            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"
             android:scaleType="centerCrop"
-            android:layout_marginEnd="@dimen/spacing_small_8dp"            app:imageUrl="@{item.profilePath}"
+            app:imageUrl="@{item.profilePath}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             app:srcCompat="@drawable/ic_image_not_found"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"
-            />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_name_people"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.name}"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
+            tools:text="uncle bob" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

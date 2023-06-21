@@ -13,15 +13,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:hideWhenNoResult="@{item.list}">
 
         <TextView
             android:id="@+id/text_view_top_rated"
             style="@style/TextStyle.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:text="@string/top_rated"
             android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="parent"
