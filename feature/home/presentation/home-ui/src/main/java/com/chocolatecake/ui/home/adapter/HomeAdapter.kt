@@ -122,35 +122,56 @@ class HomeAdapter(
         val viewPager = holder.binding.viewPager
         val upComingAdapter = UpComingAdapter(upComing.list, listener)
 
+        setupViewPager(viewPager, upComingAdapter)
+        registerPageChangeCallback(viewPager)
+        setSliderPageTransformer(viewPager)
+        bindSliderItem(holder, upComing)
+        attachDotsIndicator(holder, viewPager)
+    }
+
+    private fun setupViewPager(viewPager: ViewPager2, adapter: RecyclerView.Adapter<*>) {
         viewPager.apply {
-            adapter = upComingAdapter
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    val handler = Handler(Looper.myLooper()!!)
-                    val runnable = Runnable {
-                        currentItem += 1
-                    }
-                    handler.removeCallbacks(runnable)
-                    handler.postDelayed(runnable, 4000)
-                }
-            })
+            this.adapter = adapter
             clipToPadding = false
             clipChildren = false
-            val pageTransformer =
-                ViewPager2.PageTransformer { page, position ->
-                    val absPosition = Math.abs(position)
-                    val scaleFactor = 0.85f + (0.15f * (1 - absPosition))
-                    page.scaleY = scaleFactor
-                    page.scaleX = scaleFactor
-                }
-            setPageTransformer(CompositePageTransformer().apply {
-                addTransformer(pageTransformer)
-            })
         }
+    }
+
+    private fun registerPageChangeCallback(viewPager: ViewPager2) {
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val handler = Handler(Looper.myLooper()!!)
+                val runnable = Runnable {
+                    viewPager.currentItem += 1
+                }
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable, 4000)
+            }
+        })
+    }
+
+    private fun setSliderPageTransformer(viewPager: ViewPager2) {
+        val pageTransformer =
+            ViewPager2.PageTransformer { page, position ->
+                val absPosition = Math.abs(position)
+                val scaleFactor = 0.85f + (0.15f * (1 - absPosition))
+                page.scaleY = scaleFactor
+                page.scaleX = scaleFactor
+            }
+        viewPager.setPageTransformer(CompositePageTransformer().apply {
+            addTransformer(pageTransformer)
+        })
+    }
+
+    private fun bindSliderItem(holder: SliderViewHolder, upComing: HomeItem.Slider) {
         holder.binding.item = upComing
+    }
+
+    private fun attachDotsIndicator(holder: SliderViewHolder, viewPager: ViewPager2) {
         holder.binding.dotsIndicator.attachTo(viewPager)
     }
+
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
         val nowPlaying = itemsHome[position] as HomeItem.NowPlaying
@@ -172,7 +193,6 @@ class HomeAdapter(
         val adapter = TrendingAdapter(trending.list, listener)
         holder.binding.recyclerViewTrending.adapter = adapter
         holder.binding.item = trending
-        Log.i("trending", trending.toString())
     }
 
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
