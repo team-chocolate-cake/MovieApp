@@ -24,9 +24,5 @@ class ShowMoreUiMapper @Inject constructor() :
         return input.joinToString(" | ") { it.genreName }
     }
 
-//    fun extractYearFromDate(): String {
-//        val parts = year.split("-")
-//        return parts[0]
-//    }
 
 }
