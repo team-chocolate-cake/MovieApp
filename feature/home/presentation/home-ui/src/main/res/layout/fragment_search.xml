@@ -11,9 +11,10 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_search_scene">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edittext_search"
@@ -21,7 +22,7 @@
             android:layout_height="52dp"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
             android:layout_marginTop="48dp"
-            android:background="@drawable/edittext_background"
+            android:background="@drawable/edit_text_search_background"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/spacing_custom_12dp"
             android:drawableTint="@color/on_background_60"
@@ -36,14 +37,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/linear_progress_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginHorizontal="@dimen/spacing_x_medium_20dp"
             android:indeterminate="true"
             app:indeterminateAnimationType="disjoint"
             app:indicatorColor="@color/primary"
-            app:layout_constraintEnd_toEndOf="@+id/edittext_search"
-            app:layout_constraintStart_toStartOf="@id/edittext_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edittext_search"
             app:loading="@{viewModel.state.loading}" />
 
@@ -55,6 +57,8 @@
             android:background="@null"
             app:hideImageButton="@{viewModel.state.isSelectedPeople}"
             android:onClick="@{() -> viewModel.onClickFilter()}"
+            app:query="@{viewModel.query}"
+            app:isVisible="@{viewModel.state.hideResult}"
             android:src="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
             app:layout_constraintEnd_toEndOf="@+id/edittext_search"
@@ -79,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:selectedMedia="@{viewModel.state.mediaType}"
+                app:selectionRequired="true"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -132,9 +137,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"
+            app:lottie_loop="false"
             app:lottie_rawRes="@raw/empty_state"
-            app:showWhenQueryEmpty="@{viewModel.query}" />
+            app:showWhenQueryEmpty="@{viewModel.query}"
+            app:showWhenFailure="@{viewModel.state.error}" />
 
         <include
             android:id="@+id/lottie_animation_view_no_network"
@@ -145,7 +151,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:showWhenError="@{viewModel.state.error}" />
+            app:isVisible="@{viewModel.state.isFailure}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

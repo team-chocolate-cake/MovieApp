@@ -3,8 +3,10 @@ package com.chocolatecake.ui.search
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentSearchBinding
@@ -12,6 +14,7 @@ import com.chocolatecake.viewmodel.search.SearchItem
 import com.chocolatecake.viewmodel.search.SearchUiEvent
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.chocolatecake.viewmodel.search.SearchViewModel
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,6 +30,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         super.onViewCreated(view, savedInstanceState)
         setupHomeAdapter()
         collectChange()
+        doNothingWhenTheSameChipIsReslected()
     }
 
     private fun setupHomeAdapter() {
@@ -67,12 +71,44 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
             is SearchUiEvent.OpenFilterBottomSheet -> showBottomSheet()
             is SearchUiEvent.ApplyFilter -> applyFilter(event.genre)
             is SearchUiEvent.ShowSnackBar -> showSnackBar(event.messages)
-            is SearchUiEvent.NavigateToMovie ->  TODO()
-            is SearchUiEvent.NavigateToPeople -> TODO()
-            is SearchUiEvent.NavigateToTv -> TODO()
+            is SearchUiEvent.NavigateToMovie -> navigateToMovie(event.movieId)
+            is SearchUiEvent.NavigateToPeople -> navigateToPeople(event.peopleId)
+            is SearchUiEvent.NavigateToTv -> navigateToTv(event.tvId)
             is SearchUiEvent.ShowMovieResult -> showMovieResult()
-            is SearchUiEvent.ShowPeopleResult -> showPeopleResult()
             is SearchUiEvent.ShowTvResult -> showTvResult()
+            is SearchUiEvent.ShowPeopleResult -> showPeopleResult()
+        }
+    }
+
+    private fun showBottomSheet() {
+        FilterMovieBottomSheetFragment().show(childFragmentManager, "BOTTOM")
+    }
+
+    private fun applyFilter(genresId: Int) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onClickGenre(genresId)
+        }
+    }
+
+    private fun navigateToMovie(movieId: Int) {
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(
+                movieId
+            )
+        )
+    }
+
+    private fun navigateToPeople(peopleId: Int) {
+        toastMessage("Navigate To People:", peopleId)
+    }
+
+    private fun navigateToTv(tvId: Int) {
+        toastMessage("Navigate To Tv:", tvId)
+    }
+
+    private fun showMovieResult() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onSearchForMovie()
         }
     }
 
@@ -88,19 +124,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         }
     }
 
-    private fun showMovieResult() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.onSearchForMovie()
-        }
+    private fun toastMessage(message: String, id: Int) {
+        Toast.makeText(
+            binding.root.context,
+            "$message $id",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
-    private fun applyFilter(genresId: Int) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.onClickGenre(genresId)
+    private fun doNothingWhenTheSameChipIsReslected() {
+        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip?.isChecked == true) {
+                // Do nothing when the same chip is reselected
+            }
         }
-    }
-
-    private fun showBottomSheet() {
-        FilterMovieBottomSheetFragment().show(childFragmentManager, "BOTTOM")
     }
 }

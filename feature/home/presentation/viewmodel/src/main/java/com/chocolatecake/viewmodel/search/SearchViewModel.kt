@@ -3,6 +3,7 @@ package com.chocolatecake.viewmodel.search
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.GenreEntity
+import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.GetAllGenresMoviesUseCase
 import com.chocolatecake.usecase.GetAllGenresTvsUseCase
 import com.chocolatecake.usecase.search.SearchMoviesUseCase
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,13 +43,16 @@ class SearchViewModel @Inject constructor(
 
     val query = MutableStateFlow("")
 
+    //region init
     init {
         viewModelScope.launch {
             query.debounce(1000)
                 .collect { onSearchInputChanged(it) }
         }
     }
+    // endregion
 
+    //region search input
     private fun onSearchInputChanged(newQuery: String) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +61,9 @@ class SearchViewModel @Inject constructor(
             getData()
         }
     }
+    // endregion
 
+    //region search history
     private suspend fun saveSearchHistoryInLocal(query: String) {
         insertSearchHistoryUseCase(query)
     }
@@ -65,16 +72,20 @@ class SearchViewModel @Inject constructor(
         val result = searchHistoryUseCase(query)
         _state.update { it.copy(searchHistory = result) }
     }
+    // endregion
 
-
+    // region get data
     fun getData() {
+        _state.update { it.copy(isLoading = true) }
         when (_state.value.mediaType) {
             SearchUiState.SearchMedia.MOVIE -> onSearchForMovie()
             SearchUiState.SearchMedia.TV -> onSearchForTv()
             SearchUiState.SearchMedia.PEOPLE -> onSearchForPeople()
         }
     }
+    // endregion
 
+    // region people
     fun onSearchForPeople() {
         tryToExecute(
             call = { searchPeopleUseCase(query.value) },
@@ -95,7 +106,9 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region tv
     fun onSearchForTv() {
         tryToExecute(
             call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
@@ -116,7 +129,9 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region movie
     fun onSearchForMovie() {
         tryToExecute(
             call = {
@@ -142,6 +157,7 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
     ///region events
     override fun onClickFilter() {
@@ -214,7 +230,11 @@ class SearchViewModel @Inject constructor(
     }
 
     override fun onClickMovie(id: Int) {
-        sendEvent(SearchUiEvent.NavigateToMovie(id))
+        if (_state.value.mediaType == SearchUiState.SearchMedia.MOVIE) {
+            sendEvent(SearchUiEvent.NavigateToMovie(id))
+        } else if (_state.value.mediaType == SearchUiState.SearchMedia.TV) {
+            sendEvent(SearchUiEvent.NavigateToTv(id))
+        }
     }
 
     override fun onClickPeople(id: Int) {
@@ -225,8 +245,12 @@ class SearchViewModel @Inject constructor(
 
     /// region error handling
     private fun onError(throwable: Throwable) {
-        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
-        _state.update {
+        if (throwable == NoNetworkThrowable()) {
+            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        }else if(throwable == SocketTimeoutException()){
+
+        }
+            _state.update {
             it.copy(
                 error = listOf(throwable.message ?: "No Network Connection"),
                 isLoading = false

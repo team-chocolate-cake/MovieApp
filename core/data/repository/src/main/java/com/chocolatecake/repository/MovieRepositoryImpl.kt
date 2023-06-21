@@ -2,21 +2,18 @@ package com.chocolatecake.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.ProfileEntity
+import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.TvEntity
-import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
-import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
-import com.chocolatecake.repository.mappers.cash.LocalProfileMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
 import com.chocolatecake.repository.mappers.cash.LocalPopularPeopleMapper
@@ -26,12 +23,11 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
-import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
+import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
-import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
-import com.chocolatecake.repository.mappers.domain.DomainProfileMapper
+import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -265,6 +261,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshAll() {
         refreshGenres()
+        refreshGenresTv()
         refreshPopularMovies()
         refreshPopularPeople()
         refreshNowPlayingMovies()
