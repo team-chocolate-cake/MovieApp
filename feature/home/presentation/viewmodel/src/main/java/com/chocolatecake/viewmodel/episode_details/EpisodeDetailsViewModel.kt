@@ -1,6 +1,7 @@
 package com.chocolatecake.viewmodel.episode_details
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
@@ -31,21 +32,24 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val episodeDetails = episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber)
                 val castItems = castUseCase(seriesId, seasonNumber, episodeNumber)
                     .map { castEntity -> castUiMapper.map(castEntity) }
-                _state.update { currentState ->
-                    currentState.copy(
-                        imageUrl = episodeDetails.imageUrl,
-                        episodeName = episodeDetails.episodeName,
-                        episodeNumber = episodeDetails.episodeNumber,
-                        seasonNumber = episodeDetails.seasonNumber,
-                        episodeRate = episodeDetails.episodeRate,
-                        episodeOverview = episodeDetails.overview,
-                        productionCode = episodeDetails.productionCode,
-                        cast = castItems,
-                        isLoading = false,
-                        onErrors = emptyList()
-                    )
-                }
-                Log.d("banan-data-viewmodel", _state.value.cast.toString())
+
+                val productionCode = episodeDetails.productionCode
+
+                val newState = _state.value.copy(
+                    imageUrl = episodeDetails.imageUrl,
+                    episodeName = episodeDetails.episodeName,
+                    episodeNumber = episodeDetails.episodeNumber,
+                    seasonNumber = episodeDetails.seasonNumber,
+                    episodeRate = episodeDetails.episodeRate,
+                    episodeOverview = episodeDetails.overview,
+                    productionCode = productionCode,
+                    cast = castItems,
+                    isLoading = false,
+                    onErrors = emptyList()
+                )
+                _state.update { newState }
+
+                Log.d("banan-data-viewmodel", newState.cast.toString())
             } catch (th: Throwable) {
                 onError(th)
                 Log.d("banan-error", th.message.toString())
