@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/background"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_bottom_sheet">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_medium_16dp"
+            android:paddingBottom="@dimen/spacing_large_24dp">
+
+            <View
+                android:id="@+id/view_drag_handle"
+                android:layout_width="32dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/drag_handle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/text_view_title"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_giant_32dp"
+                android:gravity="center"
+                android:text="Create List"
+                android:textAppearance="@style/TextStyle.TitleMedium"
+                android:textColor="@color/secondary_text_87"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_drag_handle" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:src="@drawable/ic_close"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_title" />
+
+            <TextView
+                android:id="@+id/text_view_list_name"
+                style="@style/TextStyle.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large_24dp"
+                android:text="List Name"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_title" />
+
+            <EditText
+                android:id="@+id/edit_text_list_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_extra_giant_48dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:background="@drawable/rounded_edittext"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
+                app:layout_constraintCircleRadius="@dimen/spacing_extra_giant_48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_list_name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/material_button_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:backgroundTint="@color/primary"
+                android:paddingVertical="@dimen/spacing_small_8dp"
+                android:text="@string/create"
+                android:textColor="@color/on_primary"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_list_name" />
+
+            <TextView
+                android:id="@+id/text_view_save_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large_24dp"
+                android:text="Save to"
+                android:textAppearance="@style/TextStyle.TitleMedium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/material_button_create" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_genere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:chipSpacingHorizontal="@dimen/spacing_tiny_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_save_to">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="my favourite" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="my favourite" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="Tv" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
