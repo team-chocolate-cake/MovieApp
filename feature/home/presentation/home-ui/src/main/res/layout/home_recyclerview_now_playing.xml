@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.home.HomeItem.NowPlaying" />
+            type="com.chocolatecake.ui.home.HomeItem.NowPlaying" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

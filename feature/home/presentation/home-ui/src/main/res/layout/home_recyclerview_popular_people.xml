@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.home.HomeItem.PopularPeople" />
+            type="com.chocolatecake.ui.home.HomeItem.PopularPeople" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

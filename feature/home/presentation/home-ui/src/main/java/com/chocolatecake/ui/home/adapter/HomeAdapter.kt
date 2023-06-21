@@ -1,11 +1,8 @@
 package com.chocolatecake.ui.home.adapter
 
-import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +17,8 @@ import com.chocolatecake.ui.home.databinding.HomeRecyclerviewPopularPeopleBindin
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewSliderBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTopRatedBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTrendingBinding
-import com.chocolatecake.viewmodel.home.HomeItem
-import com.chocolatecake.viewmodel.home.HomeItemType
+import com.chocolatecake.ui.home.HomeItem
+import com.chocolatecake.ui.home.HomeItemType
 import com.chocolatecake.viewmodel.home.HomeListener
 import java.lang.Math.abs
 

@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.home.HomeItem.Trending" />
+            type="com.chocolatecake.ui.home.HomeItem.Trending" />
     </data>
 
 
