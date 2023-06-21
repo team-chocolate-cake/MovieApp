@@ -19,18 +19,31 @@
 
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView2"
             android:layout_width="@dimen/width_image"
             android:layout_height="@dimen/height_image"
             android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:onClick="@{()-> listener.onClickNowPlaying(item.id)}"
             android:scaleType="centerCrop"
+            app:imageUrl="@{item.imageUrl}"
             app:layout_constraintDimensionRatio="16:9"
-            tools:src="@tools:sample/backgrounds/scenic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
-            android:onClick="@{()-> listener.onClickNowPlaying(item.id)}"
-            app:imageUrl="@{item.imageUrl}"/>
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <View
+            android:layout_width="@dimen/width_image"
+            android:layout_height="@dimen/height_image"
+            android:background="@drawable/shadow_layer"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -24,12 +24,24 @@
             android:layout_height="match_parent"
             android:onClick="@{()->listener.onClickUpComing(item.id)}"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shadow_layer"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
