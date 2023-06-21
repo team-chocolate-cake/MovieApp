@@ -10,7 +10,7 @@ import com.chocolatecake.ui.home.databinding.HomeItemImageSliderBinding
 import com.chocolatecake.viewmodel.home.UpComingMoviesUiState
 
 class UpComingAdapter(
-    private val upComingList: MutableList<UpComingMoviesUiState>, private val viewPager: ViewPager2
+    private val upComingList: List<UpComingMoviesUiState>, private val viewPager: ViewPager2
 ) : RecyclerView.Adapter<UpComingAdapter.ImageSliderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageSliderViewHolder {
@@ -30,14 +30,6 @@ class UpComingAdapter(
 
     override fun onBindViewHolder(holder: ImageSliderViewHolder, position: Int) {
         holder.bind(upComingList[position])
-        if (position == upComingList.size - 1) {
-            viewPager.post(runnable)
-        }
-    }
-
-    private val runnable = Runnable {
-        upComingList.addAll(upComingList)
-        notifyDataSetChanged()
     }
 
     inner class ImageSliderViewHolder(val binding: HomeItemImageSliderBinding) :

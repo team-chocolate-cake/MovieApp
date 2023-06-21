@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.home.HomeItem.Slider" />
@@ -24,5 +25,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dots_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_giant_32dp"
+            android:layout_marginBottom="@dimen/spacing_medium_16dp"
+            app:dotsColor="@color/background"
+            app:dotsCornerRadius="@dimen/spacing_tiny_4dp"
+            app:dotsSize="6dp"
+            app:dotsSpacing="@dimen/spacing_one_1dp"
+            app:dotsWidthFactor="7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:progressMode="true"
+            app:selectedDotColor="@color/background" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

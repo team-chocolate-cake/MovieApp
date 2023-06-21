@@ -113,9 +113,11 @@ class HomeAdapter(
 
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
-        val mutableList = upComing.list.toMutableList()
-        val adapter = UpComingAdapter(mutableList,holder.binding.viewPager)
-        holder.binding.viewPager.adapter = adapter
+        val viewPager = holder.binding.viewPager
+        val adapter = UpComingAdapter(upComing.list, viewPager)
+        viewPager.adapter = adapter
+        val dotsIndicator = holder.binding.dotsIndicator
+        dotsIndicator.attachTo(viewPager)
         holder.binding.item = upComing
     }
 

@@ -8,7 +8,7 @@ class GetUpcomingMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
     private val refreshIfNeededUseCase: RefreshIfNeededUseCase
 ) {
-    suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
+    suspend operator fun invoke(limit: Int = 5): List<MovieEntity> {
         refreshIfNeededUseCase()
         return movieRepository.getUpcomingMovies().take(limit)
     }
