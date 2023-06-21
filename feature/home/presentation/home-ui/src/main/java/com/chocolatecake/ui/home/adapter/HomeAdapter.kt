@@ -1,9 +1,15 @@
 package com.chocolatecake.ui.home.adapter
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
@@ -114,11 +120,36 @@ class HomeAdapter(
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
         val viewPager = holder.binding.viewPager
-        val adapter = UpComingAdapter(upComing.list,listener)
-        viewPager.adapter = adapter
-        val dotsIndicator = holder.binding.dotsIndicator
-        dotsIndicator.attachTo(viewPager)
+        val upComingAdapter = UpComingAdapter(upComing.list, listener)
+
+        viewPager.apply {
+            adapter = upComingAdapter
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    val handler = Handler(Looper.myLooper()!!)
+                    val runnable = Runnable {
+                        currentItem += 1
+                    }
+                    handler.removeCallbacks(runnable)
+                    handler.postDelayed(runnable, 4000)
+                }
+            })
+            clipToPadding = false
+            clipChildren = false
+            val pageTransformer =
+                ViewPager2.PageTransformer { page, position ->
+                    val absPosition = Math.abs(position)
+                    val scaleFactor = 0.85f + (0.15f * (1 - absPosition))
+                    page.scaleY = scaleFactor
+                    page.scaleX = scaleFactor
+                }
+            setPageTransformer(CompositePageTransformer().apply {
+                addTransformer(pageTransformer)
+            })
+        }
         holder.binding.item = upComing
+        holder.binding.dotsIndicator.attachTo(viewPager)
     }
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
