@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetShowMoreTrendingByTypeUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(genreId: Int? = null): Flow<PagingData<MovieEntity>> {
+    suspend operator fun invoke(): Flow<PagingData<MovieEntity>> {
         return movieRepository.getTrendingMoviesPaging().flow
     }
 }
