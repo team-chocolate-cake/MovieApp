@@ -10,4 +10,6 @@
     <string name="popcorn_puzzles">Popcorn Puzzles!</string>
     <string name="theme">Theme</string>
     <string name="logout">Logout</string>
+    <string name="login_title">Lights, Camera, Action! Login to Personalize Your Movie Experience</string>
+    <string name="login">Login</string>
 </resources>

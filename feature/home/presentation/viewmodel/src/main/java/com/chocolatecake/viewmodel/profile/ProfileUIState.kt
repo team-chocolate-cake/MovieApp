@@ -5,6 +5,6 @@ data class ProfileUIState(
     val avatarUrl: String = "",
     val error: List<String>? = null,
     val isLogout: Boolean = false,
-    val isLoggedIn:Boolean=false,
+    val isLoggedIn: Boolean = false,
     val isLoading: Boolean = false
 )

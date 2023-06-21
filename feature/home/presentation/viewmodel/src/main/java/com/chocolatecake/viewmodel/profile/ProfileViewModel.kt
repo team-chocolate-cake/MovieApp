@@ -71,8 +71,10 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoggedIn = true) }
             if (checkIsUserLoggedInUseCase()) {
-               _state.update { it.copy(isLoggedIn = false) }
+               _state.update { it.copy(isLoggedIn = false)
+               }
             }
+
         }
     }
 }

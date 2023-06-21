@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
@@ -23,6 +24,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
     companion object {
         private const val PREF_THEME_STATE = "theme_state"
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         changeAppTheme()
@@ -41,14 +43,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
                 findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
             }
 
-            ProfileUiEvent.RatingEvent -> TODO()
-            ProfileUiEvent.ThemeEvent -> TODO()
             ProfileUiEvent.WatchHistoryEvent -> TODO()
             ProfileUiEvent.WatchlistEvent -> TODO()
         }
     }
 
-    private fun changeAppTheme(){
+    private fun changeAppTheme() {
         val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val switchButtonTheme = binding.switchBottonTheme
 
