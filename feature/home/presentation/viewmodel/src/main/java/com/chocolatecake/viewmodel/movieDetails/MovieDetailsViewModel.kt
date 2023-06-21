@@ -146,8 +146,8 @@ class MovieDetailsViewModel @Inject constructor(
         sendEvent(MovieDetailsUiEvent.OnClickBack)
     }
 
-    override fun onClickSaveButton(id: Int) {
-        sendEvent(MovieDetailsUiEvent.SaveToList(id))
+    fun onClickSaveButton() {
+        sendEvent(MovieDetailsUiEvent.SaveToList(movieId!!))
     }
 
     override fun onClickShowMore(movieId: Int) {

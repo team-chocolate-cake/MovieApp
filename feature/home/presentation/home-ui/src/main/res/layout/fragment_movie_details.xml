@@ -10,143 +10,172 @@
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.movieDetails.MovieDetailsFragment">
+        android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout_details"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:elevation="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="350dp"
+                app:contentScrim="@color/card"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <ImageButton
-                    android:id="@+id/backButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@null"
-                    android:onClick="@{()->viewModel.onClickBackButton()}"
+                <ImageView
+                    android:id="@+id/image_view_main_image"
+                    app:imageUrlByBackDropPath="@{viewModel.state.movieUiState.backdropPath}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:foreground="@drawable/gradient_background"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/arrow_left"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_collapseMode="parallax"
+                    tools:src="@tools:sample/backgrounds/scenic" />
 
-                <ImageButton
-                    android:id="@+id/saveButton"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@null"
-                    android:onClick="@{()-> viewModel.onClickSaveButton(viewModel.state.id)}"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/save_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.appcompat.widget.Toolbar>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="2dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@null"
+                        android:onClick="@{()->viewModel.onClickBackButton()}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/arrow_left" />
+
+                    <TextView
+                        android:id="@+id/text_view_tool_bar_name"
+                        style="@style/TextStyle.TitleMedium"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:layout_marginLeft="4dp"
+                        android:text="@{viewModel.state.movieUiState.title}"
+                        android:textColor="@color/on_background_87"
+                        android:visibility="invisible" />
+
+                    <ImageButton
+                        android:id="@+id/saveButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@null"
+                        android:backgroundTint="@color/on_primary"
+                        android:onClick="@{()-> viewModel.onClickSaveButton()}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_save" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminateTint="@color/primary"
-                android:visibility="gone"
-                app:isVisible="@{viewModel.state.loading}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nestedRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.onErrors.empty }"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/primary"
+            android:visibility="gone"
+            app:isVisible="@{viewModel.state.loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/nestedRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.onErrors.empty }"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/lottie_animation_view_no_network"
+            layout="@layout/layout_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`noNetwork`)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`timeout`)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <include
-                android:id="@+id/lottie_animation_view_no_network"
-                layout="@layout/layout_no_connection"
+                android:id="@+id/lottie_animation_view_timeout"
+                layout="@layout/layout_timeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/PrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`noNetwork`)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
+                android:text="Try Again" />
+        </LinearLayout>
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            app:isVisibleOrGone="@{!viewModel.state.onErrors.contains(`noNetwork`) &amp; !viewModel.state.onErrors.contains(`timeout`)&amp; !viewModel.state.onErrors.empty }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/lottie_animation_view_error"
+                layout="@layout/layout_error"
+                android:layout_width="@dimen/lottie_error_size"
+                android:layout_height="@dimen/lottie_error_size" />
+
+            <TextView
+                style="@style/TextStyle.TitleMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:isVisibleOrGone="@{viewModel.state.onErrors.contains(`timeout`)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-
-                <include
-                    android:id="@+id/lottie_animation_view_timeout"
-                    layout="@layout/layout_timeout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.button.MaterialButton
-                    style="@style/PrimaryButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
-                    android:text="Try Again" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:isVisibleOrGone="@{!viewModel.state.onErrors.contains(`noNetwork`) &amp; !viewModel.state.onErrors.contains(`timeout`)&amp; !viewModel.state.onErrors.empty }"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-
-                <include
-                    android:id="@+id/lottie_animation_view_error"
-                    layout="@layout/layout_error"
-                    android:layout_width="@dimen/lottie_error_size"
-                    android:layout_height="@dimen/lottie_error_size" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    style="@style/TextStyle.TitleMedium"
-                    android:textColor="@color/on_background_87"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
-                    android:text="@{viewModel.state.onErrors.toString()}" />
-            </LinearLayout>
+                android:onClick="@{()->viewModel.tryAgain(viewModel.state.id)}"
+                android:text="@{viewModel.state.onErrors.toString()}"
+                android:textColor="@color/on_background_87" />
+        </LinearLayout>
 
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -5,6 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
@@ -14,6 +16,7 @@ import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.abs
 
 
 @AndroidEntryPoint
@@ -32,6 +35,7 @@ class MovieDetailsFragment :
         binding.toolbar.title = ""
         setAdapter()
         collectChange()
+        collapseState()
     }
 
     private fun setAdapter() {
@@ -111,5 +115,34 @@ class MovieDetailsFragment :
 
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingUiState(rate)
+    }
+    private fun collapseState() {
+        var pos = 0
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val firstVisibleItemPosition = recyclerView.layoutManager as LinearLayoutManager
+                    pos = firstVisibleItemPosition.findFirstVisibleItemPosition()
+                }
+            })
+            binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+                when {
+                    // Fully expanded state
+                    verticalOffset == 0 -> {
+                        binding.textViewToolBarName.visibility = View.INVISIBLE
+                        if (pos != 0) appBarLayout.setExpanded(false, false)
+                    }
+                    // Fully collapsed state
+                    abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
+                        binding.textViewToolBarName.visibility = View.VISIBLE
+                    }
+                    // In between expanded and collapsed states
+                    else -> {
+                        binding.textViewToolBarName.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+        }
     }
 }
