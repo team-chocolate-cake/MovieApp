@@ -15,13 +15,7 @@ import javax.inject.Inject
 class GetAiringTodayTVShowsUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(genreId: Int? = null): Flow<PagingData<TVShowsEntity>> {
-        return movieRepository.getAiringTodayTVShows().flow.map {
-            it.filter { tvShow ->
-                tvShow.genreEntities.takeIf { genreId != null }
-                    ?.map { it.genreID }
-                    ?.contains(genreId) ?: true && tvShow.rate != 0.0
-            }
-        }
+    suspend operator fun invoke(): Flow<PagingData<TVShowsEntity>> {
+        return movieRepository.getAiringTodayTVShows().flow
     }
 }

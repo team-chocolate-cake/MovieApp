@@ -8,23 +8,19 @@ data class TVShowUIState(
     val tvShowsType: TVShowsType = TVShowsType.AIRING_TODAY,
     val tvShowAiringToday: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val tvShowTopRated: Flow<PagingData<TVShowsUI>> = emptyFlow(),
-    val genresTvShows: List<GenresTVShowsUiState> = emptyList(),
-    val selectedMovieGenresId: Int? = null,
     val tvShowOnTheAir: Flow<PagingData<TVShowsUI>> = emptyFlow(),
     val tvShowPopular: Flow<PagingData<TVShowsUI>> = emptyFlow(),
-    val error: List<String>? = null,
+    val errorList: List<String>? = emptyList(),
     val isLoading: Boolean = false
-)
+) {
+    val isError: Boolean
+        get() = errorList?.isNotEmpty() ?: false
+}
 
 data class TVShowsUI(
-    val id: Int?,
+    val tvId: Int?,
     val imageUrl: String?,
-)
-
-data class GenresTVShowsUiState(
-    val genreId: Int = 0,
-    val genresName: String = "",
-    val isSelected: Boolean = false
+    val rate: Double?
 )
 
 enum class TVShowsType {

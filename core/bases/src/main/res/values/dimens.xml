@@ -44,7 +44,7 @@
     <!--height dimens-->
     <dimen name="height_tiny">4dp</dimen>
     <dimen name="height_giant">32dp</dimen>
-    <dimen name="custom_height_card">200dp</dimen>
+    <dimen name="custom_height_card">213dp</dimen>
     <dimen name="width_image">240dp</dimen>
     <dimen name="height_image">150dp</dimen>
     <dimen name="lottie_error_size">180dp</dimen>

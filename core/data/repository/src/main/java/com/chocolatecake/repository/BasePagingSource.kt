@@ -1,8 +1,12 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.chocolatecake.remote.service.MovieService
+import retrofit2.Response
+import java.io.IOException
+import java.net.UnknownHostException
 
 abstract class BasePagingSource<Value : Any>(
     val service: MovieService
@@ -19,7 +23,7 @@ abstract class BasePagingSource<Value : Any>(
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = currentPage + 1
             )
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             LoadResult.Error(e)
         }
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.tv_shows.TVShowsUI" />
@@ -14,25 +15,55 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> listener.onClickTVShows(item.tvId)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeable_ImageView"
-            android:layout_width="@dimen/height_image"
-            android:layout_height="@dimen/custom_height_card"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
-            android:onClick="@{()-> listener.onClickTVShows(item.id)}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:foregroundGravity="center"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:background="@drawable/shadow_layer"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/text_view_rates_number"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_tiny_4dp"
+            android:gravity="center"
+            android:text="@{String.valueOf(item.rate)}"
+            android:textColor="@color/background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="9.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

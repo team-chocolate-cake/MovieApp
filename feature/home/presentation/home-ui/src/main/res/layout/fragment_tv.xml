@@ -4,48 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel" />
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_tv_xml_constraintlayout3_scene">
 
-        <ImageButton
-            android:id="@+id/image_button_filter"
+        <TextView
+            android:id="@+id/textView"
+            style="@style/TextStyle.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@null"
-            android:onClick="@{() -> viewModel.onClickFilter()}"
-            android:src="@drawable/ic_filter"
-            app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/horizontalScrollView"
-            app:tint="@color/on_background_60" />
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:textColor="@color/on_background_87"
+            android:text="@string/explore_the_best_tv_shows"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Explore The Best TV Shows" />
 
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:clipToPadding="false"
-            android:paddingStart="@dimen/spacing_medium_16dp"
-            android:paddingEnd="@dimen/spacing_small_8dp"
             android:scrollbars="none"
-            app:layout_constraintEnd_toStartOf="@+id/image_button_filter"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                app:selectionRequired="true"
                 app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 app:singleSelection="true">
 
@@ -55,43 +58,44 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:onClick="@{()-> viewModel.getAiringTodayTVShows()}"
-                    android:text="Airing Today" />
+                    android:onClick="@{()-> viewModel.showAiringTodayTVShowsResult()}"
+                    android:text="@string/airing_today" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_on_the_air"
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getOnTheAirTVShows()}"
-                    android:text="On The Air" />
+                    android:onClick="@{()-> viewModel.showOnTheAiringTVShowsResult()}"
+                    android:text="@string/on_the_air" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_top_rated"
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getTopRatedTVShows()}"
-                    android:text="Top Rated" />
+                    android:onClick="@{()-> viewModel.showTopRatedTVShowsResult()}"
+                    android:text="@string/top_rated" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_popular"
                     style="@style/TextStyle.LabelMedium.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> viewModel.getPopularTVShows()}"
-                    android:text="Popular" />
+                    android:onClick="@{()-> viewModel.showPopularTVShowsResult()}"
+                    android:text="@string/popular" />
 
             </com.google.android.material.chip.ChipGroup>
 
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tv_shows"
+            android:id="@+id/recycler_view_tv_shows"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +116,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <include
+            android:id="@+id/lottie_animation_view_no_network"
+            layout="@layout/layout_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{viewModel.state.isError}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
 
 </layout>
+
+   <!-- app:showWhenNoResult="@{viewModel.state.tvShowAiringToday}"
+    app:showWhenListEmpty="@{viewModel.state.tvShowAiringToday}"-->
