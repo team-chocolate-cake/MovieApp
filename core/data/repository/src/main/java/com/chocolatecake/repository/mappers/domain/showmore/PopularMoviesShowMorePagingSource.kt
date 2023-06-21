@@ -17,12 +17,6 @@ class PopularMoviesShowMorePagingSource  @Inject constructor(
     override suspend fun fetchData(page: Int): List<MovieEntity> {
 
         val response = service.getPopularMovies(page).body()?.results?.filterNotNull()
-        val popularMoviesEntities = response?.map {
-            mapper.map(it) } ?: emptyList()
-
-        val test = service.getPopularMovies(page).isSuccessful
-        Log.d("source--TopRated", "$test")
-
-        return popularMoviesEntities
+        return response?.map { mapper.map(it) } ?: emptyList()
     }
 }

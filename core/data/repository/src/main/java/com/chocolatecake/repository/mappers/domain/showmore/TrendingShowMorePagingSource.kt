@@ -1,6 +1,5 @@
 package com.chocolatecake.repository.showmore
 
-import android.util.Log
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.BasePagingSource
@@ -14,12 +13,8 @@ class TrendingShowMorePagingSource @Inject constructor(
 
     override suspend fun fetchData(page: Int): List<MovieEntity> {
 
-        val response = service.getTrendingMoviesPaging(page).body()?.results?.filterNotNull()
-        val trendingEntities = response?.map { mapper.map(it) } ?: emptyList()
+        val response = service.getTrendingMovies(page = page).body()?.results?.filterNotNull()
 
-        val test = service.getTrendingMoviesPaging(page).isSuccessful
-        Log.d("source--TopRated", "$test")
-
-        return trendingEntities
+        return response?.map { mapper.map(it) } ?: emptyList()
     }
 }
