@@ -14,13 +14,13 @@ class SeasonDetailsUiMapper @Inject constructor():
             name = input.name,
             overview = input.overview,
             id = input.id,
-            episodes = map(input.episodes),
+            episodes = mapEpisodes(input.episodes),
             onErrors = emptyList(),
             isLoading = false
         )
     }
 
-    private fun map(input: List<EpisodeEntity>): List<EpisodeHorizontalUIState>{
+    private fun mapEpisodes(input: List<EpisodeEntity>): List<EpisodeHorizontalUIState>{
         return input.map {
             EpisodeHorizontalUIState(
                 id = it.id,

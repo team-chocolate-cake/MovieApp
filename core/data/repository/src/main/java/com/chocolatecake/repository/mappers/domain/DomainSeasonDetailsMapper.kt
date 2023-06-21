@@ -16,11 +16,11 @@ class DomainSeasonDetailsMapper @Inject constructor() :
             id = input.id ?: 0,
             name = input.name ?: "",
             overview = input.overview ?: "",
-            episodes = map(input.episodes ?: emptyList())
+            episodes = mapEpisodes(input.episodes ?: emptyList())
         )
     }
 
-    private fun map(input: List<EpisodeDto>): List<EpisodeEntity>{
+    private fun mapEpisodes(input: List<EpisodeDto>): List<EpisodeEntity>{
         return input.map {
             EpisodeEntity(
                 id = it.id ?: 0,
