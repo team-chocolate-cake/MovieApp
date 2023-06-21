@@ -21,7 +21,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="@dimen/width_image"
             android:layout_height="@dimen/height_image"
-            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic"
             app:layout_constraintEnd_toEndOf="parent"

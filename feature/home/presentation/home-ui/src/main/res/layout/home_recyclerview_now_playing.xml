@@ -11,8 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_medium_16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/text_view_now_playing"
@@ -29,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:paddingHorizontal="@dimen/spacing_medium_16dp"
+            android:clipToPadding="false"
             android:contentDescription="@string/now_playing"
             android:orientation="horizontal"
             app:items="@{item.list}"
