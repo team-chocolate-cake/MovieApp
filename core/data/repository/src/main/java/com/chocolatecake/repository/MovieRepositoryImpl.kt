@@ -1,5 +1,6 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.chocolatecake.entities.GenreEntity
@@ -11,6 +12,7 @@ import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
@@ -306,43 +308,47 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { airingTodayTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { airingTodayTvShowsPagingSource }
         )
     }
 
     override suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { topRatedTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { topRatedTvShowsPagingSource }
         )
     }
 
     override suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { popularTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { popularTVShowsPagingSource }
         )
     }
 
     override suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { onTheAirTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { onTheAirTVShowsPagingSource }
         )
     }
     /// endregion
 
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
-        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
 
     override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
         return domainRatingMapper.map(
-            wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) }
+            wrapApiCall { movieService.setMovieRate(RatingRequest(rate), movieId) }
         )
     }
 
 
     //region my list
     override suspend fun getFavoriteMovies(): List<MovieEntity> {
-        return  domainFavoriteMoviesMapper.map(movieDao.getFavoriteMovies())
+        return domainFavoriteMoviesMapper.map(movieDao.getFavoriteMovies())
     }
 
     override suspend fun refreshFavoriteMovies() {
@@ -354,19 +360,19 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean {
-        return  movieService.addFavoriteMovie(
+        return movieService.addFavoriteMovie(
             favoriteMoviesMapper.map(favoriteBody)
         ).isSuccessful
     }
 
     override suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity> {
         refreshFavoriteByMediaType(mediaType)
-        return  domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType(mediaType))
+        return domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType(mediaType))
     }
 
     private suspend fun refreshFavoriteByMediaType(mediaType: String) {
         refreshWrapper(
-            apiCall = { movieService.getFavoriteByMediaType(mediaType = mediaType )},
+            apiCall = { movieService.getFavoriteByMediaType(mediaType = mediaType) },
             localFavoriteMoviesMapper::map,
             movieDao::insertFavoriteMovie
         )
@@ -374,13 +380,13 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity> {
-        return  domainWatchlistMapper.map(movieDao.getWatchlistByMediaType(mediaType))
+        return domainWatchlistMapper.map(movieDao.getWatchlistByMediaType(mediaType))
     }
 
 
     override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
 
-        val result =  movieService.addWatchlist(
+        val result = movieService.addWatchlist(
             watchlistMapper.map(watchlistRequest)
         ).isSuccessful
 
@@ -393,7 +399,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     private suspend fun refreshWatchlistByMediaType(mediaType: String) {
         refreshWrapper(
-          apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType )},
+            apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType) },
             localWatchlistMapper::map,
             movieDao::insertWatchlist
         )
@@ -401,11 +407,11 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun addList(name: String): Boolean {
-        return movieService.addList(name,).isSuccessful
+        return movieService.addList(name).isSuccessful
     }
 
     override suspend fun getLists(): List<ListEntity> {
-        return  domainListMapper.map(movieDao.getLists())
+        return domainListMapper.map(movieDao.getLists())
     }
 
     override suspend fun refreshLists() {
@@ -425,7 +431,7 @@ class MovieRepositoryImpl @Inject constructor(
 //        return result
 //    }
 
-     private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
+    private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
         movieDao.insertMovieToList(localListMovieMapper.map(movie))
     }
 
@@ -434,24 +440,51 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMovieList(): List<ListMovieEntity> {
-        return  domainListMovieMapper.map(movieDao.getMoviesList())
+        return domainListMovieMapper.map(movieDao.getMoviesList())
     }
-
-
 
 
     override suspend fun getDetailsList(listId: Int): List<MovieEntity> {
-        refreshDetailsList(listId)
+//        refreshDetailsList(listId)
+        wrapApiCall {
+            movieService.getDetailsList(8257253)
+        }.also {
+            Log.i("jkk", "getDetailsList: getDetailsList   llllkkkjj $it ")
+        }
         return domainMoviesMapper.map(movieDao.getDetailsList())
     }
 
-     private suspend fun refreshDetailsList(listId: Int) {
-        refreshWrapper(
-            apiCall = { movieService.getDetailsList(listId)},
-            localMoviesMapper::map,
-            movieDao::insertDetailsList
-        )
+//    private suspend fun refreshDetailsList(listId: Int) {
+//        refreshWrapper(
+//            apiCall = { movieService.getDetailsList(listId) },
+//            localMoviesMapper::map,
+//            movieDao::insertDetailsList
+//        )
+//    }
+
+
+    override suspend fun getListCreated(): List<ListCreatedEntity> {
+        return wrapApiCall { movieService.getLists() }.results.also {
+        }
+            ?.filterNotNull()?.let { lists ->
+                lists.map { input ->
+                    ListCreatedEntity(
+                        id = input.id,
+                        itemCount = input.itemCount,
+                        listType = input.listType,
+                        name = input.name,
+
+                        posterPath = getDetailsList(input.id?:0).also {
+                            Log.i("jkk", "getListCreated 444444 $it :")
+                        }.map { items ->
+                            Log.i("jkk",  items.imageUrl)
+                             items.imageUrl
+                        }
+                    )
+                }
+            } ?: emptyList()
     }
+
 
     //endregion
 }

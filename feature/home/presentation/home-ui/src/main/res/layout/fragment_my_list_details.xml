@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="8 items"
+                android:text="@{String.valueOf(viewModel.state.movies.size())+` items`}"
                 android:textColor="@color/on_background_60"
                 tools:text="9 item" />
 
@@ -52,6 +52,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                app:items="@{viewModel.state.movies}"
                 android:id="@+id/recycler_view_my_list_details"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -100,34 +101,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-<!--        <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginVertical="@dimen/spacing_giant_32dp"-->
-<!--            android:indeterminateTint="@color/primary"-->
-<!--            app:isVisible="@{viewModel.state.loading}" />-->
 
-
-<!--        <TextView-->
-<!--            android:id="@+id/text_view_description2"-->
-<!--            style="@style/TextStyle.BodySmall"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:ellipsize="end"-->
-<!--            android:maxLines="1"-->
-<!--            android:text="8 items"-->
-<!--            android:textColor="@color/on_background_60"-->
-<!--            tools:text="9 item" />-->
-
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/recycler_view_my_list_details"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:clipToPadding="false"-->
-<!--                app:isVisible="@{!viewModel.state.loading}"-->
-<!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                tools:listitem="@layout/item_movie_horizontal" />-->
     </LinearLayout>
 </layout>

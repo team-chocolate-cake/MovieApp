@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.bases.ListType
 import com.chocolatecake.bases.MediaType
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
@@ -31,8 +32,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
             ProfileUiEvent.FavoriteEvent -> {
                 findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
-                        mediaType = MediaType.FAVOURITE.name,
+                        listType = ListType.favorite.name,
                         listId = 0,
+                        mediaType = MediaType.movie.name
                     )
                 )
             }
@@ -53,17 +55,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
                 )
             }
 
-            ProfileUiEvent.RatingEvent -> TODO()
+            ProfileUiEvent.RatingEvent -> {}
 
-            ProfileUiEvent.ThemeEvent -> TODO()
+            ProfileUiEvent.ThemeEvent -> {}
 
-            ProfileUiEvent.WatchHistoryEvent -> TODO()
+            ProfileUiEvent.WatchHistoryEvent -> {}
 
             ProfileUiEvent.WatchlistEvent -> {
                 findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
-                        mediaType = MediaType.WATCHLIST.name,
+                        listType = ListType.watchlist.name,
                         listId = 0,
+                        mediaType = MediaType.movie.name,
                     )
                 )
             }

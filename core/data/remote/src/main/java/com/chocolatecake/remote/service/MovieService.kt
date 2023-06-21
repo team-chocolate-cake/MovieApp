@@ -15,6 +15,7 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
 import com.chocolatecake.remote.response.dto.ListRemoteDto
+import com.chocolatecake.remote.response.dto.MovieItemListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
@@ -199,7 +200,7 @@ interface MovieService {
 
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)
-    : Response<DataWrapperResponse<MovieRemoteDto>>
+    : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
 
     //endregion
 }

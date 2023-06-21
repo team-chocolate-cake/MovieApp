@@ -44,15 +44,14 @@
                     android:text="New List"
                     style="@style/TextStyle.TitleSmall"
                     android:textColor="@color/on_primary"/>
-
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
                 <androidx.recyclerview.widget.RecyclerView
+                    app:items="@{viewModel.state.movieList}"
                     android:id="@+id/recycler_view_my_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

@@ -4,6 +4,7 @@ package com.chocolatecake.viewmodel.myList
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
 import com.chocolatecake.usecase.myList.GetMovieListUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyListViewModel @Inject constructor(
-    private val getMovies: GetMovieListUseCase,
+    private val getMovies: GetListsCreatedUseCase,
     private val myListUiMapper: MyListUiMapper,
    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MyListUiState, MyListUiEvent>(MyListUiState()), MyListListener {
@@ -71,21 +72,33 @@ class MyListViewModel @Inject constructor(
         }
     }
 
-    override fun onClickFavoriteList(itemId: Int, listType: String) {
+    override fun onClickFavoriteList(itemId: Int, listType: String ,mediaType: String) {
         sendEvent(
-            MyListUiEvent.NavigateToListDetails(listId= 0, listType= listType)
+            MyListUiEvent.NavigateToListDetails(
+                listId= 0,
+                listType= listType,
+                mediaType= mediaType,
+            )
         )
     }
 
-    override fun onClickWatchlist(itemId: Int, listType: String) {
+    override fun onClickWatchlist(itemId: Int, listType: String ,mediaType: String) {
         sendEvent(
-            MyListUiEvent.NavigateToListDetails(listId= 0, listType= listType)
+            MyListUiEvent.NavigateToListDetails(
+                listId= 0,
+                listType= listType,
+                mediaType= mediaType,
+            )
         )
     }
 
-    override fun onClickItem(listId: Int, listType: String) {
+    override fun onClickItem(listId: Int, listType: String ,mediaType: String) {
         sendEvent(
-            MyListUiEvent.NavigateToListDetails(listId= 0, listType= listType)
+            MyListUiEvent.NavigateToListDetails(
+                listId= listId,
+                listType= listType,
+                mediaType= mediaType,
+            )
         )
     }
 

@@ -4,6 +4,7 @@ package com.chocolatecake.viewmodel.myListDetails
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.ListType
 import com.chocolatecake.bases.MediaType
 import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
@@ -30,17 +31,18 @@ class MyListDetailsViewModel @Inject constructor(
 
     private val mediaId = savedStateHandle.get<Int>("mediaId") ?:0
     private val mediaType = savedStateHandle.get<String>("mediaType") ?:""
+    private val listType = savedStateHandle.get<String>("listType") ?:""
     private val listId = savedStateHandle.get<Int>("listId") ?:0
 
     init {
-        when(mediaType){
-            MediaType.FAVOURITE.name ->{
+        when(listType){
+            ListType.favorite.name ->{
                getAllFavorite(mediaType)
            }
-            MediaType.WATCHLIST.name ->{
+            ListType.watchlist.name ->{
                 getAllWatchlist(mediaType)
             }
-            MediaType.LIST.name ->{
+            ListType.list.name ->{
                 getAllMovieListDetails(listId)
             }
         }

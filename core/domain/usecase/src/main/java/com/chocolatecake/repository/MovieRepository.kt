@@ -9,6 +9,7 @@ import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
@@ -84,6 +85,9 @@ interface MovieRepository {
     suspend fun addMovieToList( movie: ListMovieEntity): Boolean
 
     suspend fun getDetailsList(listId: Int): List<MovieEntity>
+
+
+    suspend fun getListCreated(): List<ListCreatedEntity>
 
    // suspend fun refreshDetailsList(listId: Int)
 

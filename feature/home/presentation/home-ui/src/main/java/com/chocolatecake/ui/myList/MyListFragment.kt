@@ -25,7 +25,6 @@ class MyListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        collectChange()
     }
 
     private fun setAdapter() {
@@ -33,21 +32,22 @@ class MyListFragment :
         binding.recyclerViewMyList.adapter = myListAdapter
     }
 
-    private fun collectChange() {
-        collectLatest {
-            viewModel.state.collect { state ->
-                myListAdapter
-            }
-        }
-    }
+//    private fun collectChange() {
+//        collectLatest {
+//            viewModel.state.collect { state ->
+//                myListAdapter
+//            }
+//        }
+//    }
 
     override fun onEvent(event: MyListUiEvent) {
         when(event){
             is MyListUiEvent.NavigateToListDetails -> {
                 findNavController().navigate(
                     MyListFragmentDirections.actionMyListFragmentToMyListDetailsFragment(
-                        mediaType = event.listType,
+                        listType = event.listType,
                         listId = event.listId,
+                        mediaType = event.mediaType,
                     )
                 )
             }

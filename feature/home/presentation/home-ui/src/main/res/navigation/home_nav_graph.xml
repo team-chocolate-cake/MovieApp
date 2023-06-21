@@ -55,6 +55,8 @@
         <action
             android:id="@+id/action_myListDetailsFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+        <argument android:name="listType"
+            app:argType="string" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />
