@@ -182,7 +182,7 @@ class TvDetailsViewModel @Inject constructor(
 
     fun onRatingSubmit() {
         tryToExecute(
-            call = { tvShowUseCase(_state.value.userRating.toDouble(), 44217) },
+            call = { tvShowUseCase(_state.value.userRating.toDouble(), tvShowId) },
             onSuccess = ::onRatingSuccess,
             onError = {
                 Log.i("Click", "${_state.value.userRating.toDouble()}")
