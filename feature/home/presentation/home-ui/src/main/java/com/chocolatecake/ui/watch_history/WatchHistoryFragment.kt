@@ -33,11 +33,11 @@ class WatchHistoryFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAdapter()
+        setupRecyclerAdapter()
         swipeToDeleteItemSetup(binding.watchHistoryRecyclerView)
     }
 
-    private fun setupAdapter() {
+    private fun setupRecyclerAdapter() {
         adapter = WatchHistoryAdapter(mutableListOf(), viewModel, this)
         binding.watchHistoryRecyclerView.adapter = adapter
     }
@@ -68,15 +68,15 @@ class WatchHistoryFragment
     private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
-                initTheState()
+                finishNotCompletedDeletion()
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
             } catch (e: Exception) {
-                createToast(getString(R.string.error_occured))
+//                createToast(getString(R.string.error_occured))
             }
         }
     }
 
-    private fun initTheState() {
+    private fun finishNotCompletedDeletion() {
         viewModel.deleteItemFromDataBase()
         viewModel.initTheDeletionStates()
     }
@@ -106,7 +106,8 @@ class WatchHistoryFragment
                     requireContext(),
                     com.chocolatecake.bases.R.color.orangeRed
                 )
-            ).addCallback(setupSnackBarCallback())
+            )
+            .addCallback(setupSnackBarCallback())
             .setAction(getString(com.chocolatecake.bases.R.string.undo)) {
                 viewModel.addItemToUi()
             }
@@ -128,11 +129,10 @@ class WatchHistoryFragment
     }
 
     private fun createToast(message: String) {
-        Log.i("batata", "createToast: $message ")
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setSearchQuery(query: CharSequence?) {
+    override fun setSearchQueryState(query: CharSequence?) {
         viewModel.setSearchQuery(query)
     }
 
