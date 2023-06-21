@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.ui.home.HomeFragmentDirections
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
 import com.chocolatecake.viewmodel.profile.ProfileUIState
@@ -17,12 +18,9 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, Prof
 
     override val layoutIdFragment: Int = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
-//    private lateinit var uiModeManager: UiModeManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        uiModeManager = requireContext().getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
-//        binding.uiMode = uiModeManager
     }
 
     override fun onEvent(event: ProfileUiEvent) {
@@ -30,6 +28,7 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding, ProfileUIState, Prof
             ProfileUiEvent.FavoriteEvent -> TODO()
             ProfileUiEvent.LogoutEvent -> {
                 showSnackBar("Logout!")
+
             }
 
             ProfileUiEvent.MyListsEvent -> TODO()
