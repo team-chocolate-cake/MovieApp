@@ -114,7 +114,7 @@ class HomeAdapter(
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
         val viewPager = holder.binding.viewPager
-        val adapter = UpComingAdapter(upComing.list, viewPager)
+        val adapter = UpComingAdapter(upComing.list,listener)
         viewPager.adapter = adapter
         val dotsIndicator = holder.binding.dotsIndicator
         dotsIndicator.attachTo(viewPager)
