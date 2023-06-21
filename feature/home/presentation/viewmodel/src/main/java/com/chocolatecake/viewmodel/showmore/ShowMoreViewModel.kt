@@ -2,6 +2,8 @@ package com.chocolatecake.viewmodel.showmore
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
@@ -34,14 +36,32 @@ class ShowMoreViewModel @Inject constructor(
         getData()
     }
 
-    private fun getData() {
-
-        _state.update{it.copy(showMoreType = showMoreType)}
+     fun getData() {
         when (_state.value.showMoreType) {
             ShowMoreType.POPULAR_MOVIES -> getPopularMoviesShowMore()
             ShowMoreType.TOP_RATED -> getTopRatedShowMore()
             ShowMoreType.TRENDING -> getTrendingShowMore()
 
+        }
+    }
+
+    fun setErrorUiState(combinedLoadStates: CombinedLoadStates) {
+        when (combinedLoadStates.refresh) {
+            is LoadState.NotLoading -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = emptyList())
+                }
+            }
+            LoadState.Loading -> {
+                _state.update {
+                    it.copy(isLoading = true, errorList = emptyList())
+                }
+            }
+            is LoadState.Error -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = listOf("no Network "))
+                }
+            }
         }
     }
 
