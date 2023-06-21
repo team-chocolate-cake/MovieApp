@@ -50,6 +50,8 @@ class ShowMoreFragment : BaseFragment<FragmentShowMoreBinding, ShowMoreUiState, 
                     Log.e("TAG", "setAdapter: $itemsPagingData ")
                     showMoreAdapter.submitData(itemsPagingData)
                 }
+                collectLast(showMoreAdapter.loadStateFlow) { viewModel.setErrorUiState(it) }
+
             }
         }
     }
