@@ -4,7 +4,6 @@ package com.chocolatecake.viewmodel.myList
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
 import com.chocolatecake.usecase.myList.GetMovieListUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel

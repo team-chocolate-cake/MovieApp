@@ -4,9 +4,11 @@ package com.chocolatecake.viewmodel.myListDetails
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.MediaType
 import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
+import com.chocolatecake.usecase.myList.GetWatchlistByMediaTypeUseCase
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
@@ -15,10 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MyListDetailsViewModel @Inject constructor(
 
-    private val getMoviesFavorite: GetMyFavoriteListUseCase,
-    private val getMovies: GetFavoritesByMediaTypeUseCase,
+//    private val getMoviesFavorite: GetMyFavoriteListUseCase,
+    private val getFavorite: GetFavoritesByMediaTypeUseCase,
+    private val getWatchlist: GetWatchlistByMediaTypeUseCase,
 //    private val getTvFavorite: GetMyFavoriteTvListUseCase,
-    private val getMovieList: GetMyListDetailsByListIdUseCase,
+    private val getMovieListDetails: GetMyListDetailsByListIdUseCase,
     private val myListDetailsUiMapper: MyListDetailsUiMapper,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MyListDetailsUiState, MyListDetailsUiEvent>(MyListDetailsUiState()),
@@ -30,13 +33,41 @@ class MyListDetailsViewModel @Inject constructor(
     private val listId = savedStateHandle.get<Int>("listId") ?:0
 
     init {
-        getAllFavorite(mediaType)
+        when(mediaType){
+            MediaType.FAVOURITE.name ->{
+               getAllFavorite(mediaType)
+           }
+            MediaType.WATCHLIST.name ->{
+                getAllWatchlist(mediaType)
+            }
+            MediaType.LIST.name ->{
+                getAllMovieListDetails(listId)
+            }
+        }
     }
 
     private fun getAllFavorite(mediaType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { getMoviesFavorite().map { myListDetailsUiMapper.map(it) } },
+            call = { getFavorite(mediaType).map { myListDetailsUiMapper.map(it) } },
+            onSuccess = ::onGetAllMoviesSuccess,
+            onError = ::onGetAllMoviesError
+        )
+    }
+
+    private fun getAllWatchlist(mediaType: String) {
+        _state.update { it.copy(isLoading = true) }
+        tryToExecute(
+            call = { getWatchlist(mediaType).map { myListDetailsUiMapper.map(it) } },
+            onSuccess = ::onGetAllMoviesSuccess,
+            onError = ::onGetAllMoviesError
+        )
+    }
+
+    private fun getAllMovieListDetails(listId: Int) {
+        _state.update { it.copy(isLoading = true) }
+        tryToExecute(
+            call = { getMovieListDetails(listId).map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )

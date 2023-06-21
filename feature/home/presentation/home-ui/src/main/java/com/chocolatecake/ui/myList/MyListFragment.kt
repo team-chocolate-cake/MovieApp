@@ -2,9 +2,11 @@ package com.chocolatecake.ui.myList
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListBinding
+import com.chocolatecake.ui.myListDetails.MyListDetailsFragmentDirections
 import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
@@ -41,8 +43,15 @@ class MyListFragment :
 
     override fun onEvent(event: MyListUiEvent) {
         when(event){
-            is MyListUiEvent.NavigateToListDetails -> TODO()
-            is MyListUiEvent.ShowSnackBar -> TODO()
+            is MyListUiEvent.NavigateToListDetails -> {
+                findNavController().navigate(
+                    MyListFragmentDirections.actionMyListFragmentToMyListDetailsFragment(
+                        mediaType = event.listType,
+                        listId = event.listId,
+                    )
+                )
+            }
+            is MyListUiEvent.ShowSnackBar -> {}
         }
     }
 }
