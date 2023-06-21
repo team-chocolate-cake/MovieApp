@@ -61,11 +61,8 @@ class TVShowsViewModel @Inject constructor(
                         errorList = null
                     )
                 }
-                Log.d("network", _state.value.isError.toString())
-                Log.d("network", _state.value.errorList.toString())
-
             } catch (throwable: Throwable) {
-               onError(throwable)
+                onError(throwable)
             }
         }
     }
@@ -77,11 +74,13 @@ class TVShowsViewModel @Inject constructor(
                     it.copy(isLoading = false, errorList = emptyList())
                 }
             }
+
             LoadState.Loading -> {
                 _state.update {
                     it.copy(isLoading = true, errorList = emptyList())
                 }
             }
+
             is LoadState.Error -> {
                 _state.update {
                     it.copy(isLoading = false, errorList = listOf("no Network "))

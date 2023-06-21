@@ -31,12 +31,4 @@ abstract class BasePagingSource<Value : Any>(
     override fun getRefreshKey(state: PagingState<Int, Value>): Int? {
         return null
     }
-
-    protected suspend fun <T> wrapPagingApiCall(call: suspend () -> List<T>): List<T> {
-        return try {
-            call()
-        } catch (e: Exception) {
-            throw Throwable("No network connection", e)
-        }
-    }
 }
