@@ -58,11 +58,6 @@ class ProfileViewModel @Inject constructor(
         sendEvent(ProfileUiEvent.PopcornPuzzlesEvent)
     }
 
-    override fun onClickSwitchTheme() {
-
-
-    }
-
     override fun onClickLogout() {
         viewModelScope.launch {
             _state.update { it.copy(isLogout = true) }
@@ -75,8 +70,8 @@ class ProfileViewModel @Inject constructor(
     override fun onUserNotLoggedIn() {
         viewModelScope.launch {
             _state.update { it.copy(isLoggedIn = true) }
-            if (_state.value.isLoggedIn == checkIsUserLoggedInUseCase()) {
-
+            if (checkIsUserLoggedInUseCase()) {
+               _state.update { it.copy(isLoggedIn = false) }
             }
         }
     }

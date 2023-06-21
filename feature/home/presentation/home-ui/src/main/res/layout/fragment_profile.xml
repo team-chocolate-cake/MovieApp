@@ -11,9 +11,7 @@
             name="viewModel"
             type="com.chocolatecake.viewmodel.profile.ProfileViewModel" />
 
-        <variable
-            name="uiMode"
-            type="android.app.UiModeManager" />
+
 
     </data>
 
@@ -203,7 +201,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_view_theme"
             app:showText="false"
-            app:track="@drawable/switch_track"/>
+            app:track="@drawable/switch_track"
+            />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

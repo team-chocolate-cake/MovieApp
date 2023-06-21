@@ -1,13 +1,9 @@
 package com.chocolatecake.ui.profile
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
@@ -23,19 +19,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override val layoutIdFragment: Int = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
+
+    companion object {
+        private const val PREF_THEME_STATE = "theme_state"
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        changeTheme()
-    }
-
-    private fun changeTheme(){
-        binding.switchBottonTheme.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
+        changeAppTheme()
     }
 
     override fun onEvent(event: ProfileUiEvent) {
@@ -48,7 +38,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
             ProfileUiEvent.MyListsEvent -> TODO()
             ProfileUiEvent.PopcornPuzzlesEvent -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToHomeFragment())
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
             }
 
             ProfileUiEvent.RatingEvent -> TODO()
@@ -56,6 +46,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
             ProfileUiEvent.WatchHistoryEvent -> TODO()
             ProfileUiEvent.WatchlistEvent -> TODO()
         }
+    }
 
+    private fun changeAppTheme(){
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+        val switchButtonTheme = binding.switchBottonTheme
+
+        val savedThemeState = sharedPreferences.getBoolean(PREF_THEME_STATE, false)
+        switchButtonTheme.isChecked = savedThemeState
+
+        switchButtonTheme.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean(PREF_THEME_STATE, isChecked).apply()
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 }

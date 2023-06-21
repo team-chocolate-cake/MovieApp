@@ -6,7 +6,6 @@ interface ProfileListener {
     fun onClickWatchHistory()
     fun onClickMyLists()
     fun onClickPopcornPuzzles()
-    fun onClickSwitchTheme()
     fun onClickLogout()
     fun onUserNotLoggedIn()
 }

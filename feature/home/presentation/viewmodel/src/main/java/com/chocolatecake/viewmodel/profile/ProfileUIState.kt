@@ -6,6 +6,5 @@ data class ProfileUIState(
     val error: List<String>? = null,
     val isLogout: Boolean = false,
     val isLoggedIn:Boolean=false,
-    val isDarkTheme: Boolean = false,
     val isLoading: Boolean = false
 )
