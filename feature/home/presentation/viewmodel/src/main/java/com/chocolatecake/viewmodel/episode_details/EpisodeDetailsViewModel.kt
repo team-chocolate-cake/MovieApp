@@ -1,7 +1,6 @@
 package com.chocolatecake.viewmodel.episode_details
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
@@ -32,9 +31,6 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val episodeDetails = episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber)
                 val castItems = castUseCase(seriesId, seasonNumber, episodeNumber)
                     .map { castEntity -> castUiMapper.map(castEntity) }
-
-                val productionCode = episodeDetails.productionCode
-
                 val newState = _state.value.copy(
                     imageUrl = episodeDetails.imageUrl,
                     episodeName = episodeDetails.episodeName,
@@ -42,19 +38,27 @@ class EpisodeDetailsViewModel @Inject constructor(
                     seasonNumber = episodeDetails.seasonNumber,
                     episodeRate = episodeDetails.episodeRate,
                     episodeOverview = episodeDetails.overview,
-                    productionCode = productionCode,
+                    productionCode = episodeDetails.productionCode,
                     cast = castItems,
                     isLoading = false,
                     onErrors = emptyList()
                 )
                 _state.update { newState }
-
+                checkIfTheProductionCodeIsEmpty(newState.productionCode)
                 Log.d("banan-data-viewmodel", newState.cast.toString())
             } catch (th: Throwable) {
                 onError(th)
                 Log.d("banan-error", th.message.toString())
             }
         }
+    }
+
+    private fun checkIfTheProductionCodeIsEmpty(productionCode: String) {
+        if (productionCode.isEmpty()) {
+            Log.e("banan","empty")
+        }else
+        Log.e("banan","not empty")
+
     }
 
     private fun onError(th: Throwable) {
