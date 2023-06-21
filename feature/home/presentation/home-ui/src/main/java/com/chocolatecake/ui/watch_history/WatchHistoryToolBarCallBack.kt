@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.watch_history
 
-interface SearchBarTextCallBack {
+interface WatchHistoryToolBarCallBack {
     fun setSearchQueryState(query: CharSequence?)
+    fun onBackButtonPressed()
 }

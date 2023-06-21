@@ -10,12 +10,11 @@ import com.chocolatecake.ui.home.databinding.WatchHistoryRecyclerViewCardBinding
 import com.chocolatecake.ui.home.databinding.WatchHistoryRecyclerViewTitleBinding
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.WatchHistoryRecyclerItem
-import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
 
 class WatchHistoryAdapter(
     private var items: List<WatchHistoryRecyclerItem>,
     private val listener: MediaListener,
-    private val searchCallBack: SearchBarTextCallBack
+    private val historyToolBarCallBack: WatchHistoryToolBarCallBack
 ) : BaseAdapter<WatchHistoryRecyclerItem>(items, listener) {
     override val layoutID = -1
 
@@ -72,7 +71,7 @@ class WatchHistoryAdapter(
     }
 
     private fun bindSearch(holder: SearchBarViewHolder) {
-        holder.binding.searchCallBack = searchCallBack
+        holder.binding.toolBarCallBack = historyToolBarCallBack
     }
 
     private fun bindCard(holder: CardViewHolder, item: WatchHistoryRecyclerItem) {

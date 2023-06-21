@@ -2,8 +2,10 @@ package com.chocolatecake.viewmodel.watch_history
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.GetAllWatchHistoryMoviesUseCase
+import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieDomainMapper
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel

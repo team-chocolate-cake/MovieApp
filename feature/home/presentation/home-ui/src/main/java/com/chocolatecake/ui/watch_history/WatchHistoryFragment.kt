@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.watch_history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -22,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class WatchHistoryFragment
     : BaseFragment<FragmentWatchHistoryBinding, WatchHistoryUiState, WatchHistoryUiEvent>(),
-    SearchBarTextCallBack {
+    WatchHistoryToolBarCallBack {
 
     override val layoutIdFragment = R.layout.fragment_watch_history
     override val viewModel by viewModels<WatchHistoryViewModel>()
@@ -134,6 +133,10 @@ class WatchHistoryFragment
 
     override fun setSearchQueryState(query: CharSequence?) {
         viewModel.setSearchQuery(query)
+    }
+
+    override fun onBackButtonPressed() {
+        findNavController().popBackStack()
     }
 
     override fun onStop() {
