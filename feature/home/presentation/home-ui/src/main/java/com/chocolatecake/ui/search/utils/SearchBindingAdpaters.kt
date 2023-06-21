@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
-import com.chocolatecake.viewmodel.tv_shows.TVShowsListener
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter(value = ["app:setGenres", "app:listener", "app:chipSelected"])

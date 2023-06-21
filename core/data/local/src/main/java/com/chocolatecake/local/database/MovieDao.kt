@@ -8,7 +8,6 @@ import androidx.room.Query
 import com.chocolatecake.local.database.dto.GenresMoviesLocalDto
 import com.chocolatecake.local.database.dto.GenresTvsLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
-import com.chocolatecake.local.database.dto.ProfileLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieInWatchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
@@ -98,6 +97,9 @@ interface MovieDao {
     ///region search history
     @Query("select * from SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword")
     suspend fun getSearchHistory(keyword: String): List<SearchHistoryLocalDto>
+
+    @Query("select * from SEARCH_HISTORY_TABLE ORDER BY keyword ASC LIMIT 10")
+    suspend fun getSearchHistory(): List<SearchHistoryLocalDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSearchHistory(searchHistory: SearchHistoryLocalDto)
