@@ -44,9 +44,7 @@ class AddToListBottomSheet : BottomSheetDialogFragment() {
                 groupCreateList.visibility =
                     if (chipAddNewList.isChecked) View.GONE else View.VISIBLE
             }
-            imageButtonClose.setOnClickListener {
-                dismiss()
-            }
+            imageButtonClose.setOnClickListener { dismiss() }
         }
 
     }
