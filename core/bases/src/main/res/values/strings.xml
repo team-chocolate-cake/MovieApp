@@ -25,4 +25,7 @@
     <string name="apply">Apply</string>
     <string name="Popular_Movies">Popular Movies</string>
     <string name="retry">retry</string>
+    <string name="item_deleted">Item Deleted</string>
+    <string name="undo">UNDO</string>
+
 </resources>

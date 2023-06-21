@@ -14,4 +14,7 @@
     <string name="airing_today">Airing Today</string>
     <string name="on_the_air">On The Air</string>
     <string name="try_again">Try Again</string>
+    <string name="cannot_fetch_movies">cannot fetch movies 😢</string>
+    <string name="swipe_to_delete">swipe to delete\n</string>
+    <string name="error_occured">error occured</string>
 </resources>

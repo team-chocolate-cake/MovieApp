@@ -86,6 +86,7 @@
             android:drawableTint="@color/star"
             android:text="@{String.valueOf(item.rating)}"
             android:textColor="@color/star"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
             app:layout_constraintEnd_toEndOf="@+id/text_view_genres"
             app:layout_constraintTop_toTopOf="@+id/text_view_year"
@@ -93,12 +94,15 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_movie"
-            android:layout_width="@dimen/custom_width_image"
-            android:layout_height="@dimen/custom_height_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:4"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
     </androidx.constraintlayout.widget.ConstraintLayout>
