@@ -12,7 +12,6 @@ import com.chocolatecake.usecase.showmore.GetMoreTopRatedByTypeUseCase
 import com.chocolatecake.usecase.showmore.GetMoreTrendingByTypeUseCase
 import com.chocolatecake.viewmodel.showmore.mappers.ShowMoreUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -68,9 +67,9 @@ class ShowMoreViewModel @Inject constructor(
     private fun getPopularMoviesShowMore() {
         viewModelScope.launch {
             try {
-
                 val items = getShowMorePopularMoviesByTypeUseCase().map { pagingData ->
                     pagingData.map { Showmore -> showMoreUiMapper.map(Showmore) }
+
                 }.cachedIn(viewModelScope)
                 _state.update {
                     it.copy(

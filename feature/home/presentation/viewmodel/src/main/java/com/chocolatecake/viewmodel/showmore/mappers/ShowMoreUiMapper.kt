@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.showmore.mappers
 
-import android.util.Log
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.mapper.Mapper
@@ -15,14 +14,13 @@ class ShowMoreUiMapper @Inject constructor() :
             input.title,
             input.imageUrl,
             input.year,
-            convertGenreListToString( input.genreEntities),
+            convertGenreListToString(input.genreEntities),
             input.rate,
-        ).also { Log.e("TAG", "map: $it", ) }
+        )
     }
 
     private fun convertGenreListToString(input: List<GenreEntity>): String {
         return input.joinToString(" | ") { it.genreName }
     }
-
 
 }
