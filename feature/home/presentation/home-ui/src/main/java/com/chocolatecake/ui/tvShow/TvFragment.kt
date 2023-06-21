@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.tvShow
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -18,15 +17,10 @@ import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
 import com.google.android.material.chip.Chip
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.io.IOException
-import kotlin.coroutines.coroutineContext
 
 @AndroidEntryPoint
 class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInteraction>() {
@@ -58,6 +52,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
                         tvShowsAdapter.submitData(itemsPagingData)
                     }
                 }
+                collectLast(tvShowsAdapter.loadStateFlow) { viewModel.setErrorUiState(it) }
             }
         }
     }
@@ -66,6 +61,9 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 flow.collectLatest(action)
+                flow.collect {
+                    action.invoke(it)
+                }
             }
         }
     }

@@ -2,6 +2,8 @@ package com.chocolatecake.viewmodel.tv_shows
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
@@ -10,12 +12,15 @@ import com.chocolatecake.usecase.tv_shows.GetOnTheAirTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetPopularTVShowsUseCase
 import com.chocolatecake.usecase.tv_shows.GetTopRatedTVShowsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
+import javax.net.ssl.SSLHandshakeException
 
 @HiltViewModel
 class TVShowsViewModel @Inject constructor(
@@ -47,13 +52,7 @@ class TVShowsViewModel @Inject constructor(
                 val items = getAiringTodayTVShowsUseCase().map { pagingData ->
                     pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
                 }.cachedIn(viewModelScope)
-                if (items.firstOrNull() == null) {
-                    _state.update {
-                        it.copy(
-                            errorList = listOf("No TV shows available")
-                        )
-                    }
-                }
+                Log.d("items", items.toString())
                 _state.update {
                     it.copy(
                         tvShowsType = TVShowsType.AIRING_TODAY,
@@ -66,12 +65,30 @@ class TVShowsViewModel @Inject constructor(
                 Log.d("network", _state.value.errorList.toString())
 
             } catch (throwable: Throwable) {
-                onError(throwable)
-                Log.d("network", _state.toString() + throwable.message.toString())
+               onError(throwable)
             }
         }
     }
 
+    fun setErrorUiState(combinedLoadStates: CombinedLoadStates) {
+        when (combinedLoadStates.refresh) {
+            is LoadState.NotLoading -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = emptyList())
+                }
+            }
+            LoadState.Loading -> {
+                _state.update {
+                    it.copy(isLoading = true, errorList = emptyList())
+                }
+            }
+            is LoadState.Error -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = listOf("no Network "))
+                }
+            }
+        }
+    }
 
     fun getOnTheAirTVShows() {
         viewModelScope.launch {

@@ -20,13 +20,12 @@ fun ChipGroup.setSelectedTVShowsChip(type: TVShowsType) {
         TVShowsType.POPULAR -> check(R.id.chip_popular)
     }
 }
-/*
-@BindingAdapter("app:showWhenListEmpty")
+
+/*@BindingAdapter("app:showWhenListEmpty")
 fun showWhenListEmpty(view: View, flow: Flow<PagingData<TVShowsUI>>) {
     view.isVisible = viewLifecycleOwner.lifecycleScope.launchWhenStarted {
         flow.collectLatest { pagingData ->
-            view.isVisible = pagingData.isEmpty()
+            view.isVisible = pagingData.
         }
     }
-}
-*/
+}*/
