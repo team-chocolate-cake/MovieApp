@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-data class ShowAllUiState(
+data class ShowMoreUiState(
     val showMoreTopRated: Flow<PagingData<ShowMoreUi>> = emptyFlow(),
     val showMorePopularMovies: Flow<PagingData<ShowMoreUi>> = emptyFlow(),
     val showMoreTrending: Flow<PagingData<ShowMoreUi>> = emptyFlow(),
