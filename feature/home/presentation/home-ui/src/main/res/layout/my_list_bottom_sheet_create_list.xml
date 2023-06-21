@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -34,6 +34,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
+            <!--region creat list-->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_create_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="text_view_title,image_button_close,
+                text_view_list_name,edit_text_list_name,material_button_create">
+
+                <!-- This group includes item1, item2, and item3 -->
+
+            </androidx.constraintlayout.widget.Group>
+
             <TextView
                 android:id="@+id/text_view_title"
                 style="@style/TextStyle.TitleMedium"
@@ -48,6 +60,7 @@
                 app:layout_constraintTop_toTopOf="@+id/view_drag_handle" />
 
             <ImageButton
+                android:id="@+id/image_button_close"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_weight="1"
@@ -89,8 +102,12 @@
                 android:paddingVertical="@dimen/spacing_small_8dp"
                 android:text="@string/create"
                 android:textColor="@color/on_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/edit_text_list_name" />
+            <!--endregion-->
 
+            <!--region save to list-->
             <TextView
                 android:id="@+id/text_view_save_to"
                 android:layout_width="wrap_content"
@@ -117,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:paddingVertical="8dp"
-                    android:text="my favourite" />
+                    android:text="any" />
 
                 <com.google.android.material.chip.Chip
                     style="@style/TextStyle.LabelMedium.ChipStyle"
@@ -135,8 +152,18 @@
                     android:paddingVertical="8dp"
                     android:text="Tv" />
 
-            </com.google.android.material.chip.ChipGroup>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_new_list"
+                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="+ Add List"
+                    android:textColor="@color/primary" />
 
+            </com.google.android.material.chip.ChipGroup>
+            <!--endregion-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

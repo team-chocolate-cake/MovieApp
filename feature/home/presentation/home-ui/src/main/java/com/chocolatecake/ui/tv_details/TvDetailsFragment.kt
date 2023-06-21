@@ -21,7 +21,8 @@ class TvDetailsFragment :
     BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>(),
     BottomSheetDismissListener {
 
-    private lateinit var bottomSheet: RateBottomSheet
+    private lateinit var rateBottomSheet: RateBottomSheet
+    private lateinit var addToListBottomSheet: AddToListBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
     override val layoutIdFragment: Int = R.layout.fragment_tv_details
     override val viewModel: TvDetailsViewModel by viewModels()
@@ -36,7 +37,7 @@ class TvDetailsFragment :
 
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
-            is TvDetailsUiEvent.Rate -> showBottomSheet()
+            is TvDetailsUiEvent.Rate -> showRateBottomSheet()
             is TvDetailsUiEvent.OnPersonClick -> showSnackBar("Actor id ${event.id}")
             is TvDetailsUiEvent.OnSeasonClick -> showSnackBar("season id ${event.id}")
             is TvDetailsUiEvent.OnRecommended -> navigateToSeasonDetails(event.id)
@@ -45,9 +46,7 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnShowMoreCast -> showSnackBar("Show More Cast")
             is TvDetailsUiEvent.OnShowMoreRecommended -> showSnackBar("Show More Recommended")
             is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
-            is TvDetailsUiEvent.OnSaveButtonClick -> showSnackBar("tv show id is ${event.tvShowId}")
-            else -> {
-            }
+            is TvDetailsUiEvent.OnSaveButtonClick -> showAddToListBottomSheet()
         }
     }
 
@@ -81,10 +80,15 @@ class TvDetailsFragment :
         }
     }
 
-    private fun showBottomSheet() {
-        bottomSheet = RateBottomSheet()
-        bottomSheet.setListener(this)
-        bottomSheet.show(childFragmentManager, "BOTTOM")
+    private fun showRateBottomSheet() {
+        rateBottomSheet = RateBottomSheet()
+        rateBottomSheet.setListener(this)
+        rateBottomSheet.show(childFragmentManager, "BOTTOM")
+    }
+
+    private fun showAddToListBottomSheet() {
+        addToListBottomSheet = AddToListBottomSheet()
+        addToListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
     override fun onApplyRateBottomSheet() {
