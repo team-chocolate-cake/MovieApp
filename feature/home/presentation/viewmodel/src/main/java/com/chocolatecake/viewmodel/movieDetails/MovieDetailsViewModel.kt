@@ -1,13 +1,11 @@
 package com.chocolatecake.viewmodel.movieDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingResponseEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.repository.UnauthorizedThrowable
-
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
@@ -55,7 +53,7 @@ class MovieDetailsViewModel @Inject constructor(
         when (th) {
             is NoNetworkThrowable -> errors.add("noNetwork")
             is UnauthorizedThrowable -> errors.add("noNetwork")
-            else ->errors.add(th.message.toString())
+            else -> errors.add(th.message.toString())
         }
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
@@ -75,8 +73,8 @@ class MovieDetailsViewModel @Inject constructor(
                 ),
                 recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
                     MediaVerticalUIState(
-                        id = it.id ,
-                        rate = it.voteAverage ,
+                        id = it.id,
+                        rate = it.voteAverage,
                         imageUrl = it.backdropPath,
                     )
                 },
@@ -91,7 +89,7 @@ class MovieDetailsViewModel @Inject constructor(
                 castUiState =
                 movieDetails.credits.cast.map {
                     PeopleUIState(
-                        id = it.id ,
+                        id = it.id,
                         name = it.name,
                         imageUrl = it.profilePath
                     )
@@ -106,18 +104,29 @@ class MovieDetailsViewModel @Inject constructor(
         }
     }
 
-    fun onRatingSubmit(rating: Float, movieId: Int) {
+    fun onRatingSubmit() {
         tryToExecute(
-            call = { ratingUseCase(movieId, rating) },
-            onSuccess = ::onSuccessRating,
-            onError = ::onError
+            call = { ratingUseCase(movieId!!, state.value.userRating) },
+            onSuccess = ::onRatingSuccess,
+            onError = ::onRatingError
         )
     }
 
-    private fun onSuccessRating(ratingResponseEntity: RatingResponseEntity) {
-        sendEvent(MovieDetailsUiEvent.ShowSnackBarRating(ratingResponseEntity.statusMessage))
+    fun updateRatingUiState(rate: Float) {
+        _state.update {
+            it.copy(
+                userRating = rate
+            )
+        }
     }
 
+    private fun onRatingSuccess(ratingResponseEntity: RatingResponseEntity) {
+        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
+    }
+
+    private fun onRatingError(error: Throwable) {
+        sendEvent(MovieDetailsUiEvent.ApplyRating("something went wrong 🤔\nplease try again later."))
+    }
 
     override fun onClickPeople(id: Int) {
         sendEvent(MovieDetailsUiEvent.NavigateToPeopleDetails(id))
@@ -148,8 +157,9 @@ class MovieDetailsViewModel @Inject constructor(
     override fun onClickMedia(id: Int) {
         sendEvent(MovieDetailsUiEvent.NavigateToMovie(id))
     }
-    fun tryAgain(movieId: Int){
-        _state.update { it.copy(isLoading = true , onErrors = emptyList()) }
+
+    fun tryAgain(movieId: Int) {
+        _state.update { it.copy(isLoading = true, onErrors = emptyList()) }
         getMovieDetails(movieId)
     }
 

@@ -18,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MovieDetailsFragment :
-    BaseFragment<FragmentMovieDetailsBinding, MovieDetailsUiState, MovieDetailsUiEvent>() {
+    BaseFragment<FragmentMovieDetailsBinding, MovieDetailsUiState, MovieDetailsUiEvent>(),
+    BottomSheetDismissListener {
 
     override val layoutIdFragment: Int = R.layout.fragment_movie_details
     override val viewModel: MovieDetailsViewModel by viewModels()
@@ -86,10 +87,6 @@ class MovieDetailsFragment :
                 )
             }
 
-            is MovieDetailsUiEvent.ShowSnackBarRating -> {
-                //todo
-            }
-
             is MovieDetailsUiEvent.SaveToList -> {
                 //todo
             }
@@ -98,12 +95,21 @@ class MovieDetailsFragment :
                 //todo
             }
 
+            is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
         }
     }
 
     private fun showRatingBottomSheet(movieId: Int) {
         val bottomSheet = RatingMovieBottomSheet()
         bottomSheet.show(childFragmentManager, "BOTTOM")
-        bottomSheet.setMovieID(movieId)
+        bottomSheet.setListener(this)
+    }
+
+    override fun onApplyRateBottomSheet() {
+        viewModel.onRatingSubmit()
+    }
+
+    override fun updateRatingValue(rate: Float) {
+        viewModel.updateRatingUiState(rate)
     }
 }
