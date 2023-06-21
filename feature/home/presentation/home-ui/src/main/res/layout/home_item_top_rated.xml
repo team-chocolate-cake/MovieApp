@@ -32,6 +32,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large" />
 
+        <View
+            android:layout_width="@dimen/height_image"
+            android:layout_height="@dimen/custom_height_card"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:background="@drawable/shadow_layer"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/text_view_rates_number"
             style="@style/TextAppearance.AppCompat.Caption"
@@ -47,6 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="9.6" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

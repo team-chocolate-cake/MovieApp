@@ -22,6 +22,7 @@ import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTrendingBinding
 import com.chocolatecake.viewmodel.home.HomeItem
 import com.chocolatecake.viewmodel.home.HomeItemType
 import com.chocolatecake.viewmodel.home.HomeListener
+import java.lang.Math.abs
 
 class HomeAdapter(
     private var itemsHome: MutableList<HomeItem>,
@@ -125,17 +126,33 @@ class HomeAdapter(
         setupViewPager(viewPager, upComingAdapter)
         registerPageChangeCallback(viewPager)
         setSliderPageTransformer(viewPager)
-        bindSliderItem(holder, upComing)
-        attachDotsIndicator(holder, viewPager)
+        holder.binding.item = upComing
     }
 
     private fun setupViewPager(viewPager: ViewPager2, adapter: RecyclerView.Adapter<*>) {
         viewPager.apply {
             this.adapter = adapter
+            offscreenPageLimit = 3
             clipToPadding = false
             clipChildren = false
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            val pageMarginPx =
+                resources.getDimensionPixelOffset(com.chocolatecake.bases.R.dimen.spacing_small_8dp)
+            val horizontalMarginPx =
+                resources.getDimensionPixelOffset(com.chocolatecake.bases.R.dimen.spacing_small_8dp)
+
+            val recyclerView = getChildAt(0) as RecyclerView
+            recyclerView.setPadding(horizontalMarginPx, 0, horizontalMarginPx, 0)
+            recyclerView.clipToPadding = false
+
+            val offscreenPageLimit =
+                2 // Adjust the number of offscreen pages as per your requirement
+            viewPager.offscreenPageLimit = offscreenPageLimit
+
         }
     }
+
 
     private fun registerPageChangeCallback(viewPager: ViewPager2) {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -163,15 +180,6 @@ class HomeAdapter(
             addTransformer(pageTransformer)
         })
     }
-
-    private fun bindSliderItem(holder: SliderViewHolder, upComing: HomeItem.Slider) {
-        holder.binding.item = upComing
-    }
-
-    private fun attachDotsIndicator(holder: SliderViewHolder, viewPager: ViewPager2) {
-        holder.binding.dotsIndicator.attachTo(viewPager)
-    }
-
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
         val nowPlaying = itemsHome[position] as HomeItem.NowPlaying
