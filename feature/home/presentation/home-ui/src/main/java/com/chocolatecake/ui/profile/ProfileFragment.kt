@@ -1,7 +1,13 @@
 package com.chocolatecake.ui.profile
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Switch
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
@@ -17,10 +23,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override val layoutIdFragment: Int = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        changeTheme()
+    }
 
+    private fun changeTheme(){
+        binding.switchBottonTheme.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 
     override fun onEvent(event: ProfileUiEvent) {
@@ -33,7 +48,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
             ProfileUiEvent.MyListsEvent -> TODO()
             ProfileUiEvent.PopcornPuzzlesEvent -> {
-                 findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToHomeFragment())
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToHomeFragment())
             }
 
             ProfileUiEvent.RatingEvent -> TODO()

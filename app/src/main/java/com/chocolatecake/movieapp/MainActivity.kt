@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 else -> hideBottomNav()
             }
         }
-        handleIsAuthorized(navController)
     }
 
     private fun handleIsAuthorized(navController: NavController) {
