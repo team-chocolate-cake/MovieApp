@@ -5,10 +5,10 @@ import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
-import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 
 
 interface MovieRepository {
@@ -58,4 +58,8 @@ interface MovieRepository {
     suspend fun setLastRefreshTime(time: Long)
     suspend fun refreshAll()
 
+    /// region season details
+    suspend fun getSeasonDetails(seriesId : Int, seasonId : Int): SeasonDetailsEntity
+
+    /// endregion
 }
