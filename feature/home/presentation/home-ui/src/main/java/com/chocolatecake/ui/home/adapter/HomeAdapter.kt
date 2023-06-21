@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewNowPlayingBinding
@@ -112,9 +113,9 @@ class HomeAdapter(
 
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
-        val adapter = UpComingAdapter(upComing.list)
-        holder.binding.imageSlider.setSliderAdapter(adapter)
-        holder.binding.imageSlider.startAutoCycle()
+        val mutableList = upComing.list.toMutableList()
+        val adapter = UpComingAdapter(mutableList,holder.binding.viewPager)
+        holder.binding.viewPager.adapter = adapter
         holder.binding.item = upComing
     }
 

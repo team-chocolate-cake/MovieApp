@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -25,6 +25,7 @@
             android:layout_height="match_parent"
             android:onClick="@{()->listener.onClickUpComing(item.id)}"
             app:imageUrl="@{item.imageUrl}"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
