@@ -63,14 +63,10 @@ interface MovieService {
 
     @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
-        @Path("time_window") timeWindow: String = "day"
-    ): Response<DataWrapperResponse<MovieRemoteDto>>
-
-
-    @GET("trending/movie/{time_window}")
-    suspend fun getTrendingMoviesPaging(
+        @Path("time_window") timeWindow: String = "day",
         @Query("page") page: Int = 1
     ): Response<DataWrapperResponse<MovieRemoteDto>>
+
     ///endregion
 
     /// region tv
