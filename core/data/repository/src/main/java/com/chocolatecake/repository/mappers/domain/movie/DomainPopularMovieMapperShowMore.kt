@@ -1,23 +1,23 @@
 package com.chocolatecake.repository.mappers.domain.movie
 
+import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
-import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.repository.BuildConfig
-import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
 
-class DomainPopularMovieMapperShowMore @Inject constructor():
-    Mapper<MovieRemoteDto, MovieEntity> {
+class DomainPopularMovieMapperShowMore @Inject constructor() {
 
-    override fun map(input: MovieRemoteDto): MovieEntity {
+    fun map(input: MovieRemoteDto, genreEntities: List<GenreEntity>): MovieEntity {
         return MovieEntity(
-            id = input.id?:0,
-            title = input.title?:"",
+            id = input.id ?: 0,
+            title = input.title ?: "",
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
-            year=input.releaseDate?:"",
-            genreEntities = emptyList(),
-            rate = input.voteAverage?:0.0
+            year = input.releaseDate ?: "",
+            genreEntities = genreEntities.filter {
+                it.genreID in (input.genreIds?.filterNotNull() ?: emptyList())
+            },
+            rate = input.voteAverage ?: 0.0
         )
     }
 }

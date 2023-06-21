@@ -6,7 +6,7 @@ import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.repository.BuildConfig
 import javax.inject.Inject
 
-class DomainTrendingMovieMapperShowMore @Inject constructor() {
+class DomainTopRatedMoviesMapperShowMore @Inject constructor() {
 
     fun map(input: MovieRemoteDto, genreEntities: List<GenreEntity>): MovieEntity {
         return MovieEntity(
