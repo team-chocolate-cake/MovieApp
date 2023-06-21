@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.people_guessing.PeopleGuessingFragmentDirections
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentMoiveGuessingBinding
 import com.chocolatecake.viewmodel.common.model.GameUIEvent
@@ -38,12 +37,12 @@ class MovieGuessingFragment :
     override fun onEvent(event: GameUIEvent) {
         when(event){
             GameUIEvent.NavigateToLoserScreen -> {
-                findNavController().navigate(PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToTypeGameFragment())
+                findNavController().navigate(MovieGuessingFragmentDirections.actionMovieGuessingFragmentToTypeGameFragment())
             }
 
             is GameUIEvent.NavigateToWinnerScreen -> {
                 findNavController().navigate(
-                    PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToCongratsFragment(
+                    MovieGuessingFragmentDirections.actionMovieGuessingFragmentToCongratsFragment(
                         event.gameType
                     )
                 )

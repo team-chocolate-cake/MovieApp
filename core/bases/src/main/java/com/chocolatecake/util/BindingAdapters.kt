@@ -26,6 +26,15 @@ fun View.isVisible(isVisible: Boolean) {
     }
 }
 
+@BindingAdapter(value = ["app:isVisibleOrGone"])
+fun View.isVisibleOrGone(isVisible: Boolean?) {
+    if (isVisible == true) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("app:setTipError")
 fun EditText.setTipError(errorMessage: String?) {
     if (errorMessage == null) return
