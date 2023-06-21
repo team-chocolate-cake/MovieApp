@@ -17,7 +17,7 @@ class ProfileViewModel @Inject constructor(
     private val getAccountDetailsUseCase: GetAccountDetailsUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val profileUiMapper: ProfileUiMapper,
-    private val checkIsUserLoggedInUseCase : CheckIsUserLoggedInUseCase
+    private val checkIsUserLoggedInUseCase: CheckIsUserLoggedInUseCase
 ) : BaseViewModel<ProfileUIState, ProfileUiEvent>(ProfileUIState()), ProfileListener {
 
     init {
@@ -60,6 +60,7 @@ class ProfileViewModel @Inject constructor(
 
     override fun onClickSwitchTheme() {
 
+
     }
 
     override fun onClickLogout() {
@@ -73,10 +74,9 @@ class ProfileViewModel @Inject constructor(
 
     override fun onUserNotLoggedIn() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoggedIn = true ) }
-            if(_state.value.isLoggedIn==checkIsUserLoggedInUseCase()){
-              val intent=Intent(this,LoginActivity)
-                startActivity(intent)
+            _state.update { it.copy(isLoggedIn = true) }
+            if (_state.value.isLoggedIn == checkIsUserLoggedInUseCase()) {
+
             }
         }
     }
