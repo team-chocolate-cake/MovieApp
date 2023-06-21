@@ -36,16 +36,22 @@
         <action
             android:id="@+id/action_profileFragment_to_myListDetailsFragment"
             app:destination="@id/myListDetailsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myListFragment"
+            app:destination="@id/myListFragment" />
 
     </fragment>
 
     <fragment
         android:id="@+id/myListDetailsFragment"
-        android:name="com.chocolatecake.ui.myListDetails.MyListFragment"
+        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
         android:label="MyListDetailsFragment" >
         <argument
             android:name="mediaType"
             app:argType="string" />
+        <argument
+            android:name="listId"
+            app:argType="integer" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />
@@ -63,5 +69,13 @@
         <argument
             android:name="movieId"
             app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.chocolatecake.ui.myList.MyListFragment"
+        android:label="MyListFragment" >
+        <action
+            android:id="@+id/action_myListFragment_to_myListDetailsFragment"
+            app:destination="@id/myListDetailsFragment" />
     </fragment>
 </navigation>

@@ -8,6 +8,7 @@
             name="viewModel"
             type="com.chocolatecake.viewmodel.myList.MyListViewModel" />
     </data>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,9 +43,8 @@
                     android:background="@drawable/button_background"
                     android:text="New List"
                     style="@style/TextStyle.TitleSmall"
-                    android:textColor="@color/on_primary"
-                    android:textSize="@dimen/text_medium" />
-<!--                android:onClick="@{()->viewModel.addList()}"-->
+                    android:textColor="@color/on_primary"/>
+
 
             </LinearLayout>
 
@@ -54,7 +54,7 @@
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_my_list_details"
+                    android:id="@+id/recycler_view_my_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -63,7 +63,6 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     tools:listitem="@layout/item_my_list" />
-
 
 
                 <TextView
@@ -77,18 +76,18 @@
                     app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
                     app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty" />
 
+
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottie_animation_view_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:isVisible="@{(!viewModel.state.loading)  &amp;&amp;  (viewModel.state.movieList.size()==0)}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/no_item_have" />
-
+                    app:lottie_rawRes="@raw/no_connection" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -102,41 +101,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="vertical">-->
-<!--                -->
-<!--                <ScrollView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                    -->
-<!--                    <include-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        layout="@layout/item_my_list"-->
-<!--                        android:onClick="@{()->viewModel.onClickFavoriteList()}"-->
-<!--                        android:id="@+id/favorite"/>-->
-
-<!--                    <include-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        layout="@layout/item_my_list"-->
-<!--                        android:onClick="@{()->viewModel.onClickWatchlist()}"-->
-<!--                        android:id="@+id/watchlist"/>-->
-<!--                    -->
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/recycler_view_my_list"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:clipToPadding="false"-->
-<!--                        app:isVisible="@{!viewModel.state.loading}"-->
-<!--                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                        tools:listitem="@layout/item_my_list" />-->
-
-
-<!--                </ScrollView>-->
-<!--            </LinearLayout>-->
 
         </LinearLayout>
 </layout>

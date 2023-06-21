@@ -18,7 +18,7 @@ class MyListDetailsFragment :
     override val layoutIdFragment: Int = R.layout.fragment_my_list_details
     override val viewModel: MyListDetailsViewModel by viewModels()
 //    private val args: MyListDetailsFragmentArgs by navArgs()
-    private lateinit var myListDetailsAdapter: MyListAdapter
+    private lateinit var myListDetailsAdapter: MyListDetailsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,7 +27,7 @@ class MyListDetailsFragment :
     }
 
     private fun setAdapter() {
-        myListDetailsAdapter = MyListAdapter(mutableListOf(), viewModel)
+        myListDetailsAdapter = MyListDetailsAdapter(mutableListOf(), viewModel)
         binding.recyclerViewMyListDetails.adapter = myListDetailsAdapter
     }
 

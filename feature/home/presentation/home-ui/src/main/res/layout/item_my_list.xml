@@ -75,8 +75,8 @@
                     android:layout_marginEnd="@dimen/spacing_tiny_2dp"
                     android:layout_weight="2.5"
                     android:scaleType="centerCrop"
-                    style="@style/MyListFirstImage"
-                    app:imageUrlWithUrl="@{item.posterPath}"
+
+                    app:imageUrl="@{item.posterPath}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -85,7 +85,7 @@
                     android:layout_marginEnd="@dimen/spacing_tiny_2dp"
                     android:layout_weight="2"
                     android:scaleType="centerCrop"
-                    app:imageUrlWithUrl="@{item.posterPath}"
+                    app:imageUrl="@{item.posterPath}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -93,8 +93,8 @@
                     android:layout_height="@dimen/height_image"
                     android:layout_weight="1.5"
                     android:scaleType="centerCrop"
-                    astyle="@style/MyListLastImage"
-                    app:imageUrlWithUrl="@{item.posterPath}"
+
+                    app:imageUrl="@{item.posterPath}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
             </LinearLayout>

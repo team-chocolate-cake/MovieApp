@@ -4,15 +4,12 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.chocolatecake.movieapp.ui" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeWidth="0dp"
         app:cardBackgroundColor="@android:color/transparent"
         android:background="@drawable/bottom_sheet_background">
 
@@ -59,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_extra_giant_48dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
-                android:afterTextChanged="@{(text) -> viewModel.onListNameChanged(text)}"
+
                 android:background="@drawable/edittext_background"
                 android:drawablePadding="@dimen/spacing_custom_12dp"
                 android:inputType="text"
@@ -67,8 +64,7 @@
                 android:paddingHorizontal="@dimen/spacing_x_medium_20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_name_list"
-                app:setTipError="@{viewModel.state.nameListError}" />
+                app:layout_constraintTop_toBottomOf="@+id/text_view_name_list" />
 
 
             <Button
@@ -77,12 +73,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/spacing_giant_32dp"
                 android:background="@drawable/button_background"
-                android:onClick="@{()->viewModel.createList()}"
                 android:paddingVertical="@dimen/spacing_custom_12dp"
                 android:text="Create"
                 android:textColor="@color/on_primary"
                 android:textSize="@dimen/text_medium"
-                app:isVisible="@{viewModel.state.isLoading == false}"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_name_list" />

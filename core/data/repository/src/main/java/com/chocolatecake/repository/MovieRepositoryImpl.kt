@@ -360,7 +360,16 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity> {
+        refreshFavoriteByMediaType(mediaType)
         return  domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType(mediaType))
+    }
+
+    private suspend fun refreshFavoriteByMediaType(mediaType: String) {
+        refreshWrapper(
+            apiCall = { movieService.getFavoriteByMediaType(mediaType = mediaType )},
+            localFavoriteMoviesMapper::map,
+            movieDao::insertFavoriteMovie
+        )
     }
 
 
@@ -382,7 +391,7 @@ class MovieRepositoryImpl @Inject constructor(
         return result
     }
 
-    suspend fun refreshWatchlistByMediaType(mediaType: String) {
+    private suspend fun refreshWatchlistByMediaType(mediaType: String) {
         refreshWrapper(
           apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType )},
             localWatchlistMapper::map,
@@ -427,14 +436,6 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMovieList(): List<ListMovieEntity> {
         return  domainListMovieMapper.map(movieDao.getMoviesList())
     }
-
-//    override suspend fun refreshMovieList() {
-//        refreshWrapper(
-//            movieService::,
-//            localListMapper::map,
-//            movieDao::insertList
-//        )
-//    }
 
 
 

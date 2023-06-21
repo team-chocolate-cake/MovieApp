@@ -4,6 +4,7 @@ package com.chocolatecake.viewmodel.myListDetails
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
@@ -15,8 +16,9 @@ import javax.inject.Inject
 class MyListDetailsViewModel @Inject constructor(
 
     private val getMoviesFavorite: GetMyFavoriteListUseCase,
+    private val getMovies: GetFavoritesByMediaTypeUseCase,
 //    private val getTvFavorite: GetMyFavoriteTvListUseCase,
-    private val getMovies: GetMyListDetailsByListIdUseCase,
+    private val getMovieList: GetMyListDetailsByListIdUseCase,
     private val myListDetailsUiMapper: MyListDetailsUiMapper,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MyListDetailsUiState, MyListDetailsUiEvent>(MyListDetailsUiState()),
@@ -28,10 +30,10 @@ class MyListDetailsViewModel @Inject constructor(
     private val listId = savedStateHandle.get<Int>("listId") ?:0
 
     init {
-        getAllFavoriteMovies()
+        getAllFavorite(mediaType)
     }
 
-    private fun getAllFavoriteMovies() {
+    private fun getAllFavorite(mediaType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getMoviesFavorite().map { myListDetailsUiMapper.map(it) } },
