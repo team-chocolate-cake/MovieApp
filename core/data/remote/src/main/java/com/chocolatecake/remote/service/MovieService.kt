@@ -139,6 +139,7 @@ interface MovieService {
     ) : Response<ProfileRemoteDto>
     ///endregion
 
+    /// region movie details
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int
@@ -150,4 +151,5 @@ interface MovieService {
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
     ):Response<RatingDto>
+    /// endregion
 }
