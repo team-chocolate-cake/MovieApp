@@ -8,10 +8,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentShowMoreBinding
-import com.chocolatecake.viewmodel.showmore.ShowAllUiState
+import com.chocolatecake.viewmodel.showmore.ShowMoreUiState
 import com.chocolatecake.viewmodel.showmore.ShowMoreType
 import com.chocolatecake.viewmodel.showmore.ShowMoreUiEvent
 import com.chocolatecake.viewmodel.showmore.ShowMoreViewModel
@@ -21,11 +22,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ShowMoreFragment : BaseFragment<FragmentShowMoreBinding, ShowAllUiState, ShowMoreUiEvent>() {
+class ShowMoreFragment : BaseFragment<FragmentShowMoreBinding, ShowMoreUiState, ShowMoreUiEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_show_more
     override val viewModel: ShowMoreViewModel by viewModels()
-    private  val showMoreAdapter by lazy{ShowMoreAdapter(viewModel)}
+    private val showMoreAdapter by lazy { ShowMoreAdapter(viewModel) }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,18 +38,17 @@ class ShowMoreFragment : BaseFragment<FragmentShowMoreBinding, ShowAllUiState, S
 
         binding.recyclerMedia.adapter = showMoreAdapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        collectLatest {
             viewModel.state.collectLatest { state ->
-                Log.e("TAG", "setAdapter: $state ", )
+                //  Log.e("TAG", "setAdapter: $state ")
                 val flow = when (state.showMoreType) {
                     ShowMoreType.POPULAR_MOVIES -> state.showMorePopularMovies
                     ShowMoreType.TOP_RATED -> state.showMoreTopRated
                     ShowMoreType.TRENDING -> state.showMoreTrending
                 }
                 collectLast(flow) { itemsPagingData ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        showMoreAdapter.submitData(itemsPagingData)
-                    }
+                    Log.e("TAG", "setAdapter: $itemsPagingData ")
+                    showMoreAdapter.submitData(itemsPagingData)
                 }
             }
         }
@@ -64,10 +64,13 @@ class ShowMoreFragment : BaseFragment<FragmentShowMoreBinding, ShowAllUiState, S
 
     override fun onEvent(event: ShowMoreUiEvent) {
         when (event) {
-            ShowMoreUiEvent.BackNavigate -> TODO()
-            is ShowMoreUiEvent.NavigateToMovieDetails -> TODO()
+            ShowMoreUiEvent.BackNavigate -> findNavController().popBackStack()
+            is ShowMoreUiEvent.NavigateToMovieDetails -> findNavController().navigate(
+                ShowMoreFragmentDirections.actionShowMoreFragmentToMovieDetailsFragment(event.itemId)
+            )
 
-            else -> {}
+            is ShowMoreUiEvent.ShowSnackBar -> showSnackBar(event.messages)
+
         }
     }
 
