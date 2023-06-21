@@ -11,7 +11,15 @@ data class ShowMoreUiState(
     val isLoading: Boolean = false,
     val showMoreType: ShowMoreType = ShowMoreType.POPULAR_MOVIES,
     val errorList: List<String>? = null,
-) {
+
+    ) {
+
+    val title: String
+        get() = when (showMoreType) {
+            ShowMoreType.POPULAR_MOVIES -> "Popular Movies"
+            ShowMoreType.TOP_RATED -> "Top Rated Movies"
+            ShowMoreType.TRENDING -> "Trending Movies"
+        }
     val isError: Boolean
         get() = errorList?.isNotEmpty() ?: false
 }
