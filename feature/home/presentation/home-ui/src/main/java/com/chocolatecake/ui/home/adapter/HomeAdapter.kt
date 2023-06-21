@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.home.adapter
 
+import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -122,7 +123,6 @@ class HomeAdapter(
         val upComing = itemsHome[position] as HomeItem.Slider
         val viewPager = holder.binding.viewPager
         val upComingAdapter = UpComingAdapter(upComing.list, listener)
-
         setupViewPager(viewPager, upComingAdapter)
         registerPageChangeCallback(viewPager)
         setSliderPageTransformer(viewPager)
@@ -133,52 +133,29 @@ class HomeAdapter(
         viewPager.apply {
             this.adapter = adapter
             offscreenPageLimit = 3
-            clipToPadding = false
-            clipChildren = false
-            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-
-            val pageMarginPx =
-                resources.getDimensionPixelOffset(com.chocolatecake.bases.R.dimen.spacing_small_8dp)
-            val horizontalMarginPx =
-                resources.getDimensionPixelOffset(com.chocolatecake.bases.R.dimen.spacing_small_8dp)
-
-            val recyclerView = getChildAt(0) as RecyclerView
-            recyclerView.setPadding(horizontalMarginPx, 0, horizontalMarginPx, 0)
-            recyclerView.clipToPadding = false
-
-            val offscreenPageLimit =
-                2 // Adjust the number of offscreen pages as per your requirement
-            viewPager.offscreenPageLimit = offscreenPageLimit
-
         }
     }
-
 
     private fun registerPageChangeCallback(viewPager: ViewPager2) {
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 val handler = Handler(Looper.myLooper()!!)
-                val runnable = Runnable {
-                    viewPager.currentItem += 1
-                }
+                val runnable = Runnable { viewPager.currentItem += 1 }
                 handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable, 4000)
+                handler.postDelayed(runnable, 2000)
             }
         })
     }
 
     private fun setSliderPageTransformer(viewPager: ViewPager2) {
-        val pageTransformer =
-            ViewPager2.PageTransformer { page, position ->
-                val absPosition = Math.abs(position)
-                val scaleFactor = 0.85f + (0.15f * (1 - absPosition))
-                page.scaleY = scaleFactor
-                page.scaleX = scaleFactor
-            }
-        viewPager.setPageTransformer(CompositePageTransformer().apply {
-            addTransformer(pageTransformer)
-        })
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(16))
+        transformer.addTransformer { page, position ->
+            val r = 1 - abs(position)
+            page.scaleY = 0.85f + r * 0.14f
+        }
+        viewPager.setPageTransformer(transformer)
     }
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
