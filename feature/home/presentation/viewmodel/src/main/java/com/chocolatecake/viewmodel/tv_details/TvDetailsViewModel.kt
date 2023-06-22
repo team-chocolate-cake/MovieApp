@@ -46,7 +46,6 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvShowRecommendationsUseCase: GetTvShowRecommendationsUseCase,
     private val getTvShowYoutubeDetailsUseCase: GetTvShowYoutubeDetailsUseCase,
     private val getUserListsUseCase: GetUserListsUseCase,
-    private val userListsUiMapper: UserListsUiMapper,
     private val addToUserListUseCase: AddToUserListUseCase,
     private val createUserListUseCase: CreateUserListUseCase,
     savedStateHandle: SavedStateHandle,
@@ -308,8 +307,8 @@ class TvDetailsViewModel @Inject constructor(
         sendEvent(TvDetailsUiEvent.OnRecommended(id))
     }
 
-    override fun onClickSeason(id: Int) {
-        sendEvent(TvDetailsUiEvent.OnSeasonClick(id))
+    override fun onClickSeason(seasonNumber: Int) {
+        sendEvent(TvDetailsUiEvent.OnSeasonClick(seasonNumber))
     }
 
     override fun onShowMoreCast() {

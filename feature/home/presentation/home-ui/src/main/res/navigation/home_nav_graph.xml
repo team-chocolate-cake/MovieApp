@@ -105,4 +105,18 @@
             android:name="seasonNumber"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/tvDetailsFragment"
+        tools:layout="@layout/fragment_tv_details"
+        android:name="com.chocolatecake.ui.tv_details.TvDetailsFragment"
+        android:label="TvDetailsFragment" >
+        <action
+            android:id="@+id/action_tvDetailsFragment_self"
+            app:destination="@id/tvDetailsFragment" />
+        <argument android:name="tvShowId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
+            app:destination="@id/seasonDetailsFragment" />
+    </fragment>
 </navigation>

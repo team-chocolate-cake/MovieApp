@@ -6,5 +6,6 @@ data class SeasonEntity(
     val title: String,
     val description: String,
     val year: String,
-    val countEpisode: Int
+    val countEpisode: Int,
+    val seasonNumber: Int = 0,
 )

@@ -1,10 +1,10 @@
 package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
@@ -20,13 +20,16 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class TvDetailsFragment :
     BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>(),
-    BottomSheetDismissListener,CreateListener {
+    BottomSheetDismissListener, CreateListener {
 
     private lateinit var rateBottomSheet: RateBottomSheet
     private lateinit var addToListBottomSheet: AddToListBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
+    private val args: TvDetailsFragmentArgs by navArgs()
+
     override val layoutIdFragment: Int = R.layout.fragment_tv_details
     override val viewModel: TvDetailsViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
@@ -38,8 +41,17 @@ class TvDetailsFragment :
         when (event) {
             is TvDetailsUiEvent.Rate -> showRateBottomSheet()
             is TvDetailsUiEvent.OnPersonClick -> showSnackBar("Actor id ${event.id}")
-            is TvDetailsUiEvent.OnSeasonClick -> showSnackBar("season id ${event.id}")
-            is TvDetailsUiEvent.OnRecommended -> navigateToSeasonDetails(event.id)
+            is TvDetailsUiEvent.OnSeasonClick -> {
+                findNavController()
+                    .navigate(
+                        TvDetailsFragmentDirections.actionTvDetailsFragmentToSeasonDetailsFragment(
+                            args.tvShowId,
+                            event.seasonNumber
+                        )
+                    )
+            }
+
+            is TvDetailsUiEvent.OnRecommended -> navigateToTvDetails(event.id)
             is TvDetailsUiEvent.Back -> navigateBack()
             is TvDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnShowMoreCast -> showSnackBar("Show More Cast")
@@ -56,8 +68,8 @@ class TvDetailsFragment :
         binding.nestedRecycler.adapter = tvDetailsAdapter
     }
 
-    private fun navigateToSeasonDetails(seasonId: Int) {
-        findNavController().navigate(TvDetailsFragmentDirections.actionHomeFragmentSelf(seasonId))
+    private fun navigateToTvDetails(tvId: Int) {
+        findNavController().navigate(TvDetailsFragmentDirections.actionTvDetailsFragmentSelf(tvId))
     }
 
     private fun navigateBack() {
@@ -67,7 +79,6 @@ class TvDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
-                Log.i("recommended","list => ${state.recommended}")
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),
@@ -131,7 +142,7 @@ class TvDetailsFragment :
         }
     }
 
-    override fun onClickCreate(listName:String) {
+    override fun onClickCreate(listName: String) {
         viewModel.createUserNewList(listName)
     }
 

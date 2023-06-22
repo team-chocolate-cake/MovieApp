@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,7 +60,6 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.map { it.userLists }.distinctUntilChanged().collectLatest {
-                Log.i("list","new list => ${viewModel.state.value.userLists}")
                 binding.chipGroupGenere.setGenreChips(viewModel.state.value.userLists, viewModel)
                 viewModel.emptyUserLists()
             }
@@ -69,7 +67,7 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
         }
         binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate(binding.textInputEditTextListName.text.toString())
-            binding.chipGroupGenere.removeViewsInLayout(0,binding.chipGroupGenere.childCount -1)
+            binding.chipGroupGenere.removeViewsInLayout(0, binding.chipGroupGenere.childCount - 1)
         }
         binding.textViewDone.setOnClickListener {
             creeateButton.onDone(viewModel.state.value.userSelectedLists)

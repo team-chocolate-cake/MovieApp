@@ -54,7 +54,6 @@ interface MovieRepository {
     suspend fun searchForTv(keyword: String): List<TvEntity>
 
     suspend fun searchForPeople(keyword: String): List<PeopleEntity>
-    suspend fun getSearchMovies(keyword: String): List<MovieEntity>
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()

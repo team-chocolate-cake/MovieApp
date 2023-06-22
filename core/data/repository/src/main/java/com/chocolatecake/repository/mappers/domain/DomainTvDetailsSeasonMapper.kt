@@ -11,11 +11,12 @@ class DomainTvDetailsSeasonMapper @Inject constructor() :Mapper<TvDetailsRemoteD
         return input.seasons?.map { season ->
              SeasonEntity(
                  id = season?.id ?: 0,
-                 imageUrl = (BuildConfig.IMAGE_BASE_PATH + season?.posterPath) ?: "",
+                 imageUrl = BuildConfig.IMAGE_BASE_PATH + season?.posterPath,
                  title = season?.name ?: "",
                  description = season?.overview ?: "",
                  year = season?.airDate ?: "",
-                 countEpisode = season?.episodeCount ?: 0
+                 countEpisode = season?.episodeCount ?: 0,
+                 seasonNumber = season?.seasonNumber ?: 0
             )
         }?: emptyList()
     }

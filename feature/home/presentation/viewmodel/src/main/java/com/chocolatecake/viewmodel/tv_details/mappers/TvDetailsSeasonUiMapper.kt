@@ -16,7 +16,8 @@ class TvDetailsSeasonUiMapper @Inject constructor() : Mapper<List<SeasonEntity>,
                     title = season.title,
                     description = season.description,
                     year = season.year,
-                    countEpisode = season.countEpisode
+                    countEpisode = season.countEpisode,
+                    seasonNumber =  season.seasonNumber
                 )
             }
         )

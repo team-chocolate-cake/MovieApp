@@ -4,7 +4,6 @@ import com.chocolatecake.viewmodel.common.model.CommentUIState
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
-import com.chocolatecake.viewmodel.home.RecommendedUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 
 sealed class TvDetailsItem(val type: TvDetailsType) {

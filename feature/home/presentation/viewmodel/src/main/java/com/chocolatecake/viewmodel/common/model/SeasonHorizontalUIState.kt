@@ -6,5 +6,6 @@ data class SeasonHorizontalUIState(
     val title: String = "",
     val description: String = "",
     val year: String = "",
-    val countEpisode: Int = 0
+    val countEpisode: Int = 0,
+    val seasonNumber: Int = 1,
 )

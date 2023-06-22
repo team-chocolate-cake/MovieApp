@@ -39,7 +39,7 @@
                 android:id="@+id/group_create_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="text_view_title,image_button_close,
+                app:constraint_referenced_ids="text_view_title,
                 text_view_list_name,edit_text_list_name,material_button_create,text_view_close"
                 android:visibility="gone"
                 >
@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:text="Create List"
                 android:textAppearance="@style/TextStyle.TitleMedium"
-                android:textColor="@color/secondary_text_87"
+                android:textColor="@color/on_background_87"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view_drag_handle" />
 
@@ -95,9 +95,10 @@
                 app:layout_constraintTop_toBottomOf="@id/text_view_list_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_edit_text_list_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_edittext"
+                    android:background="@drawable/edittext_background"
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:textAppearance="@style/TextStyle.BodyMedium"

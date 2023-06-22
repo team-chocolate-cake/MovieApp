@@ -94,7 +94,16 @@ class MovieRepositoryImpl @Inject constructor(
     private val popularMovieMapperShowMore: PopularMoviesShowMorePagingSource,
     private val topRatedShowMorePagingSource: TopRatedShowMorePagingSource,
     private val trendingShowMorePagingSource: TrendingShowMorePagingSource,
+    private val domainTvDetailsMapper: DomainTvDetailsMapper,
+    private val domainStatusMapper: DomainStatusMapper,
+    private val domainYoutubeDetailsMapper: DomainYoutubeDetailsMapper,
+    private val domainTvDetailsCreditMapper: DomainTvDetailsCreditMapper,
+    private val domainTvDetailsReviewMapper: DomainTvDetailsReviewMapper,
+    private val domainTvShowMapper: DomainTvShowMapper,
+    private val domainTvDetailsSeasonMapper: DomainTvDetailsSeasonMapper,
+    private val domainUserListsMapper: DomainUserListsMapper,
 ) : BaseRepository(), MovieRepository {
+
     /// region showMore
     override suspend fun getPopularMoviesPaging(): Pager<Int, MovieEntity> {
         return Pager(
@@ -303,7 +312,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
     /// endregion
 
-
     /// region refresh time
     override suspend fun getLastRefreshTime(): Long? {
         return preferenceStorage.lastRefreshTime
@@ -382,11 +390,11 @@ class MovieRepositoryImpl @Inject constructor(
 
     ///region tv
     override suspend fun getTvDetailsInfo(tvShowID: Int): TvDetailsInfoEntity {
-        return DomainTvDetailsMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+        return domainTvDetailsMapper.map(wrapApiCall { movieService.getTvDetails(tvShowID) })
     }
 
     override suspend fun getTvDetailsCredit(tvShowID: Int): List<PeopleEntity> {
-        return DomainTvDetailsCreditMapper().map(
+        return domainTvDetailsCreditMapper.map(
             wrapApiCall {
                 movieService.getTvDetailsCredit(tvShowID)
             })
@@ -394,7 +402,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity {
         val newRate = RateRequest(value = rate)
-        return DomainStatusMapper().map(wrapApiCall {
+        return domainStatusMapper.map(wrapApiCall {
             movieService.rateTvShow(
                 newRate,
                 tvShowID
@@ -405,7 +413,7 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity> {
         val call = wrapApiCall { movieService.getTvShowReviews(tvShowID) }.results?.filterNotNull()
             ?: emptyList()
-        return DomainTvDetailsReviewMapper().map(call)
+        return domainTvDetailsReviewMapper.map(call)
 
     }
 
@@ -413,38 +421,41 @@ class MovieRepositoryImpl @Inject constructor(
         val call =
             wrapApiCall { movieService.getTvShowRecomendations(tvShowID) }.results?.filterNotNull()
                 ?: emptyList()
-        return DomainTvShowMapper().map(call)
+        return domainTvShowMapper.map(call)
     }
 
     override suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity {
         val call =
             wrapApiCall { movieService.getTvShowYoutubeVideoDetails(tvShowID) }.results?.first()
                 ?: YoutubeVideoDetailsRemoteDto()
-        return DomainYoutubeDetailsMapper().map(call)
+        return domainYoutubeDetailsMapper.map(call)
     }
 
 
     override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {
-        return DomainTvDetailsSeasonMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+        return domainTvDetailsSeasonMapper.map(wrapApiCall { movieService.getTvDetails(tvShowID) })
     }
 
 
     /// endregion
+
+    /// region user list
     override suspend fun getUserLists(): List<UserListEntity> {
         val call =
             wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
-        return DomainUserListsMapper().map(call)
+        return domainUserListsMapper.map(call)
     }
 
     override suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity {
         val addMediaRequest = AddMediaToListRequest(mediaId)
         val call = wrapApiCall { movieService.postUserMedia(listId, addMediaRequest) }
-        return DomainStatusMapper().map(call)
+        return domainStatusMapper.map(call)
     }
 
     override suspend fun createUserList(listName: String): StatusEntity {
         val newList = CreateUserListRequest(listName)
         val call = wrapApiCall { movieService.createUserList(newList) }
-        return DomainStatusMapper().map(call)
+        return domainStatusMapper.map(call)
     }
+    /// endregion
 }
