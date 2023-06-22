@@ -70,7 +70,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
-    private val domainSeasonDetailsMapper: DomainSeasonDetailsMapper
+    private val domainSeasonDetailsMapper: DomainSeasonDetailsMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
     private val popularMovieMapperShowMore: PopularMoviesShowMorePagingSource,
     private val topRatedShowMorePagingSource: TopRatedShowMorePagingSource,
@@ -338,6 +338,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
     /// endregion
 
+    /// region movies details
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
         return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
@@ -350,6 +351,7 @@ class MovieRepositoryImpl @Inject constructor(
             )
         })
     }
+    /// endregion
 
     /// region season details
     override suspend fun getSeasonDetails(seriesId: Int, seasonId: Int): SeasonDetailsEntity {

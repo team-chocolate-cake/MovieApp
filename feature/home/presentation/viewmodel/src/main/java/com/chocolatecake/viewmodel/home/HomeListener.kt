@@ -10,5 +10,7 @@ interface HomeListener : BaseInteractionListener {
     fun onClickTopRated(itemId: Int)
     fun onClickPopularPeople(itemId: Int)
 
-    fun onClickShowMore()
+    fun onClickTrendingShowMore()
+    fun onClickTopRatedShowMore()
+    fun onClickPopularMoviesShowMore()
 }

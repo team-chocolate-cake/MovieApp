@@ -8,6 +8,11 @@
         <variable
             name="item"
             type="com.chocolatecake.ui.home.HomeItem.PopularMovies" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.home.HomeListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:onClick="@{()->listener.onClickPopularMoviesShowMore()}"
             android:text="@string/show_more"
             android:textColor="@color/primary"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_popular_movies"

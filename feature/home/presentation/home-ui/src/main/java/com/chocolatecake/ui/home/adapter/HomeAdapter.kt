@@ -167,14 +167,15 @@ class HomeAdapter(
         val adapter = TopRatedAdapter(topRated.list, listener)
         holder.binding.recyclerViewTopRated.adapter = adapter
         holder.binding.item = topRated
+        holder.binding.listener = listener
     }
 
     private fun bindTrending(holder: TrendingViewHolder, position: Int) {
-
         val trending = itemsHome[position] as HomeItem.Trending
         val adapter = TrendingAdapter(trending.list, listener)
         holder.binding.recyclerViewTrending.adapter = adapter
         holder.binding.item = trending
+        holder.binding.listener = listener
     }
 
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
@@ -189,7 +190,7 @@ class HomeAdapter(
         val adapter = PopularMoviesAdapter(popularMovies.list, listener)
         holder.binding.recyclerViewPopularMovies.adapter = adapter
         holder.binding.item = popularMovies
-        holder.binding.listener=listener
+        holder.binding.listener = listener
     }
 
 

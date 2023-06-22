@@ -24,18 +24,21 @@ class ShowMoreViewModel @Inject constructor(
     private val getShowMoreTopRatedByTypeUseCase: GetMoreTopRatedByTypeUseCase,
     private val getShowMoreTrendingByTypeUseCase: GetMoreTrendingByTypeUseCase,
     private val showMoreUiMapper: ShowMoreUiMapper,
-      savedStateHandle: SavedStateHandle,
-) : BaseViewModel<ShowMoreUiState, ShowMoreUiEvent>(ShowMoreUiState()), ShowMoreListener {
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<ShowMoreUiState, ShowMoreUiEvent>(
+    ShowMoreUiState(
+        showMoreType = savedStateHandle.get<ShowMoreType>(
+            "showMoreType"
+        ) ?: ShowMoreType.POPULAR_MOVIES
+    )
+), ShowMoreListener {
 
-    private val showMoreType =
-        savedStateHandle.get<ShowMoreType>("showMoreType") ?: ShowMoreType.POPULAR_MOVIES
+        init {
+            _state.update { it.copy(isLoading = true) }
+            getData()
+        }
 
-    init {
-        _state.update { it.copy(isLoading = true) }
-        getData()
-    }
-
-     fun getData() {
+    fun getData() {
         when (_state.value.showMoreType) {
             ShowMoreType.POPULAR_MOVIES -> getPopularMoviesShowMore()
             ShowMoreType.TOP_RATED -> getTopRatedShowMore()
@@ -51,11 +54,13 @@ class ShowMoreViewModel @Inject constructor(
                     it.copy(isLoading = false, errorList = emptyList())
                 }
             }
+
             LoadState.Loading -> {
                 _state.update {
                     it.copy(isLoading = true, errorList = emptyList())
                 }
             }
+
             is LoadState.Error -> {
                 _state.update {
                     it.copy(isLoading = false, errorList = listOf("no Network "))
@@ -138,9 +143,11 @@ class ShowMoreViewModel @Inject constructor(
             )
         }
     }
+
     private fun showErrorWithSnackBar(messages: String) {
         sendEvent(ShowMoreUiEvent.ShowSnackBar(messages))
     }
+
     override fun backNavigate() {
         sendEvent(ShowMoreUiEvent.BackNavigate)
     }

@@ -52,9 +52,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
 
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.ClickShowMore -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(showMoreType = ShowMoreType.POPULAR_MOVIES))
-            }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
                 findNavController().navigate(
@@ -112,6 +109,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
                 )
             }
 
+            HomeUiEvent.ClickPopularMoviesShowMore -> {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.POPULAR_MOVIES
+                    )
+                )
+            }
+
+            HomeUiEvent.ClickTopRatedShowMore ->  {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.TOP_RATED
+                    )
+                )
+            }
+            HomeUiEvent.ClickTrendingShowMore ->  {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.TRENDING
+                    )
+                )
+            }
         }
     }
 }

@@ -13,7 +13,6 @@ import com.chocolatecake.viewmodel.home.mappers.PopularPeopleUiMapper
 import com.chocolatecake.viewmodel.home.mappers.TopRatedUiMapper
 import com.chocolatecake.viewmodel.home.mappers.TrendingUiMapper
 import com.chocolatecake.viewmodel.home.mappers.UpComingUiMapper
-import com.chocolatecake.viewmodel.showmore.ShowMoreType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -199,8 +198,16 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    override fun onClickShowMore() {
-        sendEvent(HomeUiEvent.ClickShowMore)
+    override fun onClickTrendingShowMore() {
+        sendEvent(HomeUiEvent.ClickTrendingShowMore)
+    }
+
+    override fun onClickTopRatedShowMore() {
+        sendEvent(HomeUiEvent.ClickTopRatedShowMore)
+    }
+
+    override fun onClickPopularMoviesShowMore() {
+        sendEvent(HomeUiEvent.ClickPopularMoviesShowMore)
     }
     /// endregion
 
