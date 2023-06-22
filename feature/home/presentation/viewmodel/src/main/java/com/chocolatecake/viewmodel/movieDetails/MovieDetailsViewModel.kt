@@ -1,17 +1,24 @@
 package com.chocolatecake.viewmodel.movieDetails
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingResponseEntity
+import com.chocolatecake.entities.movieDetails.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.repository.UnauthorizedThrowable
+import com.chocolatecake.usecase.common.AddToUserListUseCase
+import com.chocolatecake.usecase.common.CreateUserListUseCase
+import com.chocolatecake.usecase.common.GetUserListsUseCase
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.movieDetails.mapper.UserListsUiMapper
+import com.chocolatecake.viewmodel.tv_details.listener.ChipListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -21,9 +28,12 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase,
     private val ratingUseCase: GetRatingUseCase,
+    private val getUserListsUseCase: GetUserListsUseCase,
+    private val addToUserListUseCase: AddToUserListUseCase,
+    private val createUserListUseCase: CreateUserListUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
-    MovieDetailsListener, MediaListener, PeopleListener {
+    MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
     private val movieId = savedStateHandle.get<Int>("movieId")
 
@@ -118,9 +128,71 @@ class MovieDetailsViewModel @Inject constructor(
                 userRating = rate
             )
         }
+
     }
 
-    private fun onRatingSuccess(ratingResponseEntity: RatingResponseEntity) {
+    //region user lists
+
+    fun emptyUserLists() {
+        _state.update {
+            it.copy(userLists = emptyList())
+        }
+    }
+
+    fun getUserLists() {
+        tryToExecute(
+            call = { getUserListsUseCase() },
+            onSuccess = ::onGetUserListsUseCase,
+            onError = {
+                Log.i("lists", "something went wrong $it")
+            }
+        )
+    }
+
+    private fun onGetUserListsUseCase(userListsEntity: List<UserListEntity>) {
+        val item = UserListsUiMapper().map(userListsEntity)
+        _state.update {
+            it.copy(
+                userLists = item.userLists
+            )
+        }
+        Log.i("lists", "user lists => ${state.value.userLists}")
+    }
+
+    fun onDone(listsId: List<Int>) {
+        listsId.forEach { id ->
+            tryToExecute(
+                call = { addToUserListUseCase(id, movieId!!) },
+                onSuccess = ::onDoneSuccess,
+                onError = {
+                    sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔"))
+                    Log.i("chip", "something went wrong")
+                }
+            )
+        }
+    }
+
+    private fun onDoneSuccess(statusEntity: StatusEntity) {
+        sendEvent(MovieDetailsUiEvent.OnDoneAdding("adding was successful"))
+    }
+
+    fun createUserNewList(listName: String) {
+        tryToExecute(
+            call = { createUserListUseCase(listName) },
+            onSuccess = ::onCreateUserNewList,
+            onError = {
+                sendEvent(MovieDetailsUiEvent.onCreateNewList("something went wrong"))
+            }
+        )
+    }
+
+    private fun onCreateUserNewList(statusEntity: StatusEntity) {
+        sendEvent(MovieDetailsUiEvent.onCreateNewList("New List Was Added Successfully"))
+        getUserLists()
+    }
+    //endregion
+
+    private fun onRatingSuccess(statusEntity: StatusEntity) {
         sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
     }
 
@@ -161,6 +233,18 @@ class MovieDetailsViewModel @Inject constructor(
     fun tryAgain(movieId: Int) {
         _state.update { it.copy(isLoading = true, onErrors = emptyList()) }
         getMovieDetails(movieId)
+    }
+
+    override fun onChipClick(id: Int) {
+        val updatedList = state.value.userSelectedLists.toMutableList()
+        if (updatedList.remove(id)) Unit else updatedList.add(id)
+
+        _state.update {
+            it.copy(
+                userSelectedLists = updatedList
+            )
+        }
+        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
 
 }
