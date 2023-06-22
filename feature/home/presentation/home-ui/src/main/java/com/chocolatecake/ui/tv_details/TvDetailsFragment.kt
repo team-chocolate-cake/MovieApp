@@ -19,15 +19,13 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class TvDetailsFragment :
     BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>(),
-    BottomSheetDismissListener {
+    BottomSheetDismissListener,CreateListener {
 
     private lateinit var rateBottomSheet: RateBottomSheet
     private lateinit var addToListBottomSheet: AddToListBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
     override val layoutIdFragment: Int = R.layout.fragment_tv_details
     override val viewModel: TvDetailsViewModel by viewModels()
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
@@ -87,7 +85,7 @@ class TvDetailsFragment :
     }
 
     private fun showAddToListBottomSheet() {
-        addToListBottomSheet = AddToListBottomSheet()
+        addToListBottomSheet = AddToListBottomSheet(this)
         addToListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
@@ -127,6 +125,10 @@ class TvDetailsFragment :
             }
 
         }
+    }
+
+    override fun onClickCreate() {
+        viewModel.doSomething()
     }
 
 }
