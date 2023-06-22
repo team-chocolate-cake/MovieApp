@@ -41,7 +41,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_back" />
+                app:navigationIcon="@drawable/ic_back"
+                android:onClick="@{()->listener.clickToBack()}"/>
 
 
             <!--            <ImageView-->
@@ -59,12 +60,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminateTint="@color/primary"
-                android:visibility="gone"
                 app:isVisible="@{viewModel.state.loading}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <include
+                android:id="@+id/lottie_animation_view_no_network"
+                layout="@layout/layout_no_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:showWhenError="@{viewModel.state.onErrors}" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_episode_image"
@@ -176,7 +187,7 @@
                 android:id="@+id/recycler_view_people"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/spacing_small_8dp"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
                 android:layout_marginBottom="@dimen/spacing_medium_16dp"
                 android:clipToPadding="false"

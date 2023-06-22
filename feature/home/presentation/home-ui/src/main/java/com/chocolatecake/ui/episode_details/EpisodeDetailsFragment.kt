@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.common.adapters.PeopleAdapter
 import com.chocolatecake.ui.home.R
@@ -17,7 +18,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EpisodeDetailsFragment :
-    BaseFragment<FragmentEpisodeDetailsBinding, EpisodeDetailsUiState, EpisodeDetailsUiEvent>() {
+    BaseFragment<FragmentEpisodeDetailsBinding, EpisodeDetailsUiState, EpisodeDetailsUiEvent>(),
+    EpisodeRateBottomSheet.BottomSheetListener {
 
     override val layoutIdFragment = R.layout.fragment_episode_details
     override val viewModel: EpisodeDetailsViewModel by viewModels()
@@ -41,12 +43,33 @@ class EpisodeDetailsFragment :
     override fun onEvent(event: EpisodeDetailsUiEvent) {
         when (event) {
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
-            is EpisodeDetailsUiEvent.ApplyRating -> TODO()
-            is EpisodeDetailsUiEvent.PlayEpisode -> TODO()
-            is EpisodeDetailsUiEvent.ClickCast -> TODO()
+            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
+            EpisodeDetailsUiEvent.ClickToBack ->navigateToBack()
+            EpisodeDetailsUiEvent.SubmitRating -> submitRate()
         }
     }
+
+       private fun navigateToBack(){
+        findNavController().popBackStack()
+       }
+
+    private fun navigateToCastDetails(){
+        //toDo findNavController().navigate()
+    }
+
+    private fun submitRate(){
+    }
+
     private fun showBottomSheet() {
         EpisodeRateBottomSheet().show(childFragmentManager, "BOTTOM")
+    }
+
+    override fun onApplyRateBottomSheet() {
+        viewModel.setRating()
+
+    }
+
+    override fun updateRatingValue(rate: Float) {
+        viewModel.onRating(rate.toInt())
     }
 }

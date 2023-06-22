@@ -6,6 +6,7 @@ data class EpisodeDetailsUiState(
     val imageUrl: String = "",
     val episodeName: String = "",
     val episodeRate: Float = 0.0F,
+    val userRate: Int = 0,
     val episodeOverview: String = "",
     val episodeNumber: Int = 0,
     val seasonNumber: Int = 0,

@@ -14,9 +14,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
+class EpisodeRateBottomSheet : BottomSheetDialogFragment(){
     private lateinit var binding: ItemEpisodeDetailsRateBottomSheetBinding
     val viewModel by activityViewModels<EpisodeDetailsViewModel>()
+    private var dismissListener: BottomSheetListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,5 +46,19 @@ class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
             viewModel.submitRating()
             dismiss()
         }
+        var userRating = 0f
+
+        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+            userRating = rating * 2
+        }
+        binding.buttonApply.setOnClickListener {
+            dismissListener?.onApplyRateBottomSheet()
+            dismissListener?.updateRatingValue(userRating)
+            dismiss()
+        }
+    }
+    interface BottomSheetListener {
+        fun onApplyRateBottomSheet()
+        fun updateRatingValue(rate:Float)
     }
 }

@@ -16,6 +16,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+
         android:onClick="@{() -> listener.onClickPeople(item.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -23,6 +25,7 @@
             android:layout_width="@dimen/width_image_people"
             android:layout_height="@dimen/height_image_people"
             android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
             app:imageUrl="@{item.imageUrl}"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,9 +1,9 @@
 package com.chocolatecake.viewmodel.episode_details
 
-import android.util.Log
+import android.media.Rating
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
@@ -24,12 +24,17 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val castUseCase: GetCastForEpisodeUseCase,
     private val setEpisodeRatingUseCase: SetEpisodeRatingUseCase,
     private val peopleUiMapper: PeopleUiMapper,
-    private val episodeDetailsUiMapper: EpisodeDetailsUiMapper
+    private val episodeDetailsUiMapper: EpisodeDetailsUiMapper,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
 
+    private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 1772
+    private val seasonNumber = savedStateHandle.get<Int>("seasonNumber") ?: 1
+    private val episodeNumber = savedStateHandle.get<Int>("episodeNumber") ?: 1
+
     init {
-        getData(1772, 1, 1)
+        getData(seriesId, seasonNumber, episodeNumber)
     }
 
 
@@ -38,30 +43,13 @@ class EpisodeDetailsViewModel @Inject constructor(
         getCastData(seriesId, seasonNumber, episodeNumber)
     }
 
-
     private fun getEpisodeDetailsData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
-        execute(
+        executeEpisodeDetails(
             call = { episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber) },
             mapper = episodeDetailsUiMapper,
             onSuccess = ::onSuccessEpisodeDetail,
             onError = ::onError
         )
-    }//ههههههههه قول يارب بنشوف
-
-    fun <INPUT, OUTPUT> execute(
-        call: suspend () -> INPUT,
-        onSuccess: (OUTPUT) -> Unit,
-        mapper: Mapper<INPUT, OUTPUT>,
-        onError: (Throwable) -> Unit,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ) {
-        viewModelScope.launch(dispatcher) {
-            try {
-                mapper.map(call()).also(onSuccess)
-            } catch (th: Throwable) {
-                onError(th)
-            }
-        }
     }
 
     private fun onSuccessEpisodeDetail(episodeDetails: EpisodeDetailsUiState) {
@@ -76,6 +64,29 @@ class EpisodeDetailsViewModel @Inject constructor(
                 productionCode = episodeDetails.productionCode,
                 isLoading = false,
                 onErrors = emptyList()
+            )
+        }
+    }
+
+    fun setRating() {
+        viewModelScope.launch {
+            try {
+                setEpisodeRatingUseCase(
+                    seriesId,
+                    seasonNumber,
+                    episodeNumber,
+                    state.value.userRate
+                )
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
+    }
+
+    fun onRating(value: Int) {
+        _state.update {
+            it.copy(
+                userRate = value
             )
         }
     }
@@ -99,20 +110,39 @@ class EpisodeDetailsViewModel @Inject constructor(
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
-    fun submitRating() {
-
+    private fun <EpisodeDetailsEntity, EpisodeDetailsUiState> executeEpisodeDetails(
+        call: suspend () -> EpisodeDetailsEntity,
+        onSuccess: (EpisodeDetailsUiState) -> Unit,
+        mapper: Mapper<EpisodeDetailsEntity, EpisodeDetailsUiState>,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                mapper.map(call()).also(onSuccess)
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
     }
 
     /// region event
+    override fun clickToBack() {
+        sendEvent(EpisodeDetailsUiEvent.ClickToBack)
+    }
 
     override fun clickToRate() {
         sendEvent(EpisodeDetailsUiEvent.ClickToRate)
-        Log.i("Click", "rate button was clicked")
     }
 
-    override fun playEpisode() {}
+    override fun submitRating() {
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating)
 
-    override fun applyRating() {}
-    override fun onClickPeople(id: Int) {}
+    }
+
+    override fun onClickPeople(id: Int) {
+        sendEvent(EpisodeDetailsUiEvent.ClickCast(id))
+    }
+
     /// endregion
 }
