@@ -4,10 +4,8 @@ package com.chocolatecake.viewmodel.myListDetails
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.bases.ListType
-import com.chocolatecake.bases.MediaType
+import com.chocolatecake.bases.ListName
 import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
-import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
 import com.chocolatecake.usecase.myList.GetWatchlistByMediaTypeUseCase
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
@@ -17,50 +15,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyListDetailsViewModel @Inject constructor(
-
-//    private val getMoviesFavorite: GetMyFavoriteListUseCase,
     private val getFavorite: GetFavoritesByMediaTypeUseCase,
     private val getWatchlist: GetWatchlistByMediaTypeUseCase,
-//    private val getTvFavorite: GetMyFavoriteTvListUseCase,
     private val getMovieListDetails: GetMyListDetailsByListIdUseCase,
     private val myListDetailsUiMapper: MyListDetailsUiMapper,
     private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<MyListDetailsUiState, MyListDetailsUiEvent>(MyListDetailsUiState()),
     MyListDetailsListener {
 
-
-    private val mediaId = savedStateHandle.get<Int>("mediaId") ?:0
-    private val mediaType = savedStateHandle.get<String>("mediaType") ?:""
     private val listType = savedStateHandle.get<String>("listType") ?:""
+    private val _listName = savedStateHandle.get<String>("listName") ?:""
+        val listName = _listName
     private val listId = savedStateHandle.get<Int>("listId") ?:0
 
     init {
-        when(listType){
-            ListType.favorite.name ->{
-               getAllFavorite(mediaType)
+        when(listName){
+            ListName.favorite.name ->{
+               getAllFavorite(listType)
            }
-            ListType.watchlist.name ->{
-                getAllWatchlist(mediaType)
+            ListName.watchlist.name ->{
+                getAllWatchlist(listType)
             }
-            ListType.list.name ->{
+            else ->{
                 getAllMovieListDetails(listId)
             }
         }
     }
 
-    private fun getAllFavorite(mediaType: String) {
+    private fun getAllFavorite(listType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { getFavorite(mediaType).map { myListDetailsUiMapper.map(it) } },
+            call = { getFavorite(listType).map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )
     }
 
-    private fun getAllWatchlist(mediaType: String) {
+    private fun getAllWatchlist(listType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { getWatchlist(mediaType).map { myListDetailsUiMapper.map(it) } },
+            call = { getWatchlist(listType).map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )

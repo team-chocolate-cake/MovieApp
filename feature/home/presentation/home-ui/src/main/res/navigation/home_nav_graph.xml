@@ -47,7 +47,7 @@
         android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
         android:label="MyListDetailsFragment" >
         <argument
-            android:name="mediaType"
+            android:name="listName"
             app:argType="string" />
         <argument
             android:name="listId"

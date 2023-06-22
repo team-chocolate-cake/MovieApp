@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.myList.MyListViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -56,11 +57,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_extra_giant_48dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
-
                 android:background="@drawable/edittext_background"
                 android:drawablePadding="@dimen/spacing_custom_12dp"
                 android:inputType="text"
-                android:hint="anime"
+                android:text="@={viewModel.newListName}"
                 android:paddingHorizontal="@dimen/spacing_x_medium_20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,6 @@
                 android:text="Create"
                 android:textColor="@color/on_primary"
                 android:textSize="@dimen/text_medium"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_name_list" />

@@ -47,6 +47,7 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapp
 import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMovieMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainMovieItemListMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
 import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
@@ -93,6 +94,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
     private val domainMoviesMapper: DomainMovieMapper,
+    private val domainMovieItemListMapper: DomainMovieItemListMapper,
     private val domainListMovieMapper: DomainListMovieMapper,
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
     private val watchlistMapper: WatchlistRequestMapper,
@@ -431,9 +433,9 @@ class MovieRepositoryImpl @Inject constructor(
 //        return result
 //    }
 
-    private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
-        movieDao.insertMovieToList(localListMovieMapper.map(movie))
-    }
+//    private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
+//        movieDao.insertMovieToList(localListMovieMapper.map(movie))
+//    }
 
     override suspend fun addMovieToList(movie: ListMovieEntity): Boolean {
         return movieService.addMovieToList(movie.mediaId).isSuccessful
@@ -445,22 +447,11 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun getDetailsList(listId: Int): List<MovieEntity> {
-//        refreshDetailsList(listId)
-        wrapApiCall {
-            movieService.getDetailsList(8257253)
-        }.also {
-            Log.i("jkk", "getDetailsList: getDetailsList   llllkkkjj $it ")
-        }
-        return domainMoviesMapper.map(movieDao.getDetailsList())
+        val result =  wrapApiCall { movieService.getDetailsList(listId)}.items
+        return    result?.map { item->
+            domainMovieItemListMapper.map (item)
+        }?: emptyList()
     }
-
-//    private suspend fun refreshDetailsList(listId: Int) {
-//        refreshWrapper(
-//            apiCall = { movieService.getDetailsList(listId) },
-//            localMoviesMapper::map,
-//            movieDao::insertDetailsList
-//        )
-//    }
 
 
     override suspend fun getListCreated(): List<ListCreatedEntity> {
@@ -473,11 +464,8 @@ class MovieRepositoryImpl @Inject constructor(
                         itemCount = input.itemCount,
                         listType = input.listType,
                         name = input.name,
-
                         posterPath = getDetailsList(input.id?:0).also {
-                            Log.i("jkk", "getListCreated 444444 $it :")
                         }.map { items ->
-                            Log.i("jkk",  items.imageUrl)
                              items.imageUrl
                         }
                     )

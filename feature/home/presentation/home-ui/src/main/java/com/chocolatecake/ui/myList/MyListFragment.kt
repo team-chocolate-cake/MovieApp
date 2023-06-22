@@ -2,15 +2,18 @@ package com.chocolatecake.ui.myList
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListBinding
 import com.chocolatecake.ui.myListDetails.MyListDetailsFragmentDirections
+import com.chocolatecake.ui.search.FilterMovieBottomSheetFragment
 import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyListFragment :
@@ -32,13 +35,6 @@ class MyListFragment :
         binding.recyclerViewMyList.adapter = myListAdapter
     }
 
-//    private fun collectChange() {
-//        collectLatest {
-//            viewModel.state.collect { state ->
-//                myListAdapter
-//            }
-//        }
-//    }
 
     override fun onEvent(event: MyListUiEvent) {
         when(event){
@@ -47,12 +43,31 @@ class MyListFragment :
                     MyListFragmentDirections.actionMyListFragmentToMyListDetailsFragment(
                         listType = event.listType,
                         listId = event.listId,
-                        mediaType = event.mediaType,
+                        listName = event.listName,
                     )
                 )
             }
-            is MyListUiEvent.ShowSnackBar -> {}
+
+
+            is MyListUiEvent.ApplyCreateList -> {applyCreateList()}
+
+            is MyListUiEvent.OpenCreateListBottomSheet -> {showBottomSheet()}
+
+            is MyListUiEvent.ShowSnackBar -> { showSnackBar(event.message)}
+
+            else -> {}
         }
+    }
+
+
+    private fun applyCreateList() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onCreateList()
+        }
+    }
+
+    private fun showBottomSheet() {
+        CreateListBottomSheetFragment().show(childFragmentManager, "BOTTOM")
     }
 }
 

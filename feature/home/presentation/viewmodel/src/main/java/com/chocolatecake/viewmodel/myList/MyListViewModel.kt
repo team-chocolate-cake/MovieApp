@@ -3,24 +3,29 @@ package com.chocolatecake.viewmodel.myList
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.usecase.myList.CreateListUseCase
 import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
 import com.chocolatecake.usecase.myList.GetMovieListUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
+import com.chocolatecake.viewmodel.search.SearchUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MyListViewModel @Inject constructor(
     private val getMovies: GetListsCreatedUseCase,
     private val myListUiMapper: MyListUiMapper,
-   private val savedStateHandle: SavedStateHandle,
+    private val createList: CreateListUseCase,
 ) : BaseViewModel<MyListUiState, MyListUiEvent>(MyListUiState()), MyListListener {
 
-//    private val mediaId = savedStateHandle.get<Int>("mediaId") ?:0
-//    private val mediaType = savedStateHandle.get<String>("mediaType") ?:""
-//    private val listId = savedStateHandle.get<Int>("listId") ?:0
+
+    val newListName = MutableStateFlow("")
 
     init {
         getAllMovies()
@@ -42,7 +47,6 @@ class MyListViewModel @Inject constructor(
                 isLoading = false
             )
         }
-        Log.i("jk",items.toString())
     }
 
     private fun onGetAllMoviesError(throwable: Throwable) {
@@ -72,33 +76,31 @@ class MyListViewModel @Inject constructor(
         }
     }
 
-    override fun onClickFavoriteList(itemId: Int, listType: String ,mediaType: String) {
-        sendEvent(
-            MyListUiEvent.NavigateToListDetails(
-                listId= 0,
-                listType= listType,
-                mediaType= mediaType,
-            )
-        )
-    }
 
-    override fun onClickWatchlist(itemId: Int, listType: String ,mediaType: String) {
-        sendEvent(
-            MyListUiEvent.NavigateToListDetails(
-                listId= 0,
-                listType= listType,
-                mediaType= mediaType,
-            )
-        )
-    }
-
-    override fun onClickItem(listId: Int, listType: String ,mediaType: String) {
+    override fun onClickItem(listId: Int, listType: String ,listName: String) {
         sendEvent(
             MyListUiEvent.NavigateToListDetails(
                 listId= listId,
                 listType= listType,
-                mediaType= mediaType,
+                listName= listName,
             )
+        )
+    }
+
+    override fun onClickNewList() {
+        viewModelScope.launch {
+            _event.emit(MyListUiEvent.OpenCreateListBottomSheet)
+        }
+        Log.i("v2", "onClickNewList:  hiiv2 ")
+    }
+
+    fun onCreateList(){
+        tryToExecute(
+            call = {
+                createList.invoke(newListName.toString())
+            },
+            onSuccess = {Log.i("v2", "onClickNewList:  done $it ") },
+            onError = ::error
         )
     }
 

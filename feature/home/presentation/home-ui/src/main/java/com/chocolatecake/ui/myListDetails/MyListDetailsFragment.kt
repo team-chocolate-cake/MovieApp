@@ -5,10 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.bases.MediaType
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListDetailsBinding
-import com.chocolatecake.ui.profile.ProfileFragmentDirections
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsViewModel

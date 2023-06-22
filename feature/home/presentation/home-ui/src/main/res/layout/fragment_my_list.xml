@@ -42,6 +42,7 @@
                     android:paddingVertical="@dimen/spacing_small_8dp"
                     android:background="@drawable/button_background"
                     android:text="New List"
+                    android:onClick="@{() -> viewModel.onClickNewList()}"
                     style="@style/TextStyle.TitleSmall"
                     android:textColor="@color/on_primary"/>
             </LinearLayout>

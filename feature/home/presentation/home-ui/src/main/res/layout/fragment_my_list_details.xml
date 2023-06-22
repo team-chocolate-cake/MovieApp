@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="My Favourite"
+                android:text="@{viewModel.listName}"
                 android:textColor="@color/on_background_87"/>
 
             <TextView
