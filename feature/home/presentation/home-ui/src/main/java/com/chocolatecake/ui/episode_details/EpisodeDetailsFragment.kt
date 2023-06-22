@@ -72,4 +72,8 @@ class EpisodeDetailsFragment :
     override fun updateRatingValue(rate: Float) {
         viewModel.onRating(rate.toInt())
     }
+
+    override fun retrieveRatingValue(): Float {
+        return viewModel.getRatingValue()
+    }
 }

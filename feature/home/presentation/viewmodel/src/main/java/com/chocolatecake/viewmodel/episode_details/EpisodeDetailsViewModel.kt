@@ -91,6 +91,10 @@ class EpisodeDetailsViewModel @Inject constructor(
         }
     }
 
+    fun getRatingValue(): Float {
+        return state.value.userRate.toFloat()
+    }
+
     private fun getCastData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         tryToExecute(
             call = { castUseCase(seriesId, seasonNumber, episodeNumber) },
