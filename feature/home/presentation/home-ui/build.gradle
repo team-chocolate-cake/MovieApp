@@ -45,6 +45,7 @@ dependencies {
     implementation project(path: ':core:bases')
     implementation project(path: ':feature:home:presentation:viewmodel')
     implementation project(path: ':feature:trvia:presentation:ui')
+    implementation project(path: ':feature:authectication:presentation:ui')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"

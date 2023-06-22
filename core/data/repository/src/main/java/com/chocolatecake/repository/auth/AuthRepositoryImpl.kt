@@ -56,5 +56,10 @@ class AuthRepositoryImpl @Inject constructor(
         val profileData=movieService.getAccountDetails(sessionId!!).body()
         return domainProfileMapper.map(profileData!!)
     }
+
+    override suspend fun isUserLoggedIn(): Boolean {
+        val sessionId = prefs.sessionId
+        return sessionId != null
+    }
 }
 

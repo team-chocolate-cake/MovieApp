@@ -34,6 +34,16 @@ fun View.isVisibleOrGone(isVisible: Boolean?) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenNotLoggedIn"])
+fun View.hideWhenNotLoggedIn(hideWhenNotLoggedIn: Boolean?) {
+    if (hideWhenNotLoggedIn == false) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.INVISIBLE
+    }
+}
+
+
 @BindingAdapter("app:setTipError")
 fun EditText.setTipError(errorMessage: String?) {
     if (errorMessage == null) return
@@ -50,6 +60,23 @@ fun ImageView.loadImage(imageUrl: String?) {
             .into(this)
     } else Glide.with(context)
         .load(imageUrl)
+        .fitCenter()
+        .centerCrop()
+        .into(this)
+
+}
+
+@BindingAdapter(value = ["app:profileUrl"])
+fun ImageView.loadProfileImage(profileUrl: String?) {
+    if (profileUrl=="https://image.tmdb.org/t/p/w500null"){
+        Glide.with(context)
+            .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+            .fitCenter()
+            .centerCrop()
+            .into(this)
+    }
+    else Glide.with(context)
+        .load(profileUrl)
         .fitCenter()
         .centerCrop()
         .into(this)

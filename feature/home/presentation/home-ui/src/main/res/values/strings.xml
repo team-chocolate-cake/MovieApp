@@ -28,4 +28,6 @@
     <string name="home_much_you_love_this_tv_show" tools:ignore="ExtraTranslation">Home much you love this tv show ?</string>
     <string name="rate_it_with_stars_your_satisfaction_level" tools:ignore="ExtraTranslation">Rate it with stars your satisfaction level</string>
     <string name="create" tools:ignore="ExtraTranslation">Create</string>
+    <string name="login_title">Lights, Camera, Action! Login to Personalize Your Movie Experience</string>
+    <string name="login">Login</string>
 </resources>

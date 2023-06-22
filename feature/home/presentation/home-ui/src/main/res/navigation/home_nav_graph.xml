@@ -49,7 +49,11 @@
         <action
             android:id="@+id/action_profileFragment_to_game_nav_graph"
             app:destination="@id/game_nav_graph" />
-
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />
@@ -123,4 +127,8 @@
             android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
             app:destination="@id/seasonDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.chocolatecake.ui.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

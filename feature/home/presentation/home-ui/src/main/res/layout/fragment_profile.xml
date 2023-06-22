@@ -4,206 +4,218 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.profile.ProfileListener" />
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.profile.ProfileViewModel" />
-
-        <variable
-            name="uiMode"
-            type="android.app.UiModeManager" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:paddingHorizontal="@dimen/spacing_medium_16dp">
+
+        <ImageView
+            android:id="@+id/image_view_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:src="@drawable/image_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_login_title"
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:ellipsize="middle"
+            android:text="@string/login_title"
+            android:textAlignment="center"
+            android:textColor="@color/on_background_87"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_view_login" />
+
+        <Button
+            android:id="@+id/button_login"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_marginBottom="@dimen/spacing_extra_extra_giant_56dp"
+            android:background="@drawable/button_retry"
+            android:onClick="@{()->viewModel.ocClickLogIn()}"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/on_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_profile"
             android:layout_width="123dp"
-            android:layout_height="133dp"
-            android:layout_marginStart="118dp"
-            android:layout_marginTop="75dp"
-            android:layout_marginEnd="118dp"
+            android:layout_height="123dp"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:profileUrl="@{viewModel.state.avatarUrl}"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
-            tools:src="@tools:sample/backgrounds/scenic"
-            app:imageUrl="@{viewModel.state.avatarUrl}" />
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/text_view_profile_username"
             style="@style/TextAppearance.Material3.BodyLarge"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:gravity="center"
+            android:text="@{viewModel.state.username}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_view_profile"
-            tools:text=" @el-mtarsham"
-            android:text="@{viewModel.state.username}" />
+            tools:text=" @el-mtarsham" />
 
         <TextView
             android:id="@+id/text_view_favorite"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_extra_large_28dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_heart"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClickFavorite()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/favorite"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username"
-            android:onClick="@{()->viewModel.onClickFavorite()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_profile_username" />
 
         <TextView
             android:id="@+id/text_view_watchlist"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_bookmark"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClickWatchlist()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/watchlist"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_favorite"
-            android:onClick="@{()->viewModel.onClickWatchlist()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_favorite" />
 
         <TextView
             android:id="@+id/text_view_watch_history"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_clock"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClickWatchHistory()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/watch_history"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist"
-            android:onClick="@{()->viewModel.onClickWatchHistory()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_watchlist" />
 
         <TextView
             android:id="@+id/text_view_mylists"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_checklist"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClickMyLists()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/my_lists"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history"
-            android:onClick="@{()->viewModel.onClickMyLists()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_watch_history" />
 
         <TextView
-            android:id="@+id/text_view_rating"
+            android:id="@+id/text_view_popcorn_puzzles"
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
-            android:background="@drawable/custom_card_background"
-            android:drawableStart="@drawable/ic_star"
-            android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
-            android:padding="@dimen/spacing_small_8dp"
-            android:text="@string/rating"
-            android:textColor="@color/on_background_60"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_mylists"
-            android:onClick="@{()->viewModel.onClickRating()}"/>
-
-        <TextView
-            android:id="@+id/text_view_puzzle"
-            style="@style/TextStyle.TitleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:background="@drawable/custom_card_background"
             android:drawableStart="@drawable/ic_gamepad"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()-> viewModel.onClickPopcornPuzzles()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/popcorn_puzzles"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_rating"
-            android:onClick="@{()-> viewModel.onClickPopcornPuzzles()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_mylists" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/text_view_theme"-->
-<!--            style="@style/TextStyle.TitleSmall"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="@dimen/spacing_medium_16dp"-->
-<!--            android:layout_marginTop="@dimen/spacing_custom_12dp"-->
-<!--            android:layout_marginEnd="@dimen/spacing_medium_16dp"-->
-<!--            android:background="@drawable/custom_card_background"-->
-<!--            android:drawableStart="@drawable/ic_sun"-->
-<!--            android:drawablePadding="@dimen/spacing_small_8dp"-->
-<!--            android:drawableTint="@color/on_background_38"-->
-<!--            android:padding="@dimen/spacing_small_8dp"-->
-<!--            android:text="@string/theme"-->
-<!--            android:textColor="@color/on_background_60"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"-->
-<!--            android:onClick="@{()->listener.onClickTheme()}"/>-->
+        <TextView
+            android:id="@+id/text_view_theme"
+            style="@style/TextStyle.TitleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_field"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:background="@drawable/custom_card_background"
+            android:drawableStart="@drawable/ic_sun"
+            android:drawablePadding="@dimen/spacing_small_8dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_small_8dp"
+            android:text="@string/theme"
+            android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_popcorn_puzzles" />
 
-<!--        <androidx.appcompat.widget.SwitchCompat-->
-<!--            android:id="@+id/switch_theme"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:checked="true"-->
-<!--            android:padding="@dimen/spacing_tiny"-->
-<!--            android:thumb="@drawable/switch_thumb_selector"-->
-<!--            android:visibility="visible"-->
-<!--            app:layout_constraintTop_toTopOf="@id/text_view_theme"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/text_view_logout"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/text_view_theme"-->
-<!--            app:track="@drawable/switch_track_selector"-->
-<!--            app:toggleUiMode="@{uiMode}"/>-->
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_botton_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:checked="true"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_theme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_view_theme"
+            app:showText="false" />
 
 
         <TextView
@@ -211,19 +223,39 @@
             style="@style/TextStyle.TitleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_custom_12dp"
-            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
             android:drawableStart="@drawable/ic_logout"
             android:drawablePadding="@dimen/spacing_small_8dp"
-            android:drawableTint="@color/on_background_38"
+            android:gravity="center_vertical"
+            android:onClick="@{()->viewModel.onClickLogout()}"
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/logout"
             android:textColor="@color/on_background_60"
+            app:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_puzzle"
-            android:onClick="@{()->viewModel.onClickLogout()}"/>
+            app:layout_constraintTop_toBottomOf="@id/text_view_theme" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/when_user_not_loggedin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="button_login,
+            image_view_login,text_view_login_title"
+            app:hideWhenNotLoggedIn="@{viewModel.state.loggedIn}" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/when_user_loggedin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="image_view_profile,
+            text_view_profile_username,text_view_favorite,
+            text_view_watch_history,
+            text_view_watchlist,text_view_mylists,
+            text_view_popcorn_puzzles,
+            text_view_theme,switch_botton_theme,text_view_logout"
+            app:isVisible="@{viewModel.state.loggedIn}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
