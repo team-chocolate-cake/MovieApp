@@ -11,6 +11,7 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.TvDetailsItemBotomSheetBinding
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,19 +50,27 @@ class RateBottomSheet : BottomSheetDialogFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
         binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
-            // Access the rating value here
             userRating = rating * 2
 
         }
         binding.buttonApply.setOnClickListener {
-            dismissListener?.onApplyRateBottomSheet()
-            dismissListener?.updateRatingValue(userRating)
-            dismiss()
+            if (userRating == 0f) {
+                showSnackBar("Please Rate First")
+            } else {
+                dismissListener?.onApplyRateBottomSheet()
+                dismissListener?.updateRatingValue(userRating)
+                dismiss()
+            }
         }
+
+    }
+
+    private fun showSnackBar(messages: String) {
+        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
 }
 
 interface BottomSheetDismissListener {
     fun onApplyRateBottomSheet()
-    fun updateRatingValue(rate:Float)
+    fun updateRatingValue(rate: Float)
 }
