@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.home.PopularMoviesUiState" />
@@ -21,25 +22,30 @@
             android:id="@+id/shapeable_ImageView"
             android:layout_width="@dimen/height_image"
             android:layout_height="@dimen/custom_height_card"
-            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:onClick="@{()-> listener.onClickPopularMovies(item.id)}"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic"
+            app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
-            android:onClick="@{()-> listener.onClickPopularMovies(item.id)}"
-            app:imageUrl="@{item.imageUrl}"/>
+            tools:src="@tools:sample/backgrounds/scenic" />
 
-        <ImageView
-            android:id="@+id/image_view_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/shapeable_ImageView"
-            app:layout_constraintBottom_toBottomOf="@id/shapeable_ImageView"
-            app:srcCompat="@drawable/ic_star"
-            android:layout_marginBottom="@dimen/spacing_medium_16dp"/>
+
+        <View
+            android:layout_width="@dimen/height_image"
+            android:layout_height="@dimen/custom_height_card"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
+            android:background="@drawable/shadow_layer"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_view_rates_number"
@@ -47,15 +53,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium_16dp"
-            android:layout_marginStart="@dimen/spacing_tiny_4dp"
-            android:text="@{String.valueOf(item.rate)}"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/spacing_tiny_4dp"
+            android:gravity="center"
+            android:text="@{String.valueOf(item.formattedRate)}"
             android:textColor="@color/rating_color"
             app:layout_constraintBottom_toBottomOf="@id/shapeable_ImageView"
-            app:layout_constraintEnd_toEndOf="@id/shapeable_ImageView"
-            app:layout_constraintEnd_toStartOf="@id/image_view_rate"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/image_view_rate"
-            tools:text="9.6" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/_9_6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

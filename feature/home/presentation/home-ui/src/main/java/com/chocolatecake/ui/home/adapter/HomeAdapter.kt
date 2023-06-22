@@ -1,10 +1,17 @@
 package com.chocolatecake.ui.home.adapter
 
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.chocolatecake.bases.BaseAdapter
+import com.chocolatecake.ui.home.HomeItem
+import com.chocolatecake.ui.home.HomeItemType
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewNowPlayingBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewPopularMoviesBinding
@@ -12,9 +19,8 @@ import com.chocolatecake.ui.home.databinding.HomeRecyclerviewPopularPeopleBindin
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewSliderBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTopRatedBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTrendingBinding
-import com.chocolatecake.viewmodel.home.HomeItem
-import com.chocolatecake.viewmodel.home.HomeItemType
 import com.chocolatecake.viewmodel.home.HomeListener
+import java.lang.Math.abs
 
 class HomeAdapter(
     private var itemsHome: MutableList<HomeItem>,
@@ -112,10 +118,41 @@ class HomeAdapter(
 
     private fun bindSlider(holder: SliderViewHolder, position: Int) {
         val upComing = itemsHome[position] as HomeItem.Slider
-        val adapter = UpComingAdapter(upComing.list)
-        holder.binding.imageSlider.setSliderAdapter(adapter)
-        holder.binding.imageSlider.startAutoCycle()
+        val viewPager = holder.binding.viewPager
+        val upComingAdapter = UpComingAdapter(upComing.list, listener)
+        setupViewPager(viewPager, upComingAdapter)
+        registerPageChangeCallback(viewPager)
+        setSliderPageTransformer(viewPager)
         holder.binding.item = upComing
+    }
+
+    private fun setupViewPager(viewPager: ViewPager2, adapter: RecyclerView.Adapter<*>) {
+        viewPager.apply {
+            this.adapter = adapter
+            offscreenPageLimit = 3
+        }
+    }
+
+    private fun registerPageChangeCallback(viewPager: ViewPager2) {
+        val handler = Handler(Looper.myLooper()!!)
+        val runnable = Runnable { viewPager.currentItem += 1 }
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable, 6000)
+            }
+        })
+    }
+
+    private fun setSliderPageTransformer(viewPager: ViewPager2) {
+        val transformer = CompositePageTransformer()
+        transformer.addTransformer(MarginPageTransformer(16))
+        transformer.addTransformer { page, position ->
+            val r = 1 - abs(position)
+            page.scaleY = 0.85f + r * 0.14f
+        }
+        viewPager.setPageTransformer(transformer)
     }
 
     private fun bindNowPlaying(holder: NowPlayingViewHolder, position: Int) {
@@ -138,7 +175,6 @@ class HomeAdapter(
         val adapter = TrendingAdapter(trending.list, listener)
         holder.binding.recyclerViewTrending.adapter = adapter
         holder.binding.item = trending
-        Log.i("trending", trending.toString())
     }
 
     private fun bindPopularPeople(holder: PopularPeopleViewHolder, position: Int) {
