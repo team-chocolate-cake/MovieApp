@@ -36,19 +36,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             viewModel.state.collect { state ->
                 homeAdapter.setItems(
                     mutableListOf(
-                        state.upComingMovies,
-                        state.nowPlayingMovies,
-                        state.trendingMovies,
-                        state.topRated,
-                        state.popularPeople,
-                        state.popularMovies,
+                        HomeItem.Slider(state.upComingMovies),
+                        HomeItem.NowPlaying(state.nowPlayingMovies),
+                        HomeItem.Trending(state.trendingMovies),
+                        HomeItem.TopRated(state.topRated),
+                        HomeItem.PopularPeople(state.popularPeople),
+                        HomeItem.PopularMovies(state.popularMovies),
                     )
                 )
-
+                binding.recyclerViewHome.smoothScrollToPosition(0)
             }
-
         }
-        binding.recyclerViewHome.smoothScrollToPosition(0)
     }
 
     override fun onEvent(event: HomeUiEvent) {
@@ -58,31 +56,59 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.PopularMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.PopularPeopleEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.TopRatedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.TrendingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.UpComingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
         }
     }

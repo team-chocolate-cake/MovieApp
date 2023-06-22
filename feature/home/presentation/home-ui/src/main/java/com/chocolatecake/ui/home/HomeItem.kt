@@ -1,4 +1,11 @@
-package com.chocolatecake.viewmodel.home
+package com.chocolatecake.ui.home
+
+import com.chocolatecake.viewmodel.home.NowPlayingUiState
+import com.chocolatecake.viewmodel.home.PopularMoviesUiState
+import com.chocolatecake.viewmodel.home.PopularPeopleUiState
+import com.chocolatecake.viewmodel.home.TopRatedUiState
+import com.chocolatecake.viewmodel.home.TrendingMoviesUiState
+import com.chocolatecake.viewmodel.home.UpComingMoviesUiState
 
 sealed class HomeItem(val type: HomeItemType) {
 
@@ -16,7 +23,6 @@ sealed class HomeItem(val type: HomeItemType) {
 
     data class PopularMovies(val list: List<PopularMoviesUiState>) :
         HomeItem(HomeItemType.POPULAR_MOVIES)
-
 
 }
 
