@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/text_view_genres"
-            style="@style/TextStyle.BodyMedium"
+            style="@style/TextStyle.Caption"
             android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
@@ -62,7 +62,7 @@
 
         <TextView
             android:id="@+id/text_view_year"
-            style="@style/TextStyle.BodySmall"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -79,6 +79,7 @@
 
         <TextView
             android:id="@+id/text_view_count_rate"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_star"

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
             android:background="@drawable/edittext_background"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/spacing_custom_12dp"
@@ -88,7 +88,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipMovie"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -97,7 +97,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTV"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> viewModel.showResultTv()}"
@@ -105,7 +105,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipPerson"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> viewModel.showResultPeople()}"

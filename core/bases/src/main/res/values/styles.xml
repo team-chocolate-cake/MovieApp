@@ -3,7 +3,7 @@
 
     <!--region Font-->
     <style name="TextStyle">
-
+        <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
     <!--region Title-Font-->
@@ -35,7 +35,7 @@
     </style>
 
     <style name="TextStyle.BodySmall">
-        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textSize">@dimen/text_semi_small</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
     <!--endregion-->
@@ -55,7 +55,17 @@
         <item name="android:textSize">@dimen/text_semi_small</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
+    <!--    endregion-->
 
+    <!--    region caption-->
+    <style name="TextStyle.Caption">
+        <item name="android:textSize">@dimen/text_tiny</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+    </style>
+    <!--    endregion-->
+    <!--    endregion-->
+
+    <!--    region styles-->
     <style name="ViewDividerStyle">
         <item name="android:radius">@dimen/radius_full</item>
     </style>
@@ -65,10 +75,17 @@
         <item name="enforceMaterialTheme">true</item>
         <item name="android:background">@color/bottom_navigation_background</item>
         <item name="itemIconTint">@color/bottom_nav_icon_tint</item>
-        <item name="itemTextColor">@color/on_background_38</item>
-        <item name="itemTextAppearanceActive">@color/on_background_87</item>
-        <item name="itemTextAppearanceInactive">@color/on_background_38</item>
+        <item name="itemTextAppearanceActive">@style/TextStyle.TitleSmall.ItemTextAppearanceActive</item>
+        <item name="itemTextAppearanceInactive">@style/TextStyle.TitleSmall.ItemTextAppearanceInactive</item>
         <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="TextStyle.TitleSmall.ItemTextAppearanceActive">
+        <item name="itemTextColor">@color/on_background_87</item>
+    </style>
+
+    <style name="TextStyle.TitleSmall.ItemTextAppearanceInactive">
+        <item name="itemTextColor">@color/on_background_38</item>
     </style>
 
     <style name="BottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
@@ -79,6 +96,7 @@
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
+
     <style name="PrimaryButton" parent="@style/Widget.Material3.Button.UnelevatedButton">
         <item name="android:backgroundTint">@color/primary</item>
         <item name="android:textColor">@color/on_primary</item>
@@ -110,12 +128,10 @@
         <item name="android:imeOptions">flagNoFullscreen</item>
         <item name="android:inputType">text</item>
         <item name="android:padding">16sp</item>
-
     </style>
 
-    <style name="TextStyle.LabelMedium.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+    <style name="TextStyle.BodySmall.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="android:textColor">@color/chip_text_color</item>
-        <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="checkedIconVisible">false</item>
         <item name="chipStartPadding">@dimen/spacing_medium_16dp</item>
         <item name="chipEndPadding">@dimen/spacing_medium_16dp</item>
@@ -124,5 +140,6 @@
         <item name="chipStrokeWidth">0dp</item>
         <item name="chipMinTouchTargetSize">0dp</item>
     </style>
+    <!--    endregion-->
 
 </resources>

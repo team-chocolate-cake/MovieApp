@@ -54,7 +54,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_airing_today"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -63,7 +63,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_on_the_air"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.showOnTheAiringTVShowsResult()}"
@@ -71,7 +71,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_top_rated"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.showTopRatedTVShowsResult()}"
@@ -79,7 +79,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_popular"
-                    style="@style/TextStyle.LabelMedium.ChipStyle"
+                    style="@style/TextStyle.BodySmall.ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{()-> viewModel.showPopularTVShowsResult()}"

@@ -14,7 +14,7 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chipMovie"
-        style="@style/TextStyle.LabelMedium.ChipStyle"
+        style="@style/TextStyle.BodySmall.ChipStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="@{item.selected}"
