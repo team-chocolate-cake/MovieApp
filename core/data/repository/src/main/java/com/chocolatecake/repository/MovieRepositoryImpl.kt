@@ -8,11 +8,14 @@ import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingResponseEntity
+import com.chocolatecake.entities.movieDetails.StatusEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.AddMediaToListRequest
+import com.chocolatecake.remote.request.CreateUserListRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
@@ -27,9 +30,10 @@ import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
-import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
+import com.chocolatecake.repository.mappers.domain.DomainStatusMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.DomainReviewsMapper
+import com.chocolatecake.repository.mappers.domain.DomainUserListsMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -65,10 +69,11 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainPeopleMapper: DomainPeopleMapper,
     private val domainGenreMapper: DomainGenreMapper,
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
-    private val domainRatingMapper: DomainRatingMapper,
+    private val domainStatusMapper: DomainStatusMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
-    private val domainReviewsMapper: DomainReviewsMapper
+    private val domainReviewsMapper: DomainReviewsMapper,
+    private val domainUserListsMapper: DomainUserListsMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -305,11 +310,29 @@ class MovieRepositoryImpl @Inject constructor(
         return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
     }
 
-    override suspend fun setMovieRate(movieId: Int, rate: Float): RatingResponseEntity {
-        return domainRatingMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+    override suspend fun setMovieRate(movieId: Int, rate: Float): StatusEntity {
+        return domainStatusMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
     }
 
     override suspend fun getMovieReviews(movieId: Int, page: Int): ReviewResponseEntity {
         return domainReviewsMapper.map(wrapApiCall { movieService.getMovieReviews(movieId , page) })
+    }
+
+    override suspend fun getUserLists(): List<UserListEntity> {
+        val call =
+            wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
+        return domainUserListsMapper.map(call)
+    }
+
+    override suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity {
+        val addMediaRequest = AddMediaToListRequest(mediaId)
+        val call = wrapApiCall { movieService.postUserMedia(listId, addMediaRequest) }
+        return domainStatusMapper.map(call)
+    }
+
+    override suspend fun createUserList(listName: String): StatusEntity {
+        val newList = CreateUserListRequest(listName)
+        val call = wrapApiCall { movieService.createUserList(newList) }
+        return domainStatusMapper.map(call)
     }
 }
