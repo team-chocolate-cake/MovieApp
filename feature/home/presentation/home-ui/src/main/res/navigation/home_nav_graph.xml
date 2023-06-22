@@ -36,7 +36,11 @@
         android:id="@+id/tvFragment"
         android:name="com.chocolatecake.ui.tvShow.TvFragment"
         android:label="TvFragment"
-        tools:layout="@layout/fragment_tv" />
+        tools:layout="@layout/fragment_tv" >
+        <action
+            android:id="@+id/action_tvFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.chocolatecake.ui.profile.ProfileFragment"
