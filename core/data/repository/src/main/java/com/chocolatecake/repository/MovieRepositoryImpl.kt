@@ -410,7 +410,7 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun addList(name: String): Boolean {
-        return movieService.addList(ListRequest(name=name ,)).isSuccessful
+        return movieService.addList(ListRequest(name = name)).isSuccessful
     }
 
     override suspend fun getLists(): List<ListEntity> {
@@ -448,16 +448,15 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun getDetailsList(listId: Int): List<MovieEntity> {
-        val result =  wrapApiCall { movieService.getDetailsList(listId)}.items
-        return    result?.map { item->
-            domainMovieItemListMapper.map (item)
-        }?: emptyList()
+        val result = wrapApiCall { movieService.getDetailsList(listId) }.items
+        return result?.map { item ->
+            domainMovieItemListMapper.map(item)
+        } ?: emptyList()
     }
 
 
     override suspend fun getListCreated(): List<ListCreatedEntity> {
-        return wrapApiCall { movieService.getLists() }.results.also {
-        }
+        return wrapApiCall { movieService.getLists() }.results
             ?.filterNotNull()?.let { lists ->
                 lists.map { input ->
                     ListCreatedEntity(
@@ -465,10 +464,10 @@ class MovieRepositoryImpl @Inject constructor(
                         itemCount = input.itemCount,
                         listType = input.listType,
                         name = input.name,
-                        posterPath = getDetailsList(input.id?:0).also {
-                        }.map { items ->
-                             items.imageUrl
-                        }
+                        posterPath = getDetailsList(input.id ?: 0)
+                            .map { items ->
+                                items.imageUrl
+                            }
                     )
                 }
             } ?: emptyList()
