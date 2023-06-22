@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.tv_details
 
 import android.view.LayoutInflater
+import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.bases.R
@@ -37,4 +38,8 @@ fun ChipGroup.setGenreChips(chips: List<TvDetailsUiState.UserListUi>, chipListen
         binding.listener = chipListener
         addView(binding.root, 0)
     }
+}
+@BindingAdapter(value=["app:emptyList"])
+fun View.emptyList(list: List<Any>): Int {
+    return if (list.isEmpty()) View.GONE else View.VISIBLE
 }

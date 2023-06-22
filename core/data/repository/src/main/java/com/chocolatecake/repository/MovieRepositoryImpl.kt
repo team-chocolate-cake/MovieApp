@@ -5,15 +5,16 @@ import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
+import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
-import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.AddMediaToListRequest
+import com.chocolatecake.remote.request.CreateUserListRequest
 import com.chocolatecake.remote.request.RateRequest
-import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
@@ -25,11 +26,11 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
+import com.chocolatecake.repository.mappers.domain.DomainStatusMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvDetailsCreditMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvDetailsReviewMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvDetailsSeasonMapper
-import com.chocolatecake.repository.mappers.domain.DomainTvRatingMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvShowMapper
 import com.chocolatecake.repository.mappers.domain.DomainUserListsMapper
 import com.chocolatecake.repository.mappers.domain.DomainYoutubeDetailsMapper
@@ -208,9 +209,9 @@ class MovieRepositoryImpl @Inject constructor(
             })
     }
 
-    override suspend fun rateTvShow(rate: Double, tvShowID: Int): TvRatingEntity {
+    override suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity {
         val newRate = RateRequest(value = rate)
-        return DomainTvRatingMapper().map(wrapApiCall {
+        return DomainStatusMapper().map(wrapApiCall {
             movieService.rateTvShow(
                 newRate,
                 tvShowID
@@ -239,15 +240,28 @@ class MovieRepositoryImpl @Inject constructor(
         return DomainYoutubeDetailsMapper().map(call)
     }
 
+
+    override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {
+        return DomainTvDetailsSeasonMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+    }
+
+
+    /// endregion
     override suspend fun getUserLists(): List<UserListEntity> {
         val call =
             wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
         return DomainUserListsMapper().map(call)
     }
 
-    override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {
-        return DomainTvDetailsSeasonMapper().map(wrapApiCall { movieService.getTvDetails(tvShowID) })
+    override suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity {
+        val addMediaRequest = AddMediaToListRequest(mediaId)
+        val call = wrapApiCall { movieService.postUserMedia(listId, addMediaRequest) }
+        return DomainStatusMapper().map(call)
     }
 
-    /// endregion
+    override suspend fun createUserList(listName: String): StatusEntity {
+        val newList = CreateUserListRequest(listName)
+        val call = wrapApiCall { movieService.createUserList(newList) }
+        return DomainStatusMapper().map(call)
+    }
 }

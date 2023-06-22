@@ -1,5 +1,7 @@
 package com.chocolatecake.remote.service
 
+import com.chocolatecake.remote.request.AddMediaToListRequest
+import com.chocolatecake.remote.request.CreateUserListRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RateRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
@@ -9,10 +11,10 @@ import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.StatusResponse
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
-import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
 import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
@@ -105,7 +107,7 @@ interface MovieService {
     @POST("tv/{tv_id}/rating?")
     suspend fun rateTvShow(
         @Body rateRequest: RateRequest, @Path("tv_id") tvShowId: Int,
-    ): Response<TvRatingRemoteDto>
+    ): Response<StatusResponse>
 
     @GET("tv/{tv_id}/reviews")
     suspend fun getTvShowReviews(
@@ -120,9 +122,18 @@ interface MovieService {
     @GET("tv/{tv_id}/videos")
     suspend fun getTvShowYoutubeVideoDetails(
         @Path("tv_id") tvShowId: Int
-    ):Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 
     @GET("account/account_id/lists")
-    suspend fun getUserLists():Response<DataWrapperResponse<UserListRemoteDto>>
+    suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
+
+    @POST("list/{list_id}/add_item")
+    suspend fun postUserMedia(
+        @Path("list_id") listId: Int,
+        @Body mediaId: AddMediaToListRequest
+    ): Response<StatusResponse>
+
+    @POST("list")
+    suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
 }

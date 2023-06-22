@@ -5,8 +5,8 @@ import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
+import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
-import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
@@ -42,13 +42,15 @@ interface MovieRepository {
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
 
-    suspend fun getTvDetailsInfo(tvShowID: Int ): TvDetailsInfoEntity
-    suspend fun getTvDetailsSeasons(tvShowID: Int ): List<SeasonEntity>
-    suspend fun getTvDetailsCredit(tvShowID: Int ): List<PeopleEntity>
-    suspend fun rateTvShow(rate: Double, tvShowID: Int ): TvRatingEntity
+    suspend fun getTvDetailsInfo(tvShowID: Int): TvDetailsInfoEntity
+    suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity>
+    suspend fun getTvDetailsCredit(tvShowID: Int): List<PeopleEntity>
+    suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity
     suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
-    suspend fun getTvShowRecommendations(tvShowID: Int):List<TvShowEntity>
+    suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity>
     suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity
 
-    suspend fun getUserLists():List<UserListEntity>
+    suspend fun getUserLists(): List<UserListEntity>
+    suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
+    suspend fun createUserList(listName:String):StatusEntity
 }

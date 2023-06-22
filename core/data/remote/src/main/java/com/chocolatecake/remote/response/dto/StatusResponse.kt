@@ -3,7 +3,7 @@ package com.chocolatecake.remote.response.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class TvRatingRemoteDto(
+data class StatusResponse(
     @SerializedName("success")
     val success: Boolean?,
     @SerializedName("status_code")

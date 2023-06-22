@@ -6,11 +6,13 @@ import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
+import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
-import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
+import com.chocolatecake.usecase.AddToUserListUseCase
+import com.chocolatecake.usecase.CreateUserListUseCase
 import com.chocolatecake.usecase.GetTVDetailsInfoUseCase
 import com.chocolatecake.usecase.GetTvDetailsCreditUseCase
 import com.chocolatecake.usecase.GetTvDetailsReviewsUseCase
@@ -45,6 +47,8 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvShowYoutubeDetailsUseCase: GetTvShowYoutubeDetailsUseCase,
     private val getUserListsUseCase: GetUserListsUseCase,
     private val userListsUiMapper: UserListsUiMapper,
+    private val addToUserListUseCase: AddToUserListUseCase,
+    private val createUserListUseCase: CreateUserListUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     private val tvShowId =
@@ -54,6 +58,7 @@ class TvDetailsViewModel @Inject constructor(
         getData()
     }
 
+
     private fun getData() {
         getYoutubeDetails()
         getTvShowInfo()
@@ -61,6 +66,12 @@ class TvDetailsViewModel @Inject constructor(
         getTvSeasons()
         getTvRecommendations()
         getTvReviews()
+    }
+
+    fun emptyUserLists() {
+        _state.update {
+            it.copy(userLists = emptyList())
+        }
     }
 
     //region info
@@ -186,9 +197,6 @@ class TvDetailsViewModel @Inject constructor(
 
     }
 
-    fun doSomething() {
-        Log.i("chip", "its working")
-    }
 
     fun onRatingSubmit() {
         tryToExecute(
@@ -201,9 +209,9 @@ class TvDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onRatingSuccess(tvRatingEntity: TvRatingEntity) {
+    private fun onRatingSuccess(statusEntity: StatusEntity) {
         sendEvent(TvDetailsUiEvent.ApplyRating("rating was successful"))
-        val item = TvRatingUiMapper().map(tvRatingEntity)
+        val item = TvRatingUiMapper().map(statusEntity)
         _state.update {
             it.copy(
                 ratingSuccess = item.ratingSuccess
@@ -252,6 +260,38 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
         Log.i("lists", "user lists => ${state.value.userLists}")
+    }
+
+    fun onDone(listsId: List<Int>) {
+        listsId.forEach { id ->
+            tryToExecute(
+                call = { addToUserListUseCase(id, tvShowId) },
+                onSuccess = ::onDoneSuccess,
+                onError = {
+                    Log.i("chip", "something went wrong")
+                }
+            )
+        }
+
+    }
+
+    private fun onDoneSuccess(statusEntity: StatusEntity) {
+        sendEvent(TvDetailsUiEvent.OnDoneAdding("adding was successful"))
+    }
+
+    fun createUserNewList(listName: String) {
+        tryToExecute(
+            call = { createUserListUseCase(listName) },
+            onSuccess = ::onCreateUserNewList,
+            onError = {
+                sendEvent(TvDetailsUiEvent.onCreateNewList("something went wrong"))
+            }
+        )
+    }
+
+    private fun onCreateUserNewList(statusEntity: StatusEntity) {
+        sendEvent(TvDetailsUiEvent.onCreateNewList("New List Was Added Successfully"))
+        getUserLists()
     }
     //endregion
 

@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,6 +46,8 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnShowMoreRecommended -> showSnackBar("Show More Recommended")
             is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
             is TvDetailsUiEvent.OnSaveButtonClick -> showAddToListBottomSheet()
+            is TvDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
+            is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
         }
     }
 
@@ -64,6 +67,7 @@ class TvDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
+                Log.i("recommended","list => ${state.recommended}")
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),
@@ -127,8 +131,13 @@ class TvDetailsFragment :
         }
     }
 
-    override fun onClickCreate() {
-        viewModel.doSomething()
+    override fun onClickCreate(listName:String) {
+        viewModel.createUserNewList(listName)
     }
+
+    override fun onDone(listsId: List<Int>) {
+        viewModel.onDone(listsId)
+    }
+
 
 }
