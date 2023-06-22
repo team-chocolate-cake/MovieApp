@@ -32,7 +32,15 @@ class LoginViewModel @Inject constructor(
                 LoginError.PASSWORD_ERROR -> updateStateToPasswordError()
                 LoginError.REQUEST_ERROR -> updateStateToRequestError()
                 LoginError.SUCCESS -> updateStateToSuccessLogin()
-                else -> {}
+                LoginError.NO_INPUT_ERRORS -> {
+                    _state.update {
+                        it.copy(
+                            userNameError = null,
+                            passwordError = null,
+                            isLoading = false
+                        )
+                    }
+                }
             }
             _state.update { it.copy(isLoading = false) }
         }
@@ -43,11 +51,11 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun updateStateToUserNameError() {
-        _state.update { it.copy(userNameError = stringsRes.usernameIsRequired) }
+        _state.update { it.copy(userNameError = stringsRes.usernameIsRequired, isLoading = false) }
     }
 
     private fun updateStateToPasswordError() {
-        _state.update { it.copy(passwordError = stringsRes.passwordIsRequired) }
+        _state.update { it.copy(passwordError = stringsRes.passwordIsRequired, isLoading = false) }
     }
 
     private fun updateStateToSuccessLogin() {
