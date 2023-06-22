@@ -51,7 +51,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
     private fun changeAppTheme() {
         val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val switchButtonTheme = binding.switchBottonTheme
-
         val savedThemeState = sharedPreferences.getBoolean(PREF_THEME_STATE, false)
         switchButtonTheme.isChecked = savedThemeState
 

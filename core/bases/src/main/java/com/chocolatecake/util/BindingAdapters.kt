@@ -26,6 +26,16 @@ fun View.isVisible(isVisible: Boolean?) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenNotLoggedIn"])
+fun View.hideWhenNotLoggedIn(hideWhenNotLoggedIn: Boolean?) {
+    if (hideWhenNotLoggedIn == false) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.INVISIBLE
+    }
+}
+
+
 @BindingAdapter("app:setTipError")
 fun EditText.setTipError(errorMessage: String?) {
     if (errorMessage == null) return

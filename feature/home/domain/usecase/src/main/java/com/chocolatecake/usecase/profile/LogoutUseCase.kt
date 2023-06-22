@@ -9,9 +9,9 @@ class LogoutUseCase @Inject constructor(
     suspend operator fun invoke(): Boolean {
         return try {
             authRepository.logout()
-            true
-        } catch (_: Throwable) {
             false
+        } catch (_: Throwable) {
+            true
         }
     }
 }

@@ -9,6 +9,7 @@ import com.chocolatecake.usecase.profile.GetAccountDetailsUseCase
 import com.chocolatecake.usecase.profile.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +33,7 @@ class ProfileViewModel @Inject constructor(
                     username = profileEntity.username,
                     avatarUrl = profileEntity.avatarUrl,
                     error = null,
-                    isLogout = false
+                    isLoggedIn = true
                 )
             }
         }
@@ -60,8 +61,8 @@ class ProfileViewModel @Inject constructor(
 
     override fun onClickLogout() {
         viewModelScope.launch {
-            _state.update { it.copy(isLogout = true) }
-            if (_state.value.isLogout == logoutUseCase()) {
+            _state.update { it.copy(isLoggedIn = false) }
+            if (_state.value.isLoggedIn == logoutUseCase()) {
                 sendEvent(ProfileUiEvent.LogoutEvent)
             }
         }

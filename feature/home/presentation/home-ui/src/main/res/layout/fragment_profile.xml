@@ -15,6 +15,8 @@
 
 
 
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -252,14 +254,16 @@
             app:track="@drawable/switch_track" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/when_user_loggedin"
+            android:id="@+id/when_user_not_loggedin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="button_login,
-            image_view_login,text_view_login_title" />
+            image_view_login,text_view_login_title"
+            app:hideWhenNotLoggedIn="@{viewModel.state.loggedIn}"
+            />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/when_user_not_loggedin"
+            android:id="@+id/when_user_loggedin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="image_view_profile,
@@ -267,7 +271,9 @@
             text_view_watch_history,
             text_view_watchlist,text_view_mylists,
             text_view_popcorn_puzzles,
-            text_view_theme,switch_botton_theme,text_view_logout" />
+            text_view_theme,switch_botton_theme,text_view_logout"
+            app:isVisible="@{viewModel.state.loggedIn}"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
