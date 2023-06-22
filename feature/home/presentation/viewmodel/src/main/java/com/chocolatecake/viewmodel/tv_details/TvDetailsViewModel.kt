@@ -9,6 +9,7 @@ import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvRatingEntity
 import com.chocolatecake.entities.TvShowEntity
+import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.usecase.GetTVDetailsInfoUseCase
 import com.chocolatecake.usecase.GetTvDetailsCreditUseCase
@@ -16,15 +17,17 @@ import com.chocolatecake.usecase.GetTvDetailsReviewsUseCase
 import com.chocolatecake.usecase.GetTvDetailsSeasonsUseCase
 import com.chocolatecake.usecase.GetTvShowRecommendationsUseCase
 import com.chocolatecake.usecase.GetTvShowYoutubeDetailsUseCase
+import com.chocolatecake.usecase.GetUserListsUseCase
 import com.chocolatecake.usecase.RateTvShowUseCase
 import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsInfoUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsReviewUiMapper
-import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsSeasonMapper
+import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsSeasonUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvRatingUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvShowUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvShowYoutubeVideoDetailsUiMapper
+import com.chocolatecake.viewmodel.tv_details.mappers.UserListsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -32,6 +35,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TvDetailsViewModel @Inject constructor(
     private val tvDetailsInfoUiMapper: TvDetailsInfoUiMapper,
+    private val tvShowUiMapper: TvShowUiMapper,
     private val tvDetailsInfoUseCase: GetTVDetailsInfoUseCase,
     private val getTvDetailsCreditUseCase: GetTvDetailsCreditUseCase,
     private val getTvDetailsSeasonsUseCase: GetTvDetailsSeasonsUseCase,
@@ -39,7 +43,8 @@ class TvDetailsViewModel @Inject constructor(
     private val getTvDetailsReviewsUseCase: GetTvDetailsReviewsUseCase,
     private val getTvShowRecommendationsUseCase: GetTvShowRecommendationsUseCase,
     private val getTvShowYoutubeDetailsUseCase: GetTvShowYoutubeDetailsUseCase,
-    private val tvShowUiMapper: TvShowUiMapper,
+    private val getUserListsUseCase: GetUserListsUseCase,
+    private val userListsUiMapper: UserListsUiMapper,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     private val tvShowId =
@@ -143,7 +148,7 @@ class TvDetailsViewModel @Inject constructor(
 
     private fun onTvDetailsSeasonSuccess(seasons: List<SeasonEntity>) {
         updateLoading(false)
-        val item = TvDetailsSeasonMapper().map(seasons)
+        val item = TvDetailsSeasonUiMapper().map(seasons)
         _state.update { it.copy(seasons = item.seasons) }
     }
 
@@ -178,6 +183,11 @@ class TvDetailsViewModel @Inject constructor(
                 userRating = rate
             )
         }
+
+    }
+
+    fun doSomething(){
+        Log.i("chip","its working")
     }
 
     fun onRatingSubmit() {
@@ -223,6 +233,28 @@ class TvDetailsViewModel @Inject constructor(
     }
     //endregion
 
+    //region user lists
+    fun getUserLists(){
+        tryToExecute(
+            call = {getUserListsUseCase()},
+            onSuccess = ::onGetUserListsUseCase,
+            onError = {
+                Log.i("lists","something went wrong $it")
+            }
+        )
+    }
+
+    private fun onGetUserListsUseCase(userListsEntity:List<UserListEntity>){
+        val item = UserListsUiMapper().map(userListsEntity)
+        _state.update {
+            it.copy(
+                userLists = item.userLists
+            )
+        }
+        Log.i("lists","user lists => ${state.value.userLists}")
+    }
+    //endregion
+
     //region events
     override fun onRateButtonClick() {
         sendEvent(TvDetailsUiEvent.Rate)
@@ -250,6 +282,10 @@ class TvDetailsViewModel @Inject constructor(
 
     override fun onClickPlayButton() {
         sendEvent(TvDetailsUiEvent.PlayButton(state.value.youtubeKeyId))
+    }
+
+    override fun onChipClick(id: Int) {
+        Log.i("chip","id = $id")
     }
 
     fun onBack() {

@@ -10,10 +10,11 @@ import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
-import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.TvRatingRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
+import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -121,4 +122,7 @@ interface MovieService {
         @Path("tv_id") tvShowId: Int
     ):Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
+
+    @GET("account/account_id/lists")
+    suspend fun getUserLists():Response<DataWrapperResponse<UserListRemoteDto>>
 }
