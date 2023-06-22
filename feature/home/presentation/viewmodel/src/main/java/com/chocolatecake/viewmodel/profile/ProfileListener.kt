@@ -8,4 +8,5 @@ interface ProfileListener {
     fun onClickPopcornPuzzles()
     fun onClickLogout()
     fun onUserNotLoggedIn()
+    fun ocClickLogIn()
 }

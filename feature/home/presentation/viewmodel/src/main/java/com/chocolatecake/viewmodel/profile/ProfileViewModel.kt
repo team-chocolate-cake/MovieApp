@@ -88,4 +88,8 @@ class ProfileViewModel @Inject constructor(
 
         }
     }
+
+    override fun ocClickLogIn() {
+        sendEvent(ProfileUiEvent.LoginEvent)
+    }
 }

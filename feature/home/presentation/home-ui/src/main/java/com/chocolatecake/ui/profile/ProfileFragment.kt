@@ -41,8 +41,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
             }
             ProfileUiEvent.LogoutEvent -> {
                 showSnackBar("Logout!")
-                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToHomeFragment())
             }
+            ProfileUiEvent.LoginEvent->findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
         }
     }
 

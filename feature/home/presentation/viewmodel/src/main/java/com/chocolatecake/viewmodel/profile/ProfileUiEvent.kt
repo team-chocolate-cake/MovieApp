@@ -7,4 +7,5 @@ sealed interface ProfileUiEvent{
     object MyListsEvent : ProfileUiEvent
     object PopcornPuzzlesEvent : ProfileUiEvent
     object LogoutEvent : ProfileUiEvent
+    object LoginEvent:ProfileUiEvent
 }
