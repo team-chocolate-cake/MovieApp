@@ -4,11 +4,10 @@ import androidx.paging.Pager
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.TvEntity
-import com.chocolatecake.entities.ProfileEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
-import com.chocolatecake.entities.TVShowsEntity
 
 
 interface MovieRepository {
@@ -32,6 +31,7 @@ interface MovieRepository {
     suspend fun refreshPopularPeople()
 
     suspend fun getSearchHistory(keyword: String): List<String>
+    suspend fun searchHistory(): List<String>
     suspend fun insertSearchHistory(keyword: String)
     suspend fun clearAllSearchHistory()
     suspend fun deleteSearchHistory(keyword: String)

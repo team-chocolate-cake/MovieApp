@@ -29,5 +29,5 @@ data class SearchUiState(
     val isFailure: Boolean get() =
         error?.isNotEmpty() == true
     val hideResult: Boolean get() =
-        searchMediaResult.isNullOrEmpty() || searchPeopleResult.isNullOrEmpty()
+        searchMediaResult.isNullOrEmpty() && searchPeopleResult.isNullOrEmpty()
 }

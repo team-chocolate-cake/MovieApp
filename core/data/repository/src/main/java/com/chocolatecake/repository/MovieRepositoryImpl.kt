@@ -148,6 +148,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun searchHistory(): List<String> {
+        return movieDao.getSearchHistory().map { it.keyword }
+    }
+
     override suspend fun insertSearchHistory(keyword: String) {
         return movieDao.insertSearchHistory(SearchHistoryLocalDto(keyword))
     }
