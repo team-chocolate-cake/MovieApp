@@ -10,6 +10,8 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.chocolatecake.bases.BaseAdapter
+import com.chocolatecake.ui.home.HomeItem
+import com.chocolatecake.ui.home.HomeItemType
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewNowPlayingBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewPopularMoviesBinding
@@ -17,8 +19,6 @@ import com.chocolatecake.ui.home.databinding.HomeRecyclerviewPopularPeopleBindin
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewSliderBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTopRatedBinding
 import com.chocolatecake.ui.home.databinding.HomeRecyclerviewTrendingBinding
-import com.chocolatecake.ui.home.HomeItem
-import com.chocolatecake.ui.home.HomeItemType
 import com.chocolatecake.viewmodel.home.HomeListener
 import java.lang.Math.abs
 
@@ -134,13 +134,13 @@ class HomeAdapter(
     }
 
     private fun registerPageChangeCallback(viewPager: ViewPager2) {
+        val handler = Handler(Looper.myLooper()!!)
+        val runnable = Runnable { viewPager.currentItem += 1 }
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val handler = Handler(Looper.myLooper()!!)
-                val runnable = Runnable { viewPager.currentItem += 1 }
                 handler.removeCallbacks(runnable)
-                handler.postDelayed(runnable, 2000)
+                handler.postDelayed(runnable, 6000)
             }
         })
     }
