@@ -128,12 +128,10 @@
         <item name="android:imeOptions">flagNoFullscreen</item>
         <item name="android:inputType">text</item>
         <item name="android:padding">16sp</item>
-
     </style>
 
-    <style name="TextStyle.LabelMedium.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+    <style name="TextStyle.BodySmall.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="android:textColor">@color/chip_text_color</item>
-        <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="checkedIconVisible">false</item>
         <item name="chipStartPadding">@dimen/spacing_medium_16dp</item>
         <item name="chipEndPadding">@dimen/spacing_medium_16dp</item>
