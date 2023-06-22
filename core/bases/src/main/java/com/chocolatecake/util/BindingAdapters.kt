@@ -48,6 +48,7 @@ fun ImageView.loadImage(imageUrl: String?) {
             .into(this)
     }
 }
+
 @BindingAdapter(value = ["app:hideResult", "app:query"])
 fun <T> View.hideResult(list: List<T>?, text: String) {
     if (list.isNullOrEmpty() && text.isNotBlank()) {
@@ -76,28 +77,37 @@ fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
 }
 
 @BindingAdapter(value = ["app:showWhenQueryEmpty"])
-fun View.showWhenEmptyData(query: String?){
-    if(query?.isEmpty() == true){
+fun View.showWhenEmptyData(query: String?) {
+    if (query?.isEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter(value = ["app:showWhenNoResult"])
-fun <T> View.showWhenNoResult(list: List<T>?){
-    if (list.isNullOrEmpty()){
+fun <T> View.showWhenNoResult(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
     }
 }
 
 @BindingAdapter("app:showWhenError")
-fun <T> View.showWhenError(list: List<T>?){
-    if(list?.isNotEmpty() == true){
+fun <T> View.showWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
         this.visibility = View.VISIBLE
-    }else{
+    } else {
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("app:hideWhenError")
+fun <T> View.hideWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
     }
 }
