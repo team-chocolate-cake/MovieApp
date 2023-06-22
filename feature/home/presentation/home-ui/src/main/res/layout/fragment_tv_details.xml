@@ -60,25 +60,27 @@
                     <TextView
                         android:id="@+id/text_view_tool_bar_name"
                         style="@style/TextStyle.TitleMedium"
-                        android:layout_width="wrap_content"
+                        android:layout_width="250dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="@dimen/spacing_tiny_4dp"
                         android:text="@{viewModel.state.info.name}"
                         android:textColor="@color/on_background_87"
                         android:visibility="invisible" />
 
-                    <ImageButton
-                        android:id="@+id/saveButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@null"
-                        android:backgroundTint="@color/on_primary"
-                        android:onClick="@{()-> viewModel.onClickSaveButton()}"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_save" />
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/saveButton"-->
+<!--                        android:layout_width="24dp"-->
+<!--                        android:layout_height="24dp"-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:background="@null"-->
+<!--                        android:backgroundTint="@color/on_primary"-->
+<!--                        android:onClick="@{()-> viewModel.onClickSaveButton()}"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/ic_save" />-->
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
