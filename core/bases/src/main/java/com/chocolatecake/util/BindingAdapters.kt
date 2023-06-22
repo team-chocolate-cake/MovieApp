@@ -51,7 +51,14 @@ fun <T> View.hideResult(list: List<T>?, text: String) {
         this.visibility = View.GONE
     }
 }
-
+@BindingAdapter(value = ["app:hideWhenEmpty"])
+fun <T> View.hideWhenEmpty(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
+    }
+}
 @BindingAdapter(value = ["app:loading"])
 fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
     if (isLoading == true) {
@@ -88,23 +95,3 @@ fun <T> View.showWhenError(list: List<T>?) {
     }
 }
 
-@BindingAdapter("app:chips")
-fun ChipGroup.setChips(chips: List<String>) {
-    removeAllViews()
-    val inflater = LayoutInflater.from(context)
-    for (chipText in chips) {
-        val chip = inflater.inflate(R.layout.tv_details_item_chip, this, false) as Chip
-        chip.apply {
-            text = chipText
-            isEnabled = false
-        }
-        addView(chip)
-    }
-}
-
-@BindingAdapter("app:onRatingChanged")
-fun RatingBar.setOnRatingChangedListener(onRatingChanged: ((Float) -> Unit)) {
-    setOnRatingBarChangeListener { _, rating, _ ->
-        onRatingChanged.invoke(rating)
-    }
-}
