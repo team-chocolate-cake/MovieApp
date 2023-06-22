@@ -3,7 +3,7 @@ package com.chocolatecake.remote.response.movieDetails
 
 import com.google.gson.annotations.SerializedName
 
-data class RatingDto(
+data class StatusResponse(
     @SerializedName("status_code")
     val statusCode: Int?,
     @SerializedName("status_message")
