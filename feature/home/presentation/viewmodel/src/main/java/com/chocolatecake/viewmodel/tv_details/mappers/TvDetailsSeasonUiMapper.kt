@@ -6,7 +6,7 @@ import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import javax.inject.Inject
 
-class TvDetailsSeasonMapper @Inject constructor() : Mapper<List<SeasonEntity>, TvDetailsUiState> {
+class TvDetailsSeasonUiMapper @Inject constructor() : Mapper<List<SeasonEntity>, TvDetailsUiState> {
     override fun map(input: List<SeasonEntity>): TvDetailsUiState {
         return TvDetailsUiState(
             seasons = input.map { season ->
