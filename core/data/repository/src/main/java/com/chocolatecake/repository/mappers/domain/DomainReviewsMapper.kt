@@ -1,9 +1,7 @@
 package com.chocolatecake.repository.mappers.domain
 
-import com.chocolatecake.entities.movieDetails.RatingResponseEntity
 import com.chocolatecake.entities.movieDetails.ReviewEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
-import com.chocolatecake.remote.response.movieDetails.RatingDto
 import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
