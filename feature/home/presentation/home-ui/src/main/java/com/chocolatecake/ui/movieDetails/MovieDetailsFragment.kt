@@ -12,6 +12,8 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
 import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem
+import com.chocolatecake.ui.tv_details.AddToListBottomSheet
+import com.chocolatecake.ui.tv_details.CreateListener
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
@@ -22,12 +24,13 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class MovieDetailsFragment :
     BaseFragment<FragmentMovieDetailsBinding, MovieDetailsUiState, MovieDetailsUiEvent>(),
-    BottomSheetDismissListener {
+    BottomSheetDismissListener, CreateListener {
 
     override val layoutIdFragment: Int = R.layout.fragment_movie_details
     override val viewModel: MovieDetailsViewModel by viewModels()
 
     private lateinit var movieDetailsAdapter: MovieDetailsAdapter
+    private lateinit var addToListBottomSheet: AddToListBottomSheet
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -91,15 +94,16 @@ class MovieDetailsFragment :
                 )
             }
 
-            is MovieDetailsUiEvent.SaveToList -> {
-                //todo
-            }
+            is MovieDetailsUiEvent.SaveToList -> showAddToListBottomSheet()
 
             is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
 
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
+
+            is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
+            else -> {}
         }
     }
 
@@ -116,6 +120,7 @@ class MovieDetailsFragment :
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingUiState(rate)
     }
+
     private fun collapseState() {
         var pos = 0
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
@@ -144,5 +149,16 @@ class MovieDetailsFragment :
             }
 
         }
+    }
+    private fun showAddToListBottomSheet() {
+        addToListBottomSheet = AddToListBottomSheet(this)
+        addToListBottomSheet.show(childFragmentManager, "BOTTOM")
+    }
+    override fun onClickCreate(listName:String) {
+        viewModel.createUserNewList(listName)
+    }
+
+    override fun onDone(listsId: List<Int>) {
+        viewModel.onDone(listsId)
     }
 }
