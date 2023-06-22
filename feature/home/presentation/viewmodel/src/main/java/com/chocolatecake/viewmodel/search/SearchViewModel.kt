@@ -113,7 +113,7 @@ class SearchViewModel @Inject constructor(
     // region tv
     fun onSearchForTv() {
         tryToExecute(
-            call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
+            call = { searchTvsUseCase(query.value, _state.value.selectedGenresId) },
             mapper = tvUiMapper,
             onSuccess = ::onSuccessTv,
             onError = ::onError
@@ -139,7 +139,7 @@ class SearchViewModel @Inject constructor(
             call = {
                 searchMoviesUseCase(
                     query.value,
-                    _state.value.selectedMovieGenresId
+                    _state.value.selectedGenresId
                 )
             },
             mapper = movieUiMapper,
@@ -155,7 +155,7 @@ class SearchViewModel @Inject constructor(
                 searchMediaResult = mediaUIState,
                 isSelectedPeople = false,
                 isLoading = false,
-                error = null
+                error = null,
             )
         }
     }
@@ -174,6 +174,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun getAllGenresTv() {
+        _state.update { it.copy(genres = emptyList()) }
         tryToExecute(
             call = { getAllGenresTvsUseCase() },
             onSuccess = ::onSuccessGenres,
@@ -182,6 +183,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun getAllGenresMovies() {
+        _state.update { it.copy(genres = emptyList()) }
         tryToExecute(
             call = { getAllGenresMoviesUseCase() },
             onSuccess = ::onSuccessGenres,
@@ -195,43 +197,45 @@ class SearchViewModel @Inject constructor(
                 genreEntities.map { genre ->
                     genreUiStateMapper.map(
                         genre,
-                        genre.genreID == it.selectedMovieGenresId
+                        genre.genreID == it.selectedGenresId
                     )
                 }
             it.copy(
-                genresMovie = updatedGenres,
+                genres = updatedGenres,
                 isLoading = false,
-                error = null
+                error = null,
             )
         }
     }
 
     override fun onClickGenre(genresId: Int) {
-        val updatedGenres = _state.value.genresMovie.map { genre ->
+        val updatedGenres = _state.value.genres.map { genre ->
             genre.copy(isSelected = genre.genreId == genresId)
         }
         _state.update {
             it.copy(
-                selectedMovieGenresId = genresId,
+                selectedGenresId = genresId,
                 isLoading = false,
-                genresMovie = updatedGenres
+                genres = updatedGenres
             )
         }
     }
 
     override fun showResultMovie() {
         sendEvent(SearchUiEvent.ShowMovieResult)
+        _state.update { it.copy(selectedGenresId = null) }
     }
 
     override fun showResultTv() {
         sendEvent(SearchUiEvent.ShowTvResult)
+        _state.update { it.copy(selectedGenresId = null) }
     }
 
     override fun showResultPeople() {
         sendEvent(SearchUiEvent.ShowPeopleResult)
     }
 
-    override fun onClickMovie(id: Int) {
+    override fun onClickMedia(id: Int) {
         if (_state.value.mediaType == SearchUiState.SearchMedia.MOVIE) {
             sendEvent(SearchUiEvent.NavigateToMovie(id))
         } else if (_state.value.mediaType == SearchUiState.SearchMedia.TV) {

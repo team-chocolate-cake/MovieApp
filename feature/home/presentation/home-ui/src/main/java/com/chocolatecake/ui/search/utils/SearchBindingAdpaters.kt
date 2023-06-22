@@ -13,7 +13,7 @@ import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter(value = ["app:setGenres", "app:listener", "app:chipSelected"])
 fun ChipGroup.setGenres(
-    items: List<SearchUiState.GenresMoviesUiState>?,
+    items: List<SearchUiState.GenresUiState>?,
     listener: SearchListener,
     chipSelected: Int?
 ) {
