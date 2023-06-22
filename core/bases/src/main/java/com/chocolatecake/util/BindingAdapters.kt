@@ -104,3 +104,12 @@ fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
         }
     }
 }
+
+@BindingAdapter("app:isVisibleOrGone")
+fun <T> View.isVisibleOrGone(value:Boolean){
+    if(value){
+        this.visibility = View.VISIBLE
+    }else{
+        this.visibility = View.GONE
+    }
+}
