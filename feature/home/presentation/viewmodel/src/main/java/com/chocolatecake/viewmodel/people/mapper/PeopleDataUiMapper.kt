@@ -5,7 +5,8 @@ import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.viewmodel.people.PeopleDetailsUiState
 import javax.inject.Inject
 
-class PeopleDataUiMapper @Inject constructor():Mapper<PeopleDataEntity, PeopleDetailsUiState.PeopleDataUiState> {
+class PeopleDataUiMapper @Inject constructor() :
+    Mapper<PeopleDataEntity, PeopleDetailsUiState.PeopleDataUiState> {
     override fun map(input: PeopleDataEntity): PeopleDetailsUiState.PeopleDataUiState {
         return PeopleDetailsUiState.PeopleDataUiState(
             input.id,
@@ -13,7 +14,10 @@ class PeopleDataUiMapper @Inject constructor():Mapper<PeopleDataEntity, PeopleDe
             imageUrl = input.imageUrl,
             input.placeOfBirth,
             input.gender,
-            input.biography
-        )
+            acting = input.acting,
+            num_movies = input.num_movies,
+            input.biography,
+
+            )
     }
 }

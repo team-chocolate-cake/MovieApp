@@ -26,7 +26,7 @@ private lateinit var mediaVerticalAdapter: MediaVerticalAdapter
         super.onViewCreated(view, savedInstanceState)
         viewModel.getTvShowsByPeople(35)
         viewModel.getPersonData(35)
-        viewModel.getTvShowsByPeople(35)
+        viewModel.getMoviesByPeople(35)
 
         setAdapters()
         getData()

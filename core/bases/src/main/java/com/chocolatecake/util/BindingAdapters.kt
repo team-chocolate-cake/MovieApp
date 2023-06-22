@@ -3,6 +3,7 @@ package com.chocolatecake.util
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -80,5 +81,18 @@ fun <T> View.showWhenError(list: List<T>?){
         this.visibility = View.VISIBLE
     }else{
         this.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("convertGenderText")
+fun TextView.convertGenderText(gender: String?) {
+    text = if (gender != null) {
+        when (gender) {
+            "1" -> "female"
+            "2" -> "male"
+            else -> ""
+        }
+    } else {
+        ""
     }
 }

@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.people
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.people.GetMoviesByPeopleUseCase
@@ -29,7 +30,7 @@ class PeopleDetailsViewModel @Inject constructor(
 ) : BaseViewModel<PeopleDetailsUiState, PeopleDetailsUiEvent>(PeopleDetailsUiState()),
     MediaListener {
 
-
+var num_people_movies =""
 
     fun getPersonData(personId: Int) {
         viewModelScope.launch {
@@ -51,8 +52,8 @@ class PeopleDetailsViewModel @Inject constructor(
                 peopleData = peopleDataUiState,
                 isLoading = false
             )
-        }
     }
+        Log.e("num_people_movies",num_people_movies)  }
 
     private fun onErrorGetPersonData(e: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
@@ -74,9 +75,11 @@ class PeopleDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 Movies = moviesUiState,
-                isLoading = false
+                isLoading = false,
             )
         }
+        num_people_movies=moviesUiState.size.toString()
+        Log.e("num_people_movies",num_people_movies)
     }
 
     private fun onErrorGetMoviesByPeople(e: Throwable) {

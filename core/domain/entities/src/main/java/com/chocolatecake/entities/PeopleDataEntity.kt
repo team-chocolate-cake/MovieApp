@@ -5,6 +5,8 @@ data class PeopleDataEntity(
     val name: String,
     val imageUrl: String,
     val placeOfBirth: String,
-    val gender: Int,
-    val biography: String
+    val gender: String,
+    val biography: String,
+    val acting: String,
+    val num_movies: String,
     )

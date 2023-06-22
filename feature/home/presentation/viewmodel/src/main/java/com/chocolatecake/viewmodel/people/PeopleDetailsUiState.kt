@@ -4,7 +4,7 @@ import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 
 
 data class PeopleDetailsUiState(
-    val peopleData :PeopleDataUiState =PeopleDataUiState(0,"","","",0,"") ,
+    val peopleData :PeopleDataUiState =PeopleDataUiState(0,"","","","","","","") ,
     val Movies: List<MediaVerticalUIState> = emptyList(),
     val TvShows: List<MediaVerticalUIState> = emptyList(),
     val onErrors: List<String> = emptyList(),
@@ -28,7 +28,8 @@ data class PeopleDetailsUiState(
         val name: String,
         val imageUrl: String,
         val placeOfBirth: String,
-        val gender: Int,
-        val biography: String
-    )
+        val gender: String,
+        val acting: String,
+        val num_movies: String,
+        val biography: String    )
 }
