@@ -13,6 +13,11 @@ import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 
 interface MovieRepository {
 
+
+    //showMore
+    suspend fun getPopularMoviesPaging(): Pager<Int, MovieEntity>
+    suspend fun getTopRateMoviesPaging(): Pager<Int, MovieEntity>
+    suspend fun getTrendingMoviesPaging(): Pager<Int, MovieEntity>
     suspend fun getPopularMovies(): List<MovieEntity>
     suspend fun refreshPopularMovies()
 

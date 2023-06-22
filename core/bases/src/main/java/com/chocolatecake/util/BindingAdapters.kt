@@ -4,6 +4,7 @@ import android.app.UiModeManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toolbar
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -140,5 +141,12 @@ fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
         } else {
             uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
         }
+    }
+}
+
+@BindingAdapter("app:onClickNavigation")
+fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit) {
+    this.setNavigationOnClickListener {
+        onClick()
     }
 }

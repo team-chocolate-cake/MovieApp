@@ -10,6 +10,7 @@ import com.chocolatecake.ui.home.databinding.FragmentHomeBinding
 import com.chocolatecake.viewmodel.home.HomeUiEvent
 import com.chocolatecake.viewmodel.home.HomeUiState
 import com.chocolatecake.viewmodel.home.HomeViewModel
+import com.chocolatecake.viewmodel.showmore.ShowMoreType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,7 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
             HomeUiEvent.ClickShowMore -> {
-                // todo: navigation
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(showMoreType = ShowMoreType.POPULAR_MOVIES))
             }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
@@ -110,6 +111,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
                     )
                 )
             }
+
         }
     }
 }

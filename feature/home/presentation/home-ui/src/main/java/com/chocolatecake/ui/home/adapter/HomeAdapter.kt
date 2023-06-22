@@ -189,6 +189,7 @@ class HomeAdapter(
         val adapter = PopularMoviesAdapter(popularMovies.list, listener)
         holder.binding.recyclerViewPopularMovies.adapter = adapter
         holder.binding.item = popularMovies
+        holder.binding.listener=listener
     }
 
 
