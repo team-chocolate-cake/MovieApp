@@ -13,8 +13,18 @@ data class MovieDetailsUiState(
     val reviewsDetails: ReviewDetailsUiState = ReviewDetailsUiState(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
-    val userRating: Float = 0f
-)
+    val userRating: Float = 0f,
+    val userLists: List<UserListUi> = emptyList(),
+    val userSelectedLists: List<Int> = emptyList()
+) {
+    data class UserListUi(
+        val id: Int = 0,
+        val name: String = "",
+        val isLoading: Boolean = true,
+        val error: Boolean = false
+    )
+}
+
 
 data class UpperUiState(
     val id: Int = 0,
