@@ -11,12 +11,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/season_appbar"
                 android:layout_width="match_parent"
-                android:layout_height="@attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
                 android:elevation="2dp"
                 app:titleTextAppearance="@style/TextStyle.TitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
@@ -27,30 +27,19 @@
                 app:titleTextColor="@color/on_background_87"
                 app:title="@{viewModel.state.name}" />
 
-            <TextView
-                android:id="@+id/text_view_episodes_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/episodes_title"
-                android:layout_marginTop="@dimen/spacing_medium_16dp"
-                android:layout_marginStart="@dimen/spacing_medium_16dp"
-                android:textColor="@color/on_background_87"
-                style="@style/TextStyle.TitleMedium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_episodes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_tiny_4dp"
                 android:orientation="vertical"
-                app:items="@{viewModel.state.episodes}"
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.empty}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_episodes_title"
-                tools:listitem="@layout/item_episode_horizontal"/>
+                app:layout_constraintTop_toBottomOf="@id/season_appbar"
+                tools:listitem="@layout/item_episode_horizontal" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

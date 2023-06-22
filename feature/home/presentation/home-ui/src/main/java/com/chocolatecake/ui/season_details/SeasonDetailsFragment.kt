@@ -14,14 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SeasonDetailsFragment () : BaseFragment
-<FragmentSeasonDetailsBinding, SeasonDetailsUiState, SeasonDetailsUiEvent>() {
+class SeasonDetailsFragment
+    : BaseFragment<FragmentSeasonDetailsBinding, SeasonDetailsUiState, SeasonDetailsUiEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_season_details
-    override val viewModel : SeasonDetailsViewModel by viewModels()
+    override val viewModel: SeasonDetailsViewModel by viewModels()
 
     private val seasonDetailsAdapter: SeasonDetailsAdapter
-            by lazy { SeasonDetailsAdapter(mutableListOf(),viewModel) }
+            by lazy { SeasonDetailsAdapter(mutableListOf(), viewModel) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,24 +29,21 @@ class SeasonDetailsFragment () : BaseFragment
         collectChange()
     }
 
-    private fun collectChange(){
+    private fun collectChange() {
         collectLatest {
-            viewModel.state.collectLatest{ state ->
-            val seasonDetailsItems = mutableListOf(
-                SeasonDetailsItem.OverviewItem(state.overview))+
-                state.episodes.map {
-                    SeasonDetailsItem.EpisodeItem(it)
-                }
+            viewModel.state.collectLatest { state ->
+                val seasonDetailsItems = mutableListOf(
+                    SeasonDetailsItem.OverviewItem(state.overview)
+                ) + state.episodes.map { SeasonDetailsItem.EpisodeItem(it) }
                 seasonDetailsAdapter.setItems(seasonDetailsItems)
-            }
             }
         }
     }
 
     override fun onEvent(event: SeasonDetailsUiEvent) {
-        when(event){
+        when (event) {
             is SeasonDetailsUiEvent.NavigateToEpisodeDetails ->
-                showSnackBar(event.episodeId.toString()) //ToDo Navigate to Episode Details
+                showSnackBar(event.episodeId.toString()) //todo: Navigate to Episode Details
             SeasonDetailsUiEvent.NavigateBack -> findNavController().popBackStack()
             is SeasonDetailsUiEvent.ShowSnackBar -> showSnackBar(event.messages)
         }
