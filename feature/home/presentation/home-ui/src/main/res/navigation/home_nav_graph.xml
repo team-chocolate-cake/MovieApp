@@ -60,4 +60,16 @@
             android:name="movieId"
             app:argType="integer"/>
     </fragment>
+    <fragment
+        android:id="@+id/seasonDetailsFragment"
+        tools:layout="@layout/fragment_season_details"
+        android:name="com.chocolatecake.ui.season_details.SeasonDetailsFragment"
+        android:label="SeasonDetailsFragment" >
+        <argument
+            android:name="seriesId"
+            app:argType="integer" />
+        <argument
+            android:name="seasonNumber"
+            app:argType="integer" />
+    </fragment>
 </navigation>

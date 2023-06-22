@@ -1,6 +1,6 @@
 package com.chocolatecake.viewmodel.season_details
 
-import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import com.chocolatecake.usecase.season_details.GetSeasonDetailsUseCase
@@ -13,8 +13,13 @@ import javax.inject.Inject
 class SeasonDetailsViewModel @Inject constructor(
     private val getSeasonDetailsUseCase: GetSeasonDetailsUseCase,
     private val seasonDetailsUiMapper: SeasonDetailsUiMapper,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel<SeasonDetailsUiState, SeasonDetailsUiEvent>(SeasonDetailsUiState()),
     EpisodeListener {
+
+    private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 1396
+    private val seasonNumber = savedStateHandle.get<Int>("seasonNumber") ?: 2
+
 
     init {
         getData()
@@ -27,14 +32,13 @@ class SeasonDetailsViewModel @Inject constructor(
 
     private fun getSeasonDetails() {
         tryToExecute(
-            call = { getSeasonDetailsUseCase(seriesId = 1396, seasonNumber = 1) },
+            call = { getSeasonDetailsUseCase(seriesId = seriesId, seasonNumber = seasonNumber) },
             onSuccess = ::onSuccessSeasonDetails,
             onError = ::onError,
         )
     }
 
     private fun onSuccessSeasonDetails(seasonDetailsEntity: SeasonDetailsEntity) {
-        Log.e("onSuccess", "onSuccessEpisodes: $seasonDetailsEntity")
         _state.update {
             seasonDetailsUiMapper.map(seasonDetailsEntity)
         }
@@ -54,7 +58,7 @@ class SeasonDetailsViewModel @Inject constructor(
         sendEvent(SeasonDetailsUiEvent.ShowSnackBar(messages))
     }
 
-    override fun onClickEpisode(episodeId: Int) {
-        sendEvent(SeasonDetailsUiEvent.NavigateToEpisodeDetails(episodeId))
+    override fun onClickEpisode(id: Int) {
+        sendEvent(SeasonDetailsUiEvent.NavigateToEpisodeDetails(id))
     }
 }
