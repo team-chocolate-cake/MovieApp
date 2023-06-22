@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="lottie_animation_view_no_network,no_network_try_again"
-                app:isVisible="@{viewModel.state.onErrors.contains(`noNetwork`)}"/>
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`No Network Connection`)}"/>
 
             <include
                 android:id="@+id/lottie_animation_view_error"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="lottie_animation_view_error,error_try_again"
-                app:isVisible="@{viewModel.state.onErrors.contains(`error`)}"/>
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`Error`)}"/>
 
             <include
                 android:id="@+id/lottie_animation_view_timeout"
@@ -135,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="lottie_animation_view_timeout,timeout_try_again"
-                app:isVisible="@{viewModel.state.onErrors.contains(`timeout`)}"/>
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`timeout`)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
