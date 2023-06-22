@@ -9,11 +9,6 @@
             type="com.chocolatecake.viewmodel.season_details.SeasonDetailsViewModel" />
     </data>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -21,49 +16,28 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/season_appbar"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/background"
+                android:layout_height="@attr/actionBarSize"
+                android:elevation="2dp"
+                app:titleTextAppearance="@style/TextStyle.TitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_arrow"
+                app:navigationIcon="@drawable/arrow_left"
+                app:navigationIconTint="@color/on_background_87"
+                app:titleTextColor="@color/on_background_87"
                 app:title="@{viewModel.state.name}" />
-
-            <TextView
-                android:id="@+id/text_view_overview_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Overview"
-                android:textColor="@color/on_background_87"
-                android:layout_marginStart="@dimen/spacing_medium_16dp"
-                android:visibility="visible"
-                style="@style/TextStyle.TitleMedium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/season_appbar" />
-
-            <TextView
-                android:id="@+id/text_view_overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.state.overview}"
-                android:layout_marginTop="@dimen/spacing_small_8dp"
-                android:layout_marginStart="@dimen/spacing_medium_16dp"
-                android:textColor="@color/on_background_60"
-                style="@style/TextStyle.BodySmall"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_overview_title" />
 
             <TextView
                 android:id="@+id/text_view_episodes_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Episodes"
+                android:text="@string/episodes_title"
                 android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:textColor="@color/on_background_87"
                 style="@style/TextStyle.TitleMedium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_overview" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_episodes"
@@ -71,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
                 android:orientation="vertical"
-                tools:itemCount="6"
                 app:items="@{viewModel.state.episodes}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -79,6 +52,101 @@
                 app:layout_constraintTop_toBottomOf="@id/text_view_episodes_title"
                 tools:listitem="@layout/item_episode_horizontal"/>
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:isVisible="@{viewModel.state.loading}"
+                android:indeterminateTint="@color/primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_no_network"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_no_connection"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/no_network_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_no_network,no_network_try_again"
+                app:isVisible="@{viewModel.state.onErrors.contains(`noNetwork`)}"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_error"
+                android:layout_width="@dimen/lottie_error_size"
+                android:layout_height="@dimen/lottie_error_size"
+                layout="@layout/layout_error"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/error_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_error"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_error,error_try_again"
+                app:isVisible="@{viewModel.state.onErrors.contains(`error`)}"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_timeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_timeout"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/timeout_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_timeout"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_timeout,timeout_try_again"
+                app:isVisible="@{viewModel.state.onErrors.contains(`timeout`)}"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </layout>
