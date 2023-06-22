@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.ui.home.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class AddToListBottomSheet : BottomSheetDialogFragment() {
+@AndroidEntryPoint
+class AddToListBottomSheet(private val creeateButton:CreateListener) : BottomSheetDialogFragment() {
     private lateinit var binding: MyListBottomSheetCreateListBinding
     val viewModel by activityViewModels<TvDetailsViewModel>()
 
@@ -35,6 +40,7 @@ class AddToListBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
@@ -42,10 +48,24 @@ class AddToListBottomSheet : BottomSheetDialogFragment() {
             lifecycleOwner = viewLifecycleOwner
             chipAddNewList.setOnClickListener {
                 groupCreateList.visibility =
-                    if (chipAddNewList.isChecked) View.GONE else View.VISIBLE
+                    if (chipAddNewList.isChecked) View.VISIBLE else View.GONE
             }
-            imageButtonClose.setOnClickListener { dismiss() }
+            textViewClose.setOnClickListener { dismiss() }
+            textViewDone.setOnClickListener { dismiss() }
         }
 
+        viewModel.getUserLists()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collectLatest { state ->
+                binding.chipGroupGenere.setGenreChips(state.userLists, viewModel)
+            }
+        }
+        binding.materialButtonCreate.setOnClickListener{
+            creeateButton.onClickCreate()
+        }
     }
+}
+
+interface CreateListener{
+    fun onClickCreate()
 }
