@@ -101,14 +101,3 @@ fun <T> View.showWhenError(list: List<T>?){
         this.visibility = View.GONE
     }
 }
-
-@BindingAdapter("app:toggleUiMode")
-fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
-    this.setOnCheckedChangeListener { _, isChecked ->
-        if (isChecked) {
-            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_NO
-        } else {
-            uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
-        }
-    }
-}
