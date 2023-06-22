@@ -1,5 +1,7 @@
 package com.chocolatecake.remote.service
 
+import com.chocolatecake.remote.request.AddMediaToListRequest
+import com.chocolatecake.remote.request.CreateUserListRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
@@ -12,9 +14,10 @@ import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
+import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
-import com.chocolatecake.remote.response.movieDetails.RatingDto
+import com.chocolatecake.remote.response.movieDetails.StatusResponse
 import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -150,11 +153,23 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<RatingDto>
+    ):Response<StatusResponse>
 
     @GET("movie/{movieId}/reviews")
     suspend fun getMovieReviews(
         @Path("movieId") movieId: Int,
         @Query("page") page: Int = 1
     ): Response<ReviewsDto>
+
+    @GET("account/account_id/lists")
+    suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
+
+    @POST("list/{list_id}/add_item")
+    suspend fun postUserMedia(
+        @Path("list_id") listId: Int,
+        @Body mediaId: AddMediaToListRequest
+    ): Response<StatusResponse>
+
+    @POST("list")
+    suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
 }
