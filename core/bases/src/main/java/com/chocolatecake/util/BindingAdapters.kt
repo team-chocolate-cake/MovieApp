@@ -57,6 +57,15 @@ fun <T> View.hideResult(list: List<T>?, text: String) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenNoList"])
+fun <T> View.hideWhenNoList(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter(value = ["app:loading"])
 fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
     if (isLoading == true) {

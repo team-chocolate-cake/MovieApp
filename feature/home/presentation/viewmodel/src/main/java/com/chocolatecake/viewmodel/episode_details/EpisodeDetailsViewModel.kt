@@ -3,11 +3,17 @@ package com.chocolatecake.viewmodel.episode_details
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.EpisodeDetailsEntity
+import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
 import com.chocolatecake.usecase.episode_details.SetEpisodeRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +23,8 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val episodeDetailsUseCase: GetEpisodeDetailsUseCase,
     private val castUseCase: GetCastForEpisodeUseCase,
     private val setEpisodeRatingUseCase: SetEpisodeRatingUseCase,
-    private val castUiMapper: CastUiMapper,
+    private val peopleUiMapper: PeopleUiMapper,
+    private val episodeDetailsUiMapper: EpisodeDetailsUiMapper
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
 
@@ -25,40 +32,65 @@ class EpisodeDetailsViewModel @Inject constructor(
         getData(1772, 1, 1)
     }
 
+
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
-        viewModelScope.launch {
+        getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
+        getCastData(seriesId, seasonNumber, episodeNumber)
+    }
+
+
+    private fun getEpisodeDetailsData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        execute(
+            call = { episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber) },
+            mapper = episodeDetailsUiMapper,
+            onSuccess = ::onSuccessEpisodeDetail,
+            onError = ::onError
+        )
+    }//ههههههههه قول يارب بنشوف
+
+    fun <INPUT, OUTPUT> execute(
+        call: suspend () -> INPUT,
+        onSuccess: (OUTPUT) -> Unit,
+        mapper: Mapper<INPUT, OUTPUT>,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
             try {
-                val episodeDetails = episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber)
-                val castItems = castUseCase(seriesId, seasonNumber, episodeNumber)
-                    .map { castEntity -> castUiMapper.map(castEntity) }
-                val newState = _state.value.copy(
-                    imageUrl = episodeDetails.imageUrl,
-                    episodeName = episodeDetails.episodeName,
-                    episodeNumber = episodeDetails.episodeNumber,
-                    seasonNumber = episodeDetails.seasonNumber,
-                    episodeRate = episodeDetails.episodeRate,
-                    episodeOverview = episodeDetails.overview,
-                    productionCode = episodeDetails.productionCode,
-                    cast = castItems,
-                    isLoading = false,
-                    onErrors = emptyList()
-                )
-                _state.update { newState }
-                checkIfTheProductionCodeIsEmpty(newState.productionCode)
-                Log.d("banan-data-viewmodel", newState.cast.toString())
+                mapper.map(call()).also(onSuccess)
             } catch (th: Throwable) {
                 onError(th)
-                Log.d("banan-error", th.message.toString())
             }
         }
     }
 
-    private fun checkIfTheProductionCodeIsEmpty(productionCode: String) {
-        if (productionCode.isEmpty()) {
-            Log.e("banan","empty")
-        }else
-        Log.e("banan","not empty")
+    private fun onSuccessEpisodeDetail(episodeDetails: EpisodeDetailsUiState) {
+        _state.update {
+            it.copy(
+                imageUrl = episodeDetails.imageUrl,
+                episodeName = episodeDetails.episodeName,
+                episodeNumber = episodeDetails.episodeNumber,
+                seasonNumber = episodeDetails.seasonNumber,
+                episodeRate = episodeDetails.episodeRate,
+                episodeOverview = episodeDetails.episodeOverview,
+                productionCode = episodeDetails.productionCode,
+                isLoading = false,
+                onErrors = emptyList()
+            )
+        }
+    }
 
+    private fun getCastData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        tryToExecute(
+            call = { castUseCase(seriesId, seasonNumber, episodeNumber) },
+            mapper = peopleUiMapper,
+            onSuccess = ::onSuccessCast,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessCast(cast: List<PeopleUIState>) {
+        _state.update { it.copy(cast = cast) }
     }
 
     private fun onError(th: Throwable) {
