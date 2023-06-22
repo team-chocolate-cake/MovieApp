@@ -58,7 +58,7 @@
             android:id="@+id/lottie_animation_view_empty"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
@@ -82,6 +82,34 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             motion:layout_constraintStart_toStartOf="@id/edittext_search" />
+        <Constraint
+            android:id="@+id/textview_no_items_found"
+            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:visibilityMode="ignore"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty"
+            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty" />
+        <Constraint
+            android:id="@+id/lottie_animation_view_search"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:visibilityMode="ignore"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp" />
+        <Constraint
+            android:id="@+id/text_view_try_again"
+            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:visibilityMode="ignore"
+            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
+            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
+            android:layout_marginTop="@dimen/spacing_medium_16dp" />
 
     </ConstraintSet>
 
@@ -136,7 +164,7 @@
             android:id="@+id/lottie_animation_view_empty"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
@@ -160,6 +188,34 @@
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
             motion:layout_constraintTop_toBottomOf="@id/edittext_search"
             motion:layout_constraintStart_toStartOf="@id/edittext_search" />
+        <Constraint
+            android:id="@+id/textview_no_items_found"
+            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:visibilityMode="ignore"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty"
+            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty" />
+        <Constraint
+            android:id="@+id/lottie_animation_view_search"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:visibilityMode="ignore"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp" />
+        <Constraint
+            android:id="@+id/text_view_try_again"
+            motion:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:visibilityMode="ignore"
+            motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
+            motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
+            android:layout_marginTop="@dimen/spacing_medium_16dp" />
 
     </ConstraintSet>
 </MotionScene>
