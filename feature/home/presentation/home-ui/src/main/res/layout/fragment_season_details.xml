@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.season_details.SeasonDetailsViewModel" />
+    </data>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/season_appbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="2dp"
+                app:titleTextAppearance="@style/TextStyle.TitleMedium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/arrow_left"
+                app:navigationIconTint="@color/on_background_87"
+                app:titleTextColor="@color/on_background_87"
+                app:title="@{viewModel.state.name}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_tiny_4dp"
+                android:orientation="vertical"
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.empty}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/season_appbar"
+                tools:listitem="@layout/item_episode_horizontal" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:isVisible="@{viewModel.state.loading}"
+                android:indeterminateTint="@color/primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_no_network"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_no_connection"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/no_network_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_no_network,no_network_try_again"
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`No Network Connection`)}"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_error"
+                android:layout_width="@dimen/lottie_error_size"
+                android:layout_height="@dimen/lottie_error_size"
+                layout="@layout/layout_error"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/error_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_error"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_error,error_try_again"
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`Error`)}"/>
+
+            <include
+                android:id="@+id/lottie_animation_view_timeout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_timeout"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/timeout_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_timeout"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="Try Again"
+                android:onClick="@{()->viewModel.getData()}" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="lottie_animation_view_timeout,timeout_try_again"
+                app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.contains(`timeout`)}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -18,4 +18,6 @@
     <string name="cannot_fetch_movies" tools:ignore="ExtraTranslation">cannot fetch movies 😢</string>
     <string name="swipe_to_delete" tools:ignore="ExtraTranslation">swipe to delete\n</string>
     <string name="error_occured" tools:ignore="ExtraTranslation">error occured</string>
+    <string name="overview_title">Overview</string>
+    <string name="episodes_title">Episodes</string>
 </resources>

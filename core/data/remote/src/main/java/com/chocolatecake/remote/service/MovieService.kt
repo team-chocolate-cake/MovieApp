@@ -13,6 +13,7 @@ import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
+import com.chocolatecake.remote.response.dto.season_details.SeasonDetailsDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.RatingDto
 import retrofit2.Response
@@ -152,4 +153,12 @@ interface MovieService {
         @Path("movieId") movieId: Int
     ):Response<RatingDto>
     /// endregion
+
+    /// region season details
+    @GET("tv/{series_id}/season/{season_number}")
+    suspend fun getSeasonDetails(
+        @Path("series_id") series_id : Int,
+        @Path("season_number") season_number : Int
+    ): Response<SeasonDetailsDto>
+    ///endregion
 }

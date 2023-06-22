@@ -9,6 +9,7 @@ import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
@@ -28,6 +29,7 @@ import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.DomainRatingMapper
+import com.chocolatecake.repository.mappers.domain.DomainSeasonDetailsMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -65,7 +67,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainRatingMapper: DomainRatingMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
-    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper
+    private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
+    private val domainSeasonDetailsMapper: DomainSeasonDetailsMapper
 ) : BaseRepository(), MovieRepository {
 
     /// region movies
@@ -319,4 +322,11 @@ class MovieRepositoryImpl @Inject constructor(
             )
         })
     }
+
+    /// region season details
+    override suspend fun getSeasonDetails(seriesId : Int, seasonId : Int): SeasonDetailsEntity {
+        val result = wrapApiCall { movieService.getSeasonDetails(seriesId, seasonId) }
+        return domainSeasonDetailsMapper.map(result)
+    }
+    /// endregion
 }
