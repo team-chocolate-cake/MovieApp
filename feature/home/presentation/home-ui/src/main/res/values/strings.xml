@@ -14,4 +14,6 @@
     <string name="airing_today">Airing Today</string>
     <string name="on_the_air">On The Air</string>
     <string name="try_again">Try Again</string>
+    <string name="overview_title">Overview</string>
+    <string name="episodes_title">Episodes</string>
 </resources>

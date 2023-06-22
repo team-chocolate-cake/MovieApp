@@ -20,7 +20,7 @@ class SeasonDetailsViewModel @Inject constructor(
         getData()
     }
 
-    private fun getData() {
+     fun getData() {
         _state.update { it.copy(isLoading = true) }
         getSeasonDetails()
     }
