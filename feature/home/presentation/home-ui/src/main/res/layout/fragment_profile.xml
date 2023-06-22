@@ -107,7 +107,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/favorite"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_profile_username" />
@@ -126,7 +126,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/watchlist"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_favorite" />
@@ -145,7 +145,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/watch_history"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_watchlist" />
@@ -164,7 +164,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/my_lists"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_watch_history" />
@@ -183,7 +183,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/popcorn_puzzles"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_mylists" />
@@ -201,7 +201,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/theme"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_popcorn_puzzles" />
@@ -231,7 +231,7 @@
             android:padding="@dimen/spacing_small_8dp"
             android:text="@string/logout"
             android:textColor="@color/on_background_60"
-            app:drawableTint="@color/on_background_60"
+            android:drawableTint="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_view_theme" />
