@@ -38,9 +38,14 @@ class ProfileViewModel @Inject constructor(
                     )
                 }
             } catch (th: Throwable) {
-
+                onError(th)
             }
         }
+    }
+
+    private fun onError(th: Throwable) {
+        val errors = _state.value.error
+        _state.update { it.copy(error = errors, isLoading = false) }
     }
 
     override fun onClickFavorite() {
