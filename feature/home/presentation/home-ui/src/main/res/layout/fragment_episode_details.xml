@@ -38,11 +38,11 @@
                 android:layout_marginTop="24dp"
                 android:background="@android:color/transparent"
                 android:elevation="2dp"
+                android:onClick="@{()->listener.clickToBack()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_back"
-                android:onClick="@{()->listener.clickToBack()}"/>
+                app:navigationIcon="@drawable/ic_back" />
 
 
             <!--            <ImageView-->
@@ -111,6 +111,7 @@
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:text='@{@string/season + String.valueOf(item.seasonNumber )+ " | "+ @string/episode+ String.valueOf(item.episodeNumber)}'
+                app:hideWhenError="@{viewModel.state.onErrors}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_episode_name"
                 tools:text="Season 1 | Episode 1 " />
@@ -124,6 +125,7 @@
                 android:onClick="@{()-> viewModel.clickToRate()}"
                 android:text="@string/rate_the_episode"
                 android:textColor="@color/primary"
+                app:hideWhenError="@{viewModel.state.onErrors}"
                 app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ratingBar" />
@@ -140,6 +142,7 @@
                 android:numStars="5"
                 android:rating="@{item.episodeRate}"
                 android:stepSize="1"
+                app:hideWhenError="@{viewModel.state.onErrors}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_season" />
 
@@ -158,17 +161,17 @@
                 app:layout_constraintTop_toBottomOf="@id/ratingBar"
                 tools:text="@tools:sample/lorem/random" />
 
-                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:id="@+id/youtube_player"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/video_player_height_328dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_view_episode_description"
-                    android:layout_marginVertical="@dimen/spacing_medium_16dp"
-                    android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
-                    app:setVideoId="@{viewModel.state.productionCode}"
-                    app:hideWhenNoProductionCode="@{viewModel.state.productionCode}"/>
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/video_player_height_328dp"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                android:layout_marginVertical="@dimen/spacing_medium_16dp"
+                app:hideWhenNoProductionCode="@{viewModel.state.productionCode}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_episode_description"
+                app:setVideoId="@{viewModel.state.productionCode}" />
 
             <TextView
                 android:id="@+id/text_view_actors"
@@ -178,8 +181,8 @@
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:text="@string/actors"
-                app:hideWhenNoList="@{viewModel.state.cast}"
                 android:textColor="@color/on_background_87"
+                app:hideWhenNoList="@{viewModel.state.cast}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/youtube_player" />
 
@@ -187,14 +190,14 @@
                 android:id="@+id/recycler_view_people"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
                 android:layout_marginBottom="@dimen/spacing_medium_16dp"
                 android:clipToPadding="false"
                 android:contentDescription="@string/rate_the_episode"
                 android:orientation="horizontal"
-                app:items="@{item.cast}"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 app:hideWhenNoList="@{viewModel.state.cast}"
+                app:items="@{item.cast}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
