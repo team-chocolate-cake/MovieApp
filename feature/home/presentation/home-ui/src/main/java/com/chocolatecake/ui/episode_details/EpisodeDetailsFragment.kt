@@ -2,6 +2,7 @@ package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -44,20 +45,21 @@ class EpisodeDetailsFragment :
         when (event) {
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
             is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
-            EpisodeDetailsUiEvent.ClickToBack ->navigateToBack()
+            EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             EpisodeDetailsUiEvent.SubmitRating -> submitRate()
         }
     }
 
-       private fun navigateToBack(){
+    private fun navigateToBack() {
         findNavController().popBackStack()
-       }
+        Toast.makeText(requireActivity(),"back button clicked",Toast.LENGTH_SHORT).show()
+    }
 
-    private fun navigateToCastDetails(){
+    private fun navigateToCastDetails() {
         //toDo findNavController().navigate()
     }
 
-    private fun submitRate(){
+    private fun submitRate() {
     }
 
     private fun showBottomSheet() {

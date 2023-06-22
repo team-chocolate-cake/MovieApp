@@ -141,7 +141,6 @@ class EpisodeDetailsViewModel @Inject constructor(
 
     override fun submitRating() {
         sendEvent(EpisodeDetailsUiEvent.SubmitRating)
-
     }
 
     override fun onClickPeople(id: Int) {
