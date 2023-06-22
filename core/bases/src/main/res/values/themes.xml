@@ -5,6 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="background">@color/background</item>
         <item name="android:windowBackground">?attr/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
@@ -24,6 +27,14 @@
         <item name="postSplashScreenTheme">@style/Theme.MovieApp</item>
     </style>
 
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/on_background_60
+        </item> <!-- Change the text color to red -->
+        <item name="chipStrokeColor">@color/on_background_38
+        </item> <!-- Change the border color to green -->
+        <item name="chipStrokeWidth">1dp</item> <!-- Set the border width to 2dp -->
+    </style>
+
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
         <item name="android:minHeight">24dp</item>
@@ -37,14 +48,6 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="android:textColor">@color/on_background_60
-        </item> <!-- Change the text color to red -->
-        <item name="chipStrokeColor">@color/on_background_38
-        </item> <!-- Change the border color to green -->
-        <item name="chipStrokeWidth">1dp</item> <!-- Set the border width to 2dp -->
-    </style>
-
     <style name="ShapeAppearanceOverlay_bottom_sheet" parent="Widget.MaterialComponents.CardView">
 
         <item name="cornerFamily">rounded</item>
@@ -54,4 +57,6 @@
         <item name="cornerSizeBottomRight">0dp</item>
 
     </style>
+
+    <!--endregion-->
 </resources>
