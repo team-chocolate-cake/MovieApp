@@ -27,14 +27,18 @@ class ProfileViewModel @Inject constructor(
 
     private fun getAccountDetails() {
         viewModelScope.launch {
-            val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
-            _state.update {
-                it.copy(
-                    username = profileEntity.username,
-                    avatarUrl = profileEntity.avatarUrl,
-                    error = null,
-                    isLoggedIn = true
-                )
+            try {
+                val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
+                _state.update {
+                    it.copy(
+                        username = profileEntity.username,
+                        avatarUrl = profileEntity.avatarUrl,
+                        error = null,
+                        isLoggedIn = true
+                    )
+                }
+            } catch (th: Throwable) {
+
             }
         }
     }
@@ -72,8 +76,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoggedIn = true) }
             if (checkIsUserLoggedInUseCase()) {
-               _state.update { it.copy(isLoggedIn = false)
-               }
+                _state.update {
+                    it.copy(isLoggedIn = false)
+                }
             }
 
         }
