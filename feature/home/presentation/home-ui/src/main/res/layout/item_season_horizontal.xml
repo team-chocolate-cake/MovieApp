@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState" />
@@ -46,7 +47,7 @@
 
         <TextView
             android:id="@+id/text_view_description"
-            style="@style/TextStyle.BodyMedium"
+            style="@style/TextStyle.Caption"
             android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
@@ -62,7 +63,7 @@
 
         <TextView
             android:id="@+id/text_view_year"
-            style="@style/TextStyle.BodySmall"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -79,13 +80,14 @@
 
         <TextView
             android:id="@+id/text_view_count_episode"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_count_episodes"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/on_background_38"
-            android:text="@{String.valueOf(item.countEpisode)}"
             android:gravity="center_vertical"
+            android:text="@{String.valueOf(item.countEpisode)}"
             android:textColor="@color/on_background_38"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
             app:layout_constraintEnd_toEndOf="@+id/text_view_description"
