@@ -7,4 +7,6 @@ interface MyListListener : BaseInteractionListener {
     fun onClickItem(listId: Int , listType: String = "movie", listName: String = "favorite")
 
     fun onClickNewList()
+
+    fun onClickBackButton()
 }

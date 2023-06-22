@@ -50,20 +50,4 @@
     </style>
 
 
-<!--    <style name="MyListFirstImage">-->
-<!--        <item name="cornerFamily">rounded</item>-->
-<!--        <item name="cornerSizeTopRight">0</item>-->
-<!--        <item name="cornerSizeTopLeft">0</item>-->
-<!--        <item name="cornerSizeBottomLeft">8</item>-->
-<!--        <item name="cornerSizeBottomRight">0</item>-->
-<!--    </style>-->
-
-<!--    <style name="MyListLastImage">-->
-<!--        <item name="cornerFamily">rounded</item>-->
-<!--        <item name="cornerSizeTopRight">0</item>-->
-<!--        <item name="cornerSizeTopLeft">0</item>-->
-<!--        <item name="cornerSizeBottomLeft">0</item>-->
-<!--        <item name="cornerSizeBottomRight">8</item>-->
-<!--    </style>-->
-
 </resources>

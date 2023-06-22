@@ -189,7 +189,7 @@ interface MovieService {
 
 
     @POST("list")
-    suspend fun addList(@Body name: String ): Response<ListResponse>
+    suspend fun addList(@Body listRequest: ListRequest ): Response<ListResponse>
 
     @GET("account/{account_id}/lists")
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>

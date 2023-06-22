@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListDetailsBinding
+import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsViewModel
@@ -39,6 +40,10 @@ class MyListDetailsFragment :
                      movieId = event.movieId,
                     )
                 )
+            }
+
+            is MyListDetailsUiEvent.OnClickBack ->{
+                findNavController().popBackStack()
             }
             else -> {}
         }

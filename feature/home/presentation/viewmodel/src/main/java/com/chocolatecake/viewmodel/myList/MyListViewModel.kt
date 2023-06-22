@@ -1,4 +1,3 @@
-
 package com.chocolatecake.viewmodel.myList
 
 import android.util.Log
@@ -10,6 +9,7 @@ import com.chocolatecake.usecase.myList.CreateListUseCase
 import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
 import com.chocolatecake.usecase.myList.GetMovieListUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
+import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
 import com.chocolatecake.viewmodel.search.SearchUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +50,7 @@ class MyListViewModel @Inject constructor(
     }
 
     private fun onGetAllMoviesError(throwable: Throwable) {
+        Log.i("TAG", "onGetAllMoviesError: $throwable")
         _state.update {
             it.copy(
                 isLoading = false,
@@ -77,31 +78,59 @@ class MyListViewModel @Inject constructor(
     }
 
 
-    override fun onClickItem(listId: Int, listType: String ,listName: String) {
+    override fun onClickItem(listId: Int, listType: String, listName: String) {
         sendEvent(
             MyListUiEvent.NavigateToListDetails(
-                listId= listId,
-                listType= listType,
-                listName= listName,
+                listId = listId,
+                listType = listType,
+                listName = listName,
             )
         )
     }
 
     override fun onClickNewList() {
-        viewModelScope.launch {
-            _event.emit(MyListUiEvent.OpenCreateListBottomSheet)
-        }
-        Log.i("v2", "onClickNewList:  hiiv2 ")
-    }
 
-    fun onCreateList(){
         tryToExecute(
             call = {
+                Log.i("gg", "onCreateList: newwwww ${createList.invoke("mmmmmmnn")} ")
+                createList.invoke("mmmmmmnn")
+            },
+            onSuccess = { Log.i("v2", "onClickNewList:  done $it ") },
+            onError = ::onGetAllMoviesError
+        )
+//        viewModelScope.launch {
+//            _event.emit(MyListUiEvent.OpenCreateListBottomSheet)
+//        }
+//        Log.i("v2", "onClickNewList:  hiiv2 ")
+    }
+
+    fun onCreateList() {
+        tryToExecute(
+            call = {
+                Log.i("gg", "onCreateList: ${newListName} ")
                 createList.invoke(newListName.toString())
             },
-            onSuccess = {Log.i("v2", "onClickNewList:  done $it ") },
-            onError = ::error
+            onSuccess = { Log.i("v2", "onClickNewList:  done $it ") },
+            onError = ::onCreateListError
         )
+    }
+
+    private fun onCreateListError(throwable: Throwable) {
+        Log.i("TAG", "onCreateListError: $throwable")
+        _state.update {
+            it.copy(
+                errors = listOf(
+                    Error(
+                        2,
+                        throwable.message.toString()
+                    )
+                )
+            )
+        }
+    }
+
+    override fun onClickBackButton() {
+        sendEvent(MyListUiEvent.OnClickBack)
     }
 
 }

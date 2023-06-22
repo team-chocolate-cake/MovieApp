@@ -113,4 +113,8 @@ class MyListDetailsViewModel @Inject constructor(
         )
     }
 
+    override fun onClickBackButton() {
+        sendEvent(MyListDetailsUiEvent.OnClickBack)
+    }
+
 }

@@ -18,6 +18,7 @@ import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
+import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
@@ -409,7 +410,7 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun addList(name: String): Boolean {
-        return movieService.addList(name).isSuccessful
+        return movieService.addList(ListRequest(name=name ,)).isSuccessful
     }
 
     override suspend fun getLists(): List<ListEntity> {

@@ -1,4 +1,5 @@
 package com.chocolatecake.ui.myList
+
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyListFragment :
-    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>(){
+    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_my_list
     override val viewModel: MyListViewModel by viewModels()
@@ -37,7 +38,7 @@ class MyListFragment :
 
 
     override fun onEvent(event: MyListUiEvent) {
-        when(event){
+        when (event) {
             is MyListUiEvent.NavigateToListDetails -> {
                 findNavController().navigate(
                     MyListFragmentDirections.actionMyListFragmentToMyListDetailsFragment(
@@ -48,12 +49,21 @@ class MyListFragment :
                 )
             }
 
+            is MyListUiEvent.ApplyCreateList -> {
+                applyCreateList()
+            }
 
-            is MyListUiEvent.ApplyCreateList -> {applyCreateList()}
+            is MyListUiEvent.OpenCreateListBottomSheet -> {
+                showBottomSheet()
+            }
 
-            is MyListUiEvent.OpenCreateListBottomSheet -> {showBottomSheet()}
+            is MyListUiEvent.OnClickBack ->{
+                findNavController().popBackStack()
+            }
 
-            is MyListUiEvent.ShowSnackBar -> { showSnackBar(event.message)}
+            is MyListUiEvent.ShowSnackBar -> {
+                showSnackBar(event.message)
+            }
 
             else -> {}
         }
