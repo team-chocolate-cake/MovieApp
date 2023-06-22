@@ -47,7 +47,7 @@ fun RecyclerView.setSearchLayoutManager(searchUiState: SearchUiState?) {
             LinearLayoutManager(context)
         }
         SearchUiState.SearchMedia.PEOPLE -> {
-            GridLayoutManager(context, 3)
+            GridLayoutManager(context, 4)
         }
         else -> {
             LinearLayoutManager(context)
