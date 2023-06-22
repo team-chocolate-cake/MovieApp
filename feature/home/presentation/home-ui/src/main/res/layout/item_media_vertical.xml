@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{() -> listener.onClickMedia(item.id)}"
-        android:layout_margin="@dimen/spacing_small">
+        android:layout_margin="@dimen/spacing_tiny">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_media_vertical"
