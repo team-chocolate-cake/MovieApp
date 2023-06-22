@@ -32,19 +32,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override fun onEvent(event: ProfileUiEvent) {
         when (event) {
-            ProfileUiEvent.FavoriteEvent -> TODO()
+            ProfileUiEvent.FavoriteEvent -> showSnackBar("Favorite")
+            ProfileUiEvent.WatchlistEvent -> showSnackBar("Watchlist")
+            ProfileUiEvent.WatchHistoryEvent -> showSnackBar("WatchHistory")
+            ProfileUiEvent.MyListsEvent -> showSnackBar("MyLists")
+            ProfileUiEvent.PopcornPuzzlesEvent -> {
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
+            }
             ProfileUiEvent.LogoutEvent -> {
                 showSnackBar("Logout!")
                 findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToHomeFragment())
             }
-
-            ProfileUiEvent.MyListsEvent -> TODO()
-            ProfileUiEvent.PopcornPuzzlesEvent -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
-            }
-
-            ProfileUiEvent.WatchHistoryEvent -> TODO()
-            ProfileUiEvent.WatchlistEvent -> TODO()
         }
     }
 
