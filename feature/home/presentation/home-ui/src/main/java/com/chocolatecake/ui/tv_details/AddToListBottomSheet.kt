@@ -14,10 +14,13 @@ import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddToListBottomSheet(private val creeateButton:CreateListener) : BottomSheetDialogFragment() {
+class AddToListBottomSheet(private val creeateButton: CreateListener) :
+    BottomSheetDialogFragment() {
     private lateinit var binding: MyListBottomSheetCreateListBinding
     val viewModel by activityViewModels<TvDetailsViewModel>()
 
@@ -56,16 +59,17 @@ class AddToListBottomSheet(private val creeateButton:CreateListener) : BottomShe
 
         viewModel.getUserLists()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest { state ->
-                binding.chipGroupGenere.setGenreChips(state.userLists, viewModel)
+            viewModel.state.map { it.userLists }.distinctUntilChanged().collectLatest {
+                binding.chipGroupGenere.setGenreChips(viewModel.state.value.userLists, viewModel)
             }
+
         }
-        binding.materialButtonCreate.setOnClickListener{
+        binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate()
         }
     }
 }
 
-interface CreateListener{
+interface CreateListener {
     fun onClickCreate()
 }

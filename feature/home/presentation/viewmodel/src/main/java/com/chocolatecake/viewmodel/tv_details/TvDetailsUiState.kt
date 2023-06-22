@@ -16,7 +16,8 @@ data class TvDetailsUiState(
     val ratingSuccess: String = "",
     val userRating: Float = 0.0f,
     val youtubeKeyId: String = "",
-    val userLists:List<UserListUi> = emptyList()
+    val userLists: List<UserListUi> = emptyList(),
+    val userSelectedLists: List<Int> = emptyList()
 ) {
     data class Info(
         val backdropImageUrl: String = "",
@@ -26,10 +27,11 @@ data class TvDetailsUiState(
         val genres: List<String> = emptyList(),
 
         )
+
     data class UserListUi(
-        val id:Int,
-        val name:String,
-        val isLoading:Boolean = true,
-        val error:Boolean = false
+        val id: Int,
+        val name: String,
+        val isLoading: Boolean = true,
+        val error: Boolean = false
     )
 }

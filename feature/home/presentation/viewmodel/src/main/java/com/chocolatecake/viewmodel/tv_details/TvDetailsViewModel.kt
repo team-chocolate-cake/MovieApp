@@ -186,8 +186,8 @@ class TvDetailsViewModel @Inject constructor(
 
     }
 
-    fun doSomething(){
-        Log.i("chip","its working")
+    fun doSomething() {
+        Log.i("chip", "its working")
     }
 
     fun onRatingSubmit() {
@@ -234,24 +234,24 @@ class TvDetailsViewModel @Inject constructor(
     //endregion
 
     //region user lists
-    fun getUserLists(){
+    fun getUserLists() {
         tryToExecute(
-            call = {getUserListsUseCase()},
+            call = { getUserListsUseCase() },
             onSuccess = ::onGetUserListsUseCase,
             onError = {
-                Log.i("lists","something went wrong $it")
+                Log.i("lists", "something went wrong $it")
             }
         )
     }
 
-    private fun onGetUserListsUseCase(userListsEntity:List<UserListEntity>){
+    private fun onGetUserListsUseCase(userListsEntity: List<UserListEntity>) {
         val item = UserListsUiMapper().map(userListsEntity)
         _state.update {
             it.copy(
                 userLists = item.userLists
             )
         }
-        Log.i("lists","user lists => ${state.value.userLists}")
+        Log.i("lists", "user lists => ${state.value.userLists}")
     }
     //endregion
 
@@ -285,7 +285,15 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     override fun onChipClick(id: Int) {
-        Log.i("chip","id = $id")
+        val updatedList = state.value.userSelectedLists.toMutableList()
+        if (updatedList.remove(id)) Unit else updatedList.add(id)
+
+        _state.update {
+            it.copy(
+                userSelectedLists = updatedList
+            )
+        }
+        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
 
     fun onBack() {
