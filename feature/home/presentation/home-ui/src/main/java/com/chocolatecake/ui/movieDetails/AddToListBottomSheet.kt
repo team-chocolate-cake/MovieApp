@@ -67,7 +67,6 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
                 binding.chipGroupGenere.setGenreChips(viewModel.state.value.userLists, viewModel)
                 viewModel.emptyUserLists()
             }
-
         }
         binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate(binding.textInputEditTextListName.text.toString())
