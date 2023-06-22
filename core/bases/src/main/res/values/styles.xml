@@ -140,6 +140,10 @@
         <item name="chipStrokeWidth">0dp</item>
         <item name="chipMinTouchTargetSize">0dp</item>
     </style>
+
+    <style name="AddToListChipStyle" parent="TextStyle.BodySmall.ChipStyle">
+        <item name="android:textColor">@color/add_to_list_text_color</item>
+    </style>
     <!--    endregion-->
 
 </resources>

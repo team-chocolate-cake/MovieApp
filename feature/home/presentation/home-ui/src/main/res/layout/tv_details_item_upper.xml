@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.chocolatecake.ui.tv_details.TvDetailsItem.Upper" />
+
+        <variable
+            name="rateListener"
+            type="com.chocolatecake.viewmodel.tv_details.listener.RateListener" />
+
+        <variable
+            name="playButtonListener"
+            type="com.chocolatecake.viewmodel.tv_details.listener.PlayButtonListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--region info-->
+        <TextView
+            android:id="@+id/text_view_tv_title"
+            style="@style/TextStyle.BodyLarge"
+            android:layout_width="@dimen/title_details_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.upperUiState.name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem/random" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_genere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:chipSpacingHorizontal="@dimen/spacing_tiny_4dp"
+            app:chipSpacingVertical="-8dp"
+            app:chips="@{item.upperUiState.genres}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_view_tv_title" />
+
+        <RatingBar
+            android:id="@+id/rating"
+            style="@style/CustomRatingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="@{item.upperUiState.rating}"
+            android:stepSize="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chip_group_genere" />
+
+        <TextView
+            android:id="@+id/text_view_rate_this_tv_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:onClick="@{()-> rateListener.onRateButtonClick()}"
+            android:text="@string/rate_this_tv_show"
+            android:textColor="@color/primary"
+            app:layout_constraintBottom_toBottomOf="@+id/rating"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/text_view_description"
+            style="@style/TextStyle.BodySmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:ellipsize="end"
+            android:maxLines="8"
+            android:text="@{item.upperUiState.description}"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintTop_toBottomOf="@id/rating"
+            tools:text="@tools:sample/lorem/random" />
+        <!--endregion-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

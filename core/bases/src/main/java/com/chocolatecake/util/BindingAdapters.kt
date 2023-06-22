@@ -4,9 +4,7 @@ import android.app.UiModeManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toolbar
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -76,6 +74,14 @@ fun <T> View.hideWhenNoResult(list: List<T>?) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenEmpty"])
+fun <T> View.hideWhenEmpty(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.GONE
+    }
+}
 @BindingAdapter(value = ["app:loading"])
 fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
     if (isLoading == true) {

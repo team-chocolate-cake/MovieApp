@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/background"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_bottom_sheet">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium_16dp">
+
+            <View
+                android:id="@+id/view_drag_handle"
+                android:layout_width="32dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/drag_handle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--region creat list-->
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_create_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="text_view_title,image_button_close,
+                text_view_list_name,edit_text_list_name,material_button_create,text_view_close"
+                android:visibility="gone"
+                >
+
+                <!-- This group includes item1, item2, and item3 -->
+
+            </androidx.constraintlayout.widget.Group>
+
+            <TextView
+                android:id="@+id/text_view_title"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_giant_32dp"
+                android:gravity="center"
+                android:text="Create List"
+                android:textAppearance="@style/TextStyle.TitleMedium"
+                android:textColor="@color/secondary_text_87"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_drag_handle" />
+
+            <TextView
+                android:id="@+id/text_view_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close"
+                android:textAppearance="@style/TextStyle.BodyMedium"
+                android:textColor="@color/primary"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_title" />
+
+            <TextView
+                android:id="@+id/text_view_list_name"
+                style="@style/TextStyle.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large_24dp"
+                android:text="List Name"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_title" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_text_list_name"
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                app:layout_constraintCircleRadius="@dimen/spacing_extra_giant_48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_list_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_edittext"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextStyle.BodyMedium"
+                    android:textColor="@color/on_background_60"
+                    tools:text="chocolate" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/material_button_create"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:backgroundTint="@color/primary"
+                android:paddingVertical="@dimen/spacing_medium_16dp"
+                android:text="@string/create"
+                android:textColor="@color/on_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_text_list_name" />
+            <!--endregion-->
+
+            <!--region save to list-->
+            <TextView
+                android:id="@+id/text_view_save_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large_24dp"
+                android:text="Save to"
+                android:textAppearance="@style/TextStyle.TitleMedium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/material_button_create" />
+
+            <TextView
+                android:id="@+id/text_view_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:textAppearance="@style/TextStyle.BodyMedium"
+                android:textColor="@color/primary"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_save_to"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_save_to" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_genere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:chipSpacingHorizontal="@dimen/spacing_tiny_4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_save_to">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_add_new_list"
+                    style="@style/AddToListChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="+ Add List"
+                    android:textAppearance="@style/TextStyle.BodySmall" />
+            </com.google.android.material.chip.ChipGroup>
+            <!--endregion-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

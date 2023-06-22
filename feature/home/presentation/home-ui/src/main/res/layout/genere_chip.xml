@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.tv_details.TvDetailsUiState.UserListUi" />
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.tv_details.listener.ChipListener" />
+    </data>
+
+    <com.google.android.material.chip.Chip
+        style="@style/TextStyle.LabelMedium.ChipStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{item.name}"
+        android:paddingVertical="8dp"
+        android:onClick="@{()->listener.onChipClick(item.id)}"
+        android:textAppearance="@style/TextStyle.BodySmall"
+        tools:text="any" />
+</layout>

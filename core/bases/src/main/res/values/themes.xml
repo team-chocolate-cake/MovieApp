@@ -5,9 +5,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="background">@color/background</item>
         <item name="android:windowBackground">?attr/background</item>
-       <item name="android:statusBarColor">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
-
     </style>
 
     <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
@@ -49,4 +48,19 @@
 
     </style>
 
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/on_background_60
+        </item> <!-- Change the text color to red -->
+        <item name="chipStrokeColor">@color/on_background_38
+        </item> <!-- Change the border color to green -->
+        <item name="chipStrokeWidth">1dp</item> <!-- Set the border width to 2dp -->
+    </style>
+
+
+    <style name="circleShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!--endregion-->
 </resources>

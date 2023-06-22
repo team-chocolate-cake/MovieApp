@@ -4,8 +4,15 @@ import androidx.paging.Pager
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.ReviewEntity
+import com.chocolatecake.entities.SeasonEntity
+import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.TvDetailsInfoEntity
 import com.chocolatecake.entities.TvEntity
+import com.chocolatecake.entities.TvShowEntity
+import com.chocolatecake.entities.UserListEntity
+import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
@@ -30,7 +37,7 @@ interface MovieRepository {
     suspend fun getUpcomingMovies(): List<MovieEntity>
     suspend fun refreshUpcomingMovies()
 
-    suspend fun getPopularPeople() : List<PeopleEntity>
+    suspend fun getPopularPeople(): List<PeopleEntity>
     suspend fun refreshTrendingMovies()
 
     suspend fun getTrendingMovies(): List<MovieEntity>
@@ -47,6 +54,7 @@ interface MovieRepository {
     suspend fun searchForTv(keyword: String): List<TvEntity>
 
     suspend fun searchForPeople(keyword: String): List<PeopleEntity>
+    suspend fun getSearchMovies(keyword: String): List<MovieEntity>
 
     suspend fun getGenresMovies(): List<GenreEntity>
     suspend fun refreshGenres()
@@ -68,4 +76,15 @@ interface MovieRepository {
     suspend fun getSeasonDetails(seriesId : Int, seasonId : Int): SeasonDetailsEntity
 
     /// endregion
+    suspend fun getTvDetailsInfo(tvShowID: Int): TvDetailsInfoEntity
+    suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity>
+    suspend fun getTvDetailsCredit(tvShowID: Int): List<PeopleEntity>
+    suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity
+    suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
+    suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity>
+    suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity
+
+    suspend fun getUserLists(): List<UserListEntity>
+    suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
+    suspend fun createUserList(listName:String):StatusEntity
 }
