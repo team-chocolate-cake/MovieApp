@@ -25,7 +25,7 @@ class MovieDetailsViewModel @Inject constructor(
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener {
 
-    private val movieId = savedStateHandle.get<Int>("movieId") ?:502356
+    private val movieId = savedStateHandle.get<Int>("movieId") ?: 502356
 
     init {
         _state.update { it.copy(isLoading = true) }

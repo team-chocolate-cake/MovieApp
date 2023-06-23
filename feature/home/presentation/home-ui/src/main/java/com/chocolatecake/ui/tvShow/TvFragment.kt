@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
@@ -18,7 +16,6 @@ import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.chocolatecake.viewmodel.tv_shows.TVShowsViewModel
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -39,6 +36,9 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
         val footerAdapter = BaseFooterAdapter { tvShowsAdapter.retry() }
         binding.recyclerViewTvShows.adapter = tvShowsAdapter.withLoadStateFooter(footerAdapter)
 
+        val mManager = binding.recyclerViewTvShows.layoutManager as GridLayoutManager
+        mManager.setSpanSize(footerAdapter, tvShowsAdapter, mManager.spanCount)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest { state ->
                 val flow = when (state.tvShowsType) {
@@ -53,17 +53,6 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
                     }
                 }
                 collectLast(tvShowsAdapter.loadStateFlow) { viewModel.setErrorUiState(it) }
-            }
-        }
-    }
-
-    private fun <T> LifecycleOwner.collectLast(flow: Flow<T>, action: suspend (T) -> Unit) {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flow.collectLatest(action)
-                flow.collect {
-                    action.invoke(it)
-                }
             }
         }
     }
