@@ -32,7 +32,8 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
             video = input.video?:false,
             videos = mapvideos(input.videos),
             voteAverage = input.voteAverage?:0.0,
-            reviewEntity = mapReviews(input.reviews)
+            reviewEntity = mapReviews(input.reviews),
+            year = input.releaseDate ?: ""
         )
     }
 

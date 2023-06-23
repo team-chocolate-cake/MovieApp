@@ -85,7 +85,7 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/star"
-            android:text="@{String.valueOf(item.rating)}"
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
