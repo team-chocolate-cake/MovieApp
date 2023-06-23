@@ -10,6 +10,7 @@ import com.chocolatecake.local.database.dto.GenresTvsLocalDto
 import com.chocolatecake.local.database.dto.PopularPeopleLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieInWatchHistoryLocalDto
+import com.chocolatecake.local.database.dto.movie.MovieListDetailsLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
@@ -17,6 +18,9 @@ import com.chocolatecake.local.database.dto.movie.RecommendedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TopRatedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TrendingMoviesLocalDto
 import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
+import com.chocolatecake.local.database.dto.movie.WatchlistLocalDto
+import com.chocolatecake.local.database.dto.myList.ListLocalDto
+import com.chocolatecake.local.database.dto.myList.ListMovieLocalDto
 
 @Dao
 interface MovieDao {
@@ -147,4 +151,49 @@ interface MovieDao {
     suspend fun searchWatchHistory(keyword: String): List<MovieInWatchHistoryLocalDto>
 
     // endregion
+
+
+    //region my list
+    @Query("select * from MOVIE_TABLE")
+    suspend fun getFavoriteMovies(): List<MovieLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavoriteMovie(movies: List<MovieLocalDto>)
+
+    @Query("select * from MOVIE_TABLE  where mediaType like :mediaType ")
+    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieLocalDto>
+
+//    @Query("select * from TV_TABLE")
+//    suspend fun getFavoriteTv(): List<TvLocalDto>
+
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertFavoriteTv(movies: List<TvLocalDto>)
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWatchlist(movies: List<WatchlistLocalDto>)
+
+    @Query("select * from WATCHLIST_TABLE  where mediaType like :mediaType ")
+    suspend fun getWatchlistByMediaType(mediaType: String): List<WatchlistLocalDto>
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertList(movies: List<ListLocalDto>)
+
+    @Query("select * from LIST_TABLE")
+    suspend fun getLists(): List<ListLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieToList(movie: ListMovieLocalDto)
+
+    @Query("select * from LIST_MOVIE_TABLE GROUP BY listId")
+    suspend fun getMoviesList(): List<ListMovieLocalDto>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDetailsList(movie: List<MovieListDetailsLocalDto>)
+
+    @Query("select * from MOVIE_LIST_DETAILS_TABLE")
+    suspend fun getDetailsList(): List<MovieListDetailsLocalDto>
+
+    //endregion
 }

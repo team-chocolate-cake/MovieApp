@@ -2,15 +2,23 @@ package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.FavoriteRequest
+import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RateRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
+import com.chocolatecake.remote.response.ListDetailsWrapperResponse
+import com.chocolatecake.remote.response.ListResponse
+import com.chocolatecake.remote.response.MovieResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
+import com.chocolatecake.remote.response.dto.ListRemoteDto
+import com.chocolatecake.remote.response.dto.MovieItemListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.StatusResponse
@@ -102,7 +110,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun searchForMovies(
+    suspend fun searchForMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
@@ -147,8 +155,8 @@ interface MovieService {
     /// region account
     @GET("account")
     suspend fun getAccountDetails(
-        @Query("session_id") sessionId : String = " "
-    ) : Response<ProfileRemoteDto>
+        @Query("session_id") sessionId: String = " "
+    ): Response<ProfileRemoteDto>
     ///endregion
 
     /// region movie details
@@ -216,4 +224,50 @@ interface MovieService {
 
     @POST("list")
     suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
+    ): Response<RatingDto>
+
+
+    //region my list
+    @GET("account/{account_id}/favorite/movies")
+    suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+//    @GET("account/{account_id}/favorite/tv")
+//    suspend fun getFavoriteTv(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @GET("account/{account_id}/favorite/{media_type}")
+    suspend fun getFavoriteByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+
+    @POST("account/{account_id}/favorite")
+    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<MovieResponse>
+
+
+    @GET("account/{account_id}/watchlist/{media_type}")
+    suspend fun getWatchlistByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @POST("account/{account_id}/watchlist")
+    suspend fun addWatchlist(
+        @Body watchlistRequest: WatchlistRequest,
+    ): Response<MovieResponse>
+
+
+    @POST("list")
+    suspend fun addList(@Body listRequest: ListRequest ): Response<ListResponse>
+
+    @GET("account/{account_id}/lists")
+    suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
+
+
+    @GET("list/{list_id}/add_item")
+    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
+
+    @GET("list/{list_id}")
+    suspend fun getDetailsList(@Path("list_id") listId: Int)
+    : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
+
+    //endregion
 }

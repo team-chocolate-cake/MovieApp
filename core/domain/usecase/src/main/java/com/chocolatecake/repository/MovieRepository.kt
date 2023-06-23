@@ -15,6 +15,11 @@ import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
+import com.chocolatecake.entities.myList.ListCreatedEntity
+import com.chocolatecake.entities.myList.ListEntity
+import com.chocolatecake.entities.myList.ListMovieEntity
+import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 
 
@@ -86,4 +91,33 @@ interface MovieRepository {
     suspend fun getUserLists(): List<UserListEntity>
     suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
     suspend fun createUserList(listName:String):StatusEntity
+
+
+    suspend fun getFavoriteMovies(): List<MovieEntity>
+    suspend fun refreshFavoriteMovies()
+    suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean
+    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity>
+
+
+    suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity>
+    suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean
+
+
+    suspend fun addList(name:String): Boolean
+    suspend fun getLists(): List<ListEntity>
+    suspend fun refreshLists()
+
+    suspend fun getMovieList(): List<ListMovieEntity>
+
+   // suspend fun refreshAddMovieToList(movie: ListMovieEntity)
+
+    suspend fun addMovieToList( movie: ListMovieEntity): Boolean
+
+    suspend fun getDetailsList(listId: Int): List<MovieEntity>
+
+
+    suspend fun getListCreated(): List<ListCreatedEntity>
+
+   // suspend fun refreshDetailsList(listId: Int)
+
 }
