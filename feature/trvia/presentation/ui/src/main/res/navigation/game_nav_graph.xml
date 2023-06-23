@@ -5,6 +5,7 @@
     android:id="@+id/game_nav_graph"
     app:startDestination="@id/homeGameFragment">
 
+
     <fragment
         android:id="@+id/homeGameFragment"
         android:name="com.chocolatecake.ui.home.HomeGameFragment"
@@ -18,6 +19,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpToInclusive="false" />
+
+        <deepLink app:uri="movie://trivia" />
     </fragment>
     <fragment
         android:id="@+id/memorizeGameFragment"

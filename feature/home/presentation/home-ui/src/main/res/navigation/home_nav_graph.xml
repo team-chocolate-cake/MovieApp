@@ -5,11 +5,12 @@
     android:id="@+id/home_nav_graph"
     app:startDestination="@id/homeFragment">
 
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.chocolatecake.ui.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -17,6 +18,8 @@
         <action
             android:id="@+id/action_homeFragment_to_showMoreFragment"
             app:destination="@id/showMoreFragment" />
+
+        <deepLink app:uri="movie://home" />
     </fragment>
 
     <fragment
@@ -36,7 +39,7 @@
         android:id="@+id/tvFragment"
         android:name="com.chocolatecake.ui.tvShow.TvFragment"
         android:label="TvFragment"
-        tools:layout="@layout/fragment_tv" >
+        tools:layout="@layout/fragment_tv">
         <action
             android:id="@+id/action_tvFragment_to_tvDetailsFragment"
             app:destination="@id/tvDetailsFragment" />
@@ -60,9 +63,9 @@
 
     <fragment
         android:id="@+id/watchHistoryFragment"
-        tools:layout="@layout/fragment_watch_history"
         android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
-        android:label="WatchHistoryFragment" >
+        android:label="WatchHistoryFragment"
+        tools:layout="@layout/fragment_watch_history">
         <action
             android:id="@+id/action_watchHistoryFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -74,7 +77,7 @@
         tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieId"
-            app:argType="integer"/>
+            app:argType="integer" />
         <action
             android:id="@+id/action_movieDetailsFragment_to_showMoreFragment"
             app:destination="@id/showMoreFragment" />
@@ -103,9 +106,9 @@
     </fragment>
     <fragment
         android:id="@+id/seasonDetailsFragment"
-        tools:layout="@layout/fragment_season_details"
         android:name="com.chocolatecake.ui.season_details.SeasonDetailsFragment"
-        android:label="SeasonDetailsFragment" >
+        android:label="SeasonDetailsFragment"
+        tools:layout="@layout/fragment_season_details">
         <argument
             android:name="seriesId"
             app:argType="integer" />
@@ -115,13 +118,14 @@
     </fragment>
     <fragment
         android:id="@+id/tvDetailsFragment"
-        tools:layout="@layout/fragment_tv_details"
         android:name="com.chocolatecake.ui.tv_details.TvDetailsFragment"
-        android:label="TvDetailsFragment" >
+        android:label="TvDetailsFragment"
+        tools:layout="@layout/fragment_tv_details">
         <action
             android:id="@+id/action_tvDetailsFragment_self"
             app:destination="@id/tvDetailsFragment" />
-        <argument android:name="tvShowId"
+        <argument
+            android:name="tvShowId"
             app:argType="integer" />
         <action
             android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
@@ -130,5 +134,10 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.chocolatecake.ui.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

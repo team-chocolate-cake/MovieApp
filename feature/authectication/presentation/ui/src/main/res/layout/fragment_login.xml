@@ -84,8 +84,8 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="@={viewModel.state.password}"
                 android:padding="16dp"
+                android:text="@={viewModel.state.password}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
                 app:setTipError="@{viewModel.state.passwordError}"
@@ -110,8 +110,8 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPersonName"
                 android:maxLines="1"
-                android:text="@={viewModel.state.userName}"
                 android:padding="16dp"
+                android:text="@={viewModel.state.userName}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
                 app:setTipError="@{viewModel.state.userNameError}"
@@ -130,6 +130,7 @@
             android:textColor="@color/on_background_60"
             app:layout_constraintStart_toStartOf="@+id/edittext_password"
             app:layout_constraintTop_toBottomOf="@+id/edittext_username" />
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

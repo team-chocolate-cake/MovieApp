@@ -1,11 +1,10 @@
 package com.chocolatecake.viewmodel.profile
 
-sealed interface ProfileUiEvent{
-    object FavoriteEvent : ProfileUiEvent
-    object WatchlistEvent : ProfileUiEvent
-    object WatchHistoryEvent : ProfileUiEvent
-    object MyListsEvent : ProfileUiEvent
-    object PopcornPuzzlesEvent : ProfileUiEvent
-    object LogoutEvent : ProfileUiEvent
-    object LoginEvent:ProfileUiEvent
+sealed interface ProfileUiEvent {
+    object NavigateToFavoriteScreen : ProfileUiEvent
+    object NavigateToWatchlistScreen : ProfileUiEvent
+    object NavigateToWatchHistoryScreen : ProfileUiEvent
+    object NavigateToMyListsScreen : ProfileUiEvent
+    object Logout : ProfileUiEvent
+    data class NavigateWithLink(val link: Int) : ProfileUiEvent
 }

@@ -1,15 +1,13 @@
 package com.chocolatecake.viewmodel.profile
 
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.NavigationRes
 import com.chocolatecake.usecase.profile.CheckIsUserLoggedInUseCase
 import com.chocolatecake.usecase.profile.GetAccountDetailsUseCase
 import com.chocolatecake.usecase.profile.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +16,8 @@ class ProfileViewModel @Inject constructor(
     private val getAccountDetailsUseCase: GetAccountDetailsUseCase,
     private val logoutUseCase: LogoutUseCase,
     private val profileUiMapper: ProfileUiMapper,
-    private val checkIsUserLoggedInUseCase: CheckIsUserLoggedInUseCase
+    private val checkIsUserLoggedInUseCase: CheckIsUserLoggedInUseCase,
+    private val navigationRes: NavigationRes
 ) : BaseViewModel<ProfileUIState, ProfileUiEvent>(ProfileUIState()), ProfileListener {
 
     init {
@@ -49,30 +48,30 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onClickFavorite() {
-        sendEvent(ProfileUiEvent.FavoriteEvent)
+        sendEvent(ProfileUiEvent.NavigateToFavoriteScreen)
     }
 
     override fun onClickWatchlist() {
-        sendEvent(ProfileUiEvent.WatchlistEvent)
+        sendEvent(ProfileUiEvent.NavigateToWatchlistScreen)
     }
 
     override fun onClickWatchHistory() {
-        sendEvent(ProfileUiEvent.WatchHistoryEvent)
+        sendEvent(ProfileUiEvent.NavigateToWatchHistoryScreen)
     }
 
     override fun onClickMyLists() {
-        sendEvent(ProfileUiEvent.MyListsEvent)
+        sendEvent(ProfileUiEvent.NavigateToMyListsScreen)
     }
 
     override fun onClickPopcornPuzzles() {
-        sendEvent(ProfileUiEvent.PopcornPuzzlesEvent)
+        sendEvent(ProfileUiEvent.NavigateWithLink(navigationRes.gameFeatureLink))
     }
 
     override fun onClickLogout() {
         viewModelScope.launch {
             _state.update { it.copy(isLoggedIn = false) }
             if (_state.value.isLoggedIn == logoutUseCase()) {
-                sendEvent(ProfileUiEvent.LogoutEvent)
+                sendEvent(ProfileUiEvent.Logout)
             }
         }
     }
@@ -90,6 +89,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun ocClickLogIn() {
-        sendEvent(ProfileUiEvent.LoginEvent)
+        sendEvent(ProfileUiEvent.NavigateWithLink(navigationRes.authFeatureLink))
     }
 }

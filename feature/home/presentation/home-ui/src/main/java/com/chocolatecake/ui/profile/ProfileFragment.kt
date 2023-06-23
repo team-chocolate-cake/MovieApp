@@ -2,10 +2,10 @@ package com.chocolatecake.ui.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
@@ -32,17 +32,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override fun onEvent(event: ProfileUiEvent) {
         when (event) {
-            ProfileUiEvent.FavoriteEvent -> showSnackBar("Favorite")
-            ProfileUiEvent.WatchlistEvent -> showSnackBar("Watchlist")
-            ProfileUiEvent.WatchHistoryEvent -> showSnackBar("WatchHistory")
-            ProfileUiEvent.MyListsEvent -> showSnackBar("MyLists")
-            ProfileUiEvent.PopcornPuzzlesEvent -> {
-                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToGameNavGraph())
+            ProfileUiEvent.NavigateToFavoriteScreen -> showSnackBar("Favorite")
+            ProfileUiEvent.NavigateToWatchlistScreen -> showSnackBar("Watchlist")
+            ProfileUiEvent.NavigateToWatchHistoryScreen -> showSnackBar("WatchHistory")
+            ProfileUiEvent.NavigateToMyListsScreen -> showSnackBar("MyLists")
+            ProfileUiEvent.Logout -> showSnackBar("Logout!")
+
+            is ProfileUiEvent.NavigateWithLink -> {
+                try {
+                    findNavController().navigate(event.link)
+                } catch (e: Exception) {
+                    Log.e("TAGTAG", "onEvent: $e")
+                }
             }
-            ProfileUiEvent.LogoutEvent -> {
-                showSnackBar("Logout!")
-            }
-            ProfileUiEvent.LoginEvent->findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment())
         }
     }
 

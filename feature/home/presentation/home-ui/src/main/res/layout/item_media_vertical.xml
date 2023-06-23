@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_small_8dp"
+        android:layout_margin="@dimen/spacing_tiny_4dp"
         android:onClick="@{() -> listener.onClickMedia(item.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
