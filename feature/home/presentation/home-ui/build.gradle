@@ -81,4 +81,7 @@ dependencies {
 
     /// youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
+
+    /// refresh-layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

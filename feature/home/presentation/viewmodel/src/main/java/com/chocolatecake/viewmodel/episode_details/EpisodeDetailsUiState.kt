@@ -10,8 +10,9 @@ data class EpisodeDetailsUiState(
     val episodeOverview: String = "",
     val episodeNumber: Int = 0,
     val seasonNumber: Int = 0,
+    val refreshing: Boolean = false,
     val cast: List<PeopleUIState> = emptyList(),
-    val productionCode: String="",
+    val productionCode: String = "",
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
 )

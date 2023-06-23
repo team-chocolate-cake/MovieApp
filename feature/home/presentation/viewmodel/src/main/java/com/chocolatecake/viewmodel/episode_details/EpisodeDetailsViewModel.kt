@@ -1,7 +1,5 @@
 package com.chocolatecake.viewmodel.episode_details
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
@@ -43,8 +41,10 @@ class EpisodeDetailsViewModel @Inject constructor(
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
         getCastData(seriesId, seasonNumber, episodeNumber)
     }
-    fun tryAgain() {
+    fun refresh() {
+        _state.value = EpisodeDetailsUiState(refreshing = true)
         getData(seriesId, episodeNumber, episodeNumber)
+        _state.value = EpisodeDetailsUiState(refreshing = false)
     }
 
     /// region episode data

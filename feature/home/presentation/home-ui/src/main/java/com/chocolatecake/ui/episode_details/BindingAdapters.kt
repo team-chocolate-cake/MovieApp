@@ -3,6 +3,7 @@ package com.chocolatecake.ui.episode_details
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -30,4 +31,9 @@ fun TextView.setTextMaxChars(text: CharSequence?) {
     } else {
         this.text = text
     }
+}
+
+@BindingAdapter("app:refreshing")
+fun setRefreshing(view: SwipeRefreshLayout, refreshing: Boolean) {
+    view.isRefreshing = refreshing
 }

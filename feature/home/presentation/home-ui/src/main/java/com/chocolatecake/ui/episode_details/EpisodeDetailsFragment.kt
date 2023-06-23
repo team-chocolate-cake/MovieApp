@@ -36,6 +36,10 @@ class EpisodeDetailsFragment :
                 binding.item = it
             }
         }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+        }
     }
 
     private fun setAdapter() {
@@ -60,12 +64,17 @@ class EpisodeDetailsFragment :
     private fun navigateToCastDetails() {
         //toDo findNavController().navigate()
     }
+
     private fun showBottomSheet() {
         val bottomSheet = EpisodeRateBottomSheet()
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }
-    override fun onApplyRateBottomSheet() { viewModel.setRating() }
+
+    override fun onApplyRateBottomSheet() {
+        viewModel.setRating()
+    }
+
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingState(rate)
     }
