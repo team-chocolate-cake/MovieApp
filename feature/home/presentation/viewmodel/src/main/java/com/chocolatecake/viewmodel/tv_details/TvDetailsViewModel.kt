@@ -23,6 +23,7 @@ import com.chocolatecake.usecase.GetUserListsUseCase
 import com.chocolatecake.usecase.RateTvShowUseCase
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
+import com.chocolatecake.usecase.movie_details.CheckIsLoginedOrNotUseCase
 import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsInfoUiMapper
@@ -52,6 +53,7 @@ class TvDetailsViewModel @Inject constructor(
     private val createUserListUseCase: CreateUserListUseCase,
     private val addToFavouriteUseCase: AddToFavouriteUseCase,
     private val addToWatchList: AddToWatchList,
+    private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     private val tvShowId =
@@ -63,6 +65,7 @@ class TvDetailsViewModel @Inject constructor(
 
 
     private fun getData() {
+        _state.update { it.copy(isLogined = checkIsLoginedOrNotUseCase()) }
         getYoutubeDetails()
         getTvShowInfo()
         getTvShowCast()
@@ -97,7 +100,8 @@ class TvDetailsViewModel @Inject constructor(
                     name = item.info.name,
                     rating = item.info.rating,
                     description = item.info.description,
-                    genres = item.info.genres
+                    genres = item.info.genres,
+                    isLogined = checkIsLoginedOrNotUseCase()
                 ),
             )
         }

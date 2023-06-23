@@ -78,7 +78,7 @@
                         android:layout_marginEnd="16dp"
                         android:background="@null"
                         android:backgroundTint="@color/on_primary"
-                        app:isVisible="@{!viewModel.state.isLoading}"
+                        app:isVisible="@{!viewModel.state.isLoading &amp; viewModel.state.logined}"
                         android:onClick="@{()-> viewModel.onClickSaveButton()}"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_save" />
