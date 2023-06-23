@@ -181,5 +181,5 @@ interface MovieService {
     ): Response<StatusResponse>
 
     @POST("account/account_id/favorite")
-    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
+    suspend fun addFavorite(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
 }
