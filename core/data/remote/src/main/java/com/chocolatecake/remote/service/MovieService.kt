@@ -2,8 +2,10 @@ package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
@@ -172,4 +174,12 @@ interface MovieService {
 
     @POST("list")
     suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
+
+    @POST("account/account_id/watchlist")
+    suspend fun addWatchlist(
+        @Body watchlistRequest: WatchlistRequest,
+    ): Response<StatusResponse>
+
+    @POST("account/account_id/favorite")
+    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
 }
