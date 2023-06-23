@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chocolatecake.bases.BaseAdapter
+import com.chocolatecake.bases.R
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 @BindingAdapter(value = ["app:items"])
@@ -55,12 +56,12 @@ fun ImageView.loadImage(imageUrl: String?) {
     if (imageUrl == "https://image.tmdb.org/t/p/w500null") {
         Glide.with(context)
             .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-            .fitCenter()
+            .thumbnail(Glide.with(context).load(R.raw.loading_images))
             .centerCrop()
             .into(this)
     } else Glide.with(context)
         .load(imageUrl)
-        .fitCenter()
+        .thumbnail(Glide.with(context).load(R.raw.loading_images))
         .centerCrop()
         .into(this)
 

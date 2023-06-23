@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.search.SearchUiState.GenresMoviesUiState" />
+            type="com.chocolatecake.viewmodel.search.SearchUiState.GenresUiState" />
 
         <variable
             name="listener"
