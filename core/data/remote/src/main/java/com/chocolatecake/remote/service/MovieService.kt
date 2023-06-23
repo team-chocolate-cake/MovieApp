@@ -17,7 +17,7 @@ import com.chocolatecake.remote.response.MovieResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
-import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
+import com.chocolatecake.remote.response.dto.GenreTVRemoteDto
 import com.chocolatecake.remote.response.dto.ListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieItemListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
@@ -27,12 +27,12 @@ import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
-import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
-import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
-import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
 import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.dto.season_details.SeasonDetailsDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
@@ -147,7 +147,7 @@ interface MovieService {
     @GET("genre/tv/list")
     suspend fun getListOfGenresForTvs(
         @Query("language") language: String = "en"
-    ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
+    ): Response<GenresWrapperResponse<GenreTVRemoteDto>>
     ///endregion
 
     /// region account
