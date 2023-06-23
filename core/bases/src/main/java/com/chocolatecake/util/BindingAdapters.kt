@@ -96,3 +96,10 @@ fun TextView.convertGenderText(gender: String?) {
         ""
     }
 }
+
+@BindingAdapter("app:onClickNavigation")
+fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit) {
+    this.setNavigationOnClickListener {
+        onClick()
+    }
+}

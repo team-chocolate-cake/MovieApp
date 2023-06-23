@@ -15,10 +15,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:elevation="2dp"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/arrow_left"
+                app:navigationIconTint="@color/on_background_87"
+                app:onClickNavigation="@{viewModel.backNavigate}"
+                app:titleTextAppearance="@style/TextStyle.TitleMedium"
+                app:titleTextColor="@color/on_background_87"/>
 
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -33,7 +49,7 @@
                 app:layout_constraintBottom_toTopOf="@id/text_view_people_biography_title"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
                 tools:src="@tools:sample/backgrounds/scenic" />
 

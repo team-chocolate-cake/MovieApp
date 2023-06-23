@@ -28,9 +28,9 @@ class PeopleDetailsViewModel @Inject constructor(
     private val tvShowsByPeopleUiMapper: TvShowsByPeopleUiMapper
 
 ) : BaseViewModel<PeopleDetailsUiState, PeopleDetailsUiEvent>(PeopleDetailsUiState()),
-    MediaListener {
+    PeopleDetailsListener {
 
-var num_people_movies =""
+    var num_people_movies = ""
 
     fun getPersonData(personId: Int) {
         viewModelScope.launch {
@@ -115,7 +115,16 @@ var num_people_movies =""
     }
 
 
-    override fun onClickMedia(id: Int) {
+    override fun onClickMovies(itemId: Int) {
         TODO("Not yet implemented")
+    }
+
+    override fun onClickTvShows(itemId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun backNavigate() {
+        sendEvent(PeopleDetailsUiEvent.BackNavigate)
+
     }
 }

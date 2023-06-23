@@ -3,6 +3,7 @@ package com.chocolatecake.ui.people
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.common.adapters.MediaVerticalAdapter
 import com.chocolatecake.ui.home.R
@@ -20,7 +21,7 @@ class PeopleDetailsFragment :
         get() = R.layout.fragment_people_details
     override val viewModel: PeopleDetailsViewModel by viewModels()
 
-private lateinit var mediaVerticalAdapter: MediaVerticalAdapter
+    private lateinit var mediaVerticalAdapter: MediaVerticalAdapter
     private lateinit var mediaVerticalAdapterTvShows: MediaVerticalAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +57,10 @@ private lateinit var mediaVerticalAdapter: MediaVerticalAdapter
     }
 
     override fun onEvent(event: PeopleDetailsUiEvent) {
-        TODO("Not yet implemented")
+        when (event) {
+            PeopleDetailsUiEvent.BackNavigate -> findNavController().popBackStack()
+            else -> {}
+        }
     }
 
 }
