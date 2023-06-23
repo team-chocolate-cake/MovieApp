@@ -62,5 +62,6 @@ interface MovieRepository {
     suspend fun getUserLists(): List<UserListEntity>
     suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
     suspend fun createUserList(listName: String): StatusEntity
-
+    suspend fun addWatchlist(mediaId:Int,mediaType:String,isWatchList:Boolean): StatusEntity
+    suspend fun addFavouriteList(mediaId:Int,mediaType:String,isFavourite:Boolean): StatusEntity
 }

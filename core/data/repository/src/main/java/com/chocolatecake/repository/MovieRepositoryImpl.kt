@@ -5,18 +5,20 @@ import androidx.paging.PagingConfig
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.TvEntity
-import com.chocolatecake.local.PreferenceStorage
-import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.StatusEntity
 import com.chocolatecake.entities.TVShowsEntity
+import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.entities.UserListEntity
+import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
+import com.chocolatecake.entities.movieDetails.StatusEntity
+import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
@@ -27,12 +29,12 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
-import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
+import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleMapper
-import com.chocolatecake.repository.mappers.domain.DomainStatusMapper
 import com.chocolatecake.repository.mappers.domain.DomainPeopleRemoteMapper
 import com.chocolatecake.repository.mappers.domain.DomainReviewsMapper
+import com.chocolatecake.repository.mappers.domain.DomainStatusMapper
 import com.chocolatecake.repository.mappers.domain.DomainUserListsMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
@@ -283,39 +285,48 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getAiringTodayTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { airingTodayTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { airingTodayTvShowsPagingSource }
         )
     }
 
     override suspend fun getTopRatedTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { topRatedTvShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { topRatedTvShowsPagingSource }
         )
     }
 
     override suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { popularTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { popularTVShowsPagingSource }
         )
     }
 
     override suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity> {
         return Pager(
-            config = PagingConfig(pageSize = 20), pagingSourceFactory = { onTheAirTVShowsPagingSource }
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { onTheAirTVShowsPagingSource }
         )
     }
     /// endregion
 
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
-        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId)})
+        return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
 
     override suspend fun setMovieRate(movieId: Int, rate: Float): StatusEntity {
-        return domainStatusMapper.map(wrapApiCall { movieService.setMovieRate(RatingRequest(rate) , movieId) })
+        return domainStatusMapper.map(wrapApiCall {
+            movieService.setMovieRate(
+                RatingRequest(rate),
+                movieId
+            )
+        })
     }
 
     override suspend fun getMovieReviews(movieId: Int, page: Int): ReviewResponseEntity {
-        return domainReviewsMapper.map(wrapApiCall { movieService.getMovieReviews(movieId , page) })
+        return domainReviewsMapper.map(wrapApiCall { movieService.getMovieReviews(movieId, page) })
     }
 
     override suspend fun getUserLists(): List<UserListEntity> {
@@ -333,6 +344,34 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun createUserList(listName: String): StatusEntity {
         val newList = CreateUserListRequest(listName)
         val call = wrapApiCall { movieService.createUserList(newList) }
+        return domainStatusMapper.map(call)
+    }
+
+    override suspend fun addWatchlist(
+        mediaId: Int,
+        mediaType: String,
+        isWatchList: Boolean
+    ): StatusEntity {
+        val watchlistRequest = WatchlistRequest(
+            mediaId = mediaId,
+            mediaType = mediaType,
+            watchlist = isWatchList
+        )
+        val call = wrapApiCall { movieService.addWatchlist(watchlistRequest) }
+        return domainStatusMapper.map(call)
+    }
+
+    override suspend fun addFavouriteList(
+        mediaId: Int,
+        mediaType: String,
+        isFavourite: Boolean
+    ): StatusEntity {
+        val favoriteRequest = FavoriteRequest(
+            mediaId = mediaId,
+            mediaType = mediaType,
+            favorite = isFavourite
+        )
+        val call = wrapApiCall { movieService.addFavorite(favoriteRequest) }
         return domainStatusMapper.map(call)
     }
 }
