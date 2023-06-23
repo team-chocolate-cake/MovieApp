@@ -152,7 +152,7 @@ class TvDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(tvShowId,"tv") },
+            call = { addToFavouriteUseCase(tvShowId, "tv") },
             onSuccess = {
                 sendEvent(TvDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -161,9 +161,10 @@ class TvDetailsViewModel @Inject constructor(
             }
         )
     }
+
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(tvShowId,"tv") },
+            call = { addToWatchList(tvShowId, "tv") },
             onSuccess = {
                 sendEvent(TvDetailsUiEvent.OnWatchList("added successfully"))
             },
@@ -172,6 +173,7 @@ class TvDetailsViewModel @Inject constructor(
             }
         )
     }
+
     //region seasons
     private fun getTvSeasons() {
         updateLoading(true)
@@ -229,13 +231,13 @@ class TvDetailsViewModel @Inject constructor(
             onSuccess = ::onRatingSuccess,
             onError = {
                 Log.i("Click", "${_state.value.userRating.toDouble()}")
-                sendEvent(TvDetailsUiEvent.ApplyRating("something went wrong :("))
+                sendEvent(TvDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
             }
         )
     }
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(TvDetailsUiEvent.ApplyRating("rating was successful"))
+        sendEvent(TvDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
         val item = TvRatingUiMapper().map(statusEntity)
         _state.update {
             it.copy(

@@ -235,11 +235,11 @@ class MovieDetailsViewModel @Inject constructor(
     //endregion
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
     }
 
     private fun onRatingError(error: Throwable) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("something went wrong 🤔\nplease try again later."))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
     }
 
     override fun onClickPeople(id: Int) {
