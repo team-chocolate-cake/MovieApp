@@ -2,9 +2,11 @@ package com.chocolatecake.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.StatusEntity
@@ -30,6 +32,7 @@ import com.chocolatecake.remote.request.CreateUserListRequest
 import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.RateRequest
+import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
@@ -60,6 +63,9 @@ import com.chocolatecake.repository.mappers.domain.DomainTvDetailsSeasonMapper
 import com.chocolatecake.repository.mappers.domain.DomainTvShowMapper
 import com.chocolatecake.repository.mappers.domain.DomainUserListsMapper
 import com.chocolatecake.repository.mappers.domain.DomainYoutubeDetailsMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainCastMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainEpisodeDetailsMapper
+import com.chocolatecake.repository.mappers.domain.episode.DomainRatingEpisodeMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
@@ -112,6 +118,9 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainGenreMapper: DomainGenreMapper,
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainStatusMapper: DomainStatusMapper,
+    private val domainRatingEpisodeMapper: DomainRatingEpisodeMapper,
+    private val domainCastMapper: DomainCastMapper,
+    private val domainEpisodeDetailsMapper: DomainEpisodeDetailsMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainSeasonDetailsMapper: DomainSeasonDetailsMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
@@ -631,6 +640,51 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     //endregion
+
+    /// region episode
+
+    override suspend fun getCastForEpisode(
+        id: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): List<PeopleEntity> {
+        val dataDto = wrapApiCall { movieService.getEpisodeCast(id, seasonNumber, episodeNumber) }
+        return domainCastMapper.map(dataDto)
+
+    }
+
+    override suspend fun getEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): EpisodeDetailsEntity {
+        return domainEpisodeDetailsMapper.map(wrapApiCall {
+            movieService.getEpisodeDetails(
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
+    }
+
+    override suspend fun setRatingForEpisode(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        value: Float
+    ): RatingEpisodeDetailsStatusEntity {
+        val rateRequest = RatingEpisodeDetailsRequest(value)
+        return domainRatingEpisodeMapper.map(wrapApiCall {
+            movieService.postEpisodeRating(
+                rateRequest,
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
+    }
+
+    /// endregion
 
     override fun isLoginedOrNot(): Boolean {
         return if(preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true

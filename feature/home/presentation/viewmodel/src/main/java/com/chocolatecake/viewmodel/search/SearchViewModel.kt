@@ -6,7 +6,6 @@ import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.GetAllGenresMoviesUseCase
 import com.chocolatecake.usecase.GetAllGenresTvsUseCase
-import com.chocolatecake.usecase.search.GetSearchHistoryUseCase
 import com.chocolatecake.usecase.search.SearchMoviesUseCase
 import com.chocolatecake.usecase.search.SearchPeopleUseCase
 import com.chocolatecake.usecase.search.SearchTvsUseCase
@@ -37,7 +36,6 @@ class SearchViewModel @Inject constructor(
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
     private val genreUiStateMapper: GenreUiStateMapper,
-    private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
     private val movieUiMapper: MovieUiMapper,
     private val tvUiMapper: TvUiMapper,
     private val peopleUiMapper: PeopleUiMapper
@@ -223,16 +221,23 @@ class SearchViewModel @Inject constructor(
 
     override fun showResultMovie() {
         sendEvent(SearchUiEvent.ShowMovieResult)
-        _state.update { it.copy(selectedGenresId = null) }
+        _state.update {
+            it.copy(
+                selectedGenresId = null,
+                mediaType = SearchUiState.SearchMedia.MOVIE
+            )
+        }
     }
 
     override fun showResultTv() {
         sendEvent(SearchUiEvent.ShowTvResult)
-        _state.update { it.copy(selectedGenresId = null) }
+        _state.update { it.copy(selectedGenresId = null,
+            mediaType = SearchUiState.SearchMedia.TV) }
     }
 
     override fun showResultPeople() {
         sendEvent(SearchUiEvent.ShowPeopleResult)
+        _state.update { it.copy(mediaType = SearchUiState.SearchMedia.PEOPLE) }
     }
 
     override fun onClickMedia(id: Int) {
@@ -254,7 +259,7 @@ class SearchViewModel @Inject constructor(
         if (throwable == NoNetworkThrowable()) {
             showErrorWithSnackBar(throwable.message ?: "No Network Connection")
         }else if(throwable == SocketTimeoutException()){
-
+            showErrorWithSnackBar(throwable.message ?: "time out!")
         }
             _state.update {
             it.copy(

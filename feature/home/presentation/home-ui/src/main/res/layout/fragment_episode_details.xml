@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel" />
+
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsUiState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsListener" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_to_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminateTint="@color/primary"
+        app:refreshing="@{viewModel.state.refreshing}">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
+                tools:context=".ui.episodeDetails.EpisodeDetailsFragment">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    android:elevation="2dp"
+                    android:onClick="@{()->viewModel.clickToBack()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navigationIcon="@drawable/ic_back" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/primary"
+                    app:isVisible="@{viewModel.state.loading}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <include
+                    android:id="@+id/lottie_animation_view_no_network"
+                    layout="@layout/layout_no_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showWhenError="@{viewModel.state.onErrors}" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image_view_episode_image"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/height_image_details"
+                    android:foreground="@drawable/main_image_gradient"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{item.imageUrl}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <TextView
+                    android:id="@+id/text_view_episode_name"
+                    style="@style/TextStyle.BodyLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:text="@{item.episodeName}"
+                    android:textColor="@color/on_background_87"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_view_episode_image"
+                    tools:text="The Super Mario Bros." />
+
+                <TextView
+                    android:id="@+id/text_view_season"
+                    style="@style/TextStyle.BodyMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:text='@{@string/season + " " + String.valueOf(item.seasonNumber )+ " | "+ @string/episode + " " + String.valueOf(item.episodeNumber)}'
+                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_name"
+                    tools:text="Season 1 | Episode 1 " />
+
+                <TextView
+                    android:id="@+id/text_view_rate"
+                    style="@style/TextStyle.LabelBody"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                    android:onClick="@{()-> viewModel.clickToRate(item.episodeNumber)}"
+                    android:text="@string/rate_the_episode"
+                    android:textColor="@color/primary"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/CustomRatingBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:contentDescription="@string/rate_the_episode"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="@{item.episodeRate}"
+                    android:stepSize="1"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_season" />
+
+                <TextView
+                    android:id="@+id/text_view_episode_description"
+                    style="@style/TextStyle.BodySmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:maxLines="5"
+                    android:text="@{item.episodeOverview}"
+                    android:textColor="@color/on_background_60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBar"
+                    tools:text="@tools:sample/lorem/random" />
+
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/video_player_height_328dp"
+                    android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                    android:layout_marginVertical="@dimen/spacing_medium_16dp"
+                    app:hideWhenNoProductionCode="@{viewModel.state.productionCode}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_episode_description"
+                    app:setVideoId="@{viewModel.state.productionCode}" />
+
+                <TextView
+                    android:id="@+id/text_view_actors"
+                    style="@style/TextStyle.TitleMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:text="@string/actors"
+                    android:textColor="@color/on_background_87"
+                    app:hideWhenNoList="@{viewModel.state.cast}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/youtube_player" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                    android:clipToPadding="false"
+                    android:contentDescription="@string/rate_the_episode"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/spacing_custom_12dp"
+                    app:hideWhenNoList="@{viewModel.state.cast}"
+                    app:items="@{item.cast}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_actors"
+                    tools:listitem="@layout/item_people" />
+
+                <Button
+                    style="@style/TextStyle.TitleMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:onClick="@{()->viewModel.refresh()}"
+                    android:text="@string/try_again"
+                    android:textColor="@color/background"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lottie_animation_view_no_network"
+                    app:showWhenError="@{viewModel.state.onErrors}" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
