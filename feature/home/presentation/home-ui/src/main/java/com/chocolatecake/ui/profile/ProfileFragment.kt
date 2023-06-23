@@ -2,12 +2,13 @@ package com.chocolatecake.ui.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.bases.ListName
+import com.chocolatecake.bases.ListType
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
 import com.chocolatecake.viewmodel.profile.ProfileUIState
@@ -32,18 +33,37 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override fun onEvent(event: ProfileUiEvent) {
         when (event) {
-            ProfileUiEvent.NavigateToFavoriteScreen -> showSnackBar("Favorite")
-            ProfileUiEvent.NavigateToWatchlistScreen -> showSnackBar("Watchlist")
-            ProfileUiEvent.NavigateToWatchHistoryScreen -> showSnackBar("WatchHistory")
+            ProfileUiEvent.NavigateToFavoriteScreen -> {
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
+                        listType = ListType.movie.name,
+                        listId = 0,
+                        listName = ListName.favorite.name,
+                    )
+                )
+            }
+
+            ProfileUiEvent.NavigateToWatchlistScreen -> {
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToMyListFragment()
+                )
+            }
+
+            ProfileUiEvent.NavigateToWatchHistoryScreen -> {
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
+                        listType = ListType.movie.name,
+                        listId = 0,
+                        listName = ListName.watchlist.name,
+                    )
+                )
+            }
+
             ProfileUiEvent.NavigateToMyListsScreen -> showSnackBar("MyLists")
             ProfileUiEvent.Logout -> showSnackBar("Logout!")
 
             is ProfileUiEvent.NavigateWithLink -> {
-                try {
-                    findNavController().navigate(event.link)
-                } catch (e: Exception) {
-                    Log.e("TAGTAG", "onEvent: $e")
-                }
+                findNavController().navigate(event.link)
             }
         }
     }

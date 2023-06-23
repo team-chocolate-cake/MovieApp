@@ -21,13 +21,12 @@
             android:layout_height="@dimen/zero_height"
             android:clipToPadding="false"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:isVisible="@{!viewModel.state.loading}"
-            app:spanCount="1" />
+            app:isVisible="@{!viewModel.state.loading}" />
 
         <ProgressBar
             android:id="@+id/progressBar"

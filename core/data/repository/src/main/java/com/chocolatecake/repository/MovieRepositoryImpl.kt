@@ -442,9 +442,6 @@ class MovieRepositoryImpl @Inject constructor(
                 tvShowID
             )
         })
-        return domainRatingMapper.map(
-            wrapApiCall { movieService.setMovieRate(RatingRequest(rate), movieId) }
-        )
     }
 
 

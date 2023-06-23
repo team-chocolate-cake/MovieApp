@@ -12,8 +12,17 @@ class MyListDetailsUiMapper @Inject constructor() : Mapper<MovieEntity, MovieUiS
             title = input.title,
             imageUrl =input.imageUrl,
             genres = input.convertGenreListToString(),
-            year = input.year,
+            year = input.extractYearFromDate(),
             rate = input.rate,
         )
+    }
+
+    private fun MovieEntity.convertGenreListToString(): String {
+        return genreEntities.joinToString(" | ") { it.genreName }
+    }
+
+    private fun MovieEntity.extractYearFromDate(): String {
+        val parts = year.split("-")
+        return parts[0]
     }
 }

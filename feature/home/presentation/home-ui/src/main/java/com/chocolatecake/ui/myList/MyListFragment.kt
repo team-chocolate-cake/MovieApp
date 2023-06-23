@@ -1,21 +1,16 @@
 package com.chocolatecake.ui.myList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListBinding
-import com.chocolatecake.ui.myListDetails.MyListDetailsFragmentDirections
-import com.chocolatecake.ui.search.FilterMovieBottomSheetFragment
 import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyListFragment :

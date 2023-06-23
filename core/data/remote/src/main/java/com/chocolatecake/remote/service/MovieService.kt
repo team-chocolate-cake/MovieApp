@@ -213,6 +213,7 @@ interface MovieService {
     ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 
+    //region my list
     @GET("account/account_id/lists")
     suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
 
@@ -224,15 +225,11 @@ interface MovieService {
 
     @POST("list")
     suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
-    ): Response<RatingDto>
 
 
-    //region my list
+
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
-
-//    @GET("account/{account_id}/favorite/tv")
-//    suspend fun getFavoriteTv(): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("account/{account_id}/favorite/{media_type}")
     suspend fun getFavoriteByMediaType(
