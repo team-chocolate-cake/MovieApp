@@ -152,7 +152,7 @@ class TvDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(tvShowId) },
+            call = { addToFavouriteUseCase(tvShowId,"tv") },
             onSuccess = {
                 sendEvent(TvDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -163,7 +163,7 @@ class TvDetailsViewModel @Inject constructor(
     }
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(tvShowId) },
+            call = { addToWatchList(tvShowId,"tv") },
             onSuccess = {
                 sendEvent(TvDetailsUiEvent.OnWatchList("added successfully"))
             },

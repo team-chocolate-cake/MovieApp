@@ -192,7 +192,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(movieId!!) },
+            call = { addToFavouriteUseCase(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -203,7 +203,7 @@ class MovieDetailsViewModel @Inject constructor(
     }
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(movieId!!) },
+            call = { addToWatchList(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
             },
