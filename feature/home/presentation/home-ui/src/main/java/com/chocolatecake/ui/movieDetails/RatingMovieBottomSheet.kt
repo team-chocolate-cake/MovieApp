@@ -11,6 +11,7 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MovieRatingBottomSheetBinding
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -55,10 +56,17 @@ class RatingMovieBottomSheet : BottomSheetDialogFragment() {
             Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
-            dismissListener?.onApplyRateBottomSheet()
-            dismissListener?.updateRatingValue(userRating)
-            dismiss()
+            if (userRating == 0f) {
+                showSnackBar("Please Rate First")
+            } else {
+                dismissListener?.onApplyRateBottomSheet()
+                dismissListener?.updateRatingValue(userRating)
+                dismiss()
+            }
         }
+    }
+    private fun showSnackBar(messages: String) {
+        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
 }
 

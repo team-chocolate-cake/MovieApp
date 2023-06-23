@@ -206,7 +206,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(movieId!!) },
+            call = { addToFavouriteUseCase(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -218,7 +218,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(movieId!!) },
+            call = { addToWatchList(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
             },
@@ -235,11 +235,11 @@ class MovieDetailsViewModel @Inject constructor(
     //endregion
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
     }
 
     private fun onRatingError(error: Throwable) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("something went wrong 🤔\nplease try again later."))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
     }
 
     override fun onClickPeople(id: Int) {
