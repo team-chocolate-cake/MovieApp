@@ -145,5 +145,4 @@
         <item name="android:textColor">@color/add_to_list_text_color</item>
     </style>
     <!--    endregion-->
-
 </resources>

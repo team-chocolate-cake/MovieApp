@@ -10,7 +10,8 @@ class DomainStatusMapper @Inject constructor() : Mapper<StatusResponse, StatusEn
         return StatusEntity(
             success = input.success ?: false,
             statusCode = input.statusCode ?: 0,
-            statusMessage = input.statusMessage ?: ""
+            statusMessage = input.statusMessage ?: "",
+            success = input.success?:false
         )
     }
 }

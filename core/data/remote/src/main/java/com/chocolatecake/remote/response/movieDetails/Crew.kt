@@ -4,25 +4,25 @@ import com.google.gson.annotations.SerializedName
 
 data class Crew(
     @SerializedName("adult")
-    val adult: Boolean,
+    val adult: Boolean?,
     @SerializedName("credit_id")
-    val creditId: String,
+    val creditId: String?,
     @SerializedName("department")
-    val department: String,
+    val department: String?,
     @SerializedName("gender")
-    val gender: Int,
+    val gender: Int?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("job")
-    val job: String,
+    val job: String?,
     @SerializedName("known_for_department")
-    val knownForDepartment: String,
+    val knownForDepartment: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("original_name")
-    val originalName: String,
+    val originalName: String?,
     @SerializedName("popularity")
-    val popularity: Double,
+    val popularity: Double?,
     @SerializedName("profile_path")
-    val profilePath: String
+    val profilePath: String?
 )

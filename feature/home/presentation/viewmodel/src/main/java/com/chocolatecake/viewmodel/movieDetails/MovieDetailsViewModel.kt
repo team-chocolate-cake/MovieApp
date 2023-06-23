@@ -1,22 +1,28 @@
 package com.chocolatecake.viewmodel.movieDetails
 
+import com.chocolatecake.usecase.movie_details.AddToWatchList
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingEntity
-import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
-
+import com.chocolatecake.entities.movieDetails.StatusEntity
+import com.chocolatecake.repository.NoNetworkThrowable
+import com.chocolatecake.repository.UnauthorizedThrowable
+import com.chocolatecake.usecase.common.AddToUserListUseCase
+import com.chocolatecake.usecase.common.CreateUserListUseCase
+import com.chocolatecake.usecase.common.GetUserListsUseCase
+import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
-import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
-import com.chocolatecake.viewmodel.movieDetails.mapper.FavoriteBodyUiMapper
+import com.chocolatecake.viewmodel.common.listener.MediaListener
+import com.chocolatecake.viewmodel.common.listener.PeopleListener
+import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.movieDetails.mapper.UserListsUiMapper
+import com.chocolatecake.viewmodel.tv_details.listener.ChipListener
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 
@@ -24,18 +30,26 @@ import javax.inject.Inject
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase,
     private val ratingUseCase: GetRatingUseCase,
-    private val savedStateHandle: SavedStateHandle,
-    private val makeAsFavoriteUseCase: MakeAsFavoriteUseCase,
-    private val favoriteBodyUiMapper: FavoriteBodyUiMapper,
+    private val getUserListsUseCase: GetUserListsUseCase,
+    private val addToUserListUseCase: AddToUserListUseCase,
+    private val createUserListUseCase: CreateUserListUseCase,
+    private val addToFavouriteUseCase: AddToFavouriteUseCase,
+    private val addToWatchList: AddToWatchList,
+    private val savedStateHandle: SavedStateHandle
+) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
+    MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
-    ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
-    MovieDetailsListener {
-
-    private val movieId = savedStateHandle.get<Int>("movieId") ?: 502356
+    private val movieId = savedStateHandle.get<Int>("movieId")
 
     init {
         _state.update { it.copy(isLoading = true) }
-        getMovieDetails(movieId)
+        if (movieId != null) {
+            getMovieDetails(movieId)
+        } else {
+            val errors = _state.value.onErrors.toMutableList()
+            errors.add("There are a problem with MovieId")
+            _state.update { it.copy(onErrors = errors, isLoading = false) }
+        }
     }
 
 
@@ -50,6 +64,11 @@ class MovieDetailsViewModel @Inject constructor(
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
         errors.add(th.message.toString())
+        when (th) {
+            is NoNetworkThrowable -> errors.add("noNetwork")
+            is UnauthorizedThrowable -> errors.add("noNetwork")
+            else -> errors.add(th.message.toString())
+        }
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
@@ -57,123 +76,202 @@ class MovieDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 id = movieDetails.id,
-                movieUiState = MovieDetailsItem.Upper(
-                    UpperUiState(
-                        id = movieDetails.id,
-                        backdropPath = movieDetails.backdropPath,
-                        genres = movieDetails.genres,
-                        title = movieDetails.title,
-                        overview = movieDetails.overview,
-                        voteAverage = movieDetails.voteAverage?.toFloat()?.div(2f),
-                        videos = movieDetails.videos?.results?.map { it.key!! },
+                movieUiState = UpperUiState(
+                    id = movieDetails.id,
+                    backdropPath = movieDetails.backdropPath,
+                    genres = movieDetails.genres,
+                    title = movieDetails.title,
+                    overview = movieDetails.overview,
+                    voteAverage = movieDetails.voteAverage.toFloat().div(2f),
+                    videos = movieDetails.videos.results.map { it.key },
+                ),
+                recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
+                    MediaVerticalUIState(
+                        id = it.id,
+                        rate = it.voteAverage,
+                        imageUrl = it.backdropPath,
                     )
-                ),
-                recommendedUiState = MovieDetailsItem.Recommended(
-                    movieDetails.recommendations?.recommendedMovies?.map {
-                        RecommendedMoviesUiState(
-                            id = it?.id,
-                            voteAverage = it?.voteAverage,
-                            backdropPath = it?.backdropPath,
-                        )
-                    },
-                ),
-                reviewUiState = MovieDetailsItem.Reviews(
-                    movieDetails.reviewEntities?.map {
-                        ReviewUiState(
-                            name = it.name,
-                            avatar_path = it.avatar_path,
-                            content = it.content,
-                            created_at = it.created_at
-                        )
-                    }
-                ),
-                castUiState = MovieDetailsItem.People(
-                    movieDetails.credits?.cast?.map {
-                        CastUiState(
-                            id = it?.id,
-                            name = it?.name,
-                            profilePath = it?.profilePath
-                        )
-                    }
+                },
+                reviewUiState = movieDetails.reviewEntity.reviews.map {
+                    ReviewUiState(
+                        name = it.name,
+                        avatar_path = it.avatar_path,
+                        content = it.content,
+                        created_at = it.created_at
+                    )
+                },
+                castUiState =
+                movieDetails.credits.cast.map {
+                    PeopleUIState(
+                        id = it.id,
+                        name = it.name,
+                        imageUrl = it.profilePath
+                    )
+                },
+                reviewsDetails = ReviewDetailsUiState(
+                    page = movieDetails.reviewEntity.page,
+                    totalPages = movieDetails.reviewEntity.totalPages,
+                    totalReviews = movieDetails.reviewEntity.totalResults
                 ),
                 isLoading = false
             )
         }
     }
 
-    fun onRatingSubmit(rating: Float, movieId: Int) {
+    fun onRatingSubmit() {
         tryToExecute(
-            call = { ratingUseCase(movieId, rating) },
-            onSuccess = ::onSuccessRating,
-            onError = ::onError
+            call = { ratingUseCase(movieId!!, state.value.userRating) },
+            onSuccess = ::onRatingSuccess,
+            onError = ::onRatingError
         )
     }
 
-    private fun onSuccessRating(ratingEntity: RatingEntity) {
-        //todo
-        sendEvent(MovieDetailsUiEvent.onSuccessRateEvent(ratingEntity.statusMessage))
+    fun updateRatingUiState(rate: Float) {
+        _state.update {
+            it.copy(
+                userRating = rate
+            )
+        }
 
     }
 
+    //region user lists
 
-
-
-    override fun onClickPeople(itemId: Int) {
-        sendEvent(MovieDetailsUiEvent.PeopleEvent(itemId))
+    fun emptyUserLists() {
+        _state.update {
+            it.copy(userLists = emptyList())
+        }
     }
 
-    override fun onClickRecommendedMovie(itemId: Int) {
-        sendEvent(MovieDetailsUiEvent.RecommendedMovieEvent(itemId))
+    fun getUserLists() {
+        tryToExecute(
+            call = { getUserListsUseCase() },
+            onSuccess = ::onGetUserListsUseCase,
+            onError = {
+                Log.i("lists", "something went wrong $it")
+            }
+        )
     }
+
+    private fun onGetUserListsUseCase(userListsEntity: List<UserListEntity>) {
+        val item = UserListsUiMapper().map(userListsEntity)
+        _state.update {
+            it.copy(
+                userLists = item.userLists
+            )
+        }
+        Log.i("lists", "user lists => ${state.value.userLists}")
+    }
+
+    fun onDone(listsId: List<Int>) {
+        listsId.forEach { id ->
+            tryToExecute(
+                call = { addToUserListUseCase(id, movieId!!) },
+                onSuccess = ::onDoneSuccess,
+                onError = {
+                    sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔"))
+                    Log.i("chip", "something went wrong")
+                }
+            )
+        }
+    }
+
+    private fun onDoneSuccess(statusEntity: StatusEntity) {
+        sendEvent(MovieDetailsUiEvent.OnDoneAdding("adding was successful"))
+    }
+
+    fun createUserNewList(listName: String) {
+        tryToExecute(
+            call = { createUserListUseCase(listName) },
+            onSuccess = ::onCreateUserNewList,
+            onError = {
+                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong"))
+            }
+        )
+    }
+
+    fun addToFavourite() {
+        tryToExecute(
+            call = { addToFavouriteUseCase(movieId!!) },
+            onSuccess = {
+                sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
+            },
+            onError = {
+                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong"))
+            }
+        )
+    }
+    fun addToWatchlist() {
+        tryToExecute(
+            call = { addToWatchList(movieId!!) },
+            onSuccess = {
+                sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
+            },
+            onError = {
+                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong"))
+            }
+        )
+    }
+
+    private fun onCreateUserNewList(statusEntity: StatusEntity) {
+        sendEvent(MovieDetailsUiEvent.OnCreateNewList("New List Was Added Successfully"))
+        getUserLists()
+    }
+    //endregion
+
+    private fun onRatingSuccess(statusEntity: StatusEntity) {
+        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
+    }
+
+    private fun onRatingError(error: Throwable) {
+        sendEvent(MovieDetailsUiEvent.ApplyRating("something went wrong 🤔\nplease try again later."))
+    }
+
+    override fun onClickPeople(id: Int) {
+        sendEvent(MovieDetailsUiEvent.NavigateToPeopleDetails(id))
+    }
+
 
     override fun onClickPlayTrailer(keys: List<String>) {
-        sendEvent(MovieDetailsUiEvent.PlayVideoEvent(keys))
+        sendEvent(MovieDetailsUiEvent.PlayVideoTrailer(keys))
     }
 
 
     override fun onClickRate(id: Int) {
-        sendEvent(MovieDetailsUiEvent.RateMovieEvent(id))
+        sendEvent(MovieDetailsUiEvent.RateMovie(id))
     }
 
     override fun onClickBackButton() {
         sendEvent(MovieDetailsUiEvent.OnClickBack)
     }
 
-    override fun onClickSaveButton(id: Int) {
-
-        tryToExecute(
-            call = {
-                makeAsFavoriteUseCase.invoke(
-                        FavoriteBodyRequestEntity(
-                            true,
-                            20,
-                            "movie"
-                    )
-                )
-            },
-            onSuccess = { true },
-            onError = ::onError
-        )
+    fun onClickSaveButton() {
+        sendEvent(MovieDetailsUiEvent.SaveToList(movieId!!))
     }
 
+    override fun onClickShowMore(movieId: Int) {
+        sendEvent(MovieDetailsUiEvent.NavigateToShowMore(movieId))
+    }
 
-//        private fun getAccountDetails() {
-//        viewModelScope.launch {
-//            val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
-//            _state.update {
-//                it.copy(
-//                    username = profileEntity.username,
-//                    avatarUrl = profileEntity.avatarUrl,
-//                    error = null,
-//                    isLogout = false
-//                )
-//            }
-//        }
-//    }
+    override fun onClickMedia(id: Int) {
+        sendEvent(MovieDetailsUiEvent.NavigateToMovie(id))
+    }
 
-//    private fun onSuccessAsFav() : Boolean {
-//        //todo
-//      return true
-//
-//    }
+    fun tryAgain(movieId: Int) {
+        _state.update { it.copy(isLoading = true, onErrors = emptyList()) }
+        getMovieDetails(movieId)
+    }
+
+    override fun onChipClick(id: Int) {
+        val updatedList = state.value.userSelectedLists.toMutableList()
+        if (updatedList.remove(id)) Unit else updatedList.add(id)
+
+        _state.update {
+            it.copy(
+                userSelectedLists = updatedList
+            )
+        }
+        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
+    }
+
 }

@@ -14,7 +14,7 @@ import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingEntity
+import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
@@ -68,7 +68,8 @@ interface MovieRepository {
     suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity>
 
     suspend fun getMoviesDetails(movieId:Int): MovieDetailsEntity
-    suspend fun setMovieRate(movieId:Int , rate:Float): RatingEntity
+    suspend fun setMovieRate(movieId:Int , rate:Float): StatusEntity
+    suspend fun getMovieReviews(movieId:Int, page:Int): ReviewResponseEntity
 
     suspend fun getGenresTvs(): List<GenreEntity>
     suspend fun refreshGenresTv()
@@ -119,5 +120,6 @@ interface MovieRepository {
     suspend fun getListCreated(): List<ListCreatedEntity>
 
    // suspend fun refreshDetailsList(listId: Int)
-
+    suspend fun addWatchlist(mediaId:Int,mediaType:String,isWatchList:Boolean): StatusEntity
+    suspend fun addFavouriteList(mediaId:Int,mediaType:String,isFavourite:Boolean): StatusEntity
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel" />
@@ -11,7 +12,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/card"
+        android:backgroundTint="@color/background"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay_bottom_sheet">
 
         <LinearLayout
@@ -34,9 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_giant_32dp"
                 android:gravity="center"
-                android:text="Home much you love this movie ?"
-                android:textColor="@color/on_background_87"
-                android:textSize="24sp" />
+                android:text="How Much You Love This Movie ?"
+                android:textColor="@color/secondary_text_87"
+                style="@style/TextStyle.TitleMedium" />
 
             <TextView
                 android:id="@+id/description"
@@ -44,33 +45,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:text="Rate it with stars your satisfaction level "
-                android:textColor="@color/on_background_60"
-                android:textSize="16sp" />
+                android:text="Rate it With Stars Your Satisfaction Level"
+                style="@style/TextStyle.BodyMedium"
+                />
 
             <RatingBar
                 android:id="@+id/rating"
                 style="@style/CustomRatingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:stepSize="1"
                 android:rating="0"
+                android:stepSize="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_group_genere" />
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_genere"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_apply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Apply"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:backgroundTint="@color/primary"
-                android:textColor="@color/card"
-                />
+                android:text="@string/apply"
+                android:textColor="@color/on_primary" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

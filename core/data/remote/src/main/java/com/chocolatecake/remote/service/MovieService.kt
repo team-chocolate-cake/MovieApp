@@ -32,7 +32,7 @@ import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.dto.season_details.SeasonDetailsDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
-import com.chocolatecake.remote.response.movieDetails.RatingDto
+import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -266,5 +266,14 @@ interface MovieService {
     suspend fun getDetailsList(@Path("list_id") listId: Int)
     : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
 
+
+    @GET("movie/{movieId}/reviews")
+    suspend fun getMovieReviews(
+        @Path("movieId") movieId: Int,
+        @Query("page") page: Int = 1
+    ): Response<ReviewsDto>
+
+    @POST("account/account_id/favorite")
+    suspend fun addFavorite(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
     //endregion
 }
