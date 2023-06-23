@@ -71,12 +71,15 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
         binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate(binding.textInputEditTextListName.text.toString())
             binding.chipGroupGenere.removeViewsInLayout(0,binding.chipGroupGenere.childCount -1)
+
             viewLifecycleOwner.lifecycleScope.launch {
                 delay(300)
                 onViewCreated(view, savedInstanceState)
             }
         }
         binding.textViewDone.setOnClickListener {
+            if (binding.chipFavourite.isChecked) creeateButton.onFavourite()
+            if (binding.chipWatchlist.isChecked) creeateButton.onWatchlist()
             creeateButton.onDone(viewModel.state.value.userSelectedLists)
             dismiss()
         }
@@ -87,4 +90,6 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
 interface CreateListener {
     fun onClickCreate(listName: String)
     fun onDone(listsId: List<Int>)
+    fun onFavourite()
+    fun onWatchlist()
 }

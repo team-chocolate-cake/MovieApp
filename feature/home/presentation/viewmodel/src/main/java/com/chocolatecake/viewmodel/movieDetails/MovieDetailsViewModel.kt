@@ -1,6 +1,6 @@
 package com.chocolatecake.viewmodel.movieDetails
 
-import AddToWatchList
+import com.chocolatecake.usecase.movie_details.AddToWatchList
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel

@@ -1,3 +1,5 @@
+package com.chocolatecake.usecase.movie_details
+
 import com.chocolatecake.entities.movieDetails.StatusEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject

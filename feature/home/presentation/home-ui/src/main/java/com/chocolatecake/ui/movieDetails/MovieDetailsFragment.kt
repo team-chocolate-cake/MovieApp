@@ -161,4 +161,12 @@ class MovieDetailsFragment :
     override fun onDone(listsId: List<Int>) {
         viewModel.onDone(listsId)
     }
+
+    override fun onFavourite() {
+        viewModel.addToFavourite()
+    }
+
+    override fun onWatchlist() {
+        viewModel.addToWatchlist()
+    }
 }
