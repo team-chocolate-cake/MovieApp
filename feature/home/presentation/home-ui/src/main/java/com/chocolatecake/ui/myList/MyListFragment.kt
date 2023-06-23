@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.myList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,10 +19,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyListFragment :
-    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>() {
+    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>() ,CreateListener{
 
     override val layoutIdFragment: Int = R.layout.fragment_my_list
     override val viewModel: MyListViewModel by viewModels()
+    private lateinit var createListBottomSheet: CreateListBottomSheetFragment
 
 
     private lateinit var myListAdapter: MyListAdapter
@@ -50,7 +52,7 @@ class MyListFragment :
             }
 
             is MyListUiEvent.ApplyCreateList -> {
-                applyCreateList()
+//                applyCreateList()
             }
 
             is MyListUiEvent.OpenCreateListBottomSheet -> {
@@ -64,20 +66,20 @@ class MyListFragment :
             is MyListUiEvent.ShowSnackBar -> {
                 showSnackBar(event.message)
             }
+            is MyListUiEvent.OnCreateNewList -> {showSnackBar(event.message)}
 
             else -> {}
         }
     }
 
 
-    private fun applyCreateList() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.onCreateList()
-        }
+    private fun showBottomSheet() {
+        createListBottomSheet = CreateListBottomSheetFragment(this)
+        createListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
-    private fun showBottomSheet() {
-        CreateListBottomSheetFragment().show(childFragmentManager, "BOTTOM")
+    override fun onClickCreate(listName: String) {
+        viewModel.onCreateList(listName)
     }
 }
 

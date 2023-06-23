@@ -8,6 +8,7 @@ sealed interface MyListUiEvent {
         MyListUiEvent
 
     data class ShowSnackBar(val message: String) : MyListUiEvent
+    data class OnCreateNewList(val message:String):MyListUiEvent
     object OpenCreateListBottomSheet: MyListUiEvent
     object ApplyCreateList: MyListUiEvent
 

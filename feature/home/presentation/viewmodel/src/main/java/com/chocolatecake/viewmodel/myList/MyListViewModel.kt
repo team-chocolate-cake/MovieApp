@@ -64,19 +64,6 @@ class MyListViewModel @Inject constructor(
         }
     }
 
-    private fun updateStateToError(e: Exception) {
-        _state.update {
-            it.copy(
-                errors = listOf(
-                    Error(
-                        code = 1,
-                        message = e.message.toString()
-                    )
-                )
-            )
-        }
-    }
-
 
     override fun onClickItem(listId: Int, listType: String, listName: String) {
         sendEvent(
@@ -89,44 +76,27 @@ class MyListViewModel @Inject constructor(
     }
 
     override fun onClickNewList() {
-
-        tryToExecute(
-            call = {
-                Log.i("gg", "onCreateList: newwwww ${createList.invoke("mmmmmmnn")} ")
-                createList.invoke("mmmmmmnn")
-            },
-            onSuccess = { Log.i("v2", "onClickNewList:  done $it ") },
-            onError = ::onGetAllMoviesError
-        )
-//        viewModelScope.launch {
-//            _event.emit(MyListUiEvent.OpenCreateListBottomSheet)
-//        }
-//        Log.i("v2", "onClickNewList:  hiiv2 ")
-    }
-
-    fun onCreateList() {
-        tryToExecute(
-            call = {
-                Log.i("gg", "onCreateList: ${newListName} ")
-                createList.invoke(newListName.toString())
-            },
-            onSuccess = { Log.i("v2", "onClickNewList:  done $it ") },
-            onError = ::onCreateListError
-        )
-    }
-
-    private fun onCreateListError(throwable: Throwable) {
-        Log.i("TAG", "onCreateListError: $throwable")
-        _state.update {
-            it.copy(
-                errors = listOf(
-                    Error(
-                        2,
-                        throwable.message.toString()
-                    )
-                )
-            )
+        viewModelScope.launch {
+            _event.emit(MyListUiEvent.OpenCreateListBottomSheet)
         }
+    }
+
+    fun onCreateList(listName: String) {
+        tryToExecute(
+            call = {
+                createList.invoke(listName)
+            },
+            onSuccess = ::onCreateUserNewList,
+            onError = ::onCreateUserNewListError
+        )
+    }
+
+    private fun onCreateUserNewList(item: Boolean) {
+        sendEvent(MyListUiEvent.OnCreateNewList("New List Was Added Successfully"))
+    }
+
+    private fun onCreateUserNewListError(throwable: Throwable) {
+        sendEvent(MyListUiEvent.OnCreateNewList("something went wrong"))
     }
 
     override fun onClickBackButton() {
