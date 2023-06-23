@@ -2,9 +2,9 @@ package com.chocolatecake.ui.tvShow
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
@@ -73,7 +73,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
     private fun navigateToTv(tvId: Int) {
-        Toast.makeText(requireActivity(), tvId.toString(), Toast.LENGTH_SHORT).show()
+        findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
     }
 
     private fun handleMultiClickChip() {

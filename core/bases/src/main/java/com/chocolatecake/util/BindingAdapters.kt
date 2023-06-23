@@ -53,9 +53,9 @@ fun EditText.setTipError(errorMessage: String?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    if (imageUrl == "https://image.tmdb.org/t/p/w500null") {
+    if (imageUrl?.contains("null") == true) {
         Glide.with(context)
-            .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+            .load("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png")
             .thumbnail(Glide.with(context).load(R.raw.loading_images))
             .centerCrop()
             .into(this)
@@ -64,7 +64,6 @@ fun ImageView.loadImage(imageUrl: String?) {
         .thumbnail(Glide.with(context).load(R.raw.loading_images))
         .centerCrop()
         .into(this)
-
 }
 
 @BindingAdapter(value = ["app:profileUrl"])
