@@ -8,7 +8,7 @@
     <item
         android:id="@id/tvFragment"
         android:icon="@drawable/ic_tv"
-        android:title="TvShow" />
+        android:title="Tv Shows" />
 
     <item
         android:id="@id/searchFragment"

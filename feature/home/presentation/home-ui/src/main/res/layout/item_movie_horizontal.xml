@@ -84,6 +84,8 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/star"
+            android:maxLength="3"
+            android:gravity="center_vertical"
             android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"

@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.NavigationRes
 import com.chocolatecake.bases.StringsRes
+import com.chocolatecake.usecase.LoginError
 import com.chocolatecake.usecase.LoginUseCase
-import com.chocolatecake.usecase.model.LoginStateIndicator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,10 +28,11 @@ class LoginViewModel @Inject constructor(
             val password = _state.value.password
             _state.update { it.copy(isLoading = true) }
             when (loginUseCase(userName, password)) {
-                LoginStateIndicator.USER_NAME_ERROR -> updateStateToUserNameError()
-                LoginStateIndicator.PASSWORD_ERROR -> updateStateToPasswordError()
-                LoginStateIndicator.REQUEST_ERROR -> updateStateToRequestError()
-                LoginStateIndicator.SUCCESS -> updateStateToSuccessLogin()
+                LoginError.USER_NAME_ERROR -> updateStateToUserNameError()
+                LoginError.PASSWORD_ERROR -> updateStateToPasswordError()
+                LoginError.REQUEST_ERROR -> updateStateToRequestError()
+                LoginError.SUCCESS -> updateStateToSuccessLogin()
+                else -> {}
             }
             _state.update { it.copy(isLoading = false) }
         }
