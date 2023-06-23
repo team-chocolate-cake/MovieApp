@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:items="@{item.list}"
-            android:paddingStart="16dp"
+            android:paddingHorizontal="@dimen/spacing_custom_12dp"
             android:clipToPadding="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
