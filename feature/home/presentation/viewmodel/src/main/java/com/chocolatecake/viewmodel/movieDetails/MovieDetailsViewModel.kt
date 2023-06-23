@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.movieDetails
 
+import AddToWatchList
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
@@ -11,6 +12,7 @@ import com.chocolatecake.repository.UnauthorizedThrowable
 import com.chocolatecake.usecase.common.AddToUserListUseCase
 import com.chocolatecake.usecase.common.CreateUserListUseCase
 import com.chocolatecake.usecase.common.GetUserListsUseCase
+import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
@@ -31,6 +33,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val getUserListsUseCase: GetUserListsUseCase,
     private val addToUserListUseCase: AddToUserListUseCase,
     private val createUserListUseCase: CreateUserListUseCase,
+    private val addToFavouriteUseCase: AddToFavouriteUseCase,
+    private val addToWatchList: AddToWatchList,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
@@ -181,13 +185,36 @@ class MovieDetailsViewModel @Inject constructor(
             call = { createUserListUseCase(listName) },
             onSuccess = ::onCreateUserNewList,
             onError = {
-                sendEvent(MovieDetailsUiEvent.onCreateNewList("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong"))
+            }
+        )
+    }
+
+    fun addToFavourite() {
+        tryToExecute(
+            call = { addToFavouriteUseCase(movieId!!) },
+            onSuccess = {
+                sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
+            },
+            onError = {
+                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong"))
+            }
+        )
+    }
+    fun addToWatchlist() {
+        tryToExecute(
+            call = { addToWatchList(movieId!!) },
+            onSuccess = {
+                sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
+            },
+            onError = {
+                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong"))
             }
         )
     }
 
     private fun onCreateUserNewList(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.onCreateNewList("New List Was Added Successfully"))
+        sendEvent(MovieDetailsUiEvent.OnCreateNewList("New List Was Added Successfully"))
         getUserLists()
     }
     //endregion
