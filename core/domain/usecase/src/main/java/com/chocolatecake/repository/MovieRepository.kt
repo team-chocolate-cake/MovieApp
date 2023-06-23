@@ -96,7 +96,8 @@ interface MovieRepository {
 
 
     suspend fun getFavoriteMovies(): List<MovieEntity>
-    suspend fun refreshFavoriteMovies()
+    suspend fun getWatchlistMovies(): List<MovieEntity>
+
     suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean
     suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity>
 

@@ -11,5 +11,5 @@ data class WatchlistLocalDto(
     val title: String,
     val rate: Double,
     val year: String,
-    val mediaType: String,
+    val mediaType: String = "movies",
 )

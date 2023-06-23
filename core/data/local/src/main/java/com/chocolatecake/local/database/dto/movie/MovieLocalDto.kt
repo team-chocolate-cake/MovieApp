@@ -11,5 +11,5 @@ data class MovieLocalDto(
     val title: String,
     val rate: Double,
     val year: String,
-    val mediaType: String? ="movie"
+    val mediaType: String = "movies",
 )

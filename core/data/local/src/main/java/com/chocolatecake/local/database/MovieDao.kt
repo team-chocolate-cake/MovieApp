@@ -158,10 +158,10 @@ interface MovieDao {
     suspend fun getFavoriteMovies(): List<MovieLocalDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteMovie(movies: List<MovieLocalDto>)
+    suspend fun insertFavoriteMovie(movies: MovieLocalDto)
 
-    @Query("select * from MOVIE_TABLE  where mediaType like :mediaType ")
-    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieLocalDto>
+    @Query("select * from MOVIE_TABLE")
+    suspend fun getFavoriteByMediaType(): List<MovieLocalDto>
 
 //    @Query("select * from TV_TABLE")
 //    suspend fun getFavoriteTv(): List<TvLocalDto>
@@ -173,7 +173,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWatchlist(movies: List<WatchlistLocalDto>)
 
-    @Query("select * from WATCHLIST_TABLE  where mediaType like :mediaType ")
+    @Query("select * from WATCHLIST_TABLE  where mediaType like :mediaType")
     suspend fun getWatchlistByMediaType(mediaType: String): List<WatchlistLocalDto>
 
 
