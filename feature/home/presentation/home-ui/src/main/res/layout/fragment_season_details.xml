@@ -33,7 +33,7 @@
             android:id="@+id/recycler_view_episodes"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/spacing_tiny_4dp"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:orientation="vertical"
             app:isVisible="@{!viewModel.state.loading &amp;&amp; viewModel.state.onErrors.empty}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:onClick="@{()->viewModel.getData()}"
-            android:text="Try Again"
+            android:text="@string/try_again"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network" />
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:onClick="@{()->viewModel.getData()}"
-            android:text="Try Again"
+            android:text="@string/try_again"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_error" />
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:onClick="@{()->viewModel.getData()}"
-            android:text="Try Again"
+            android:text="@string/try_again"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_timeout" />
