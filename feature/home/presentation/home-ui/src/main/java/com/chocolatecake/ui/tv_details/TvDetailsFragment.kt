@@ -20,10 +20,10 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class TvDetailsFragment :
     BaseFragment<FragmentTvDetailsBinding, TvDetailsUiState, TvDetailsUiEvent>(),
-    BottomSheetDismissListener, CreateListener {
+    BottomSheetDismissListener, WatchlistFavouriteListener {
 
     private lateinit var rateBottomSheet: RateBottomSheet
-    private lateinit var addToListBottomSheet: AddToListBottomSheet
+    private lateinit var addToWatchlistFavouriteBottomSheet: AddToWatchlistFavouriteBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
     private val args: TvDetailsFragmentArgs by navArgs()
 
@@ -57,7 +57,7 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnShowMoreCast -> showSnackBar("Show More Cast")
             is TvDetailsUiEvent.OnShowMoreRecommended -> showSnackBar("Show More Recommended")
             is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
-            is TvDetailsUiEvent.OnSaveButtonClick -> showAddToListBottomSheet()
+            is TvDetailsUiEvent.OnSaveButtonClick -> showAddToWatchlistFavouriteBottomSheet()
             is TvDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
@@ -101,9 +101,9 @@ class TvDetailsFragment :
         rateBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
-    private fun showAddToListBottomSheet() {
-        addToListBottomSheet = AddToListBottomSheet(this)
-        addToListBottomSheet.show(childFragmentManager, "BOTTOM")
+    private fun showAddToWatchlistFavouriteBottomSheet() {
+        addToWatchlistFavouriteBottomSheet = AddToWatchlistFavouriteBottomSheet(this)
+        addToWatchlistFavouriteBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
     override fun onApplyRateBottomSheet() {
@@ -144,13 +144,7 @@ class TvDetailsFragment :
         }
     }
 
-    override fun onClickCreate(listName: String) {
-        viewModel.createUserNewList(listName)
-    }
 
-    override fun onDone(listsId: List<Int>) {
-        viewModel.onDone(listsId)
-    }
 
     override fun onFavourite() {
         viewModel.addToFavourite()

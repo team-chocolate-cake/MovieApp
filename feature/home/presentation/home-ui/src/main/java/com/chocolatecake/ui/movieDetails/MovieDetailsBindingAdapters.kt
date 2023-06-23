@@ -84,3 +84,7 @@ fun ChipGroup.setGenreChips(
 fun View.emptyList(list: List<Any>): Int {
     return if (list.isEmpty()) View.GONE else View.VISIBLE
 }
+@BindingAdapter(value = ["app:hideOnEmpty"])
+fun View.hideOnEmpty(list: List<Any>) {
+    if (list.isEmpty()) this.visibility = View.GONE else this.visibility = View.VISIBLE
+}

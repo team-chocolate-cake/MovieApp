@@ -2,7 +2,9 @@ package com.chocolatecake.viewmodel.movieDetails
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
@@ -15,6 +17,7 @@ import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
+import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.ChipListener
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
@@ -22,7 +25,10 @@ import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.movieDetails.mapper.UserListsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 
@@ -35,7 +41,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val createUserListUseCase: CreateUserListUseCase,
     private val addToFavouriteUseCase: AddToFavouriteUseCase,
     private val addToWatchList: AddToWatchList,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
@@ -116,6 +123,13 @@ class MovieDetailsViewModel @Inject constructor(
                 isLoading = false
             )
         }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                insertMovieToWatchHistoryUseCase(movieDetails.toHistoryEntity())
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
     }
 
     fun onRatingSubmit() {
@@ -192,7 +206,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(movieId!!) },
+            call = { addToFavouriteUseCase(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -201,9 +215,10 @@ class MovieDetailsViewModel @Inject constructor(
             }
         )
     }
+
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(movieId!!) },
+            call = { addToWatchList(movieId!!,"movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
             },
@@ -220,11 +235,11 @@ class MovieDetailsViewModel @Inject constructor(
     //endregion
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was successfull 🥰"))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
     }
 
     private fun onRatingError(error: Throwable) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("something went wrong 🤔\nplease try again later."))
+        sendEvent(MovieDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
     }
 
     override fun onClickPeople(id: Int) {
@@ -274,4 +289,16 @@ class MovieDetailsViewModel @Inject constructor(
         Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
 
+}
+
+private fun MovieDetailsEntity.toHistoryEntity(): MovieInWatchHistoryEntity {
+    return MovieInWatchHistoryEntity(
+        id = id,
+        posterPath = backdropPath,
+        title = title,
+        voteAverage = voteAverage,
+        description = overview,
+        dateWatched = Date(),
+        year = year.takeIf { it.isNotBlank() }?.split("-")?.get(0)?.toInt() ?: 1911
+    )
 }

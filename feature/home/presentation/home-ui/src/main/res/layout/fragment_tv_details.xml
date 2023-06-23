@@ -69,18 +69,19 @@
                         android:textColor="@color/on_background_87"
                         android:visibility="invisible" />
 
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/saveButton"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:layout_gravity="end"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:layout_marginEnd="16dp"-->
-<!--                        android:background="@null"-->
-<!--                        android:backgroundTint="@color/on_primary"-->
-<!--                        android:onClick="@{()-> viewModel.onClickSaveButton()}"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        android:src="@drawable/ic_save" />-->
+                    <ImageButton
+                        android:id="@+id/saveButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@null"
+                        android:backgroundTint="@color/on_primary"
+                        app:isVisible="@{!viewModel.state.isLoading}"
+                        android:onClick="@{()-> viewModel.onClickSaveButton()}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_save" />
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
