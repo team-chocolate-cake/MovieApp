@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.ui.home.databinding.FragmentSeasonDetailsBinding
 import com.chocolatecake.ui.home.databinding.ItemEpisodeHorizontalBinding
 import com.chocolatecake.ui.home.databinding.ItemSeasonDetailsHeaderBinding
 import com.chocolatecake.viewmodel.common.listener.EpisodeListener
@@ -40,20 +39,15 @@ class SeasonDetailsAdapter (
     private fun bindOverview(holder: OverviewViewHolder, position: Int){
         val overview = list[position] as SeasonDetailsItem.OverviewItem
         holder.binding.item = overview.overview
+        if(overview.overview == ""){
+            holder.binding.overviewRegion.visibility = ViewGroup.GONE
+        }
     }
 
     private fun bindEpisodes(holder: EpisodeViewHolder, position: Int){
         val episode = list[position] as SeasonDetailsItem.EpisodeItem
         holder.binding.item = episode.episodeHorizontalUIState
         holder.binding.listener = listener
-    }
-
-    fun setItem(item: SeasonDetailsItem){
-        val newItems = list.apply {
-            removeAt(item.type.ordinal)
-            add(item.type.ordinal, item)
-        }
-        setItems(newItems)
     }
 
     override fun setItems(newItems: List<SeasonDetailsItem>) {
