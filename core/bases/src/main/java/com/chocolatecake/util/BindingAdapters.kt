@@ -184,3 +184,10 @@ fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit)
         onClick()
     }
 }
+
+@BindingAdapter("app:onClickNavigation")
+fun com.google.android.material.appbar.MaterialToolbar.addNavigationListener(onClick: () -> Unit) {
+    this.setNavigationOnClickListener {
+        onClick()
+    }
+}

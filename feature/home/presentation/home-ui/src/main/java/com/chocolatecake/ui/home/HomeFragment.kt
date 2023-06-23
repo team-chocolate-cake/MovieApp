@@ -70,11 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             }
 
             is HomeUiEvent.PopularPeopleEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
-                    )
-                )
+                showSnackBar("${event.itemId}")
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
@@ -117,14 +113,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
                 )
             }
 
-            HomeUiEvent.ClickTopRatedShowMore ->  {
+            HomeUiEvent.ClickTopRatedShowMore -> {
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
                         showMoreType = ShowMoreType.TOP_RATED
                     )
                 )
             }
-            HomeUiEvent.ClickTrendingShowMore ->  {
+
+            HomeUiEvent.ClickTrendingShowMore -> {
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
                         showMoreType = ShowMoreType.TRENDING

@@ -54,6 +54,10 @@ class SeasonDetailsViewModel @Inject constructor(
         }
     }
 
+    fun onClickBack(){
+        sendEvent(SeasonDetailsUiEvent.NavigateBack)
+    }
+
     private fun showErrorWithSnackBar(messages: String) {
         sendEvent(SeasonDetailsUiEvent.ShowSnackBar(messages))
     }

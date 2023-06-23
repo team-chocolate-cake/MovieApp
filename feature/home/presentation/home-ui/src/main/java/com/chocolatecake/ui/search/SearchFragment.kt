@@ -3,7 +3,6 @@ package com.chocolatecake.ui.search
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -46,6 +45,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
                     SearchUiState.SearchMedia.MOVIE, SearchUiState.SearchMedia.TV -> {
                         state.searchMediaResult.map { SearchItem.MediaItem(it) }
                     }
+
                     SearchUiState.SearchMedia.PEOPLE -> {
                         state.searchPeopleResult.map { SearchItem.PeopleItem(it) }
                     }
@@ -99,11 +99,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
     }
 
     private fun navigateToPeople(peopleId: Int) {
-        toastMessage("Navigate To People:", peopleId)
+        showSnackBar("Navigate To People: $peopleId")
     }
 
     private fun navigateToTv(tvId: Int) {
-        toastMessage("Navigate To Tv:", tvId)
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToTvDetailsFragment(
+                tvId
+            )
+        )
     }
 
     private fun showMovieResult() {
@@ -122,15 +126,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.onSearchForPeople()
         }
-    }
-
-    private fun toastMessage(message: String, id: Int) {
-        Toast.makeText(
-            binding.root.context,
-            "$message $id",
-            Toast.LENGTH_SHORT
-        )
-            .show()
     }
 
     private fun doNothingWhenTheSameChipIsReslected() {
