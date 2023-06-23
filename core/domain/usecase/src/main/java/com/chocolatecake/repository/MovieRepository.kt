@@ -122,4 +122,6 @@ interface MovieRepository {
    // suspend fun refreshDetailsList(listId: Int)
     suspend fun addWatchlist(mediaId:Int,mediaType:String,isWatchList:Boolean): StatusEntity
     suspend fun addFavouriteList(mediaId:Int,mediaType:String,isFavourite:Boolean): StatusEntity
+
+    fun isLoginedOrNot(): Boolean
 }
