@@ -45,12 +45,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
             ProfileUiEvent.NavigateToWatchlistScreen -> {
                 findNavController().navigate(
-                    ProfileFragmentDirections.actionProfileFragmentToMyListFragment()
-                )
-            }
-
-            ProfileUiEvent.NavigateToWatchHistoryScreen -> {
-                findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
                         listType = ListType.movie.name,
                         listId = 0,
@@ -59,7 +53,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
                 )
             }
 
-            ProfileUiEvent.NavigateToMyListsScreen -> showSnackBar("MyLists")
+            ProfileUiEvent.NavigateToWatchHistoryScreen -> {
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToWatchHistoryFragment())
+            }
+
+            ProfileUiEvent.NavigateToMyListsScreen -> {
+                findNavController().navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToMyListFragment()
+                )
+            }
+
             ProfileUiEvent.Logout -> showSnackBar("Logout!")
 
             is ProfileUiEvent.NavigateWithLink -> {

@@ -66,6 +66,9 @@
         <action
             android:id="@+id/action_profileFragment_to_myListDetailsFragment"
             app:destination="@id/myListDetailsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_watchHistoryFragment"
+            app:destination="@id/watchHistoryFragment" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />

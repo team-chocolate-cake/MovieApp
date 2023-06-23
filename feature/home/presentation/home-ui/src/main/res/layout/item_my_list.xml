@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.myList.ListMovieUiState" />
@@ -19,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_medium_16dp"
-        android:layout_marginEnd="@dimen/spacing_medium_16dp"
         android:layout_marginTop="@dimen/spacing_medium_16dp"
+        android:layout_marginEnd="@dimen/spacing_medium_16dp"
         android:background="@drawable/custom_my_listl_card_background"
         android:onClick="@{()-> listener.onClickItem(item.id , item.listType , item.name )}">
 
@@ -67,7 +68,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:isVisibleOrGone="@{item.itemCount != 0}">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="0dp"

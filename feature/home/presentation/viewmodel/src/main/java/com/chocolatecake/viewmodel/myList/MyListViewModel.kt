@@ -1,16 +1,11 @@
 package com.chocolatecake.viewmodel.myList
 
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 import com.chocolatecake.usecase.myList.CreateListUseCase
 import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
-import com.chocolatecake.usecase.myList.GetMovieListUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
-import com.chocolatecake.viewmodel.search.SearchUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -93,6 +88,7 @@ class MyListViewModel @Inject constructor(
 
     private fun onCreateUserNewList(item: Boolean) {
         sendEvent(MyListUiEvent.OnCreateNewList("New List Was Added Successfully"))
+        getAllMovies()
     }
 
     private fun onCreateUserNewListError(throwable: Throwable) {
