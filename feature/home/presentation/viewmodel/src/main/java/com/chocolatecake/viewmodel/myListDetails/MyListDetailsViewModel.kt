@@ -6,7 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
 import com.chocolatecake.usecase.myList.GetFavoritesByMediaTypeUseCase
+import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
+import com.chocolatecake.usecase.myList.GetMyWatchlistListUseCase
 import com.chocolatecake.usecase.myList.GetWatchlistByMediaTypeUseCase
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyListDetailsViewModel @Inject constructor(
-    private val getFavorite: GetFavoritesByMediaTypeUseCase,
-    private val getWatchlist: GetWatchlistByMediaTypeUseCase,
+    private val getFavorite: GetMyFavoriteListUseCase,
+    private val getWatchlist: GetMyWatchlistListUseCase,
     private val getMovieListDetails: GetMyListDetailsByListIdUseCase,
     private val myListDetailsUiMapper: MyListDetailsUiMapper,
     private val savedStateHandle: SavedStateHandle,
@@ -45,7 +47,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun getAllFavorite(listType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { getFavorite(listType).map { myListDetailsUiMapper.map(it) } },
+            call = { getFavorite().map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )
@@ -54,7 +56,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun getAllWatchlist(listType: String) {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
-            call = { getWatchlist(listType).map { myListDetailsUiMapper.map(it) } },
+            call = { getWatchlist().map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
             onError = ::onGetAllMoviesError
         )

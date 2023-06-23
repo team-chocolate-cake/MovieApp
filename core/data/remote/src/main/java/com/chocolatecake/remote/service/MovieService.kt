@@ -244,6 +244,10 @@ interface MovieService {
         @Path("media_type") mediaType: String,
     ): Response<DataWrapperResponse<MovieRemoteDto>>
 
+    @GET("account/{account_id}/watchlist/movies")
+    suspend fun getWatchlist(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+
     @POST("account/{account_id}/watchlist")
     suspend fun addWatchlist(
         @Body watchlistRequest: WatchlistRequest,

@@ -75,6 +75,7 @@ import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMa
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainMovieItemListMapper
+import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
 import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
 import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
@@ -135,6 +136,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTvDetailsSeasonMapper: DomainTvDetailsSeasonMapper,
     private val domainMovieItemListMapper: DomainMovieItemListMapper,
     private val domainListMovieMapper: DomainListMovieMapper,
+    private val domainMovieMapper: DomainMovieMapper,
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
     private val watchlistMapper: WatchlistRequestMapper,
     private val domainReviewsMapper: DomainReviewsMapper,
@@ -367,7 +369,6 @@ class MovieRepositoryImpl @Inject constructor(
         refreshTopRatedMovies()
         refreshTrendingMovies()
         refreshUpcomingMovies()
-        refreshFavoriteMovies()
         refreshLists()
     }
 
@@ -443,16 +444,33 @@ class MovieRepositoryImpl @Inject constructor(
 
     //region my list
     override suspend fun getFavoriteMovies(): List<MovieEntity> {
-        return domainFavoriteMoviesMapper.map(movieDao.getFavoriteMovies())
+        val result = wrapApiCall { movieService.getFavoriteMovies() }.results
+        return result?.map { item ->
+            domainMovieMapper.map(input = item!!)
+        } ?: emptyList()
     }
 
-    override suspend fun refreshFavoriteMovies() {
+    override suspend fun getWatchlistMovies(): List<MovieEntity> {
+        val result = wrapApiCall { movieService.getWatchlist() }.results
+        return result?.map { item ->
+            domainMovieMapper.map(input = item!!)
+        } ?: emptyList()
+    }
+
+
+    override suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity> {
+        return domainWatchlistMapper.map(movieDao.getWatchlistByMediaType(mediaType))
+    }
+
+
+    private suspend fun refreshWatchlistByMediaType(mediaType: String) {
         refreshWrapper(
-            movieService::getFavoriteMovies,
-            localFavoriteMoviesMapper::map,
-            movieDao::insertFavoriteMovie
+            apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType) },
+            localWatchlistMapper::map,
+            movieDao::insertWatchlist
         )
     }
+
 
     override suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean {
         return movieService.addFavoriteMovie(
@@ -499,22 +517,9 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity> {
-        refreshFavoriteByMediaType(mediaType)
-        return domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType(mediaType))
+        return domainFavoriteMoviesMapper.map(movieDao.getFavoriteByMediaType())
     }
 
-    private suspend fun refreshFavoriteByMediaType(mediaType: String) {
-        refreshWrapper(
-            apiCall = { movieService.getFavoriteByMediaType(mediaType = mediaType) },
-            localFavoriteMoviesMapper::map,
-            movieDao::insertFavoriteMovie
-        )
-    }
-
-
-    override suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity> {
-        return domainWatchlistMapper.map(movieDao.getWatchlistByMediaType(mediaType))
-    }
 
 
     override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
@@ -530,13 +535,7 @@ class MovieRepositoryImpl @Inject constructor(
         return result
     }
 
-    private suspend fun refreshWatchlistByMediaType(mediaType: String) {
-        refreshWrapper(
-            apiCall = { movieService.getWatchlistByMediaType(mediaType = mediaType) },
-            localWatchlistMapper::map,
-            movieDao::insertWatchlist
-        )
-    }
+
 
 
     override suspend fun addList(name: String): Boolean {
