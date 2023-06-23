@@ -103,6 +103,8 @@ class MovieDetailsFragment :
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
 
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
+            is MovieDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
+            is MovieDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             else -> {}
         }
     }
@@ -150,11 +152,13 @@ class MovieDetailsFragment :
 
         }
     }
+
     private fun showAddToListBottomSheet() {
         addToListBottomSheet = AddToListBottomSheet(this)
         addToListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
-    override fun onClickCreate(listName:String) {
+
+    override fun onClickCreate(listName: String) {
         viewModel.createUserNewList(listName)
     }
 
