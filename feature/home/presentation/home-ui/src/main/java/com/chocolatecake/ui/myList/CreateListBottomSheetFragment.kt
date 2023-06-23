@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.ui.home.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.BottomSheetCreateListBinding
-import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,14 +42,6 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) : 
         binding.materialButtonCreate.setOnClickListener {
             createButton.onClickCreate(binding.textInputEditTextListName.text.toString())
         }
-//        binding.materialButtonCreate.setOnClickListener {
-//            viewLifecycleOwner.lifecycleScope.launch {
-//                Log.i("gg", "applyCreateList:   emptr")
-//                Log.i("gg", "applyCreateList:   emptr"+ binding.textInputEditTextListName.toString())
-//                viewModel.onCreateList(binding.textInputEditTextListName.toString())
-//            }
-//            dismiss()
-//        }
     }
 }
 
