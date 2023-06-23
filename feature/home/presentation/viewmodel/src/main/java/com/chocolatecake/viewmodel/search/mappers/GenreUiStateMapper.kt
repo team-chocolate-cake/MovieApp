@@ -5,8 +5,8 @@ import com.chocolatecake.viewmodel.search.SearchUiState
 import javax.inject.Inject
 
 class GenreUiStateMapper @Inject constructor() {
-    fun map(input: GenreEntity, isSelected: Boolean): SearchUiState.GenresMoviesUiState {
-        return SearchUiState.GenresMoviesUiState(
+    fun map(input: GenreEntity, isSelected: Boolean): SearchUiState.GenresUiState {
+        return SearchUiState.GenresUiState(
             genreId = input.genreID,
             genresName = input.genreName,
             isSelected = isSelected

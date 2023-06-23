@@ -1,39 +1,45 @@
 package com.chocolatecake.viewmodel.movieDetails
 
+import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
+import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.common.model.UserListUi
+
 
 data class MovieDetailsUiState(
-    val id: Int?=null,
-    val movieUiState: MovieDetailsItem = MovieDetailsItem.Upper(null),
-    val recommendedUiState: MovieDetailsItem = MovieDetailsItem.Recommended(emptyList()),
-    val castUiState: MovieDetailsItem = MovieDetailsItem.People(emptyList()),
-    val reviewUiState: MovieDetailsItem = MovieDetailsItem.Reviews(emptyList()),
+    val id: Int = 0,
+    val movieUiState: UpperUiState = UpperUiState(),
+    val recommendedUiState: List<MediaVerticalUIState> = emptyList(),
+    val castUiState: List<PeopleUIState> = emptyList(),
+    val reviewUiState: List<ReviewUiState> = emptyList(),
+    val reviewsDetails: ReviewDetailsUiState = ReviewDetailsUiState(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
+    val userRating: Float = 0f,
+    val userLists: List<UserListUi> = emptyList(),
+    val userSelectedLists: List<Int> = emptyList()
 )
+
 
 data class UpperUiState(
-    val id: Int?,
-    val backdropPath: String?,
-    val genres: List<String>?,
-    val title: String?,
-    val overview: String?,
-    val voteAverage: Float?,
-    val videos: List<String>?,
+    val id: Int = 0,
+    val backdropPath: String = "",
+    val genres: List<String> = emptyList(),
+    val title: String = "",
+    val overview: String = "",
+    val voteAverage: Float = 0f,
+    val videos: List<String> = emptyList(),
 )
 
-data class RecommendedMoviesUiState(
-    val id: Int?,
-    val voteAverage: Double?,
-    val backdropPath: String?,
-)
-data class CastUiState(
-    val id: Int?,
-    val name: String?,
-    val profilePath: String?
-)
+
 data class ReviewUiState(
-    val name:String?,
-    val avatar_path:String?,
-    val content:String?,
-    val created_at:String?,
+    val name: String?,
+    val avatar_path: String?,
+    val content: String?,
+    val created_at: String?,
+)
+
+data class ReviewDetailsUiState(
+    val page: Int = 1,
+    val totalPages: Int = 1,
+    val totalReviews: Int = 1
 )

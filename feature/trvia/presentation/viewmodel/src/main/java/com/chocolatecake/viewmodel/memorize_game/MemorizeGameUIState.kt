@@ -12,7 +12,6 @@ data class MemorizeGameUIState(
     val secondUserPosition: Int? = null,
     val isLoading: Boolean = true,
     val isError: Boolean = false
-
 )
 
 data class ItemGameImageUiState(

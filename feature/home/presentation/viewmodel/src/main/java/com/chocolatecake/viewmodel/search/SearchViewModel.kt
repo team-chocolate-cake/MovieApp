@@ -3,8 +3,10 @@ package com.chocolatecake.viewmodel.search
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.GenreEntity
+import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.GetAllGenresMoviesUseCase
 import com.chocolatecake.usecase.GetAllGenresTvsUseCase
+import com.chocolatecake.usecase.search.GetSearchHistoryUseCase
 import com.chocolatecake.usecase.search.SearchMoviesUseCase
 import com.chocolatecake.usecase.search.SearchPeopleUseCase
 import com.chocolatecake.usecase.search.SearchTvsUseCase
@@ -22,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +37,7 @@ class SearchViewModel @Inject constructor(
     private val insertSearchHistoryUseCase: InsertSearchHistoryUseCase,
     private val searchHistoryUseCase: SearchHistoryUseCase,
     private val genreUiStateMapper: GenreUiStateMapper,
+    private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
     private val movieUiMapper: MovieUiMapper,
     private val tvUiMapper: TvUiMapper,
     private val peopleUiMapper: PeopleUiMapper
@@ -41,13 +45,16 @@ class SearchViewModel @Inject constructor(
 
     val query = MutableStateFlow("")
 
+    //region init
     init {
         viewModelScope.launch {
             query.debounce(1000)
                 .collect { onSearchInputChanged(it) }
         }
     }
+    // endregion
 
+    //region search input
     private fun onSearchInputChanged(newQuery: String) {
         _state.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +63,9 @@ class SearchViewModel @Inject constructor(
             getData()
         }
     }
+    // endregion
 
+    //region search history
     private suspend fun saveSearchHistoryInLocal(query: String) {
         insertSearchHistoryUseCase(query)
     }
@@ -65,16 +74,20 @@ class SearchViewModel @Inject constructor(
         val result = searchHistoryUseCase(query)
         _state.update { it.copy(searchHistory = result) }
     }
+    // endregion
 
-
+    // region get data
     fun getData() {
+        _state.update { it.copy(isLoading = true) }
         when (_state.value.mediaType) {
             SearchUiState.SearchMedia.MOVIE -> onSearchForMovie()
             SearchUiState.SearchMedia.TV -> onSearchForTv()
             SearchUiState.SearchMedia.PEOPLE -> onSearchForPeople()
         }
     }
+    // endregion
 
+    // region people
     fun onSearchForPeople() {
         tryToExecute(
             call = { searchPeopleUseCase(query.value) },
@@ -95,10 +108,12 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region tv
     fun onSearchForTv() {
         tryToExecute(
-            call = { searchTvsUseCase(query.value, _state.value.selectedMovieGenresId) },
+            call = { searchTvsUseCase(query.value, _state.value.selectedGenresId) },
             mapper = tvUiMapper,
             onSuccess = ::onSuccessTv,
             onError = ::onError
@@ -116,13 +131,15 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+    // endregion
 
+    // region movie
     fun onSearchForMovie() {
         tryToExecute(
             call = {
                 searchMoviesUseCase(
                     query.value,
-                    _state.value.selectedMovieGenresId
+                    _state.value.selectedGenresId
                 )
             },
             mapper = movieUiMapper,
@@ -138,10 +155,11 @@ class SearchViewModel @Inject constructor(
                 searchMediaResult = mediaUIState,
                 isSelectedPeople = false,
                 isLoading = false,
-                error = null
+                error = null,
             )
         }
     }
+    // endregion
 
     ///region events
     override fun onClickFilter() {
@@ -156,6 +174,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun getAllGenresTv() {
+        _state.update { it.copy(genres = emptyList()) }
         tryToExecute(
             call = { getAllGenresTvsUseCase() },
             onSuccess = ::onSuccessGenres,
@@ -164,6 +183,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun getAllGenresMovies() {
+        _state.update { it.copy(genres = emptyList()) }
         tryToExecute(
             call = { getAllGenresMoviesUseCase() },
             onSuccess = ::onSuccessGenres,
@@ -177,44 +197,50 @@ class SearchViewModel @Inject constructor(
                 genreEntities.map { genre ->
                     genreUiStateMapper.map(
                         genre,
-                        genre.genreID == it.selectedMovieGenresId
+                        genre.genreID == it.selectedGenresId
                     )
                 }
             it.copy(
-                genresMovie = updatedGenres,
+                genres = updatedGenres,
                 isLoading = false,
-                error = null
+                error = null,
             )
         }
     }
 
     override fun onClickGenre(genresId: Int) {
-        val updatedGenres = _state.value.genresMovie.map { genre ->
+        val updatedGenres = _state.value.genres.map { genre ->
             genre.copy(isSelected = genre.genreId == genresId)
         }
         _state.update {
             it.copy(
-                selectedMovieGenresId = genresId,
+                selectedGenresId = genresId,
                 isLoading = false,
-                genresMovie = updatedGenres
+                genres = updatedGenres
             )
         }
     }
 
     override fun showResultMovie() {
         sendEvent(SearchUiEvent.ShowMovieResult)
+        _state.update { it.copy(selectedGenresId = null) }
     }
 
     override fun showResultTv() {
         sendEvent(SearchUiEvent.ShowTvResult)
+        _state.update { it.copy(selectedGenresId = null) }
     }
 
     override fun showResultPeople() {
         sendEvent(SearchUiEvent.ShowPeopleResult)
     }
 
-    override fun onClickMovie(id: Int) {
-        sendEvent(SearchUiEvent.NavigateToMovie(id))
+    override fun onClickMedia(id: Int) {
+        if (_state.value.mediaType == SearchUiState.SearchMedia.MOVIE) {
+            sendEvent(SearchUiEvent.NavigateToMovie(id))
+        } else if (_state.value.mediaType == SearchUiState.SearchMedia.TV) {
+            sendEvent(SearchUiEvent.NavigateToTv(id))
+        }
     }
 
     override fun onClickPeople(id: Int) {
@@ -225,8 +251,12 @@ class SearchViewModel @Inject constructor(
 
     /// region error handling
     private fun onError(throwable: Throwable) {
-        showErrorWithSnackBar(throwable.message ?: "No Network Connection")
-        _state.update {
+        if (throwable == NoNetworkThrowable()) {
+            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        }else if(throwable == SocketTimeoutException()){
+
+        }
+            _state.update {
             it.copy(
                 error = listOf(throwable.message ?: "No Network Connection"),
                 isLoading = false

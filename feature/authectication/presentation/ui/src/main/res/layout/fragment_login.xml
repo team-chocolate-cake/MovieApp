@@ -84,8 +84,8 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="@={viewModel.state.password}"
                 android:padding="16dp"
+                android:text="@={viewModel.state.password}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
                 app:setTipError="@{viewModel.state.passwordError}"
@@ -110,8 +110,8 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPersonName"
                 android:maxLines="1"
-                android:text="@={viewModel.state.userName}"
                 android:padding="16dp"
+                android:text="@={viewModel.state.userName}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"
                 app:setTipError="@{viewModel.state.userNameError}"
@@ -131,6 +131,19 @@
             app:layout_constraintStart_toStartOf="@+id/edittext_password"
             app:layout_constraintTop_toBottomOf="@+id/edittext_username" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/primary"
+            android:indeterminateTintMode="src_atop"
+            app:isVisible="@{viewModel.state.loading}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_login" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login"
             style="@style/PrimaryButton"
@@ -140,21 +153,8 @@
             android:layout_marginTop="@dimen/spacing_giant_32dp"
             android:onClick="@{()->viewModel.login()}"
             android:text="@string/login"
-            app:isVisible="@{viewModel.state.isLoading == false}"
+            app:isVisible="@{!viewModel.state.loading}"
             app:layout_constraintTop_toBottomOf="@+id/edittext_password" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/primary"
-            android:indeterminateTintMode="src_atop"
-            app:isVisible="@{viewModel.state.isLoading == true}"
-            app:layout_constraintBottom_toBottomOf="@+id/button_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_login" />
 
         <TextView
             android:id="@+id/textview_do_u_have_account"

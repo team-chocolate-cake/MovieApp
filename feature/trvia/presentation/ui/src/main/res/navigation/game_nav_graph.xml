@@ -5,92 +5,212 @@
     android:id="@+id/game_nav_graph"
     app:startDestination="@id/homeGameFragment">
 
+
     <fragment
         android:id="@+id/homeGameFragment"
         android:name="com.chocolatecake.ui.home.HomeGameFragment"
-        tools:layout="@layout/fragment_game_home"
-        android:label="HomeGameFragment" >
+        android:label="HomeGameFragment"
+        tools:layout="@layout/fragment_game_home">
         <action
             android:id="@+id/action_homeGameFragment_to_typeGameFragment"
-            app:destination="@id/typeGameFragment" />
+            app:destination="@id/typeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false" />
+
+        <deepLink app:uri="movie://trivia" />
     </fragment>
     <fragment
         android:id="@+id/memorizeGameFragment"
-        tools:layout="@layout/fragment_moive_guessing"
         android:name="com.chocolatecake.ui.memorize_game.MemorizeGameFragment"
-        android:label="MemorizeGameFragment" >
+        android:label="MemorizeGameFragment"
+        tools:layout="@layout/fragment_memorize">
         <action
             android:id="@+id/action_memorizeGameFragment_to_typeGameFragment"
-            app:destination="@id/typeGameFragment" />
+            app:destination="@id/typeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/memorizeGameFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_memorizeGameFragment_to_homeGameFragment"
-            app:destination="@id/homeGameFragment" />
+            app:destination="@id/homeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/memorizeGameFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_memorizeGameFragment_to_congratsFragment"
-            app:destination="@id/congratsFragment" />
+            app:destination="@id/congratsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/memorizeGameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/movieGuessingFragment"
-        tools:layout="@layout/fragment_moive_guessing"
         android:name="com.chocolatecake.ui.movie_guessing.MovieGuessingFragment"
-        android:label="MovieGuessingFragment" />
+        android:label="MovieGuessingFragment"
+        tools:layout="@layout/fragment_moive_guessing">
+        <action
+            android:id="@+id/action_movieGuessingFragment_to_congratsFragment"
+            app:destination="@id/congratsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/movieGuessingFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_movieGuessingFragment_to_typeGameFragment"
+            app:destination="@id/typeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/movieGuessingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/peopleGuessingFragment"
-        tools:layout="@layout/fragment_people_guessing"
         android:name="com.chocolatecake.ui.people_guessing.PeopleGuessingFragment"
-        android:label="PeopleGuessingFragment" >
+        android:label="PeopleGuessingFragment"
+        tools:layout="@layout/fragment_people_guessing">
         <action
             android:id="@+id/action_peopleGuessingFragment_to_typeGameFragment"
-            app:destination="@id/typeGameFragment" />
+            app:destination="@id/typeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/peopleGuessingFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_peopleGuessingFragment_to_congratsFragment"
-            app:destination="@id/congratsFragment" />
+            app:destination="@id/congratsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/peopleGuessingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/tvShowGuessingFragment"
-        tools:layout="@layout/fragment_tv_show_guessing"
         android:name="com.chocolatecake.ui.tv_show_guessing.TvShowGuessingFragment"
-        android:label="TvShowGuessingFragment" />
+        android:label="TvShowGuessingFragment"
+        tools:layout="@layout/fragment_tv_show_guessing" />
     <fragment
         android:id="@+id/typeGameFragment"
-        tools:layout="@layout/fragment_type_games"
         android:name="com.chocolatecake.ui.type_game.TypeGameFragment"
-        android:label="TypeGameFragment" >
+        android:label="TypeGameFragment"
+        tools:layout="@layout/fragment_type_games">
+
         <action
-            android:id="@+id/action_typeGameFragment_to_tvShowGuessingFragment"
-            app:destination="@id/tvShowGuessingFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_memorizeGameFragment"
-            app:destination="@id/memorizeGameFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_movieGuessingFragment"
-            app:destination="@id/movieGuessingFragment" />
-        <action
-            android:id="@+id/action_typeGameFragment_to_peopleGuessingFragment"
-            app:destination="@id/peopleGuessingFragment" />
+            android:id="@+id/action_typeGameFragment_to_gameLevelFragment"
+            app:destination="@id/gameLevelFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/congratsFragment"
-        tools:layout="@layout/fragment_congrats"
         android:name="com.chocolatecake.ui.congrats.CongratsFragment"
-        android:label="CongratsFragment" >
+        android:label="CongratsFragment"
+        tools:layout="@layout/fragment_congrats">
         <argument
             android:name="gameType"
             app:argType="com.chocolatecake.viewmodel.common.model.GameType" />
         <action
             android:id="@+id/action_congratsFragment_to_typeGameFragment"
-            app:destination="@id/typeGameFragment" />
+            app:destination="@id/typeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/congratsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_congratsFragment_to_movieGuessingFragment"
-            app:destination="@id/movieGuessingFragment" />
+            app:destination="@id/movieGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/congratsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_congratsFragment_to_tvShowGuessingFragment"
-            app:destination="@id/tvShowGuessingFragment" />
+            app:destination="@id/tvShowGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/congratsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_congratsFragment_to_peopleGuessingFragment"
-            app:destination="@id/peopleGuessingFragment" />
+            app:destination="@id/peopleGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/congratsFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_congratsFragment_to_memorizeGameFragment"
-            app:destination="@id/memorizeGameFragment" />
+            app:destination="@id/memorizeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/congratsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameLevelFragment"
+        android:name="com.chocolatecake.ui.game_level.GameLevelFragment"
+        android:label="GameLevelFragment"
+        tools:layout="@layout/fragment_level_game">
+        <action
+            android:id="@+id/action_gameLevelFragment_to_movieGuessingFragment"
+            app:destination="@id/movieGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_peopleGuessingFragment"
+            app:destination="@id/peopleGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_tvShowGuessingFragment"
+            app:destination="@id/tvShowGuessingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_gameLevelFragment_to_memorizeGameFragment"
+            app:destination="@id/memorizeGameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="game_level_type"
+            app:argType="com.chocolatecake.viewmodel.common.model.GameType" />
     </fragment>
 </navigation>

@@ -9,14 +9,14 @@ import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
 import com.google.android.material.chip.ChipGroup
 
-fun ChipGroup.createChip(item: SearchUiState.GenresMoviesUiState, listener: SearchListener): View {
+fun <T> ChipGroup.createChip(item: T, listener: SearchListener): View {
     val binding: SearchChipsFilterItemBinding = DataBindingUtil.inflate(
         LayoutInflater.from(context),
         R.layout.search_chips_filter_item,
         this,
         false
     )
-    binding.item = item
+    binding.item = item as SearchUiState.GenresUiState
     binding.listener = listener
     return binding.root
 }

@@ -5,26 +5,48 @@
     android:id="@+id/home_nav_graph"
     app:startDestination="@id/homeFragment">
 
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.chocolatecake.ui.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_showMoreFragment"
+            app:destination="@id/showMoreFragment" />
+
+        <deepLink app:uri="movie://home" />
     </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.chocolatecake.ui.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/tvFragment"
         android:name="com.chocolatecake.ui.tvShow.TvFragment"
         android:label="TvFragment"
-        tools:layout="@layout/fragment_tv" />
+        tools:layout="@layout/fragment_tv">
+        <action
+            android:id="@+id/action_tvFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.chocolatecake.ui.profile.ProfileFragment"
@@ -33,16 +55,33 @@
         <action
             android:id="@+id/action_profileFragment_to_game_nav_graph"
             app:destination="@id/game_nav_graph" />
-
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_myListFragment"
+            app:destination="@id/myListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myListDetailsFragment"
+            app:destination="@id/myListDetailsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_watchHistoryFragment"
+            app:destination="@id/watchHistoryFragment" />
     </fragment>
 
     <include app:graph="@navigation/game_nav_graph" />
 
     <fragment
         android:id="@+id/watchHistoryFragment"
-        tools:layout="@layout/fragment_watch_history"
         android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
-        android:label="WatchHistoryFragment" />
+        android:label="WatchHistoryFragment"
+        tools:layout="@layout/fragment_watch_history">
+        <action
+            android:id="@+id/action_watchHistoryFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.chocolatecake.ui.movieDetails.MovieDetailsFragment"
@@ -50,6 +89,95 @@
         tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieId"
-            app:argType="integer"/>
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_showMoreFragment"
+            app:destination="@id/showMoreFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_showMoreFragment2"
+            app:destination="@id/showMoreFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_self"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/showMoreFragment"
+        android:name="com.chocolatecake.ui.showMore.ShowMoreFragment"
+        android:label="ShowMoreFragment"
+        tools:layout="@layout/fragment_show_more">
+
+
+        <argument
+            android:name="showMoreType"
+            app:argType="com.chocolatecake.viewmodel.showmore.ShowMoreType" />
+        <action
+            android:id="@+id/action_showMoreFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_showMoreFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seasonDetailsFragment"
+        android:name="com.chocolatecake.ui.season_details.SeasonDetailsFragment"
+        android:label="SeasonDetailsFragment"
+        tools:layout="@layout/fragment_season_details">
+        <argument
+            android:name="seriesId"
+            app:argType="integer" />
+        <argument
+            android:name="seasonNumber"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/tvDetailsFragment"
+        android:name="com.chocolatecake.ui.tv_details.TvDetailsFragment"
+        android:label="TvDetailsFragment"
+        tools:layout="@layout/fragment_tv_details">
+        <action
+            android:id="@+id/action_tvDetailsFragment_self"
+            app:destination="@id/tvDetailsFragment" />
+        <argument
+            android:name="tvShowId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
+            app:destination="@id/seasonDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.chocolatecake.ui.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myListFragment"
+        tools:layout="@layout/fragment_my_list"
+        android:name="com.chocolatecake.ui.myList.MyListFragment"
+        android:label="MyListFragment" >
+        <action
+            android:id="@+id/action_myListFragment_to_myListDetailsFragment"
+            app:destination="@id/myListDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myListDetailsFragment"
+        tools:layout="@layout/fragment_my_list_details"
+        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
+        android:label="MyListDetailsFragment" >
+        <argument
+            android:name="listId"
+            app:argType="integer" />
+        <argument
+            android:name="listType"
+            app:argType="string" />
+        <argument android:name="listName" />
+        <action
+            android:id="@+id/action_myListDetailsFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>

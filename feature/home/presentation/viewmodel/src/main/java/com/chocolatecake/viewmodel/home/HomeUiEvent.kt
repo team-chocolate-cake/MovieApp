@@ -9,5 +9,7 @@ sealed interface HomeUiEvent{
     data class TrendingMovieEvent(val itemId: Int) : HomeUiEvent
     data class UpComingMovieEvent(val itemId: Int) : HomeUiEvent
 
-    object ClickShowMore : HomeUiEvent
+    object ClickTrendingShowMore : HomeUiEvent
+    object ClickTopRatedShowMore : HomeUiEvent
+    object ClickPopularMoviesShowMore : HomeUiEvent
 }

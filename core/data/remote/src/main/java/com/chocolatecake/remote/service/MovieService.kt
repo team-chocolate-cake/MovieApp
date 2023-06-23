@@ -1,20 +1,38 @@
 package com.chocolatecake.remote.service
 
+import com.chocolatecake.remote.request.AddMediaToListRequest
+import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.FavoriteRequest
+import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
+import com.chocolatecake.remote.request.RateRequest
 import com.chocolatecake.remote.request.RatingRequest
+import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
+import com.chocolatecake.remote.response.ListDetailsWrapperResponse
+import com.chocolatecake.remote.response.ListResponse
+import com.chocolatecake.remote.response.MovieResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTvRemoteDto
+import com.chocolatecake.remote.response.dto.ListRemoteDto
+import com.chocolatecake.remote.response.dto.MovieItemListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
+import com.chocolatecake.remote.response.dto.StatusResponse
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
+import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
+import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
+import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
+import com.chocolatecake.remote.response.dto.UserListRemoteDto
+import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
+import com.chocolatecake.remote.response.dto.season_details.SeasonDetailsDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
-import com.chocolatecake.remote.response.movieDetails.RatingDto
+import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -63,8 +81,10 @@ interface MovieService {
 
     @GET("trending/movie/{time_window}")
     suspend fun getTrendingMovies(
-        @Path("time_window") timeWindow: String = "day"
+        @Path("time_window") timeWindow: String = "day",
+        @Query("page") page: Int = 1
     ): Response<DataWrapperResponse<MovieRemoteDto>>
+
     ///endregion
 
     /// region tv
@@ -90,7 +110,7 @@ interface MovieService {
 
     /// region search
     @GET("search/movie")
-     suspend fun searchForMovies(
+    suspend fun searchForMovies(
         @Query("query") query: String,
         @Query("year") year: Int? = null,
         @Query("primary_release_year") primaryReleaseYear: Int? = null,
@@ -135,10 +155,11 @@ interface MovieService {
     /// region account
     @GET("account")
     suspend fun getAccountDetails(
-        @Query("session_id") sessionId : String = " "
-    ) : Response<ProfileRemoteDto>
+        @Query("session_id") sessionId: String = " "
+    ): Response<ProfileRemoteDto>
     ///endregion
 
+    /// region movie details
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int
@@ -149,5 +170,110 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<RatingDto>
+    ):Response<StatusResponse>
+    /// endregion
+
+    /// region season details
+    @GET("tv/{series_id}/season/{season_number}")
+    suspend fun getSeasonDetails(
+        @Path("series_id") series_id : Int,
+        @Path("season_number") season_number : Int
+    ): Response<SeasonDetailsDto>
+    ///endregion
+
+    /// region tv
+    @GET("tv/{tv_id}")
+    suspend fun getTvDetails(
+        @Path("tv_id") tvShowId: Int
+    ): Response<TvDetailsRemoteDto>
+
+    @GET("tv/{tv_id}/aggregate_credits")
+    suspend fun getTvDetailsCredit(
+        @Path("tv_id") tvShowId: Int
+    ): Response<TvDetailsCreditRemoteDto>
+
+    @POST("tv/{tv_id}/rating?")
+    suspend fun rateTvShow(
+        @Body rateRequest: RateRequest, @Path("tv_id") tvShowId: Int,
+    ): Response<StatusResponse>
+
+    @GET("tv/{tv_id}/reviews")
+    suspend fun getTvShowReviews(
+        @Path("tv_id") tvShowId: Int
+    ): Response<DataWrapperResponse<TvReviewRemoteDto>>
+
+    @GET("tv/{tv_id}/recommendations")
+    suspend fun getTvShowRecomendations(
+        @Path("tv_id") tvShowId: Int
+    ): Response<DataWrapperResponse<TVShowsRemoteDto>>
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTvShowYoutubeVideoDetails(
+        @Path("tv_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+    /// endregion
+
+    //region my list
+    @GET("account/account_id/lists")
+    suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
+
+    @POST("list/{list_id}/add_item")
+    suspend fun postUserMedia(
+        @Path("list_id") listId: Int,
+        @Body mediaId: AddMediaToListRequest
+    ): Response<StatusResponse>
+
+    @POST("list")
+    suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
+
+
+
+    @GET("account/{account_id}/favorite/movies")
+    suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @GET("account/{account_id}/favorite/{media_type}")
+    suspend fun getFavoriteByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+
+    @POST("account/{account_id}/favorite")
+    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<MovieResponse>
+
+
+    @GET("account/{account_id}/watchlist/{media_type}")
+    suspend fun getWatchlistByMediaType(
+        @Path("media_type") mediaType: String,
+    ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @POST("account/{account_id}/watchlist")
+    suspend fun addWatchlist(
+        @Body watchlistRequest: WatchlistRequest,
+    ): Response<StatusResponse>
+
+
+    @POST("list")
+    suspend fun addList(@Body listRequest: ListRequest ): Response<ListResponse>
+
+    @GET("account/{account_id}/lists")
+    suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
+
+
+    @GET("list/{list_id}/add_item")
+    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
+
+    @GET("list/{list_id}")
+    suspend fun getDetailsList(@Path("list_id") listId: Int)
+    : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
+
+
+    @GET("movie/{movieId}/reviews")
+    suspend fun getMovieReviews(
+        @Path("movieId") movieId: Int,
+        @Query("page") page: Int = 1
+    ): Response<ReviewsDto>
+
+    @POST("account/account_id/favorite")
+    suspend fun addFavorite(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
+    //endregion
 }

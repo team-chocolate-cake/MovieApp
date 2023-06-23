@@ -47,8 +47,14 @@ class TriviaRepositoryIml @Inject constructor(
         people: List<PeopleEntity>,
         level: Int,
     ): List<PeopleEntity> {
-        return people.filter { it.popularity in getPopularityRange(level) && !it.imageUrl.contains("null") }
-            .shuffled().take(4)
+        val filteredPeople =
+            people.filter { it.popularity in getPopularityRange(level) && !it.imageUrl.contains("null") }
+                .shuffled().take(4)
+        return if (filteredPeople.size != 4) {
+            filteredPeople + people.minus(filteredPeople.toSet()).take(4 - filteredPeople.size)
+        } else {
+            filteredPeople
+        }
     }
 
     private fun getPopularityRange(level: Int): ClosedFloatingPointRange<Double> {
@@ -80,7 +86,8 @@ class TriviaRepositoryIml @Inject constructor(
             .shuffled().take(4)
         val question = fakeQuestions.getMovieQuestion(level)
         val selectedMovie = movies.random()
-        val selectedGenre = selectedMovie.genreEntities.map { it.genreName }.first()
+        val selectedGenre =
+            movieRepository.getMoviesDetails(selectedMovie.id).genres?.first() ?: "Action"
 
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> movies.map { it.title }
@@ -108,18 +115,17 @@ class TriviaRepositoryIml @Inject constructor(
         return otherGenres.map { it.genreName }.take(3)
     }
 
+
     override suspend fun getTvShowQuestion(level: Int, questionNumber: Int): QuestionEntity {
         TODO("Not yet implemented")
     }
 
-
     override suspend fun getBoard(level: Int): BoardEntity {
         val size = when (level) {
-            1 -> 12
-            2 -> 21
-            else -> 36
+            1 -> 9
+            2 -> 12
+            else -> 20
         }
-
         val movies = movieRepository.getPopularMovies().shuffled().take(size - 1)
         val choice = movies.random()
         val modifiedMovies = (movies + choice).shuffled()

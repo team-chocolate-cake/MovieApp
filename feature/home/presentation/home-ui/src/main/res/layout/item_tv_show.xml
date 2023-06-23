@@ -51,19 +51,20 @@
 
         <TextView
             android:id="@+id/text_view_rates_number"
-            style="@style/TextAppearance.AppCompat.Caption"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:gravity="center"
+            android:maxLength="3"
             android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="9.6" />
+            tools:text="9.6jlkl" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

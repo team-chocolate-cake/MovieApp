@@ -9,12 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.search.SearchListener
 import com.chocolatecake.viewmodel.search.SearchUiState
-import com.chocolatecake.viewmodel.tv_shows.TVShowsListener
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter(value = ["app:setGenres", "app:listener", "app:chipSelected"])
 fun ChipGroup.setGenres(
-    items: List<SearchUiState.GenresMoviesUiState>?,
+    items: List<SearchUiState.GenresUiState>?,
     listener: SearchListener,
     chipSelected: Int?
 ) {
@@ -36,9 +35,9 @@ fun ChipGroup.setSelectedMedia(media: SearchUiState.SearchMedia) {
     }
 }
 
-@BindingAdapter(value = ["app:hideImageButton"])
-fun ImageButton.setHideImageButton(hide: Boolean?) {
-    this.visibility = if (hide == true) View.GONE else View.VISIBLE
+@BindingAdapter(value = ["app:hideImageButton","app:query"])
+fun ImageButton.setHideImageButton(hide: Boolean?, query: String?) {
+    this.visibility = if (hide == true || query.isNullOrEmpty()) View.GONE else View.VISIBLE
 }
 
 @BindingAdapter(value = ["app:searchLayoutManager"])
@@ -48,7 +47,7 @@ fun RecyclerView.setSearchLayoutManager(searchUiState: SearchUiState?) {
             LinearLayoutManager(context)
         }
         SearchUiState.SearchMedia.PEOPLE -> {
-            GridLayoutManager(context, 3)
+            GridLayoutManager(context, 4)
         }
         else -> {
             LinearLayoutManager(context)

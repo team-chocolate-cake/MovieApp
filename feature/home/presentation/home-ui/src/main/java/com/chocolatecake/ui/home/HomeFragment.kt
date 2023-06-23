@@ -10,6 +10,7 @@ import com.chocolatecake.ui.home.databinding.FragmentHomeBinding
 import com.chocolatecake.viewmodel.home.HomeUiEvent
 import com.chocolatecake.viewmodel.home.HomeUiState
 import com.chocolatecake.viewmodel.home.HomeViewModel
+import com.chocolatecake.viewmodel.showmore.ShowMoreType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,53 +37,96 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
             viewModel.state.collect { state ->
                 homeAdapter.setItems(
                     mutableListOf(
-                        state.upComingMovies,
-                        state.nowPlayingMovies,
-                        state.trendingMovies,
-                        state.topRated,
-                        state.popularPeople,
-                        state.popularMovies,
+                        HomeItem.Slider(state.upComingMovies),
+                        HomeItem.NowPlaying(state.nowPlayingMovies),
+                        HomeItem.Trending(state.trendingMovies),
+                        HomeItem.TopRated(state.topRated),
+                        HomeItem.PopularPeople(state.popularPeople),
+                        HomeItem.PopularMovies(state.popularMovies),
                     )
                 )
-
+                binding.recyclerViewHome.smoothScrollToPosition(0)
             }
-
         }
-        binding.recyclerViewHome.smoothScrollToPosition(0)
     }
 
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.ClickShowMore -> {
-                // todo: navigation
-            }
 
             is HomeUiEvent.NowPlayingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.PopularMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.PopularPeopleEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                showSnackBar("${event.itemId}")
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.TopRatedMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.TrendingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
 
             is HomeUiEvent.UpComingMovieEvent -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(event.itemId))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                        event.itemId
+                    )
+                )
+            }
+
+            HomeUiEvent.ClickPopularMoviesShowMore -> {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.POPULAR_MOVIES
+                    )
+                )
+            }
+
+            HomeUiEvent.ClickTopRatedShowMore -> {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.TOP_RATED
+                    )
+                )
+            }
+
+            HomeUiEvent.ClickTrendingShowMore -> {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                        showMoreType = ShowMoreType.TRENDING
+                    )
+                )
             }
         }
     }

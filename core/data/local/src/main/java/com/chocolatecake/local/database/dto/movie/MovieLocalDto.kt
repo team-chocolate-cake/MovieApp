@@ -10,4 +10,6 @@ data class MovieLocalDto(
     val imageUrl: String,
     val title: String,
     val rate: Double,
+    val year: String,
+    val mediaType: String? ="movie"
 )

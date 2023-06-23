@@ -7,15 +7,22 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.common.model.ItemGameCardUIState" />
+            type="com.chocolatecake.viewmodel.common.model.ItemGameLevelUIState" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.viewmodel.game_level.ItemGameLevelListener" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/spacing_small_8dp"
-        android:padding="@dimen/spacing_medium_16dp"
-        android:background="@drawable/card_game_level_background">
+        android:background="@drawable/card_game_level_background"
+        android:onClick="@{()-> listener.onClickItem(item)}"
+        android:padding="@dimen/spacing_medium_16dp">
 
         <TextView
             android:id="@+id/text_view_title"
@@ -23,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_tiny_4dp"
-            android:text="@{item.title}"
+            android:text="@{@string/level_text(item.level)}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon_lock"
@@ -32,14 +39,16 @@
 
         <ImageView
             android:id="@+id/icon_lock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@drawable/ic_lock"
-            app:isVisible="@{!item.isOpenLevel}"
+            app:isVisibleOrGone="@{!item.isOpenLevel}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_title"
             app:layout_constraintEnd_toStartOf="@+id/text_view_title"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_view_title" />
+            app:layout_constraintTop_toTopOf="@+id/text_view_title"
+            app:tint="@color/on_background_60" />
 
         <TextView
             android:id="@+id/text_view_level"
@@ -47,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
-            android:text="@{item.level}"
+            android:text="@{item.title}"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +70,7 @@
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             app:animationDurationInMs="1000"
-            app:isVisible="@{item.isOpenLevel}"
+            app:isVisibleOrGone="@{item.isOpenLevel &amp;&amp; item.hasProgress}"
             app:layout_constraintTop_toBottomOf="@id/text_view_level"
             app:lineWidth="18dp"
             app:max="100"
@@ -75,9 +84,9 @@
             style="@style/TextStyle.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.getFormattedProgress()}"
-            android:textColor="@color/on_background_38"
-            app:isVisible="@{item.isOpenLevel}"
+            android:text="@{item.formattedProgress}"
+            android:textColor="@color/on_primary"
+            app:isVisibleOrGone="@{item.isOpenLevel &amp;&amp; item.hasProgress}"
             app:layout_constraintBottom_toBottomOf="@+id/animatedProgressBar"
             app:layout_constraintEnd_toEndOf="@+id/animatedProgressBar"
             app:layout_constraintStart_toStartOf="@+id/animatedProgressBar"
@@ -90,14 +99,13 @@
             android:layout_width="@dimen/zero_height"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
-            android:text="@{item.caption}"
+            android:text="@{@string/game_level_caption(item.level - 1)}"
             android:textColor="@color/on_background_38"
-            app:isVisible="@{!item.isOpenLevel}"
+            app:isVisibleOrGone="@{!item.isOpenLevel}"
             app:layout_constraintEnd_toEndOf="@+id/animatedProgressBar"
             app:layout_constraintStart_toStartOf="@+id/animatedProgressBar"
             app:layout_constraintTop_toBottomOf="@id/animatedProgressBar"
-            tools:text="The level is currently locked. To unlock it - you
-need to guess 5 question" />
+            tools:text="@string/game_level_caption" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

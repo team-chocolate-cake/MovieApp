@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.viewmodel.common.model.EpisodeHorizontalUIState" />
@@ -46,7 +47,7 @@
 
         <TextView
             android:id="@+id/text_view_description"
-            style="@style/TextStyle.BodyMedium"
+            style="@style/TextStyle.Caption"
             android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
@@ -62,7 +63,7 @@
 
         <TextView
             android:id="@+id/text_view_time_episode"
-            style="@style/TextStyle.BodySmall"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -70,7 +71,7 @@
             android:drawableStart="@drawable/ic_clock"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/on_background_38"
-            android:text="@{item.timeEpisode}"
+            android:text="@{String.valueOf(item.timeEpisode)+` min`}"
             android:textColor="@color/on_background_38"
             app:layout_constraintBottom_toBottomOf="@id/view_card_background"
             app:layout_constraintStart_toStartOf="@+id/text_view_description"
@@ -79,15 +80,16 @@
 
         <TextView
             android:id="@+id/text_view_rate"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/star"
+            android:gravity="center_vertical"
+            android:maxLength="3"
             android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
-            android:maxLength="3"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_time_episode"
             app:layout_constraintEnd_toEndOf="@+id/text_view_description"
             app:layout_constraintTop_toTopOf="@+id/text_view_time_episode"

@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.memorize_game
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,7 @@ import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIEvent
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIState
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MemorizeGameFragment :
@@ -23,15 +23,9 @@ class MemorizeGameFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("123123123", "onViewCreated: $123123123")
         memorizeGameAdapter = MemorizeGameAdapter(mutableListOf(), viewModel)
         binding.recyclerViewMemorizeGame.adapter = memorizeGameAdapter
-        collectLatest {
-            viewModel.state.collect {
-                Log.d("123123123", "onViewCreated: $it")
-                memorizeGameAdapter.setItems(it.board)
-            }
-        }
+        collectLatest { viewModel.state.collectLatest { state -> memorizeGameAdapter.setItems(state.board) } }
     }
 
     override fun onEvent(event: MemorizeGameUIEvent) {

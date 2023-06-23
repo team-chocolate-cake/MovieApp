@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessPopularMovies(popularMovieEntities: List<PopularMoviesUiState>) {
         _state.update {
             it.copy(
-                popularMovies = HomeItem.PopularMovies(popularMovieEntities),
+                popularMovies = popularMovieEntities,
                 isLoading = false
             )
         }
@@ -83,7 +83,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessTopRatedMovies(topRatedMovieEntities: List<TopRatedUiState>) {
         _state.update {
             it.copy(
-                topRated = HomeItem.TopRated(topRatedMovieEntities),
+                topRated = topRatedMovieEntities,
                 isLoading = false
             )
         }
@@ -102,7 +102,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessUpcomingMovies(upcomingMovieEntities: List<UpComingMoviesUiState>) {
         _state.update {
             it.copy(
-                upComingMovies = HomeItem.Slider(upcomingMovieEntities),
+                upComingMovies = upcomingMovieEntities,
                 isLoading = false
             )
         }
@@ -120,7 +120,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessPopularPeople(popularPeopleEntities: List<PopularPeopleUiState>) {
         _state.update {
             it.copy(
-                popularPeople = HomeItem.PopularPeople(popularPeopleEntities),
+                popularPeople = popularPeopleEntities,
                 isLoading = false
             )
         }
@@ -138,7 +138,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessNowPlayingMovies(nowPlayingMovieEntities: List<NowPlayingUiState>) {
         _state.update {
             it.copy(
-                nowPlayingMovies = HomeItem.NowPlaying(nowPlayingMovieEntities),
+                nowPlayingMovies = nowPlayingMovieEntities,
                 isLoading = false
             )
         }
@@ -156,7 +156,7 @@ class HomeViewModel @Inject constructor(
     private fun onSuccessTrendingMovies(trendingMoviesEntities: List<TrendingMoviesUiState>) {
         _state.update {
             it.copy(
-                trendingMovies = HomeItem.Trending(trendingMoviesEntities),
+                trendingMovies = trendingMoviesEntities,
                 isLoading = false
             )
         }
@@ -195,6 +195,19 @@ class HomeViewModel @Inject constructor(
 
     override fun onClickPopularPeople(itemId: Int) {
         sendEvent(HomeUiEvent.PopularPeopleEvent(itemId))
+    }
+
+
+    override fun onClickTrendingShowMore() {
+        sendEvent(HomeUiEvent.ClickTrendingShowMore)
+    }
+
+    override fun onClickTopRatedShowMore() {
+        sendEvent(HomeUiEvent.ClickTopRatedShowMore)
+    }
+
+    override fun onClickPopularMoviesShowMore() {
+        sendEvent(HomeUiEvent.ClickPopularMoviesShowMore)
     }
     /// endregion
 

@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.ui.home.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.BottomSheetSearchFilterBinding
+import com.chocolatecake.ui.search.utils.setGenres
 import com.chocolatecake.viewmodel.search.SearchViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FilterMovieBottomSheetFragment : BottomSheetDialogFragment() {
@@ -39,6 +45,16 @@ class FilterMovieBottomSheetFragment : BottomSheetDialogFragment() {
         binding.buttonApplyFilter.setOnClickListener {
             viewModel.getData()
             dismiss()
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.map { it.genres }.distinctUntilChanged().collectLatest {
+                binding.chipGroupFilter.setGenres(
+                    viewModel.state.value.genres,
+                    viewModel,
+                    viewModel.state.value.selectedGenresId
+                )
+            }
+
         }
     }
 }

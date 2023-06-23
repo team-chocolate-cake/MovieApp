@@ -45,6 +45,7 @@ dependencies {
     implementation project(path: ':core:bases')
     implementation project(path: ':feature:home:presentation:viewmodel')
     implementation project(path: ':feature:trvia:presentation:ui')
+    implementation project(path: ':feature:authectication:presentation:ui')
 
     implementation "androidx.core:core-ktx:$androidXVersion"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
@@ -63,8 +64,6 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 
-    /// slide
-    implementation "com.github.smarteist:autoimageslider:$autoimagesliderVersion"
 
     /// lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
@@ -78,5 +77,4 @@ dependencies {
 
     /// paging
     implementation "androidx.paging:paging-runtime:3.1.1"
-
 }

@@ -29,7 +29,8 @@ class MovieGuessingViewModel @Inject constructor(
     private val updateMovieQuestionCountUseCase: UpdateMoviesQuestionCountUseCase,
     private val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpMovieUseCase: LevelUpMoviesUseCase,
-) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState()), AnswerListener {
+) : BaseViewModel<GameUiState, GameUIEvent>(GameUiState(gameType = GameType.MOVIE)),
+    AnswerListener {
 
     init {
         getData()
@@ -100,15 +101,13 @@ class MovieGuessingViewModel @Inject constructor(
     private fun onTimeout() {
         viewModelScope.launch {
             sendEvent(GameUIEvent.ShowTimeOut)
-            delay(1000)
+            delay(300)
             sendEvent(GameUIEvent.NavigateToLoserScreen)
         }
     }
 
     private fun onUserLose() {
-        viewModelScope.launch {
-            sendEvent(GameUIEvent.NavigateToLoserScreen)
-        }
+        sendEvent(GameUIEvent.NavigateToLoserScreen)
     }
 
 
@@ -120,7 +119,7 @@ class MovieGuessingViewModel @Inject constructor(
                 onUserLose()
             } else {
                 _state.update { it.copy(heartCount = heartCount - 1) }
-                updateCurrentQuestion()
+                getData()
             }
             return
         }
@@ -140,15 +139,11 @@ class MovieGuessingViewModel @Inject constructor(
         }
     }
 
-    private fun updateCurrentQuestion() {
-        getData()
-    }
-
     private fun updateToNextQuestion() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 updateMovieQuestionCountUseCase(_state.value.questionCount)
-                _state.update { it.copy(points = it.points + 100) }
+                _state.update { it.copy(points = it.points + (it.level * 10)) }
                 updateUserPointsUseCase(_state.value.points)
                 getData()
             }.onFailure(::onError)

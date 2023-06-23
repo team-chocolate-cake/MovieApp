@@ -1,10 +1,10 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.R
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RatingMovieBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: MovieRatingBottomSheetBinding
     private val viewModel by activityViewModels<MovieDetailsViewModel>()
-    private var movieId:Int = 0
+    private var dismissListener: BottomSheetDismissListener? = null
 
 
     override fun onCreateView(
@@ -40,18 +40,29 @@ class RatingMovieBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    fun setMovieID(id:Int){
-        movieId = id
+    fun setListener(dismissListener: BottomSheetDismissListener) {
+        this.dismissListener = dismissListener
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.buttonApply.setOnClickListener{
-            viewModel.onRatingSubmit(binding.rating.rating , movieId)
-            Toast.makeText(this.context , "Thanks for rating <3" , Toast.LENGTH_SHORT).show()
-            this.dismiss()
+        var userRating = 0f
+        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+            // Access the rating value here
+            userRating = rating * 2
+            Log.i("rate", "$userRating")
+        }
+        binding.buttonApply.setOnClickListener {
+            dismissListener?.onApplyRateBottomSheet()
+            dismissListener?.updateRatingValue(userRating)
+            dismiss()
         }
     }
+}
+
+interface BottomSheetDismissListener {
+    fun onApplyRateBottomSheet()
+    fun updateRatingValue(rate: Float)
 }

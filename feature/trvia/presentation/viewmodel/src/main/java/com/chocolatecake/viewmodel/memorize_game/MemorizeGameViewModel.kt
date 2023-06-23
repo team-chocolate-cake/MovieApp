@@ -61,7 +61,7 @@ class MemorizeGameViewModel @Inject constructor(
     private fun onSuccessUser(user: UserEntity) {
         _state.update {
             it.copy(
-                level = user.moviesGameLevel,
+                level = user.memorizeGameLevel,
                 points = user.totalPoints,
                 isError = false,
                 isLoading = false
@@ -93,23 +93,22 @@ class MemorizeGameViewModel @Inject constructor(
 
     override fun onItemClick(itemGameImageUiState: ItemGameImageUiState) {
         toggleGameItem(itemGameImageUiState)
-        saveUserPosition(itemGameImageUiState.position)
     }
 
     private fun toggleGameItem(itemGameImageUiState: ItemGameImageUiState) {
-        val modifyItem = itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
-        val modifyBoard = (_state.value.board - itemGameImageUiState).toMutableList()
-        modifyBoard.add(modifyItem.position, modifyItem)
-        _state.update {
-            it.copy(
-                board = modifyBoard
-            )
+        viewModelScope.launch {
+            val modifyItem =
+                itemGameImageUiState.copy(isSelected = !itemGameImageUiState.isSelected)
+            val modifyBoard = (_state.value.board - itemGameImageUiState).toMutableList()
+            modifyBoard.add(modifyItem.position, modifyItem)
+            _state.update { it.copy(board = modifyBoard) }
+            delay(300)
+            saveUserPosition(itemGameImageUiState.position)
         }
     }
 
     private fun saveUserPosition(position: Int) {
-        val uiState = _state.value
-        if (uiState.firstUserPosition == null) {
+        if (state.value.firstUserPosition == null) {
             saveFirstPosition(position)
         } else {
             saveSecondPosition(position)
@@ -122,17 +121,16 @@ class MemorizeGameViewModel @Inject constructor(
 
     private fun saveSecondPosition(position: Int) {
         val firstPosition = _state.value.firstUserPosition!!
-        if (_state.value.CorrectPairPositions == Pair(firstPosition, position)) {
+        if (_state.value.CorrectPairPositions.equalsIgnoreOrder(Pair(firstPosition, position))) {
             viewModelScope.launch {
                 _state.update {
                     it.copy(
                         secondUserPosition = position,
-                        points = it.points + 100
+                        points = it.points + (it.level * 20)
                     )
                 }
                 updateUserPointsUseCase(_state.value.points)
                 levelUpMemorizeUseCase()
-                delay(1000)
                 sendEvent(MemorizeGameUIEvent.NavigateToWinnerScreen(GameType.MEMORIZE))
             }
         } else {
@@ -150,6 +148,10 @@ class MemorizeGameViewModel @Inject constructor(
         _state.update { it.copy(isError = true) }
         sendEvent(MemorizeGameUIEvent.ShowSnackbar(throwable.message.toString()))
     }
+}
+
+private fun <A : Comparable<A>> Pair<A, A>.equalsIgnoreOrder(pair: Pair<A, A>): Boolean {
+    return listOf(first, second).sorted() == setOf(pair.first, pair.second).sorted()
 }
 
 

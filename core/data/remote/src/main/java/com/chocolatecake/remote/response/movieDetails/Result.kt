@@ -5,17 +5,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Result(
     @SerializedName("author")
-    val author: String,
+    val author: String?,
     @SerializedName("author_details")
-    val authorDetails: AuthorDetails,
+    val authorDetails: AuthorDetails?,
     @SerializedName("content")
-    val content: String,
+    val content: String?,
     @SerializedName("created_at")
-    val createdAt: String,
+    val createdAt: String?,
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("updated_at")
-    val updatedAt: String,
+    val updatedAt: String?,
     @SerializedName("url")
-    val url: String
+    val url: String?
 )

@@ -11,7 +11,7 @@ class GetCurrentBoardUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): BoardEntity {
         val user = getCurrentUserUseCase()
-        val level = user.moviesGameLevel
+        val level = user.memorizeGameLevel
 
         return triviaRepository.getBoard(level)
     }

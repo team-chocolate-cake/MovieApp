@@ -2,6 +2,8 @@
 <resources>
     <!-- Spacing dimens-->
     <dimen name="spacing_zero_0dp">0dp</dimen>
+    <dimen name="spacing_one_1dp">1dp</dimen>
+    <dimen name="spacing_very_tiny_2dp">4dp</dimen>
     <dimen name="spacing_tiny_4dp">4dp</dimen>
     <dimen name="spacing_small_8dp">8dp</dimen>
     <dimen name="spacing_custom_12dp">12dp</dimen>
@@ -47,6 +49,8 @@
     <dimen name="custom_height_card">213dp</dimen>
     <dimen name="width_image">240dp</dimen>
     <dimen name="height_image">150dp</dimen>
+    <dimen name="height_image_details">350dp</dimen>
+    <dimen name="title_details_width">250dp</dimen>
     <dimen name="lottie_error_size">180dp</dimen>
     <dimen name="image_width">90dp</dimen>
     <dimen name="zero_height">0dp</dimen>

@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/text_view_genres"
-            style="@style/TextStyle.BodyMedium"
+            style="@style/TextStyle.Caption"
             android:layout_width="@dimen/zero_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
@@ -62,7 +62,7 @@
 
         <TextView
             android:id="@+id/text_view_year"
-            style="@style/TextStyle.BodySmall"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -79,13 +79,15 @@
 
         <TextView
             android:id="@+id/text_view_count_rate"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/star"
-            android:text="@{String.valueOf(item.rating)}"
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
             app:layout_constraintEnd_toEndOf="@+id/text_view_genres"
             app:layout_constraintTop_toTopOf="@+id/text_view_year"
@@ -93,12 +95,15 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_movie"
-            android:layout_width="@dimen/custom_width_image"
-            android:layout_height="@dimen/custom_height_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:4"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
     </androidx.constraintlayout.widget.ConstraintLayout>

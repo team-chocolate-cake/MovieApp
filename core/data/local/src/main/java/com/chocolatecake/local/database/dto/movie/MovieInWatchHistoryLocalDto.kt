@@ -12,6 +12,6 @@ data class MovieInWatchHistoryLocalDto(
     val title: String,
     val voteAverage: Double,
     val description:String,
-    val dateWatched: Date,
-    val year:Int
+    val year:Int,
+    val dateWatched: Date
 )

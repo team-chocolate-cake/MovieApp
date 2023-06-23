@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.ItemMovieHorizontalBinding
-import com.chocolatecake.ui.home.databinding.ItemPeopleBinding
+import com.chocolatecake.ui.home.databinding.SearchItemPeopleBinding
 import com.chocolatecake.viewmodel.search.SearchItem
 import com.chocolatecake.viewmodel.search.SearchItemType
 import com.chocolatecake.viewmodel.search.SearchListener
@@ -32,7 +32,7 @@ class SearchAdapter(
                 PeopleViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_people, parent, false
+                        R.layout.search_item_people, parent, false
                     )
                 )
             }
@@ -79,6 +79,6 @@ class SearchAdapter(
 
     class MediaViewHolder(val binding: ItemMovieHorizontalBinding) : BaseViewHolder(binding)
 
-    class PeopleViewHolder(val binding: ItemPeopleBinding) : BaseViewHolder(binding)
+    class PeopleViewHolder(val binding: SearchItemPeopleBinding) : BaseViewHolder(binding)
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_items_found">No items found</string>
+    <string name="no_items_have">No items have</string>
     <string name="search">search</string>
     <string name="favorite">Favorite</string>
     <string name="watchlist">Watchlist</string>
@@ -10,8 +11,24 @@
     <string name="popcorn_puzzles">Popcorn Puzzles!</string>
     <string name="theme">Theme</string>
     <string name="logout">Logout</string>
-    <string name="explore_the_best_tv_shows">Explore The Best TV Shows</string>
-    <string name="airing_today">Airing Today</string>
-    <string name="on_the_air">On The Air</string>
-    <string name="try_again">try again</string>
+    <string name="_9_6" tools:ignore="ExtraTranslation">9.6</string>
+    <string name="explore_the_best_tv_shows" tools:ignore="ExtraTranslation">Explore The Best TV Shows</string>
+    <string name="airing_today" tools:ignore="ExtraTranslation">Airing Today</string>
+    <string name="on_the_air" tools:ignore="ExtraTranslation">On The Air</string>
+    <string name="try_again" tools:ignore="ExtraTranslation">Try Again</string>
+    <string name="cannot_fetch_movies" tools:ignore="ExtraTranslation">cannot fetch movies 😢</string>
+    <string name="swipe_to_delete" tools:ignore="ExtraTranslation">swipe to delete\n</string>
+    <string name="error_occured" tools:ignore="ExtraTranslation">error occured</string>
+    <string name="overview_title" tools:ignore="ExtraTranslation">Overview</string>
+    <string name="episodes_title" tools:ignore="ExtraTranslation">Episodes</string>
+    <string name="rate_this_tv_show" tools:ignore="ExtraTranslation">Rate This Tv Show</string>
+    <string name="cast" tools:ignore="ExtraTranslation">Cast</string>
+    <string name="seasons" tools:ignore="ExtraTranslation">Seasons</string>
+    <string name="comments" tools:ignore="ExtraTranslation">Comments</string>
+    <string name="recommended">Recommended</string>
+    <string name="home_much_you_love_this_tv_show" tools:ignore="ExtraTranslation">Home much you love this tv show ?</string>
+    <string name="rate_it_with_stars_your_satisfaction_level" tools:ignore="ExtraTranslation">Rate it with stars your satisfaction level</string>
+    <string name="create" tools:ignore="ExtraTranslation">Create</string>
+    <string name="login_title">Lights, Camera, Action! Login to Personalize Your Movie Experience</string>
+    <string name="login">Login</string>
 </resources>

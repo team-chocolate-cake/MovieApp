@@ -18,11 +18,14 @@
     <string name="password_hint">2131321</string>
     <string name="the_request_failed">The Request sadly failed 😢</string>
     <string name="movie">Movie</string>
-    <string name="tv">TV</string>
+    <string name="tv">TV Shows</string>
     <string name="person">People</string>
     <string name="collection">Collection</string>
     <string name="company">Company</string>
     <string name="apply">Apply</string>
     <string name="Popular_Movies">Popular Movies</string>
     <string name="retry">retry</string>
+    <string name="item_deleted">Item Deleted</string>
+    <string name="undo">UNDO</string>
+
 </resources>
