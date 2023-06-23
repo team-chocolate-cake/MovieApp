@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
-            android:textColor="@color/on_background_87"
             android:text="@string/explore_the_best_tv_shows"
+            android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Explore The Best TV Shows" />
@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingHorizontal="@dimen/spacing_medium_16dp"
-                app:selectionRequired="true"
                 app:selectedTVShowType="@{viewModel.state.tvShowsType}"
+                app:selectionRequired="true"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
@@ -129,8 +129,4 @@
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
-
 </layout>
-
-   <!-- app:showWhenNoResult="@{viewModel.state.tvShowAiringToday}"
-    app:showWhenListEmpty="@{viewModel.state.tvShowAiringToday}"-->

@@ -36,6 +36,8 @@ class TVShowsViewModel @Inject constructor(
         getData()
     }
 
+    fun refresh() = getData()
+
     ///region get data
     private fun getData() {
         when (_state.value.tvShowsType) {
@@ -83,7 +85,7 @@ class TVShowsViewModel @Inject constructor(
 
             is LoadState.Error -> {
                 _state.update {
-                    it.copy(isLoading = false, errorList = listOf("no Network "))
+                    it.copy(isLoading = false, errorList = listOf("no Network"))
                 }
             }
         }
