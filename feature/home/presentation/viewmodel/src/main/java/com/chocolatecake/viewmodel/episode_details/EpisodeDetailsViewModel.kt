@@ -38,10 +38,13 @@ class EpisodeDetailsViewModel @Inject constructor(
     init {
         getData(seriesId, seasonNumber, episodeNumber)
     }
-
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        _state.update { it.copy(isLoading = true) }
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
         getCastData(seriesId, seasonNumber, episodeNumber)
+    }
+    fun tryAgain() {
+        getData(seriesId, episodeNumber, episodeNumber)
     }
 
     /// region episode data
