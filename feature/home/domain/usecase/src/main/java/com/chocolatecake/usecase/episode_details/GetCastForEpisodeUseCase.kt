@@ -13,7 +13,6 @@ class GetCastForEpisodeUseCase @Inject constructor(
         seasonNumber: Int,
         episodeNumber: Int
     ): List<PeopleEntity> {
-        Log.d("useCase-cast",movieRepository.getCastForEpisode(id, seasonNumber, episodeNumber).toString())
         return movieRepository.getCastForEpisode(id, seasonNumber, episodeNumber)
     }
 }

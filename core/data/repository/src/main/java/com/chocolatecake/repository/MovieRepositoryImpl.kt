@@ -332,10 +332,7 @@ class MovieRepositoryImpl @Inject constructor(
         seasonNumber: Int,
         episodeNumber: Int
     ): List<PeopleEntity> {
-
         val dataDto = wrapApiCall { movieService.getEpisodeCast(id, seasonNumber, episodeNumber) }
-        Log.d("repo-cast", dataDto.toString())
-
         return domainCastMapper.map(dataDto)
 
     }
@@ -345,9 +342,13 @@ class MovieRepositoryImpl @Inject constructor(
         seasonNumber: Int,
         episodeNumber: Int
     ): EpisodeDetailsEntity {
-        val episodeDetailsDto =
-            movieService.getEpisodeDetails(seriesId, seasonNumber, episodeNumber).body()
-        return domainEpisodeDetailsMapper.map(episodeDetailsDto!!)
+        return domainEpisodeDetailsMapper.map(wrapApiCall {
+            movieService.getEpisodeDetails(
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
     }
 
     override suspend fun setRatingForEpisode(
