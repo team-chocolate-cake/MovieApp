@@ -204,7 +204,18 @@
                 app:layout_constraintTop_toBottomOf="@id/text_view_actors"
                 tools:listitem="@layout/item_people" />
 
+            <Button
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:onClick="@{()->viewModel.tryAgain()}"
+                android:text="@string/try_again"
+                android:textColor="@color/background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lottie_animation_view_no_network"
+                app:showWhenError="@{viewModel.state.onErrors}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 </layout>
