@@ -51,7 +51,6 @@ class MovieDetailsViewModel @Inject constructor(
     private val movieId = savedStateHandle.get<Int>("movieId")
 
     init {
-        Log.e("TAG", "${checkIsLoginedOrNotUseCase()} ", )
         _state.update { it.copy(isLoading = true, isLogined = checkIsLoginedOrNotUseCase()) }
         if (movieId != null) {
             getMovieDetails(movieId)
