@@ -93,6 +93,15 @@ fun <T> View.hideResult(list: List<T>?, text: String) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenNoList"])
+fun <T> View.hideWhenNoList(list: List<T>?) {
+    if (list.isNullOrEmpty()) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter(value = ["app:hideWhenNoResult"])
 fun <T> View.hideWhenNoResult(list: List<T>?) {
     if (list.isNullOrEmpty()) {
@@ -175,6 +184,12 @@ fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
         } else {
             uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
         }
+@BindingAdapter("app:hideWhenError")
+fun <T> View.hideWhenError(list: List<T>?) {
+    if (list?.isNotEmpty() == true) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
     }
 }
 

@@ -6,6 +6,7 @@ import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
 import com.chocolatecake.remote.request.RateRequest
+import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
 import com.chocolatecake.remote.request.WatchlistRequest
 import com.chocolatecake.remote.response.DataWrapperResponse
@@ -26,6 +27,9 @@ import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
 import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
@@ -100,12 +104,6 @@ interface MovieService {
 
     @GET("tv/popular")
     suspend fun getPopularTVShows(@Query("page") page: Int = 1): Response<DataWrapperResponse<TVShowsRemoteDto>>
-
-//    @GET("genre/tv/list")
-//    suspend fun getListOfGenresForTvs(
-//        @Query("page") page: Int = 1,
-//    ): Response<GenresWrapperResponse<GenreTvRemoteDto>>
-
     /// endregion
 
     /// region search
@@ -276,4 +274,31 @@ interface MovieService {
     @POST("account/account_id/favorite")
     suspend fun addFavorite(@Body markAsFavorite: FavoriteRequest): Response<StatusResponse>
     //endregion
+
+    /// region episode
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}")
+    suspend fun getEpisodeDetails(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<EpisodeDetailsRemoteDto>
+
+
+    @Headers("Content-Type: application/json;charset=utf-8")
+    @POST("tv/{series_id}/season/{season_number}/episode/{episode_number}/rating")
+    suspend fun postEpisodeRating(
+        @Body rate: RatingEpisodeDetailsRequest,
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<RatingEpisodeDetailsRemoteDto>
+
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}/credits")
+    suspend fun getEpisodeCast(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<EpisodeDetailsCastRemoteDto>
+
+///endregion
 }

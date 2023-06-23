@@ -1,6 +1,7 @@
 package com.chocolatecake.repository
 
 import androidx.paging.Pager
+import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
@@ -21,7 +22,6 @@ import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
-
 
 interface MovieRepository {
 
@@ -54,7 +54,7 @@ interface MovieRepository {
     suspend fun clearAllSearchHistory()
     suspend fun deleteSearchHistory(keyword: String)
 
-    suspend fun searchForMovies(keyword: String ): List<MovieEntity>
+    suspend fun searchForMovies(keyword: String): List<MovieEntity>
 
     suspend fun searchForTv(keyword: String): List<TvEntity>
 
@@ -110,8 +110,6 @@ interface MovieRepository {
 
     suspend fun getMovieList(): List<ListMovieEntity>
 
-   // suspend fun refreshAddMovieToList(movie: ListMovieEntity)
-
     suspend fun addMovieToList( movie: ListMovieEntity): Boolean
 
     suspend fun getDetailsList(listId: Int): List<MovieEntity>
@@ -119,7 +117,25 @@ interface MovieRepository {
 
     suspend fun getListCreated(): List<ListCreatedEntity>
 
-   // suspend fun refreshDetailsList(listId: Int)
     suspend fun addWatchlist(mediaId:Int,mediaType:String,isWatchList:Boolean): StatusEntity
     suspend fun addFavouriteList(mediaId:Int,mediaType:String,isFavourite:Boolean): StatusEntity
+    suspend fun getCastForEpisode(
+        id: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): List<PeopleEntity>
+
+    suspend fun getEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): EpisodeDetailsEntity
+
+    suspend fun setRatingForEpisode(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        value: Float
+    ): RatingEpisodeDetailsStatusEntity
+
 }

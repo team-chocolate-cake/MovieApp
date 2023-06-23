@@ -31,4 +31,12 @@
     <string name="create" tools:ignore="ExtraTranslation">Create</string>
     <string name="login_title">Lights, Camera, Action! Login to Personalize Your Movie Experience</string>
     <string name="login">Login</string>
+    <string name="season">Season</string>
+    <string name="episode">Episode</string>
+    <string name="rate_the_episode">ٌRate The Episode</string>
+    <string name="actors">Actors</string>
+    <string name="apply">Apply</string>
+    <string name="share_your_love_for_this_episode">Share your love for this Episode!</string>
+    <string name="rating_description">Help us by rating the episode with stars based on your satisfaction level!</string>
+    <string name="try_again">try again :(</string>
 </resources>

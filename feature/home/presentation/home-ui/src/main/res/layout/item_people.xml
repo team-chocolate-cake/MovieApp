@@ -22,10 +22,11 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shape_image_view_people"
-            android:layout_width="@dimen/width_image_people"
-            android:layout_height="@dimen/height_image_people"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +36,7 @@
         <TextView
             android:id="@+id/text_view_name_people"
             style="@style/TextStyle.BodySmall"
-            android:layout_width="70dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
             android:ellipsize="end"

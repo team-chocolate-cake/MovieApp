@@ -112,6 +112,9 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainGenreMapper: DomainGenreMapper,
     private val domainMovieDetailsMapper: DomainMovieDetailsMapper,
     private val domainStatusMapper: DomainStatusMapper,
+    private val domainRatingEpisodeMapper: DomainRatingEpisodeMapper,
+    private val domainCastMapper: DomainCastMapper,
+    private val domainEpisodeDetailsMapper: DomainEpisodeDetailsMapper,
     private val domainGenreTvMapper: DomainGenreTvMapper,
     private val domainSeasonDetailsMapper: DomainSeasonDetailsMapper,
     private val domainPeopleRemoteMapper: DomainPeopleRemoteMapper,
@@ -631,4 +634,49 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     //endregion
+
+    /// region episode
+
+    override suspend fun getCastForEpisode(
+        id: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): List<PeopleEntity> {
+        val dataDto = wrapApiCall { movieService.getEpisodeCast(id, seasonNumber, episodeNumber) }
+        return domainCastMapper.map(dataDto)
+
+    }
+
+    override suspend fun getEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): EpisodeDetailsEntity {
+        return domainEpisodeDetailsMapper.map(wrapApiCall {
+            movieService.getEpisodeDetails(
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
+    }
+
+    override suspend fun setRatingForEpisode(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int,
+        value: Float
+    ): RatingEpisodeDetailsStatusEntity {
+        val rateRequest = RatingEpisodeDetailsRequest(value)
+        return domainRatingEpisodeMapper.map(wrapApiCall {
+            movieService.postEpisodeRating(
+                rateRequest,
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
+    }
+
+    /// endregion
 }
