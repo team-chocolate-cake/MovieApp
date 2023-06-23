@@ -15,7 +15,6 @@ import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
-import com.chocolatecake.entities.movieDetails.RatingEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
@@ -45,8 +44,6 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.cash.myList.LocalFavoriteMoviesMapper
 import com.chocolatecake.repository.mappers.cash.myList.LocalListMapper
-import com.chocolatecake.repository.mappers.cash.myList.LocalListMovieMapper
-import com.chocolatecake.repository.mappers.cash.myList.LocalMoviesMapper
 import com.chocolatecake.repository.mappers.cash.myList.LocalWatchlistMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
@@ -72,7 +69,6 @@ import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMa
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainListMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainMovieItemListMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
 import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
 import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
@@ -103,9 +99,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val localUpcomingMovieMapper: LocalUpcomingMovieMapper,
     private val localFavoriteMoviesMapper: LocalFavoriteMoviesMapper,
     private val localWatchlistMapper: LocalWatchlistMapper,
-    private val localListMovieMapper: LocalListMovieMapper,
     private val localListMapper: LocalListMapper,
-    private val localMoviesMapper: LocalMoviesMapper,
     private val domainListMapper: DomainListMapper,
     private val domainFavoriteMoviesMapper: DomainFavoriteMoviesMapper,
     private val domainWatchlistMapper: DomainWatchlistMapper,
@@ -130,7 +124,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTvDetailsReviewMapper: DomainTvDetailsReviewMapper,
     private val domainTvShowMapper: DomainTvShowMapper,
     private val domainTvDetailsSeasonMapper: DomainTvDetailsSeasonMapper,
-    private val domainMoviesMapper: DomainMovieMapper,
     private val domainMovieItemListMapper: DomainMovieItemListMapper,
     private val domainListMovieMapper: DomainListMovieMapper,
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
@@ -406,15 +399,6 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity {
         return domainMovieDetailsMapper.map(wrapApiCall { movieService.getMovieDetails(movieId) })
     }
-
-    override suspend fun setMovieRate(movieId: Int, rate: Float): RatingEntity {
-        return domainRatingMapper.map(wrapApiCall {
-            movieService.setMovieRate(
-                RatingRequest(rate),
-                movieId
-            )
-        })
-    }
     /// endregion
 
     /// region season details
@@ -475,24 +459,6 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getMovieReviews(movieId: Int, page: Int): ReviewResponseEntity {
         return domainReviewsMapper.map(wrapApiCall { movieService.getMovieReviews(movieId, page) })
-    }
-
-    override suspend fun getUserLists(): List<UserListEntity> {
-        val call =
-            wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
-        return domainUserListsMapper.map(call)
-    }
-
-    override suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity {
-        val addMediaRequest = AddMediaToListRequest(mediaId)
-        val call = wrapApiCall { movieService.postUserMedia(listId, addMediaRequest) }
-        return domainStatusMapper.map(call)
-    }
-
-    override suspend fun createUserList(listName: String): StatusEntity {
-        val newList = CreateUserListRequest(listName)
-        val call = wrapApiCall { movieService.createUserList(newList) }
-        return domainStatusMapper.map(call)
     }
 
     override suspend fun addWatchlist(
@@ -629,19 +595,6 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-//    override suspend fun addMovieToList(movie: ListMovieEntity ): Boolean {
-//        val result = movieService.addMovieToList(movie.mediaId,).isSuccessful
-//
-//        if (result){
-//            refreshAddMovieToList(movie)
-//        }
-//        return result
-//    }
-
-//    private suspend fun refreshAddMovieToList(movie: ListMovieEntity) {
-//        movieDao.insertMovieToList(localListMovieMapper.map(movie))
-//    }
-
     override suspend fun addMovieToList(movie: ListMovieEntity): Boolean {
         return movieService.addMovieToList(movie.mediaId).isSuccessful
     }
@@ -676,7 +629,6 @@ class MovieRepositoryImpl @Inject constructor(
                 }
             } ?: emptyList()
     }
-
 
     //endregion
 }

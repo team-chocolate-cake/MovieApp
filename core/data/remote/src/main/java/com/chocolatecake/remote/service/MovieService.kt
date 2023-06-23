@@ -170,7 +170,7 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<RatingDto>
+    ):Response<StatusResponse>
     /// endregion
 
     /// region season details
@@ -249,7 +249,7 @@ interface MovieService {
     @POST("account/{account_id}/watchlist")
     suspend fun addWatchlist(
         @Body watchlistRequest: WatchlistRequest,
-    ): Response<MovieResponse>
+    ): Response<StatusResponse>
 
 
     @POST("list")

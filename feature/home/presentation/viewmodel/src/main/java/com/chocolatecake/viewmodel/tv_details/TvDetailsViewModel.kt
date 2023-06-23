@@ -21,6 +21,8 @@ import com.chocolatecake.usecase.GetTvShowRecommendationsUseCase
 import com.chocolatecake.usecase.GetTvShowYoutubeDetailsUseCase
 import com.chocolatecake.usecase.GetUserListsUseCase
 import com.chocolatecake.usecase.RateTvShowUseCase
+import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
+import com.chocolatecake.usecase.movie_details.AddToWatchList
 import com.chocolatecake.viewmodel.tv_details.listener.TvDetailsListeners
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsCastUiMapper
 import com.chocolatecake.viewmodel.tv_details.mappers.TvDetailsInfoUiMapper
@@ -48,6 +50,8 @@ class TvDetailsViewModel @Inject constructor(
     private val getUserListsUseCase: GetUserListsUseCase,
     private val addToUserListUseCase: AddToUserListUseCase,
     private val createUserListUseCase: CreateUserListUseCase,
+    private val addToFavouriteUseCase: AddToFavouriteUseCase,
+    private val addToWatchList: AddToWatchList,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
     private val tvShowId =
@@ -146,6 +150,28 @@ class TvDetailsViewModel @Inject constructor(
 
     //endregion
 
+    fun addToFavourite() {
+        tryToExecute(
+            call = { addToFavouriteUseCase(tvShowId) },
+            onSuccess = {
+                sendEvent(TvDetailsUiEvent.OnFavourite("added successfully"))
+            },
+            onError = {
+                sendEvent(TvDetailsUiEvent.OnFavourite("something went wrong"))
+            }
+        )
+    }
+    fun addToWatchlist() {
+        tryToExecute(
+            call = { addToWatchList(tvShowId) },
+            onSuccess = {
+                sendEvent(TvDetailsUiEvent.OnWatchList("added successfully"))
+            },
+            onError = {
+                sendEvent(TvDetailsUiEvent.OnWatchList("something went wrong"))
+            }
+        )
+    }
     //region seasons
     private fun getTvSeasons() {
         updateLoading(true)

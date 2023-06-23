@@ -4,6 +4,7 @@ import com.chocolatecake.viewmodel.common.model.CommentUIState
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.common.model.SeasonHorizontalUIState
+import com.chocolatecake.viewmodel.common.model.UserListUi
 
 data class TvDetailsUiState(
     val info: Info = Info(),
@@ -27,11 +28,4 @@ data class TvDetailsUiState(
         val genres: List<String> = emptyList(),
 
         )
-
-    data class UserListUi(
-        val id: Int,
-        val name: String,
-        val isLoading: Boolean = true,
-        val error: Boolean = false
-    )
 }

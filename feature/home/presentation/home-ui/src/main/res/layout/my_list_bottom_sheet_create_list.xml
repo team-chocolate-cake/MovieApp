@@ -163,6 +163,26 @@
                     android:paddingVertical="8dp"
                     android:text="+ Add List"
                     android:textAppearance="@style/TextStyle.BodySmall" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_favourite"
+                    style="@style/AddToListChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="Favourite"
+                    android:textAppearance="@style/TextStyle.BodySmall" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_watchlist"
+                    style="@style/AddToListChipStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:paddingVertical="8dp"
+                    android:text="Whatchlist"
+                    android:textAppearance="@style/TextStyle.BodySmall" />
             </com.google.android.material.chip.ChipGroup>
             <!--endregion-->
         </androidx.constraintlayout.widget.ConstraintLayout>

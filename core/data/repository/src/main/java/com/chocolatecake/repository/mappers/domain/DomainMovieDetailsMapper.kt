@@ -22,7 +22,7 @@ import javax.inject.Inject
 class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, MovieDetailsEntity> {
     override fun map(input: MovieDetailsDto): MovieDetailsEntity {
         return MovieDetailsEntity(
-            backdropPath = input.backdropPath ?:"",
+            backdropPath = BuildConfig.IMAGE_BASE_PATH + input.backdropPath,
             credits = mapCredits(input.credits),
             genres = input.genres?.map { it.name!! }?: emptyList(),
             id = input.id?:0,

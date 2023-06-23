@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import com.chocolatecake.bases.R
 import com.chocolatecake.ui.home.databinding.GenereChipBinding
-import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
-import com.chocolatecake.viewmodel.tv_details.listener.ChipListener
+import com.chocolatecake.viewmodel.common.listener.ChipListener
+import com.chocolatecake.viewmodel.common.model.UserListUi
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 @BindingAdapter("app:chips")
@@ -25,7 +24,7 @@ fun ChipGroup.setChips(chips: List<String>) {
 }
 
 @BindingAdapter(value = ["app:genreChips","app:listener"])
-fun ChipGroup.setGenreChips(chips: List<TvDetailsUiState.UserListUi>, chipListener: ChipListener) {
+fun ChipGroup.setGenreChips(chips: List<UserListUi>, chipListener: ChipListener) {
     val inflater = LayoutInflater.from(context)
     for (chipUiState in chips) {
         val binding = DataBindingUtil.inflate<GenereChipBinding>(

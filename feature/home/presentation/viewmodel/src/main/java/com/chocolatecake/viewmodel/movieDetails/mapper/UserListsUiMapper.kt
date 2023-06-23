@@ -2,6 +2,7 @@ package com.chocolatecake.viewmodel.movieDetails.mapper
 
 import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.mapper.Mapper
+import com.chocolatecake.viewmodel.common.model.UserListUi
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import javax.inject.Inject
 
@@ -12,8 +13,8 @@ class UserListsUiMapper @Inject constructor() : Mapper<List<UserListEntity>, Mov
         )
     }
 
-    private fun mapUserListToUi(userListEntity: UserListEntity): MovieDetailsUiState.UserListUi {
-        return MovieDetailsUiState.UserListUi(
+    private fun mapUserListToUi(userListEntity: UserListEntity): UserListUi {
+        return UserListUi(
             id = userListEntity.id,
             name = userListEntity.name
         )

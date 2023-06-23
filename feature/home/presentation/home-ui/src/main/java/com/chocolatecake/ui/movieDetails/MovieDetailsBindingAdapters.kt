@@ -10,23 +10,11 @@ import androidx.databinding.DataBindingUtil
 import com.avatarfirst.avatargenlib.AvatarGenerator
 import com.bumptech.glide.Glide
 import com.chocolatecake.ui.home.databinding.GenereChipBinding
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
-import com.chocolatecake.viewmodel.tv_details.listener.ChipListener
+import com.chocolatecake.viewmodel.common.listener.ChipListener
+import com.chocolatecake.viewmodel.common.model.UserListUi
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
-
-
-@BindingAdapter(value = ["app:imageUrlByBackDropPath"])
-fun ImageView.loadImageByBackDropPath(backDropPath: String?) {
-    //TODO Remove hardcoded link
-    if (!backDropPath.isNullOrEmpty())
-        Glide.with(context)
-            .load("https://image.tmdb.org/t/p/w500" + backDropPath)
-            .fitCenter()
-            .centerCrop()
-            .into(this)
-}
 
 @BindingAdapter(value = ["app:Genres"])
 fun ChipGroup.setGenresMovieDetails(
@@ -34,7 +22,7 @@ fun ChipGroup.setGenresMovieDetails(
 ) {
     this.removeAllViews()
     items?.forEach { genre ->
-        var chip = Chip(this.context)
+        val chip = Chip(this.context)
         chip.setChipBackgroundColorResource(com.chocolatecake.bases.R.color.on_background_38);
         chip.setCloseIconVisible(true)
         chip.setTextColor(getResources().getColor(com.chocolatecake.bases.R.color.on_background_38))
@@ -76,7 +64,7 @@ fun generateImage(context: Context, name: String): BitmapDrawable {
 
 @BindingAdapter(value = ["app:genreChips", "app:listener"])
 fun ChipGroup.setGenreChips(
-    chips: List<MovieDetailsUiState.UserListUi>,
+    chips: List<UserListUi>,
     chipListener: ChipListener
 ) {
     val inflater = LayoutInflater.from(context)

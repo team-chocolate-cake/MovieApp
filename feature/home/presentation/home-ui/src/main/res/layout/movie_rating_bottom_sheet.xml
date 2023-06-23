@@ -36,7 +36,7 @@
                 android:layout_marginTop="@dimen/spacing_giant_32dp"
                 android:gravity="center"
                 android:text="How Much You Love This Movie ?"
-                android:textColor="@color/secondary_text_87"
+                android:textColor="@color/on_background_87"
                 style="@style/TextStyle.TitleMedium" />
 
             <TextView

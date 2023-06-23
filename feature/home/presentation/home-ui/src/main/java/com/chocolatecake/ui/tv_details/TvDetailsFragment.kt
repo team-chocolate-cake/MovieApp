@@ -60,6 +60,8 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnSaveButtonClick -> showAddToListBottomSheet()
             is TvDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
+            is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
+            is TvDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
         }
     }
 
@@ -148,6 +150,14 @@ class TvDetailsFragment :
 
     override fun onDone(listsId: List<Int>) {
         viewModel.onDone(listsId)
+    }
+
+    override fun onFavourite() {
+        viewModel.addToFavourite()
+    }
+
+    override fun onWatchlist() {
+        viewModel.addToWatchlist()
     }
 
 
