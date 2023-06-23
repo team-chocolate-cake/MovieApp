@@ -89,7 +89,7 @@ class MovieDetailsViewModel @Inject constructor(
                     MediaVerticalUIState(
                         id = it.id,
                         rate = it.voteAverage,
-                        imageUrl = it.backdropPath,
+                        imageUrl = it.posterPath,
                     )
                 },
                 reviewUiState = movieDetails.reviewEntity.reviews.map {
