@@ -7,7 +7,7 @@ import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.RatingEpisodeDetailsEntity
+import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
@@ -17,7 +17,6 @@ import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.RatingEpisodeDetailsRequest
 import com.chocolatecake.remote.request.RatingRequest
-import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.service.MovieService
 import com.chocolatecake.repository.mappers.cash.LocalGenresMovieMapper
 import com.chocolatecake.repository.mappers.cash.LocalGenresTvMapper
@@ -355,13 +354,17 @@ class MovieRepositoryImpl @Inject constructor(
         seriesId: Int,
         seasonNumber: Int,
         episodeNumber: Int,
-        value: Int
-    ): RatingEpisodeDetailsEntity {
+        value: Float
+    ): RatingEpisodeDetailsStatusEntity {
         val rateRequest = RatingEpisodeDetailsRequest(value)
-        val ratingDto =
-            movieService.postEpisodeRating(rateRequest, seriesId, seasonNumber, episodeNumber)
-                .body()
-        return domainRatingEpisodeMapper.map(ratingDto!!)
+        return domainRatingEpisodeMapper.map(wrapApiCall {
+            movieService.postEpisodeRating(
+                rateRequest,
+                seriesId,
+                seasonNumber,
+                episodeNumber
+            )
+        })
     }
 
     /// endregion

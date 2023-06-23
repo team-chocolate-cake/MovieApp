@@ -4,8 +4,6 @@ import com.chocolatecake.bases.BaseInteractionListener
 
 interface EpisodeDetailsListener : BaseInteractionListener {
     fun clickToBack()
-
-    fun clickToRate()
-    fun submitRating()
+    fun clickToRate(episodeId: Int)
 
 }

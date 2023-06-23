@@ -5,7 +5,7 @@ import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
-import com.chocolatecake.entities.RatingEpisodeDetailsEntity
+import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.TvEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.RatingEntity
@@ -74,7 +74,7 @@ interface MovieRepository {
         seriesId: Int,
         seasonNumber: Int,
         episodeNumber: Int,
-        value: Int
-    ): RatingEpisodeDetailsEntity
+        value: Float
+    ): RatingEpisodeDetailsStatusEntity
 
 }

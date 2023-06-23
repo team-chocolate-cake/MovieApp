@@ -1,9 +1,11 @@
 package com.chocolatecake.viewmodel.episode_details
 
-import android.media.Rating
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
@@ -20,11 +22,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EpisodeDetailsViewModel @Inject constructor(
-    private val episodeDetailsUseCase: GetEpisodeDetailsUseCase,
-    private val castUseCase: GetCastForEpisodeUseCase,
     private val setEpisodeRatingUseCase: SetEpisodeRatingUseCase,
-    private val peopleUiMapper: PeopleUiMapper,
+    private val episodeDetailsUseCase: GetEpisodeDetailsUseCase,
     private val episodeDetailsUiMapper: EpisodeDetailsUiMapper,
+    private val castUseCase: GetCastForEpisodeUseCase,
+    private val peopleUiMapper: PeopleUiMapper,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
@@ -37,12 +39,12 @@ class EpisodeDetailsViewModel @Inject constructor(
         getData(seriesId, seasonNumber, episodeNumber)
     }
 
-
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
         getCastData(seriesId, seasonNumber, episodeNumber)
     }
 
+    /// region episode data
     private fun getEpisodeDetailsData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         executeEpisodeDetails(
             call = { episodeDetailsUseCase(seriesId, seasonNumber, episodeNumber) },
@@ -68,52 +70,6 @@ class EpisodeDetailsViewModel @Inject constructor(
         }
     }
 
-    fun setRating() {
-        viewModelScope.launch {
-            try {
-                setEpisodeRatingUseCase(
-                    seriesId,
-                    seasonNumber,
-                    episodeNumber,
-                    state.value.userRate
-                )
-            } catch (th: Throwable) {
-                onError(th)
-            }
-        }
-    }
-
-    fun onRating(value: Int) {
-        _state.update {
-            it.copy(
-                userRate = value
-            )
-        }
-    }
-
-    fun getRatingValue(): Float {
-        return state.value.userRate.toFloat()
-    }
-
-    private fun getCastData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
-        tryToExecute(
-            call = { castUseCase(seriesId, seasonNumber, episodeNumber) },
-            mapper = peopleUiMapper,
-            onSuccess = ::onSuccessCast,
-            onError = ::onError
-        )
-    }
-
-    private fun onSuccessCast(cast: List<PeopleUIState>) {
-        _state.update { it.copy(cast = cast) }
-    }
-
-    private fun onError(th: Throwable) {
-        val errors = _state.value.onErrors.toMutableList()
-        errors.add(th.message.toString())
-        _state.update { it.copy(onErrors = errors, isLoading = false) }
-    }
-
     private fun <EpisodeDetailsEntity, EpisodeDetailsUiState> executeEpisodeDetails(
         call: suspend () -> EpisodeDetailsEntity,
         onSuccess: (EpisodeDetailsUiState) -> Unit,
@@ -129,18 +85,66 @@ class EpisodeDetailsViewModel @Inject constructor(
             }
         }
     }
+    /// endregion
+
+    /// region set rating
+    fun setRating() {
+        tryToExecute(
+            call = {
+                setEpisodeRatingUseCase(
+                    seriesId, seasonNumber, episodeNumber, _state.value.userRate
+                )
+            }, onSuccess = ::onRatingSuccess, onError = ::onRatingError
+        )
+    }
+
+    private fun onRatingSuccess(episodeRateStatusEntity: RatingEpisodeDetailsStatusEntity) {
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was successfully :)"))
+    }
+
+    private fun onRatingError(th: Throwable) {
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was failed :("))
+    }
+
+    fun updateRatingState(rate: Float) {
+        _state.update {
+            it.copy(
+                userRate = rate
+            )
+        }
+    }
+
+    /// endregion
+
+    /// region cast data
+    private fun getCastData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        tryToExecute(
+            call = { castUseCase(seriesId, seasonNumber, episodeNumber) },
+            mapper = peopleUiMapper,
+            onSuccess = ::onSuccessCast,
+            onError = ::onError
+        )
+    }
+
+    private fun onSuccessCast(cast: List<PeopleUIState>) {
+        _state.update { it.copy(cast = cast) }
+    }
+
+    /// endregion
+
+    private fun onError(th: Throwable) {
+        val errors = _state.value.onErrors.toMutableList()
+        errors.add(th.message.toString())
+        _state.update { it.copy(onErrors = errors, isLoading = false) }
+    }
 
     /// region event
     override fun clickToBack() {
         sendEvent(EpisodeDetailsUiEvent.ClickToBack)
     }
 
-    override fun clickToRate() {
-        sendEvent(EpisodeDetailsUiEvent.ClickToRate)
-    }
-
-    override fun submitRating() {
-        sendEvent(EpisodeDetailsUiEvent.SubmitRating)
+    override fun clickToRate(episodeId: Int) {
+        sendEvent(EpisodeDetailsUiEvent.ClickToRate(episodeId))
     }
 
     override fun onClickPeople(id: Int) {

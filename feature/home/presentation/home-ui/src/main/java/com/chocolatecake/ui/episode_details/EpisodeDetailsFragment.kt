@@ -1,8 +1,10 @@
 package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class EpisodeDetailsFragment :
     BaseFragment<FragmentEpisodeDetailsBinding, EpisodeDetailsUiState, EpisodeDetailsUiEvent>(),
-    EpisodeRateBottomSheet.BottomSheetListener {
+    BottomSheetListener {
 
     override val layoutIdFragment = R.layout.fragment_episode_details
     override val viewModel: EpisodeDetailsViewModel by viewModels()
@@ -45,37 +47,26 @@ class EpisodeDetailsFragment :
         when (event) {
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
             is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
-            EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
-            EpisodeDetailsUiEvent.SubmitRating -> submitRate()
+            is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
+            is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
         }
     }
 
     private fun navigateToBack() {
         findNavController().popBackStack()
-        Toast.makeText(requireActivity(),"back button clicked",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), "back button clicked", Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToCastDetails() {
         //toDo findNavController().navigate()
     }
-
-    private fun submitRate() {
-    }
-
     private fun showBottomSheet() {
-        EpisodeRateBottomSheet().show(childFragmentManager, "BOTTOM")
+        val bottomSheet = EpisodeRateBottomSheet()
+        bottomSheet.show(childFragmentManager, "BOTTOM")
+        bottomSheet.setListener(this)
     }
-
-    override fun onApplyRateBottomSheet() {
-        viewModel.setRating()
-
-    }
-
+    override fun onApplyRateBottomSheet() { viewModel.setRating() }
     override fun updateRatingValue(rate: Float) {
-        viewModel.onRating(rate.toInt())
-    }
-
-    override fun retrieveRatingValue(): Float {
-        return viewModel.getRatingValue()
+        viewModel.updateRatingState(rate)
     }
 }

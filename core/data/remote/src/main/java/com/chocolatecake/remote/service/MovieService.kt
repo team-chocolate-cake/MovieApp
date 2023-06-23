@@ -163,6 +163,8 @@ interface MovieService {
         @Path("episode_number") episodeNumber: Int
     ): Response<EpisodeDetailsRemoteDto>
 
+
+    @Headers("Content-Type: application/json;charset=utf-8")
     @POST("tv/{series_id}/season/{season_number}/episode/{episode_number}/rating")
     suspend fun postEpisodeRating(
         @Body rate: RatingEpisodeDetailsRequest,

@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,6 @@ class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: ItemEpisodeDetailsRateBottomSheetBinding
     private val viewModel by activityViewModels<EpisodeDetailsViewModel>()
     private var dismissListener: BottomSheetListener? = null
-    private var userRating: Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +29,7 @@ class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.item_episode_details_rate_bottom_sheet,
-            container,
-            false
+            container, false
         )
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -39,28 +38,26 @@ class EpisodeRateBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    fun setListener(dismissListener: BottomSheetListener) {
+        this.dismissListener = dismissListener
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
+        var userRating = 0f
         binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
+            Log.i("rate", "$userRating")
         }
-
         binding.buttonApply.setOnClickListener {
             dismissListener?.onApplyRateBottomSheet()
             dismissListener?.updateRatingValue(userRating)
-            Toast.makeText(requireActivity(), userRating.toString(), Toast.LENGTH_SHORT).show()
             dismiss()
         }
-        userRating = dismissListener?.retrieveRatingValue() ?: 0f
-        binding.rating.rating = userRating / 2
     }
-
-    interface BottomSheetListener {
-        fun onApplyRateBottomSheet()
-        fun updateRatingValue(rate: Float)
-        fun retrieveRatingValue(): Float
-    }
+}
+interface BottomSheetListener {
+    fun onApplyRateBottomSheet()
+    fun updateRatingValue(rate: Float)
 }
