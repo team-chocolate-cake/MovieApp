@@ -4,7 +4,6 @@ import android.graphics.Canvas
 import android.util.TypedValue
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.chocolatecake.ui.home.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -29,7 +28,6 @@ abstract class SwipeGesture : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.
             actionState,
             isCurrentlyActive
         )
-            .addSwipeLeftLabel(recyclerView.context.getString(R.string.swipe_to_delete))
             .setSwipeLeftLabelColor(recyclerView.context.getColor(com.chocolatecake.bases.R.color.on_background_38))
             .addSwipeLeftActionIcon(deleteIcon)
             .addCornerRadius(TypedValue.COMPLEX_UNIT_DIP,12)

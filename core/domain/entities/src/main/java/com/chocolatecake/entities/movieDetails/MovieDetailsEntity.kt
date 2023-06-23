@@ -12,5 +12,6 @@ data class MovieDetailsEntity(
     val video: Boolean = false,
     val videos: VideosEntity,
     val voteAverage: Double = 0.0,
-    val reviewEntity:ReviewResponseEntity
+    val reviewEntity:ReviewResponseEntity,
+    val year: String
 )

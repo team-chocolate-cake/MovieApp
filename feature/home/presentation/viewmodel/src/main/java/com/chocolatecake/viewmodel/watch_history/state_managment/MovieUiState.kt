@@ -10,4 +10,7 @@ data class MovieUiState(
     val year: Int,
     val rating: Double,
     val dateWatched: Date?
-)
+){
+    val rate: Double
+        get() = (rating * 100.0).toInt() / 100.0
+}
