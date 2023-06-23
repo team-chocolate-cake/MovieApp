@@ -87,7 +87,7 @@ class DomainMovieDetailsMapper @Inject constructor() : Mapper<MovieDetailsDto, M
                     originalTitle = it.originalTitle?:"",
                     overview = it.overview?:"",
                     popularity = it.popularity?:0.0,
-                    posterPath = it.posterPath?:"",
+                    posterPath = BuildConfig.IMAGE_BASE_PATH+it.posterPath,
                     releaseDate = it.releaseDate?:"",
                     title = it.title?:"",
                     video = it.video?:false,

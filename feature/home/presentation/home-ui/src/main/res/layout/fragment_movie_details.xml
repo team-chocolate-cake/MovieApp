@@ -27,15 +27,29 @@
                 app:contentScrim="@color/card"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <ImageView
-                    android:id="@+id/image_view_main_image"
-                    app:imageUrl="@{viewModel.state.movieUiState.backdropPath}"
+                <FrameLayout
+                    android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:foreground="@drawable/main_image_gradient"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                    android:layout_height="350dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/movieImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:imageUrl="@{viewModel.state.movieUiState.backdropPath}"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+
+                    <View
+                        android:id="@+id/ImageBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/main_image_gradient"
+                        android:scaleType="centerCrop" />
+                </FrameLayout>
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -73,7 +87,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="end"
-                        app:isVisible="@{!viewModel.state.loading}"
+                        app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@null"

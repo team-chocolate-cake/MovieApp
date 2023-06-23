@@ -15,6 +15,7 @@ import com.chocolatecake.usecase.common.CreateUserListUseCase
 import com.chocolatecake.usecase.common.GetUserListsUseCase
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
+import com.chocolatecake.usecase.movie_details.CheckIsLoginedOrNotUseCase
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
 import com.chocolatecake.usecase.movie_details.GetRatingUseCase
 import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
@@ -43,13 +44,15 @@ class MovieDetailsViewModel @Inject constructor(
     private val addToWatchList: AddToWatchList,
     private val savedStateHandle: SavedStateHandle,
     private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
+    private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
     private val movieId = savedStateHandle.get<Int>("movieId")
 
     init {
-        _state.update { it.copy(isLoading = true) }
+        Log.e("TAG", "${checkIsLoginedOrNotUseCase()} ", )
+        _state.update { it.copy(isLoading = true, isLogined = checkIsLoginedOrNotUseCase()) }
         if (movieId != null) {
             getMovieDetails(movieId)
         } else {
@@ -91,12 +94,13 @@ class MovieDetailsViewModel @Inject constructor(
                     overview = movieDetails.overview,
                     voteAverage = movieDetails.voteAverage.toFloat().div(2f),
                     videos = movieDetails.videos.results.map { it.key },
+                    isLogined = checkIsLoginedOrNotUseCase()
                 ),
                 recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
                     MediaVerticalUIState(
                         id = it.id,
                         rate = it.voteAverage,
-                        imageUrl = it.backdropPath,
+                        imageUrl = it.posterPath,
                     )
                 },
                 reviewUiState = movieDetails.reviewEntity.reviews.map {
@@ -206,7 +210,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToFavourite() {
         tryToExecute(
-            call = { addToFavouriteUseCase(movieId!!,"movie") },
+            call = { addToFavouriteUseCase(movieId!!, "movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
             },
@@ -218,7 +222,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun addToWatchlist() {
         tryToExecute(
-            call = { addToWatchList(movieId!!,"movie") },
+            call = { addToWatchList(movieId!!, "movie") },
             onSuccess = {
                 sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
             },

@@ -23,7 +23,6 @@ fun ChipGroup.setGenresMovieDetails(
     this.removeAllViews()
     items?.forEach { genre ->
         val chip = Chip(this.context)
-        chip.setChipBackgroundColorResource(com.chocolatecake.bases.R.color.on_background_38);
         chip.setCloseIconVisible(true)
         chip.setTextColor(getResources().getColor(com.chocolatecake.bases.R.color.on_background_38))
         chip.setText(genre)
