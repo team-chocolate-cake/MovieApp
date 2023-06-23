@@ -74,7 +74,6 @@
 
     <fragment
         android:id="@+id/watchHistoryFragment"
-        tools:layout="@layout/fragment_watch_history"
         android:name="com.chocolatecake.ui.watch_history.WatchHistoryFragment"
         android:label="WatchHistoryFragment"
         tools:layout="@layout/fragment_watch_history">
@@ -130,6 +129,9 @@
         <argument
             android:name="seasonNumber"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_seasonDetailsFragment_to_episodeDetailsFragment"
+            app:destination="@id/episodeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/tvDetailsFragment"
@@ -184,5 +186,15 @@
         android:id="@+id/episodeDetailsFragment"
         android:name="com.chocolatecake.ui.episode_details.EpisodeDetailsFragment"
         android:label="EpisodeDetailsFragment"
-        tools:layout="@layout/fragment_episode_details" />
+        tools:layout="@layout/fragment_episode_details" >
+        <argument
+            android:name="seriesId"
+            app:argType="integer" />
+        <argument
+            android:name="seasonNumber"
+            app:argType="integer" />
+        <argument
+            android:name="episodeNumber"
+            app:argType="integer" />
+    </fragment>
 </navigation>

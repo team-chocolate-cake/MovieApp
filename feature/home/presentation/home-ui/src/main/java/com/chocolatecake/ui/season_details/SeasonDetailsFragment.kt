@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentSeasonDetailsBinding
@@ -22,6 +23,7 @@ class SeasonDetailsFragment
 
     private val seasonDetailsAdapter: SeasonDetailsAdapter
             by lazy { SeasonDetailsAdapter(mutableListOf(), viewModel) }
+    private val args: SeasonDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,8 +44,16 @@ class SeasonDetailsFragment
 
     override fun onEvent(event: SeasonDetailsUiEvent) {
         when (event) {
-            is SeasonDetailsUiEvent.NavigateToEpisodeDetails ->
-                showSnackBar(event.episodeId.toString()) //todo: Navigate to Episode Details
+            is SeasonDetailsUiEvent.NavigateToEpisodeDetails -> {
+                findNavController().navigate(
+                    SeasonDetailsFragmentDirections.actionSeasonDetailsFragmentToEpisodeDetailsFragment(
+                        seriesId = args.seriesId,
+                        seasonNumber = args.seasonNumber,
+                        episodeNumber = event.episodeId
+                    )
+                )
+            }
+
             SeasonDetailsUiEvent.NavigateBack -> findNavController().popBackStack()
             is SeasonDetailsUiEvent.ShowSnackBar -> showSnackBar(event.messages)
         }

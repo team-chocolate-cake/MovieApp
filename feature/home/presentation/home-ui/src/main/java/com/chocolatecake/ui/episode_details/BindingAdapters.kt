@@ -18,7 +18,7 @@ fun setVideoId(view: YouTubePlayerView, videoId: String?) {
 }
 @BindingAdapter(value = ["app:hideWhenNoProductionCode"])
 fun <T> View.hideWhenNoProductionCode(productionCode:String){
-    if (productionCode.isEmpty()){
+    if (productionCode.isBlank()){
         this.visibility = View.GONE
     }else{
         this.visibility = View.VISIBLE

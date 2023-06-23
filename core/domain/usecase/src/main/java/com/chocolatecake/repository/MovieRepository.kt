@@ -5,6 +5,7 @@ import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.entities.PeopleEntity
+import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
 import com.chocolatecake.entities.StatusEntity

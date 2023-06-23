@@ -138,7 +138,7 @@
             android:layout_height="@dimen/height_field"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:background="@drawable/custom_card_background"
-            android:drawableStart="@drawable/ic_clock"
+            android:drawableStart="@drawable/ic_clock_24"
             android:drawablePadding="@dimen/spacing_small_8dp"
             android:gravity="center_vertical"
             android:onClick="@{()->viewModel.onClickWatchHistory()}"

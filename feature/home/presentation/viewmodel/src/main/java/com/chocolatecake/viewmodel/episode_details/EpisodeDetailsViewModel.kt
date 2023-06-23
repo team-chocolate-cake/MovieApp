@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.episode_details
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel

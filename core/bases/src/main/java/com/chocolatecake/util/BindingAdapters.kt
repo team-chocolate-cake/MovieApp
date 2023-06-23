@@ -69,14 +69,13 @@ fun ImageView.loadImage(imageUrl: String?) {
 
 @BindingAdapter(value = ["app:profileUrl"])
 fun ImageView.loadProfileImage(profileUrl: String?) {
-    if (profileUrl=="https://image.tmdb.org/t/p/w500null"){
+    if (profileUrl == "https://image.tmdb.org/t/p/w500null") {
         Glide.with(context)
             .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
             .fitCenter()
             .centerCrop()
             .into(this)
-    }
-    else Glide.with(context)
+    } else Glide.with(context)
         .load(profileUrl)
         .fitCenter()
         .centerCrop()
@@ -119,6 +118,7 @@ fun <T> View.hideWhenEmpty(list: List<T>?) {
         this.visibility = View.GONE
     }
 }
+
 @BindingAdapter(value = ["app:loading"])
 fun LinearProgressIndicator.isLoading(isLoading: Boolean?) {
     if (isLoading == true) {
@@ -184,6 +184,9 @@ fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
         } else {
             uiModeManager.nightMode = UiModeManager.MODE_NIGHT_YES
         }
+    }
+}
+
 @BindingAdapter("app:hideWhenError")
 fun <T> View.hideWhenError(list: List<T>?) {
     if (list?.isNotEmpty() == true) {

@@ -15,7 +15,6 @@
     <string name="explore_the_best_tv_shows" tools:ignore="ExtraTranslation">Explore The Best TV Shows</string>
     <string name="airing_today" tools:ignore="ExtraTranslation">Airing Today</string>
     <string name="on_the_air" tools:ignore="ExtraTranslation">On The Air</string>
-    <string name="try_again" tools:ignore="ExtraTranslation">Try Again</string>
     <string name="cannot_fetch_movies" tools:ignore="ExtraTranslation">cannot fetch movies 😢</string>
     <string name="swipe_to_delete" tools:ignore="ExtraTranslation">swipe to delete\n</string>
     <string name="error_occured" tools:ignore="ExtraTranslation">error occured</string>
