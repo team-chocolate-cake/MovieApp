@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                com.chocolatecake.ui.home.R.id.episodeDetailsFragment,
+                com.chocolatecake.ui.home.R.id.homeFragment,
                 com.chocolatecake.ui.home.R.id.searchFragment,
                 com.chocolatecake.ui.home.R.id.tvFragment,
                 com.chocolatecake.ui.home.R.id.profileFragment -> showBottomNav()

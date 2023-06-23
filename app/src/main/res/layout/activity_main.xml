@@ -17,11 +17,13 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
             app:layout_constraintTop_toTopOf="parent"
-            app:defaultNavHost="true"
+            app:layout_constraintVertical_bias="1.0"
+            app:navGraph="@navigation/nav_graph"
             tools:layout="@layout/fragment_login"
-            app:navGraph="@navigation/nav_graph" />
+            tools:layout_editor_absoluteX="0dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"

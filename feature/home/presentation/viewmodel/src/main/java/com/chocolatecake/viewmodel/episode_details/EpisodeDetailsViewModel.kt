@@ -1,5 +1,6 @@
 package com.chocolatecake.viewmodel.episode_details
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
@@ -36,11 +37,13 @@ class EpisodeDetailsViewModel @Inject constructor(
     init {
         getData(seriesId, seasonNumber, episodeNumber)
     }
+
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         _state.update { it.copy(isLoading = true) }
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
         getCastData(seriesId, seasonNumber, episodeNumber)
     }
+
     fun refresh() {
         _state.value = EpisodeDetailsUiState(refreshing = true)
         getData(seriesId, episodeNumber, episodeNumber)
@@ -101,7 +104,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onRatingSuccess(episodeRateStatusEntity: RatingEpisodeDetailsStatusEntity) {
+    private fun onRatingSuccess(episodeRateSatusEntity: RatingEpisodeDetailsStatusEntity) {
         sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was successfully :)"))
     }
 

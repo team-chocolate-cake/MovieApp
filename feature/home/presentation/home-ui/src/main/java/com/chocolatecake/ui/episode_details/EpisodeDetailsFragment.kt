@@ -37,7 +37,7 @@ class EpisodeDetailsFragment :
             }
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
     }
