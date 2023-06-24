@@ -24,5 +24,9 @@
     <string name="game_level_caption">The level is currently locked. To unlock it - you
 need to pass the last level %1$d</string>
     <string name="pass_prev_level">You must pass previous level first</string>
+    <string name="trivia_losing_meesage">You Have just lost noob\nbuy three hearts for %1d or play again</string>
+    <string name="trivai_lost_title">You Lost GG</string>
+    <string name="trivia_cancel_game">Cancel Game</string>
+    <string name="trivai_buy_dialog">Buy</string>
 
 </resources>
