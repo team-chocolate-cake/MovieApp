@@ -61,7 +61,7 @@ class MyListFragment :
             is MyListUiEvent.ShowSnackBar -> {
                 showSnackBar(event.message)
             }
-            is MyListUiEvent.OnCreateNewList -> {showSnackBar(event.message)}
+            is MyListUiEvent.OnCreateNewList -> { showSnackBar(event.message) }
 
             else -> {}
         }
@@ -75,6 +75,11 @@ class MyListFragment :
 
     override fun onClickCreate(listName: String) {
         viewModel.onCreateList(listName)
+        createListBottomSheet.dismiss()
+    }
+
+    override fun failCreated(message: String) {
+        showSnackBar(message)
     }
 }
 

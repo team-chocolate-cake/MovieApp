@@ -23,19 +23,19 @@ class MyListViewModel @Inject constructor(
     val newListName = MutableStateFlow("")
 
     init {
-        getAllMovies()
+        getAllList()
     }
 
-    private fun getAllMovies() {
+    private fun getAllList() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getMovies().map { myListUiMapper.map(it) } },
-            onSuccess = ::onGetAllMoviesSuccess,
-            onError = ::onGetAllMoviesError
+            onSuccess = ::onGetAllListSuccess,
+            onError = ::onGetAllListError
         )
     }
 
-    private fun onGetAllMoviesSuccess(items: List<ListMovieUiState>) {
+    private fun onGetAllListSuccess(items: List<ListMovieUiState>) {
         _state.update {
             it.copy(
                 movieList = items,
@@ -44,8 +44,7 @@ class MyListViewModel @Inject constructor(
         }
     }
 
-    private fun onGetAllMoviesError(throwable: Throwable) {
-        Log.i("TAG", "onGetAllMoviesError: $throwable")
+    private fun onGetAllListError(throwable: Throwable) {
         _state.update {
             it.copy(
                 isLoading = false,
@@ -57,6 +56,7 @@ class MyListViewModel @Inject constructor(
                 )
             )
         }
+        sendEvent(MyListUiEvent.ShowSnackBar("something went wrong"))
     }
 
 
@@ -76,6 +76,7 @@ class MyListViewModel @Inject constructor(
         }
     }
 
+
     fun onCreateList(listName: String) {
         tryToExecute(
             call = {
@@ -87,8 +88,8 @@ class MyListViewModel @Inject constructor(
     }
 
     private fun onCreateUserNewList(item: Boolean) {
-        sendEvent(MyListUiEvent.OnCreateNewList("New List Was Added Successfully"))
-        getAllMovies()
+        sendEvent(MyListUiEvent.ShowSnackBar("New List Was Added Successfully"))
+        getAllList()
     }
 
     private fun onCreateUserNewListError(throwable: Throwable) {
@@ -98,5 +99,6 @@ class MyListViewModel @Inject constructor(
     override fun onClickBackButton() {
         sendEvent(MyListUiEvent.OnClickBack)
     }
+
 
 }

@@ -17,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class CreateListBottomSheetFragment(private val createButton: CreateListener) : BottomSheetDialogFragment() {
+class CreateListBottomSheetFragment(private val createButton: CreateListener) :
+    BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetCreateListBinding
     val viewModel by activityViewModels<MyListViewModel>()
 
@@ -39,12 +40,24 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) : 
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
         binding.materialButtonCreate.setOnClickListener {
-            createButton.onClickCreate(binding.textInputEditTextListName.text.toString())
+            if (binding.textInputEditTextListName.text == null || binding.textInputEditTextListName.text.toString() == "") {
+                createButton.failCreated("The filed is empty")
+                dismiss()
+            } else {
+                createButton.onClickCreate(binding.textInputEditTextListName.text.toString())
+            }
         }
+
+        binding.textViewClose.setOnClickListener {
+            dismiss()
+        }
+
     }
 }
 
 interface CreateListener {
     fun onClickCreate(listName: String)
+    fun failCreated(message: String)
 }
