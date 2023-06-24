@@ -10,6 +10,7 @@ import com.chocolatecake.ui.trivia.databinding.FragmentPeopleGuessingBinding
 import com.chocolatecake.viewmodel.common.model.GameUIEvent
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import com.chocolatecake.viewmodel.people_guessing.PeopleGuessingViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -55,6 +56,20 @@ class PeopleGuessingFragment :
             }
 
             is GameUIEvent.ShowSnackbar -> showSnackBar(event.message)
+
+            is GameUIEvent.ShowBuyHeartDialog -> showDialog(event.numberOfPoints)
         }
+    }
+    private fun showDialog(numberOfPoints: Int) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.trivai_lost_title))
+            .setMessage(getString(R.string.trivia_losing_meesage, numberOfPoints))
+            .setNeutralButton(getString(R.string.trivia_cancel_game)) { _, _ ->
+                findNavController().navigate(PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToTypeGameFragment())
+            }
+            .setPositiveButton(getString(R.string.trivai_buy_dialog)) { _, _ ->
+                viewModel.buyHearts(numberOfPoints)
+            }
+            .show()
     }
 }
