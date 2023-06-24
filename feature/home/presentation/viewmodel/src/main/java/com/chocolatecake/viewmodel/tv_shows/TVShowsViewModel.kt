@@ -102,7 +102,6 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
-
     private fun updateTopRated(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
@@ -111,7 +110,6 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
-
     private fun updatePopular(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
@@ -120,7 +118,6 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
-
     private fun updateOnTheAir(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
