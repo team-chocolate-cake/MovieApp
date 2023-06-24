@@ -1,6 +1,8 @@
 package com.chocolatecake.util
 
+import android.annotation.SuppressLint
 import android.app.UiModeManager
+import android.graphics.Color
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -64,6 +66,20 @@ fun ImageView.loadImage(imageUrl: String?) {
         .thumbnail(Glide.with(context).load(R.raw.loading_images))
         .centerCrop()
         .into(this)
+}
+
+@SuppressLint("ResourceAsColor")
+@BindingAdapter(value = ["app:imageUri", "app:imagePlaceholderColor"], requireAll = false)
+fun ImageView.loadImageWithPlaceholderColor(imageUri: String?, imagePlaceholderColor: String?) {
+    if (imageUri != null) {
+        Glide.with(context)
+            .load(imageUri)
+            .into(this)
+    } else {
+        this?.let {
+            this.setBackgroundColor(R.color.background)
+        }
+    }
 }
 
 @BindingAdapter(value = ["app:profileUrl"])

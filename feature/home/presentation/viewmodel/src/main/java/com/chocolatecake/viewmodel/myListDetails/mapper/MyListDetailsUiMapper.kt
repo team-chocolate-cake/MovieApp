@@ -13,7 +13,7 @@ class MyListDetailsUiMapper @Inject constructor() : Mapper<MovieEntity, MovieUiS
             imageUrl =input.imageUrl,
             genres = input.convertGenreListToString(),
             year = input.extractYearFromDate(),
-            rate = input.rate,
+            rating = input.rate,
         )
     }
 
