@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.jigsaw_puzzle
+package com.chocolatecake.ui.jigsaw_puzzle.pick_a_thumbnail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import com.chocolatecake.bases.BaseInteractionListener
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.PickThumbnailCardRecyclerItemBinding
 import com.chocolatecake.ui.trivia.databinding.PickThumbnailTitleRecyclerItemBinding
-import com.chocolatecake.viewmodel.jigsaw_puzzle.PickAThumbnailRecyclerItem
+import com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image.PickAThumbnailRecyclerItem
 
 class PickAThumbnailAdapter(
     var list: List<PickAThumbnailRecyclerItem>,

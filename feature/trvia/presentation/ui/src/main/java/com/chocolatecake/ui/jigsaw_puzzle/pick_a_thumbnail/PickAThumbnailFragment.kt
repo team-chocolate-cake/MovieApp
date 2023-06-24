@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.jigsaw_puzzle
+package com.chocolatecake.ui.jigsaw_puzzle.pick_a_thumbnail
 
 import android.os.Bundle
 import android.view.View
@@ -7,9 +7,9 @@ import androidx.fragment.app.viewModels
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentPickAThumbnailBinding
-import com.chocolatecake.viewmodel.jigsaw_puzzle.PickATThumbnailUiEvent
-import com.chocolatecake.viewmodel.jigsaw_puzzle.PickAThumbnailUiState
-import com.chocolatecake.viewmodel.jigsaw_puzzle.PickAThumbnailViewModel
+import com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image.PickATThumbnailUiEvent
+import com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image.PickAThumbnailUiState
+import com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image.PickAThumbnailViewModel
 import java.io.IOException
 
 class PickAThumbnailFragment :
