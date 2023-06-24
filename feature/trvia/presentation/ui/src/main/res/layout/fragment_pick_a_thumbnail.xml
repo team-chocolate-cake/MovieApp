@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.jigsaw_puzzle.PickAThumbnailViewModel" />
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/spacing_small_8dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        app:items="@{viewModel.state.recyclerItems}"
+        tools:listitem="@layout/pick_thumbnail_card_recycler_item" />
+</layout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.viewmodel.jigsaw_puzzle.CardItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_view"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginStart="@dimen/spacing_small_8dp"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.thumbnail}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            style="@style/TextAppearance.Material3.LabelSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginBottom="@dimen/spacing_custom_12dp"
+            android:maxLines="1"
+            android:text="@{item.title}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/image_view"
+            app:layout_constraintStart_toStartOf="@id/image_view"
+            app:layout_constraintTop_toBottomOf="@id/image_view"
+            tools:text="spiderman" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

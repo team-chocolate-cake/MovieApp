@@ -4,11 +4,8 @@ sealed interface WatchHistoryUiEvent {
     data class NavigateToMovieDetails(
         val movieId: Int
     ) : WatchHistoryUiEvent
-
     object ShowDeleteSnackBar : WatchHistoryUiEvent
-
     data class Error(
         val message: String
     ) : WatchHistoryUiEvent
-
 }
