@@ -38,7 +38,7 @@ class TriviaRepositoryIml @Inject constructor(
 
     /// region game
     override suspend fun getPeopleQuestion(level: Int, questionNumber: Int): QuestionEntity {
-        val people = movieRepository.getPopularPeople()
+        val people = movieRepository.getPopularPeopleFromRemoteDto()
         val filteredPeople = filterPeople(people, level)
         return getQuestionEntity(filteredPeople)
     }
@@ -81,7 +81,7 @@ class TriviaRepositoryIml @Inject constructor(
 
 
     override suspend fun getMovieQuestion(level: Int, questionNumber: Int): QuestionEntity {
-        val movies = movieRepository.getPopularMovies()
+        val movies = movieRepository.getPopularMoviesFromRemoteDto()
             .filter { !it.imageUrl.contains("null") }
             .shuffled().take(4)
         val question = fakeQuestions.getMovieQuestion(level)
@@ -126,7 +126,7 @@ class TriviaRepositoryIml @Inject constructor(
             2 -> 12
             else -> 20
         }
-        val movies = movieRepository.getPopularMovies().shuffled().take(size - 1)
+        val movies = movieRepository.getPopularMoviesFromRemoteDto().shuffled().take(size - 1)
         val choice = movies.random()
         val modifiedMovies = (movies + choice).shuffled()
         val pairOfCorrectPositions = Pair(
