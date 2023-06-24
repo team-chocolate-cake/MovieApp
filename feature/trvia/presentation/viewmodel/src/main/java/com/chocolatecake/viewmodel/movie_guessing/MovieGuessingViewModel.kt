@@ -106,17 +106,12 @@ class MovieGuessingViewModel @Inject constructor(
         }
     }
 
-    private fun onUserLose() {
-        sendEvent(GameUIEvent.NavigateToLoserScreen)
-    }
-
-
     override fun onClickAnswer(position: Int) {
         val heartCount = _state.value.heartCount
         val correctAnswer = _state.value.correctAnswerPosition
         if (correctAnswer != position) {
             if (heartCount - 1 == 0) {
-                onUserLose()
+                onEmptyHearts()
             } else {
                 _state.update { it.copy(heartCount = heartCount - 1) }
                 getData()
@@ -139,6 +134,29 @@ class MovieGuessingViewModel @Inject constructor(
         }
     }
 
+    private fun onEmptyHearts() {
+        state.value.apply {
+            when {
+                (level == 1 && points < 30) ||
+                        (level == 2 && points < 60) ||
+                        (level == 3 && points < 150) -> {
+                    sendEvent(GameUIEvent.NavigateToLoserScreen)
+                }
+
+                else -> {
+                    val numberOfPoints = when (level) {
+                        1 -> 30
+                        2 -> 60
+                        3 -> 150
+                        else -> 0
+                    }
+                    sendEvent(GameUIEvent.ShowBuyHeartDialog(numberOfPoints))
+                    timerJob?.cancel()
+                }
+            }
+        }
+    }
+
     private fun updateToNextQuestion() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
@@ -148,6 +166,18 @@ class MovieGuessingViewModel @Inject constructor(
                 getData()
             }.onFailure(::onError)
         }
+    }
+
+    fun retry() {
+        getData()
+        _state.update { it.copy(heartCount = 3) }
+    }
+
+    fun buyHearts(numberOfPoints:Int) {
+        _state.update { it.copy(points = it.points - numberOfPoints) }
+        _state.update { it.copy(heartCount = 3) }
+        initTimer()
+
     }
 
 }
