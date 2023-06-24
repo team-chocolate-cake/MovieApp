@@ -64,6 +64,9 @@
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:text="@string/comments"
             style="@style/TextStyle.BodySmall"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_recommended" />
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_recommended"
+            android:layout_marginBottom="@dimen/spacing_tiny_4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
