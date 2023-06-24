@@ -14,15 +14,15 @@ class GameoverViewModel @Inject constructor(
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
     savedStateHandle: SavedStateHandle
 ):
-BaseViewModel<GameoverUIState, GameoverUIEvent>(GameoverUIState()), GameoverListener{
+BaseViewModel<GameoverUIState, GameoverUIEvent>(GameoverUIState()) {
 
     private val gameType: GameType = savedStateHandle.get<GameType>("gameType") ?: GameType.PEOPLE
 
     init {
-        tryToExecute(getCurrentUserUseCase::invoke, ::onSuccessUser, ::onError)
+        tryToExecute(getCurrentUserUseCase::invoke, ::onSuccess, ::onError)
     }
 
-    private fun onSuccessUser(userEntity: UserEntity) {
+    private fun onSuccess(userEntity: UserEntity) {
         val level = when (gameType) {
             GameType.PEOPLE -> userEntity.peopleGameLevel
             GameType.MOVIE -> userEntity.moviesGameLevel
@@ -39,11 +39,11 @@ BaseViewModel<GameoverUIState, GameoverUIEvent>(GameoverUIState()), GameoverList
         throwable.message
     }
 
-    override fun onClickTryAgain(){
+    fun onClickTryAgain(){
         sendEvent(GameoverUIEvent.NavigateToAnotherQuestion(gameType))
     }
 
-    override fun onClickReturn(){
+    fun onClickReturn(){
         sendEvent(GameoverUIEvent.NavigateToGameTypeScreen)
     }
 }
