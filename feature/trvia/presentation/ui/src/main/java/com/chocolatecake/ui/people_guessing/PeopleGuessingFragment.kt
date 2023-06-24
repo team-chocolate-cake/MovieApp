@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentPeopleGuessingBinding
+import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.GameUIEvent
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import com.chocolatecake.viewmodel.people_guessing.PeopleGuessingViewModel
@@ -39,7 +40,11 @@ class PeopleGuessingFragment :
         when (event) {
             GameUIEvent.NavigateToLoserScreen -> {
                 showSnackBar("Game Over !👍")
-                findNavController().navigate(PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToTypeGameFragment())
+                findNavController().navigate(
+                    PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToGameoverFragment(
+                        gameType = GameType.PEOPLE
+                    )
+                )
             }
 
             is GameUIEvent.NavigateToWinnerScreen -> {

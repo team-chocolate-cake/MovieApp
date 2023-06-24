@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentMemorizeBinding
+import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIEvent
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameUIState
 import com.chocolatecake.viewmodel.memorize_game.MemorizeGameViewModel
@@ -31,7 +32,11 @@ class MemorizeGameFragment :
     override fun onEvent(event: MemorizeGameUIEvent) {
         when (event) {
             MemorizeGameUIEvent.NavigateToLoserScreen -> {
-                findNavController().navigate(MemorizeGameFragmentDirections.actionMemorizeGameFragmentToTypeGameFragment())
+                findNavController().navigate(MemorizeGameFragmentDirections
+                    .actionMemorizeGameFragmentToGameoverFragment(
+                        gameType = GameType.MEMORIZE
+                    )
+                )
             }
 
             MemorizeGameUIEvent.NavigateToWelcomeGameScreen -> {
