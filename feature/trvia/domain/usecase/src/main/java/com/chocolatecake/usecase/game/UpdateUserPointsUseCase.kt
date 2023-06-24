@@ -11,7 +11,7 @@ class UpdateUserPointsUseCase @Inject constructor(
     suspend operator fun invoke(points: Int) {
         val oldUser = getCurrentUserUseCase()
         val updatedUser = oldUser.copy(
-            totalPoints = oldUser.totalPoints + points
+            totalPoints =  points
         )
         triviaRepository.updateUser(updatedUser)
     }
