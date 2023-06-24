@@ -69,7 +69,7 @@ class TvDetailsFragment :
         tvDetailsAdapter = TvDetailsAdapter(mutableListOf(), viewModel)
         binding.nestedRecycler.adapter = tvDetailsAdapter
     }
-
+    //region navigation
     private fun navigateToTvDetails(tvId: Int) {
         findNavController().navigate(TvDetailsFragmentDirections.actionTvDetailsFragmentSelf(tvId))
     }
@@ -77,6 +77,7 @@ class TvDetailsFragment :
     private fun navigateBack() {
         findNavController().popBackStack()
     }
+    //endregion
 
     private fun collectChange() {
         collectLatest {
@@ -94,17 +95,13 @@ class TvDetailsFragment :
             }
         }
     }
-
+    //region rating bottom sheet
     private fun showRateBottomSheet() {
         rateBottomSheet = RateBottomSheet()
         rateBottomSheet.setListener(this)
         rateBottomSheet.show(childFragmentManager, "BOTTOM")
     }
 
-    private fun showAddToWatchlistFavouriteBottomSheet() {
-        addToWatchlistFavouriteBottomSheet = AddToWatchlistFavouriteBottomSheet(this)
-        addToWatchlistFavouriteBottomSheet.show(childFragmentManager, "BOTTOM")
-    }
 
     override fun onApplyRateBottomSheet() {
         viewModel.onRatingSubmit()
@@ -113,7 +110,9 @@ class TvDetailsFragment :
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingUiState(rate)
     }
+    //endregion
 
+    //region collapse toolbar
     private fun collapseState() {
         var pos = 0
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
@@ -143,8 +142,14 @@ class TvDetailsFragment :
 
         }
     }
+    //endregion
 
-
+    //region save to bottom sheet
+    private fun showAddToWatchlistFavouriteBottomSheet() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_pressed)
+        addToWatchlistFavouriteBottomSheet = AddToWatchlistFavouriteBottomSheet(this)
+        addToWatchlistFavouriteBottomSheet.show(childFragmentManager, "BOTTOM")
+    }
 
     override fun onFavourite() {
         viewModel.addToFavourite()
@@ -154,5 +159,9 @@ class TvDetailsFragment :
         viewModel.addToWatchlist()
     }
 
+    override fun onDismiss() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_unpressed)
+    }
+    //endregion
 
 }

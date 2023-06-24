@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.tv_details
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,9 @@ class AddToWatchlistFavouriteBottomSheet(private val watchlistFavouriteBottomShe
                 groupCreateList.visibility =
                     if (chipAddNewList.isChecked) View.VISIBLE else View.GONE
             }
-            textViewClose.setOnClickListener { dismiss() }
+            textViewClose.setOnClickListener {
+                dismiss()
+            }
         }
 
         viewModel.getUserLists()
@@ -64,9 +67,15 @@ class AddToWatchlistFavouriteBottomSheet(private val watchlistFavouriteBottomShe
         }
 
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        watchlistFavouriteBottomSheet.onDismiss()
+    }
 }
 
 interface WatchlistFavouriteListener {
     fun onFavourite()
     fun onWatchlist()
+    fun onDismiss()
 }
