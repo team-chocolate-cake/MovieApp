@@ -5,5 +5,6 @@
     android:layout_width="@dimen/spacing_extra_giant_48dp"
     android:layout_height="@dimen/spacing_extra_giant_48dp"
     app:lottie_autoPlay="true"
+    app:lottie_colorFilter="@color/primary"
     app:lottie_loop="true"
     app:lottie_rawRes="@raw/anim_loading" />
