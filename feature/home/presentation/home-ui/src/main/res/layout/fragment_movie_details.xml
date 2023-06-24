@@ -75,9 +75,9 @@
                         style="@style/TextStyle.TitleMedium"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:layout_marginLeft="4dp"
                         android:text="@{viewModel.state.movieUiState.title}"
                         android:textColor="@color/on_background_87"
                         android:visibility="invisible" />
@@ -87,14 +87,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="end"
-                        app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@null"
                         android:backgroundTint="@color/on_primary"
                         android:onClick="@{()-> viewModel.onClickSaveButton()}"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_save" />
+                        android:src="@drawable/ic_save_unpressed"
+                        app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }" />
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
