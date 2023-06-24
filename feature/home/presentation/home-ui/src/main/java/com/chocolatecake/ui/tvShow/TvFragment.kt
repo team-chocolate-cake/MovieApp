@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
@@ -65,10 +66,15 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
             is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.tvId)
             is TVShowsInteraction.ShowSnackBar -> showSnackBar(event.messages)
+            is TVShowsInteraction.ScrollToTopRecycler -> scrollToTopScreen()
         }
     }
 
     private fun showOnTheAirResult() = viewModel.getOnTheAirTVShows()
+    private fun scrollToTopScreen() {
+        binding.recyclerViewTvShows.smoothScrollToPosition(0)
+    }
+
     private fun showAiringTodayResult() = viewModel.getAiringTodayTVShows()
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()

@@ -113,7 +113,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:src="@drawable/ic_arrow"
+            android:onClick="@{() -> viewModel.scrollToTopScreen()}"
+            android:src="@drawable/ic_arrow_top"
             tools:layout_editor_absoluteX="380dp"
             tools:layout_editor_absoluteY="672dp" />
 

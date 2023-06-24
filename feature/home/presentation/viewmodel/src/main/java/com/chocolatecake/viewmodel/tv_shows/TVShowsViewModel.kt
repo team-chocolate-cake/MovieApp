@@ -50,24 +50,29 @@ class TVShowsViewModel @Inject constructor(
 
 
     }
+
     fun getPopularTVShows() {
         viewModelScope.launch { fetchTvShow(TVShowsType.POPULAR) { getPopularTVShowsUseCase() } }
     }
+
     fun getTopRatedTVShows() {
         viewModelScope.launch {
             fetchTvShow(TVShowsType.TOP_RATED) { getGetTopRatedTVShowsUseCase() }
         }
     }
+
     fun getOnTheAirTVShows() {
         viewModelScope.launch {
             fetchTvShow(TVShowsType.ON_THE_AIR) { getOnTheAirTVShowsUseCase() }
         }
     }
+
     fun getAiringTodayTVShows() {
         viewModelScope.launch {
             fetchTvShow(TVShowsType.AIRING_TODAY) { getAiringTodayTVShowsUseCase() }
         }
     }
+
     private suspend fun fetchTvShow(
         type: TVShowsType,
         useCase: suspend () -> Flow<PagingData<TVShowsEntity>>,
@@ -102,6 +107,7 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
+
     private fun updateTopRated(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
@@ -110,6 +116,7 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
+
     private fun updatePopular(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
@@ -118,6 +125,7 @@ class TVShowsViewModel @Inject constructor(
             )
         }
     }
+
     private fun updateOnTheAir(items: Flow<PagingData<TVShowsUI>>) {
         _state.update {
             it.copy(
@@ -171,6 +179,10 @@ class TVShowsViewModel @Inject constructor(
     ///region event
     override fun onClickTVShows(tvId: Int) {
         sendEvent(TVShowsInteraction.NavigateToTVShowDetails(tvId))
+    }
+
+    override fun scrollToTopScreen() {
+        sendEvent(TVShowsInteraction.ScrollToTopRecycler)
     }
 
     override fun showAiringTodayTVShowsResult() {
