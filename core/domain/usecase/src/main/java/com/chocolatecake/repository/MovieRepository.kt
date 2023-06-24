@@ -22,6 +22,8 @@ import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
+import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
+import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 
 interface MovieRepository {
@@ -142,4 +144,9 @@ interface MovieRepository {
 
 
     fun isLoginedOrNot(): Boolean
+
+
+    suspend fun getRatedMovies(): Pager<Int, MyRatedMovieEntity>
+
+    suspend fun getRatedTvShows(): Pager<Int, MyRatedTvShowEntity>
 }

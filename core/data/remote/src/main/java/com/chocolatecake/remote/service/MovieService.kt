@@ -33,7 +33,6 @@ import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
-import com.chocolatecake.remote.response.dto.my_rated.MyRatedEpisodesResponseDto
 import com.chocolatecake.remote.response.dto.my_rated.MyRatedMoviesResponseDto
 import com.chocolatecake.remote.response.dto.my_rated.MyRatedTvShowResponseDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
@@ -319,11 +318,6 @@ interface MovieService {
     suspend fun getRatedTv(
         @Query("page") page: Int = 1
     ): Response<MyRatedTvShowResponseDto>
-
-    @GET("account/{account_id}/rated/tv/episodes")
-    suspend fun getRatedEpisodes(
-        @Query("page") page: Int = 1
-    ): Response<MyRatedEpisodesResponseDto>
 
     ///endregion
 
