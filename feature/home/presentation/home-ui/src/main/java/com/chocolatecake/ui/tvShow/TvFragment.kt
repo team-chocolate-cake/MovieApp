@@ -29,7 +29,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        handleMultiClickChip()
+        doNothingWhenTheSameChipIsReselected()
     }
 
     private fun setAdapter() {
@@ -76,7 +76,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
         findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
     }
 
-    private fun handleMultiClickChip() {
+    private fun doNothingWhenTheSameChipIsReselected() {
         binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
             if (chip?.isChecked == true) {
