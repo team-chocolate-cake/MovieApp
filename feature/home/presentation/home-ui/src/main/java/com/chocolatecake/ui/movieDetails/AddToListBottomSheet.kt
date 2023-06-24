@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.tv_details
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -85,6 +86,11 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
         }
 
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        creeateButton.onDismiss()
+    }
 }
 
 interface CreateListener {
@@ -92,4 +98,5 @@ interface CreateListener {
     fun onDone(listsId: List<Int>)
     fun onFavourite()
     fun onWatchlist()
+    fun onDismiss()
 }

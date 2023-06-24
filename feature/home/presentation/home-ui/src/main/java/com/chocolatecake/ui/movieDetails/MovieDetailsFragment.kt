@@ -154,6 +154,7 @@ class MovieDetailsFragment :
     }
 
     private fun showAddToListBottomSheet() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_pressed)
         addToListBottomSheet = AddToListBottomSheet(this)
         addToListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
@@ -168,6 +169,10 @@ class MovieDetailsFragment :
 
     override fun onFavourite() {
         viewModel.addToFavourite()
+    }
+
+    override fun onDismiss() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_unpressed)
     }
 
     override fun onWatchlist() {
