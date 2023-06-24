@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.gameover.GameoverViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_view_gameover"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginHorizontal="@dimen/spacing_giant_32dp"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/gameover" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_another_question"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_giant_48dp"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginBottom="@dimen/spacing_small_8dp"
+            android:onClick="@{() -> viewModel.onClickTryAgain()}"
+            android:text="@string/try_again"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/button_return_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_return_home"
+            style="@style/PrimaryButton.ReturnHomeButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_giant_48dp"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginBottom="@dimen/spacing_giant_32dp"
+            android:onClick="@{() -> viewModel.onClickReturn()}"
+            android:text="@string/return_to_home"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
