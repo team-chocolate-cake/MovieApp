@@ -59,12 +59,12 @@
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:gravity="center"
             android:maxLength="3"
-            android:text="@{String.valueOf(item.rate)}"
+            android:text="@{String.valueOf(item.formattedRate)}"
             android:textColor="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="9.6jlkl" />
+            tools:text="9.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
