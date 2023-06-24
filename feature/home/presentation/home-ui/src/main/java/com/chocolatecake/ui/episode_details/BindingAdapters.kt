@@ -24,6 +24,16 @@ fun <T> View.hideWhenNoProductionCode(productionCode:String){
         this.visibility = View.VISIBLE
     }
 }
+
+@BindingAdapter(value = ["app:hideWhenNoResultText"])
+fun <T> View.hideWhenNoResultText(text:String){
+    if (text.isEmpty()){
+        this.visibility = View.GONE
+    }else{
+        this.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter("textMaxChars")
 fun TextView.setTextMaxChars(text: CharSequence?) {
     if (text != null && text.length > 10) {
