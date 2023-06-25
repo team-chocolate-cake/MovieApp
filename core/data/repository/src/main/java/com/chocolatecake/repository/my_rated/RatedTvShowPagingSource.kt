@@ -17,24 +17,20 @@ class RatedTvShowPagingSource @Inject constructor(
     private val domainGenreMapper: DomainGenreMapper,
     private val movieDao: MovieDao,
 ) : PagingSource<Int, MyRatedTvShowEntity>(){
-     suspend fun fetchData(page: Int): MyRatedTvShowResponseDto? {
-        return service.getRatedTv(page).body()
-    }
+
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MyRatedTvShowEntity> {
         val currentPage = params.key ?: 1
-        val response = fetchData(currentPage)
-        val myRatedTvShowsDtos = response?.tvShows?.filterNotNull() ?: emptyList()
+        val response = service.getRatedTv(currentPage).body()
+        val wrapper = response?.tvShows?.filterNotNull() ?: emptyList()
         val genreMovieMapper = domainGenreMapper.map(movieDao.getGenresMovies())
         val mapper = DomainMyRatedTvShowMapper(genreMovieMapper)
-        val nextKey = if (response?.totalPages!! <= currentPage && response.totalPages!=1) {
-            currentPage + 1
-        } else {
-            null
-        }
+        val nextKey = if (response?.totalPages!! <= currentPage && response.totalPages!=1) currentPage + 1
+         else null
+
         return try {
             LoadResult.Page(
-                data = myRatedTvShowsDtos.map { mapper.map(it) },
+                data = wrapper.map { mapper.map(it) },
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = nextKey
             )

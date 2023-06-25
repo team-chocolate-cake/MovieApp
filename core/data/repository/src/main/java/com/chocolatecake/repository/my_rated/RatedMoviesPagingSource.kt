@@ -17,14 +17,10 @@ class RatedMoviesPagingSource @Inject constructor(
     private val domainGenreMapper: DomainGenreMapper,
     private val movieDao: MovieDao,
 ) : PagingSource<Int, MyRatedMovieEntity>() {
-    suspend fun fetchData(page: Int): MyRatedMoviesResponseDto? {
-        return service.getRatedMovies(page).body()
-    }
-
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MyRatedMovieEntity> {
         val currentPage = params.key ?: 1
-        val response = fetchData(currentPage)
-        val myRatedMovieDtos = response?.movies?.filterNotNull() ?: emptyList()
+        val response = service.getRatedMovies(currentPage).body()
+        val wrapper = response?.movies?.filterNotNull() ?: emptyList()
         val genreMovieMapper = domainGenreMapper.map(movieDao.getGenresMovies())
         val mapper = DomainMyRatedMoviesMapper(genreMovieMapper)
         val nextKey = if (response?.totalPages!! <= currentPage) {
@@ -34,7 +30,7 @@ class RatedMoviesPagingSource @Inject constructor(
         }
         return try {
             LoadResult.Page(
-                data = myRatedMovieDtos.map { mapper.map(it) },
+                data = wrapper.map { mapper.map(it) },
                 prevKey = if (currentPage == 1) null else currentPage - 1,
                 nextKey = nextKey
             )
