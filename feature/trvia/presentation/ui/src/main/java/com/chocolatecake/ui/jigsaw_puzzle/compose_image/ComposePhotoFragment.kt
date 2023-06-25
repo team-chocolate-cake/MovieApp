@@ -17,5 +17,4 @@ class ComposePhotoFragment :
     override fun onEvent(event: ComposePhotoUiEvent) {
     }
 
-
 }
