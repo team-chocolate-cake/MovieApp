@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.my_rated
 
-import com.chocolatecake.viewmodel.tv_shows.TVShowsInteraction
 
 sealed interface MyRatedEvents{
     object OnBackPressed:MyRatedEvents

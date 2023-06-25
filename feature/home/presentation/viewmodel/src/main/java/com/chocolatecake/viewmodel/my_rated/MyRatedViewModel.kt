@@ -2,11 +2,14 @@ package com.chocolatecake.viewmodel.my_rated
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.my_rated.GetMyRatedMoviesUseCase
 import com.chocolatecake.usecase.my_rated.GetMyRatedTVShowsUseCase
+import com.chocolatecake.viewmodel.common.listener.MovieListener
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedMovieToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedTvShowToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
@@ -22,7 +25,7 @@ class MyRatedViewModel @Inject constructor(
     private val getRatedMoviesUseCase: GetMyRatedMoviesUseCase,
     private val myRatedMovieToMovieHorizontalUiMapper: MyRatedMovieToMovieHorizontalUiMapper,
     private val myRatedTvShowToMovieHorizontalUiMapper: MyRatedTvShowToMovieHorizontalUiMapper,
-) : BaseViewModel<MyRatedUiState, MyRatedEvents>(MyRatedUiState()) , MyRatedListner {
+) : BaseViewModel<MyRatedUiState, MyRatedEvents>(MyRatedUiState()) , MyRatedListner , MovieListener {
 
 
     init {
@@ -84,8 +87,36 @@ class MyRatedViewModel @Inject constructor(
             )
         }
     }
+    fun setErrorUiState(combinedLoadStates: CombinedLoadStates) {
+        when (combinedLoadStates.refresh) {
+            is LoadState.NotLoading -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = emptyList())
+                }
+            }
+
+            LoadState.Loading -> {
+                _state.update {
+                    it.copy(isLoading = true, errorList = emptyList())
+                }
+            }
+
+            is LoadState.Error -> {
+                _state.update {
+                    it.copy(isLoading = false, errorList = listOf("no Network"))
+                }
+            }
+        }
+    }
 
     override fun onBackPressed() {
         sendEvent(MyRatedEvents.OnBackPressed)
+    }
+
+    override fun onClickMedia(id: Int) {
+        when(_state.value.MyRateType){
+            MyRateType.Movies -> sendEvent(MyRatedEvents.NavigateToMovieDetails(id))
+            MyRateType.TVShows -> sendEvent(MyRatedEvents.NavigateToTVShowDetails(id))
+        }
     }
 }
