@@ -16,6 +16,7 @@ import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -82,7 +83,7 @@ class TvDetailsFragment :
 
     private fun collectChange() {
         collectLatest {
-            viewModel.state.collect { state ->
+            viewModel.state.collectLatest { state ->
                 Log.d("123123123", "collectChange: ${state.recommended}")
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),

@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -49,6 +50,7 @@ class MovieDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
+                Log.d("123123123", "collectChange: ${state.recommendedUiState}")
                 movieDetailsAdapter.setItems(
                     mutableListOf(
                         MovieDetailsItem.Upper(state.movieUiState),

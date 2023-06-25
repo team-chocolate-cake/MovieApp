@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.chocolatecake.ui.home.BR
+import com.chocolatecake.bases.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
 import com.chocolatecake.ui.movieDetails.setGenreChips

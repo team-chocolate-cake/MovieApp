@@ -191,6 +191,7 @@ class MovieDetailsViewModel @Inject constructor(
                 }
             )
         }
+        _state.update { it.copy(userSelectedLists = emptyList()) }
     }
 
     private fun onDoneSuccess(statusEntity: StatusEntity) {

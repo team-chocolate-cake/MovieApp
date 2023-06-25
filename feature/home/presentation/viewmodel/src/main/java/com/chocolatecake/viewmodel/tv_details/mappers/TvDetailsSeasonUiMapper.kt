@@ -15,7 +15,7 @@ class TvDetailsSeasonUiMapper @Inject constructor() : Mapper<List<SeasonEntity>,
                     imageUrl = season.imageUrl,
                     title = season.title,
                     description = season.description,
-                    year = season.year,
+                    year = extractYearFromDate(season.year),
                     countEpisode = season.countEpisode,
                     seasonNumber =  season.seasonNumber
                 )
@@ -23,5 +23,9 @@ class TvDetailsSeasonUiMapper @Inject constructor() : Mapper<List<SeasonEntity>,
         )
     }
 
+    private fun extractYearFromDate(year: String): String {
+        val parts = year.split("-")
+        return parts[0]
+    }
 
 }
