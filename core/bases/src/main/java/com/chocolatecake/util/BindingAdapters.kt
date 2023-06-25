@@ -147,10 +147,10 @@ fun <T> View.showWhenNoResult(list: List<T>?) {
 
 @BindingAdapter(value = ["app:hideWhenLoading"])
 fun View.hideWhenLoading(isLoading: Boolean?) {
-    if (isLoading == true) {
-        this.visibility = View.INVISIBLE
+    visibility = if (isLoading == true) {
+        View.INVISIBLE
     } else {
-        this.visibility = View.VISIBLE
+        View.VISIBLE
     }
 }
 

@@ -17,24 +17,3 @@ fun ChipGroup.setSelectedTVShowsChip(type: TVShowsType) {
         TVShowsType.POPULAR -> check(R.id.chip_popular)
     }
 }
-
-@BindingAdapter("scrollToTop")
-fun setScrollToTopListener(fab: FloatingActionButton, recyclerView: RecyclerView) {
-    fab.setOnClickListener {
-        recyclerView.smoothScrollToPosition(0)
-    }
-}
-
-@BindingAdapter("showOnScroll")
-fun setShowOnScrollListener(fab: FloatingActionButton, recyclerView: RecyclerView) {
-    recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            if (dy > 0 && fab.visibility == View.GONE) {
-                fab.show()
-            } else if (dy < 0 && fab.visibility == View.VISIBLE) {
-                fab.hide()
-            }
-        }
-    })
-}
