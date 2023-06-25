@@ -3,16 +3,19 @@ package com.chocolatecake.repository.my_rated
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
+import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.remote.response.dto.my_rated.MyRatedTvShowResponseDto
 import com.chocolatecake.remote.service.MovieService
+import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.my_rated.DomainMyRatedTvShowMapper
 import java.io.IOException
 import javax.inject.Inject
 
-
+//Todo when gohary fix basePagingSource
 class RatedTvShowPagingSource @Inject constructor(
     private val service: MovieService,
-    private val mapper: DomainMyRatedTvShowMapper
+    private val domainGenreMapper: DomainGenreMapper,
+    private val movieDao: MovieDao,
 ) : PagingSource<Int, MyRatedTvShowEntity>(){
      suspend fun fetchData(page: Int): MyRatedTvShowResponseDto? {
         return service.getRatedTv(page).body()
@@ -22,6 +25,8 @@ class RatedTvShowPagingSource @Inject constructor(
         val currentPage = params.key ?: 1
         val response = fetchData(currentPage)
         val myRatedTvShowsDtos = response?.tvShows?.filterNotNull() ?: emptyList()
+        val genreMovieMapper = domainGenreMapper.map(movieDao.getGenresMovies())
+        val mapper = DomainMyRatedTvShowMapper(genreMovieMapper)
         val nextKey = if (response?.totalPages!! <= currentPage && response.totalPages!=1) {
             currentPage + 1
         } else {

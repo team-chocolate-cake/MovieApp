@@ -16,11 +16,11 @@ class MyRatedTvShowToMovieHorizontalUiMapper @Inject constructor()  : Mapper<MyR
             title = input.title,
             imageUrl = input.imageUrl,
             year = extractYearFromDate(input.year),
-            genres = convertGenreListToString(input.genreEntities),
+            genres = convertGenreListToString(input.genreEntities.map { it.genreName }),
         )
     }
 
-    private fun convertGenreListToString(list: List<Int>): String {
+    private fun convertGenreListToString(list: List<String>): String {
         return list.joinToString(" | ")
     }
 

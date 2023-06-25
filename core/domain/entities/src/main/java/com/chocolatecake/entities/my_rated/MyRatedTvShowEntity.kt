@@ -7,7 +7,7 @@ data class MyRatedTvShowEntity(
     val id: Int,
     val title: String,
     val imageUrl: String,
-    val genreEntities: List<Int>,
+    val genreEntities: List<GenreEntity>,
     val rate: Double,
     val year: String = ""
 )
