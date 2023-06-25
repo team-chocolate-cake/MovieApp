@@ -197,4 +197,15 @@
             android:name="episodeNumber"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/myRatedFragment"
+        android:name="com.chocolatecake.ui.my_rated.MyRatedFragment"
+        android:label="MyRatedFragment" >
+        <action
+            android:id="@+id/action_myRatedFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_myRatedFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+    </fragment>
 </navigation>
