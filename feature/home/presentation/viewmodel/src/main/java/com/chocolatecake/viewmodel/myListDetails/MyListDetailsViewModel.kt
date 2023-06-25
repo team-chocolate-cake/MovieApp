@@ -8,6 +8,7 @@ import com.chocolatecake.bases.ListName
 import com.chocolatecake.bases.ListType
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
+import com.chocolatecake.usecase.myList.DeleteMovieFromDetailsListUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
 import com.chocolatecake.usecase.myList.GetMyWatchlistListUseCase
@@ -26,6 +27,7 @@ class MyListDetailsViewModel @Inject constructor(
     private val getWatchlistUseCase: GetMyWatchlistListUseCase,
     private val getMovieListDetailsUseCase: GetMyListDetailsByListIdUseCase,
     private val deleteFavoriteUseCase: AddToFavouriteUseCase,
+    private val deleteMovieFromDetailsListUseCase: DeleteMovieFromDetailsListUseCase,
     private val deleteWatchlistUseCase: AddToWatchList,
     private val myListDetailsUiMapper: MyListDetailsUiMapper,
     private val savedStateHandle: SavedStateHandle,
@@ -40,11 +42,11 @@ class MyListDetailsViewModel @Inject constructor(
     init {
         when (listName) {
             ListName.favorite.name -> {
-                getAllFavorite(listType)
+                getAllFavorite()
             }
 
             ListName.watchlist.name -> {
-                getAllWatchlist(listType)
+                getAllWatchlist()
             }
 
             else -> {
@@ -53,7 +55,7 @@ class MyListDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun getAllFavorite(listType: String) {
+    private fun getAllFavorite() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getFavoriteUseCase().map { myListDetailsUiMapper.map(it) } },
@@ -62,7 +64,7 @@ class MyListDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun getAllWatchlist(listType: String) {
+    private fun getAllWatchlist() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getWatchlistUseCase().map { myListDetailsUiMapper.map(it) } },
@@ -122,7 +124,7 @@ class MyListDetailsViewModel @Inject constructor(
             }
 
             ListName.watchlist.name -> {
-                deleteListDetails(mediaId)
+                deleteMovieFromListDetails(mediaId)
             }
         }
     }
@@ -149,9 +151,11 @@ class MyListDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun deleteListDetails(mediaId: Int) {
+    private fun deleteMovieFromListDetails(mediaId: Int) {
         tryToExecute(
-            call = { deleteWatchlistUseCase(mediaId, "movie", false) },
+            call = { deleteMovieFromDetailsListUseCase(listId= listId , mediaId= mediaId)
+                Log.i("bb", "deleteMovieFromListDetails: $deleteMovieFromDetailsListUseCase(listId= listId , mediaId= mediaId)")
+                   },
             onSuccess = { onDeleteMediaSuccess(true) },
             onError = {
                 _state.update { it.copy(isLoading = false) }
@@ -165,11 +169,11 @@ class MyListDetailsViewModel @Inject constructor(
         _state.update { it.copy(isLoading = false) }
         when (listName) {
             ListName.favorite.name -> {
-                getAllFavorite(listType)
+                getAllFavorite()
             }
 
             ListName.watchlist.name -> {
-                getAllWatchlist(listType)
+                getAllWatchlist()
             }
 
             else -> {

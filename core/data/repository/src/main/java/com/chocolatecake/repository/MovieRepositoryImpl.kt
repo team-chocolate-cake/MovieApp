@@ -1,5 +1,6 @@
 package com.chocolatecake.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.chocolatecake.entities.EpisodeDetailsEntity
@@ -445,23 +446,6 @@ class MovieRepositoryImpl @Inject constructor(
     //region my list
     override suspend fun getFavoriteMovies(): List<MovieEntity> {
         val genresEntities = getGenresMovies()
-//        return wrapApiCall { movieService.getFavoriteMovies() }.results
-//            ?.filterNotNull()?.let { movieDtos ->
-//                movieDtos.map { input ->
-//                    MovieEntity(
-//                        id = input.id ?: 0,
-//                        rate = input.voteAverage ?: 0.0,
-//                        title = input.title ?: "",
-//                        genreEntities = filterGenres(
-//                            input.genreIds?.filterNotNull() ?: emptyList(),
-//                            genresEntities
-//                        ),
-//                        imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
-//                        year = input.releaseDate ?: ""
-//                    )
-//                }
-//            } ?: emptyList()
-
         val result = wrapApiCall { movieService.getFavoriteMovies() }.results
         return result?.map { item ->
             domainMovieMapper.map(input = item!!
@@ -651,6 +635,14 @@ class MovieRepositoryImpl @Inject constructor(
                 )
             )
         } ?: emptyList()
+    }
+
+    override suspend fun deleteMovieDetailsList(listId: Int, mediaId: Int): StatusEntity {
+        val call = wrapApiCall { movieService.deleteMovieDetailsList(listId = listId,  mediaId)}.also {
+            Log.i("bb", "deleteMovieDetailsList: $it ")
+        }
+        return domainStatusMapper.map(call)
+
     }
 
 

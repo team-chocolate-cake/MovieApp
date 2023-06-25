@@ -168,14 +168,14 @@ interface MovieService {
     suspend fun setMovieRate(
         @Body ratingRequest: RatingRequest,
         @Path("movieId") movieId: Int
-    ):Response<StatusResponse>
+    ): Response<StatusResponse>
     /// endregion
 
     /// region season details
     @GET("tv/{series_id}/season/{season_number}")
     suspend fun getSeasonDetails(
-        @Path("series_id") series_id : Int,
-        @Path("season_number") season_number : Int
+        @Path("series_id") series_id: Int,
+        @Path("season_number") season_number: Int
     ): Response<SeasonDetailsDto>
     ///endregion
 
@@ -225,7 +225,6 @@ interface MovieService {
     suspend fun createUserList(@Body name: CreateUserListRequest): Response<StatusResponse>
 
 
-
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
 
@@ -255,7 +254,7 @@ interface MovieService {
 
 
     @POST("list")
-    suspend fun addList(@Body listRequest: ListRequest ): Response<ListResponse>
+    suspend fun addList(@Body listRequest: ListRequest): Response<ListResponse>
 
     @GET("account/{account_id}/lists")
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
@@ -266,7 +265,13 @@ interface MovieService {
 
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)
-    : Response<ListDetailsWrapperResponse<MovieRemoteDto>>
+            : Response<ListDetailsWrapperResponse<MovieRemoteDto>>
+
+    @GET("list/{list_id}/remove_item")
+    suspend fun deleteMovieDetailsList(
+        @Path("list_id") listId: Int,
+        @Body media_id: Int,
+    ): Response<StatusResponse>
 
 
     @GET("movie/{movieId}/reviews")
