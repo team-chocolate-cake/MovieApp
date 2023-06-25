@@ -89,6 +89,11 @@ interface MovieService {
         @Query("page") page: Int = 1
     ): Response<DataWrapperResponse<MovieRemoteDto>>
 
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieYoutubeVideoDetails(
+        @Path("movie_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
     ///endregion
 
     /// region tv
@@ -179,7 +184,7 @@ interface MovieService {
     ): Response<SeasonDetailsDto>
     ///endregion
 
-    /// region tv
+    /// region tv details
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") tvShowId: Int
@@ -305,4 +310,8 @@ interface MovieService {
     ): Response<EpisodeDetailsCastRemoteDto>
 
 ///endregion
+
+    /// region trailer
+
+    /// endregion
 }

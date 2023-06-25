@@ -521,7 +521,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
 
-
     override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
 
         val result = movieService.addWatchlist(
@@ -534,8 +533,6 @@ class MovieRepositoryImpl @Inject constructor(
 
         return result
     }
-
-
 
 
     override suspend fun addList(name: String): Boolean {
@@ -555,14 +552,6 @@ class MovieRepositoryImpl @Inject constructor(
                 ?: emptyList()
         return domainTvShowMapper.map(call)
     }
-
-    override suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity {
-        val call =
-            wrapApiCall { movieService.getTvShowYoutubeVideoDetails(tvShowID) }.results?.first()
-                ?: YoutubeVideoDetailsRemoteDto()
-        return domainYoutubeDetailsMapper.map(call)
-    }
-
 
     override suspend fun getTvDetailsSeasons(tvShowID: Int): List<SeasonEntity> {
         return domainTvDetailsSeasonMapper.map(wrapApiCall { movieService.getTvDetails(tvShowID) })
@@ -685,7 +674,24 @@ class MovieRepositoryImpl @Inject constructor(
 
     /// endregion
 
+    /// region trailer
+    override suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity {
+        val call =
+            wrapApiCall { movieService.getTvShowYoutubeVideoDetails(tvShowID) }.results?.first()
+                ?: YoutubeVideoDetailsRemoteDto()
+        return domainYoutubeDetailsMapper.map(call)
+    }
+
+    override suspend fun getMovieYoutubeDetails(movieID: Int): YoutubeVideoDetailsEntity {
+        val call =
+            wrapApiCall { movieService.getMovieYoutubeVideoDetails(movieID) }.results?.first()
+                ?: YoutubeVideoDetailsRemoteDto()
+        return domainYoutubeDetailsMapper.map(call)
+    }
+
+    /// endregion
+
     override fun isLoginedOrNot(): Boolean {
-        return if(preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
+        return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
     }
 }
