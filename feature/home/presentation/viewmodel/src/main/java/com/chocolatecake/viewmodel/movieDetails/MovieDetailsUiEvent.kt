@@ -12,6 +12,7 @@ sealed interface MovieDetailsUiEvent{
     object OnClickBack : MovieDetailsUiEvent
     data class ApplyRating(val message: String) : MovieDetailsUiEvent
     data class OnDoneAdding(val message: String):MovieDetailsUiEvent
+    data class OnErrorAdding(val message: String):MovieDetailsUiEvent
     data class OnCreateNewList(val message:String):MovieDetailsUiEvent
     data class OnFavourite(val message: String):MovieDetailsUiEvent
     data class OnWatchList(val message: String):MovieDetailsUiEvent

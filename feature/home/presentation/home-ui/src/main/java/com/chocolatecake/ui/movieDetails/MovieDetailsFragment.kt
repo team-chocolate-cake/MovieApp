@@ -103,6 +103,7 @@ class MovieDetailsFragment :
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
 
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
+            is MovieDetailsUiEvent.OnErrorAdding -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             else -> {}

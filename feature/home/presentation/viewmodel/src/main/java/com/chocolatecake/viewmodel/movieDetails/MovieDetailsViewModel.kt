@@ -186,22 +186,15 @@ class MovieDetailsViewModel @Inject constructor(
                 call = { addToUserListUseCase(id, movieId!!) },
                 onSuccess = ::onDoneSuccess,
                 onError = {
-                    viewModelScope.launch {
-                        if (addToUserListUseCase(id, movieId!!).statusCode  == 8) {
-                            sendEvent(MovieDetailsUiEvent.OnDoneAdding("Error: status_code = 8"))
-                        } else if(addToUserListUseCase(id, movieId).statusCode  == 403) {
-                            sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔1"))
-                        }
-                        Log.i("chip", "something went wrong")
-                    }
-
+                    Log.i("chi2222222p", "something went wrong")
+                    sendEvent(MovieDetailsUiEvent.OnErrorAdding("Duplicate entry: The data you tried to submit already exists."))
                 }
             )
         }
     }
 
     private fun onDoneSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.OnDoneAdding("adding was successful"))
+        sendEvent(MovieDetailsUiEvent.OnDoneAdding(statusEntity.statusMessage))
     }
 
     fun createUserNewList(listName: String) {
