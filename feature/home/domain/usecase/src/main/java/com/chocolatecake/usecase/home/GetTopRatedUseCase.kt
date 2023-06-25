@@ -10,6 +10,8 @@ class GetTopRatedUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
         refreshIfNeededUseCase()
-        return movieRepository.getTopRatedMovies().take(limit)
+        return movieRepository.getTopRatedMovies()
+            .also { if (it.isEmpty()) movieRepository.refreshTopRatedMovies() }
+            .take(limit)
     }
 }

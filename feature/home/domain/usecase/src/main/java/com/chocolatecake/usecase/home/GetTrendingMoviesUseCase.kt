@@ -10,6 +10,8 @@ class GetTrendingMoviesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
         refreshIfNeededUseCase()
-        return movieRepository.getTrendingMovies().take(limit)
+        return movieRepository.getTrendingMovies()
+            .also { if (it.isEmpty()) movieRepository.refreshTrendingMovies() }
+            .take(limit)
     }
 }

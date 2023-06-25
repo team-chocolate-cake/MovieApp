@@ -10,6 +10,8 @@ class GetPopularPeopleUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(limit: Int = 10): List<PeopleEntity> {
         refreshIfNeededUseCase()
-        return movieRepository.getPopularPeople().take(limit)
+        return movieRepository.getPopularPeople()
+            .also { if (it.isEmpty()) movieRepository.refreshPopularPeople() }
+            .take(limit)
     }
 }

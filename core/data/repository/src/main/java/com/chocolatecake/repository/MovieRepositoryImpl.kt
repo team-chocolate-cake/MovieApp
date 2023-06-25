@@ -86,11 +86,13 @@ import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.TopRatedTVShowsPagingSource
+import java.util.Random
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDao: MovieDao,
+    private val random: Random,
     private val airingTodayTvShowsPagingSource: AiringTodayTVShowsPagingSource,
     private val topRatedTvShowsPagingSource: TopRatedTVShowsPagingSource,
     private val onTheAirTVShowsPagingSource: OnTheAirTVShowsPagingSource,
@@ -140,7 +142,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
     private val watchlistMapper: WatchlistRequestMapper,
     private val domainReviewsMapper: DomainReviewsMapper,
-    private val domainUserListsMapper: DomainUserListsMapper
+    private val domainUserListsMapper: DomainUserListsMapper,
 ) : BaseRepository(), MovieRepository {
 
     /// region showMore
@@ -173,9 +175,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshPopularMovies() {
         refreshWrapper(
-            movieService::getPopularMovies,
+            { movieService.getPopularMovies(random.nextInt(20) + 1) },
             localPopularMovieMapper::map,
-            movieDao::insertPopularMovies
+            movieDao::insertPopularMovies,
+            clearOldLocalData = movieDao::clearAllPopularMovies
         )
     }
 
@@ -185,9 +188,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshNowPlayingMovies() {
         refreshWrapper(
-            movieService::getNowPlayingMovies,
+            { movieService.getNowPlayingMovies(random.nextInt(20) + 1) },
             localNowPlayingMovieMapper::map,
-            movieDao::insertNowPlayingMovies
+            movieDao::insertNowPlayingMovies,
+            clearOldLocalData = movieDao::clearAllNowPlayingMovies
         )
     }
 
@@ -197,9 +201,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshTopRatedMovies() {
         refreshWrapper(
-            movieService::getTopRatedMovies,
+            { movieService.getTopRatedMovies(random.nextInt(20) + 1) },
             localTopRatedMovieMapper::map,
-            movieDao::insertTopRatedMovies
+            movieDao::insertTopRatedMovies,
+            clearOldLocalData = movieDao::clearAllTopRatedMovies
         )
     }
 
@@ -209,9 +214,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshUpcomingMovies() {
         refreshWrapper(
-            movieService::getUpcomingMovies,
+            { movieService.getUpcomingMovies(random.nextInt(20) + 1) },
             localUpcomingMovieMapper::map,
-            movieDao::insertUpcomingMovies
+            movieDao::insertUpcomingMovies,
+            clearOldLocalData = movieDao::clearAllUpcomingMovies
         )
     }
 
@@ -233,9 +239,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshPopularPeople() {
         refreshWrapper(
-            movieService::getPopularPeople,
+            { movieService.getPopularPeople(random.nextInt(20) + 1) },
             localPopularPeopleMapper::map,
-            movieDao::insertPopularPeople
+            movieDao::insertPopularPeople,
+            clearOldLocalData = movieDao::clearAllPopularPeople
         )
     }
     /// endregion
