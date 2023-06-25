@@ -64,14 +64,17 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.map { it.userLists }.distinctUntilChanged().collectLatest {
-                Log.i("list","new list => ${viewModel.state.value.userLists}")
+                Log.i("list", "new list => ${viewModel.state.value.userLists}")
                 binding.chipGroupGenere.setGenreChips(viewModel.state.value.userLists, viewModel)
                 viewModel.emptyUserLists()
             }
         }
         binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate(binding.textInputEditTextListName.text.toString())
-            binding.chipGroupGenere.removeViewsInLayout(0,binding.chipGroupGenere.childCount -1)
+            binding.chipGroupGenere.removeViewsInLayout(0, binding.chipGroupGenere.childCount - 3)
+            binding.groupCreateList.visibility = View.GONE
+            binding.chipAddNewList.isChecked = false
+            binding.textInputEditTextListName.setText("")
 
             viewLifecycleOwner.lifecycleScope.launch {
                 delay(300)
