@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image.CardItem" />
+            type="com.chocolatecake.viewmodel.jigsaw_puzzle.pick_a_thumbnail.CardItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

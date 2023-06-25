@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.jigsaw_puzzle.compose_image
+package com.chocolatecake.viewmodel.jigsaw_puzzle.pick_a_thumbnail
 
 sealed class PickAThumbnailRecyclerItem {
     data class Title(val text: String) : PickAThumbnailRecyclerItem()

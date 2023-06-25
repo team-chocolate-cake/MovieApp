@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.jigsaw_puzzle.compose_image
+package com.chocolatecake.viewmodel.jigsaw_puzzle.compose_photo
 
 import android.content.Context
 import androidx.appcompat.widget.AppCompatImageView

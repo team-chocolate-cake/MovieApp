@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import com.chocolatecake.viewmodel.jigsaw_puzzle.compose_photo.PuzzlePieceImage
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
