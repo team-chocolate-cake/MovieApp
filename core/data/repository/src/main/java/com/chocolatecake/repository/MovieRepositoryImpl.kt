@@ -601,8 +601,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     /// region user list
     override suspend fun getUserLists(): List<UserListEntity> {
-        val call =
-            wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
+        val call = wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
         return domainUserListsMapper.map(call)
     }
 
@@ -644,8 +643,9 @@ class MovieRepositoryImpl @Inject constructor(
         val genresEntities = getGenresMovies()
         val result = wrapApiCall { movieService.getDetailsList(listId) }.items
         return result?.map { item ->
-            domainMovieMapper.map(item ,
-                filterGenres(
+            domainMovieMapper.map(
+                input = item ,
+                genres = filterGenres(
                     item.genreIds?.filterNotNull() ?: emptyList(),
                     genresEntities
                 )

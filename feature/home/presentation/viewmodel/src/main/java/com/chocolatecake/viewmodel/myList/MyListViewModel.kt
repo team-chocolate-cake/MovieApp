@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.myList.CreateListUseCase
 import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
+import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
