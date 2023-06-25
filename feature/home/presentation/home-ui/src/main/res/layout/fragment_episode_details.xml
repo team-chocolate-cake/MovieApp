@@ -84,6 +84,20 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars" />
 
+                <ImageButton
+                    android:id="@+id/image_button_play"
+                    android:layout_width="@dimen/spacing_extra_giant_48dp"
+                    android:layout_height="@dimen/spacing_extra_giant_48dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/play_button_background"
+                    android:src="@drawable/movie_play"
+                    app:layout_constraintBottom_toBottomOf="@id/image_view_episode_image"
+                    app:layout_constraintEnd_toEndOf="@id/image_view_episode_image"
+                    app:layout_constraintTop_toTopOf="@id/image_view_episode_image"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:tint="@color/on_background_60" />
+
                 <TextView
                     android:id="@+id/text_view_episode_name"
                     style="@style/TextStyle.BodyLarge"
@@ -175,10 +189,10 @@
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@string/actors"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
                     android:textColor="@color/on_background_87"
                     app:hideWhenNoList="@{viewModel.state.cast}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/youtube_player" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_people"
@@ -193,7 +207,6 @@
                     app:hideWhenNoList="@{viewModel.state.cast}"
                     app:items="@{item.cast}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_view_actors"
