@@ -304,5 +304,13 @@ interface MovieService {
         @Path("episode_number") episodeNumber: Int
     ): Response<EpisodeDetailsCastRemoteDto>
 
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}/videos")
+    suspend fun getEpisodeVideos(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+
 ///endregion
 }

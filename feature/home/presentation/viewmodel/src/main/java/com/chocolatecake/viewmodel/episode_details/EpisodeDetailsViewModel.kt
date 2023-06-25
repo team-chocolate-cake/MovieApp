@@ -1,21 +1,17 @@
 package com.chocolatecake.viewmodel.episode_details
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
-import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
+import com.chocolatecake.usecase.episode_details.GetEpisodeVideoUseCase
 import com.chocolatecake.usecase.episode_details.SetEpisodeRatingUseCase
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,11 +21,13 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val episodeDetailsUiMapper: EpisodeDetailsUiMapper,
     private val castUseCase: GetCastForEpisodeUseCase,
     private val peopleUiMapper: PeopleUiMapper,
+    private val trailerUiMapper: TrailerUiMapper,
+    private val episodeVideoUseCase: GetEpisodeVideoUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
 
-    private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 1772
+    private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 454
     private val seasonNumber = savedStateHandle.get<Int>("seasonNumber") ?: 1
     private val episodeNumber = savedStateHandle.get<Int>("episodeNumber") ?: 1
 
@@ -41,13 +39,16 @@ class EpisodeDetailsViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
         getCastData(seriesId, seasonNumber, episodeNumber)
+        getEpisodeVideo(seriesId, seasonNumber, episodeNumber)
     }
 
+    /// region refresh
     fun refresh() {
         _state.value = EpisodeDetailsUiState(refreshing = true)
         getData(seriesId, episodeNumber, episodeNumber)
         _state.value = EpisodeDetailsUiState(refreshing = false)
     }
+    /// endregion
 
     /// region episode data
     private fun getEpisodeDetailsData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
@@ -68,28 +69,37 @@ class EpisodeDetailsViewModel @Inject constructor(
                 seasonNumber = episodeDetails.seasonNumber,
                 episodeRate = episodeDetails.episodeRate,
                 episodeOverview = episodeDetails.episodeOverview,
-                productionCode = episodeDetails.productionCode,
                 isLoading = false,
                 onErrors = emptyList()
             )
         }
     }
 
-    private fun <EpisodeDetailsEntity, EpisodeDetailsUiState> executeEpisodeDetails(
-        call: suspend () -> EpisodeDetailsEntity,
-        onSuccess: (EpisodeDetailsUiState) -> Unit,
-        mapper: Mapper<EpisodeDetailsEntity, EpisodeDetailsUiState>,
-        onError: (Throwable) -> Unit,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ) {
-        viewModelScope.launch(dispatcher) {
-            try {
-                mapper.map(call()).also(onSuccess)
-            } catch (th: Throwable) {
-                onError(th)
-            }
+    /// endregion
+
+    ///region video
+    private fun getEpisodeVideo(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+        executeEpisodeDetails(
+            call = {
+                episodeVideoUseCase.invoke(
+                    seriesId,
+                    seasonNumber,
+                    episodeNumber,
+                )
+            },
+            mapper = trailerUiMapper,
+            onSuccess = ::onSuccessEpisodeVideo,
+            onError = ::onError
+
+        )
+    }
+
+    private fun onSuccessEpisodeVideo(trailerUiState: TrailerUiState) {
+        _state.update {
+            it.copy(trailerKey = trailerUiState.videoKey)
         }
     }
+
     /// endregion
 
     /// region set rating
@@ -137,11 +147,13 @@ class EpisodeDetailsViewModel @Inject constructor(
 
     /// endregion
 
+    ///  region error
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
         errors.add(th.message.toString())
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
+    /// endregion
 
     /// region event
     override fun clickToBack() {

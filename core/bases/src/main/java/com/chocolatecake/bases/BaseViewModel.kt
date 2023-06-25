@@ -53,4 +53,20 @@ abstract class BaseViewModel<STATE, EVENT>(initialState: STATE) : ViewModel() {
     protected fun sendEvent(event: EVENT) {
         viewModelScope.launch { _event.emit(event) }
     }
+
+    protected fun <INPUT, OUTPUT> executeEpisodeDetails(
+        call: suspend () -> INPUT,
+        onSuccess: (OUTPUT) -> Unit,
+        mapper: Mapper<INPUT, OUTPUT>,
+        onError: (Throwable) -> Unit,
+        dispatcher: CoroutineDispatcher = Dispatchers.IO
+    ) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                mapper.map(call()).also(onSuccess)
+            } catch (th: Throwable) {
+                onError(th)
+            }
+        }
+    }
 }

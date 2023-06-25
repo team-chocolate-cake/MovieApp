@@ -521,7 +521,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
 
-
     override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
 
         val result = movieService.addWatchlist(
@@ -534,8 +533,6 @@ class MovieRepositoryImpl @Inject constructor(
 
         return result
     }
-
-
 
 
     override suspend fun addList(name: String): Boolean {
@@ -683,9 +680,21 @@ class MovieRepositoryImpl @Inject constructor(
         })
     }
 
+    override suspend fun getVideoEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): YoutubeVideoDetailsEntity {
+        val response =
+        wrapApiCall {movieService.getEpisodeVideos(seriesId, seasonNumber, episodeNumber)}
+            .results?.first()?:YoutubeVideoDetailsRemoteDto()
+
+        return domainYoutubeDetailsMapper.map(response)
+    }
+
     /// endregion
 
     override fun isLoginedOrNot(): Boolean {
-        return if(preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
+        return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
     }
 }

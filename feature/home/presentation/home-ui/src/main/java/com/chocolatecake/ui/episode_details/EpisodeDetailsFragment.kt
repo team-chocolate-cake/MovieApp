@@ -78,4 +78,10 @@ class EpisodeDetailsFragment :
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingState(rate)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+
 }

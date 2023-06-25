@@ -140,6 +140,12 @@ interface MovieRepository {
         value: Float
     ): RatingEpisodeDetailsStatusEntity
 
+    suspend fun getVideoEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): YoutubeVideoDetailsEntity
+
 
     fun isLoginedOrNot(): Boolean
 }

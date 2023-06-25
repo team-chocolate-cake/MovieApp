@@ -12,7 +12,6 @@ class EpisodeDetailsUiMapper  @Inject constructor() : Mapper<EpisodeDetailsEntit
             episodeName = input.episodeName,
             episodeRate = input.episodeRate,
             episodeOverview = input.overview,
-            productionCode = input.productionCode,
             seasonNumber = input.seasonNumber
         )
     }
