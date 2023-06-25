@@ -10,11 +10,13 @@ import com.chocolatecake.usecase.my_rated.GetMyRatedTVShowsUseCase
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedMovieToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedTvShowToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MyRatedViewModel @Inject constructor(
     private val getRatedTVShowsUseCase: GetMyRatedTVShowsUseCase,
     private val getRatedMoviesUseCase: GetMyRatedMoviesUseCase,
