@@ -78,9 +78,7 @@ class TVShowsViewModel @Inject constructor(
         useCase: suspend () -> Flow<PagingData<TVShowsEntity>>,
     ) {
         try {
-            val items = useCase().map { pagingData ->
-                pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
-            }.cachedIn(viewModelScope)
+            val items = mapItemsToUIState(useCase)
             _state.update { uiState ->
                 when (type) {
                     TVShowsType.ON_THE_AIR -> updateOnTheAir(items)
@@ -93,10 +91,17 @@ class TVShowsViewModel @Inject constructor(
                     errorList = emptyList()
                 )
             }
-
         } catch (throwable: Throwable) {
             onError(throwable)
         }
+    }
+
+    private suspend fun mapItemsToUIState(
+        useCase: suspend () -> Flow<PagingData<TVShowsEntity>>
+    ): Flow<PagingData<TVShowsUI>> {
+        return useCase().map { pagingData ->
+            pagingData.map { tvShow -> tvShowsMapper.map(tvShow) }
+        }.cachedIn(viewModelScope)
     }
 
     private fun updateAiringToday(items: Flow<PagingData<TVShowsUI>>) {
