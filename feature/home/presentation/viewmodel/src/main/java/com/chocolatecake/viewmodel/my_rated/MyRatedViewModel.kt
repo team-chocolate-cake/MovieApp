@@ -12,7 +12,6 @@ import com.chocolatecake.usecase.my_rated.GetMyRatedTVShowsUseCase
 import com.chocolatecake.viewmodel.common.listener.MovieListener
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedMovieToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedTvShowToMovieHorizontalUiMapper
-import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -40,6 +39,7 @@ class MyRatedViewModel @Inject constructor(
     }
 
     fun getMyRatedMovies(){
+        _state.update { it.copy(isLoading = true,)}
         viewModelScope.launch {
             try {
                 val items = getRatedMoviesUseCase().map { pagingData ->
@@ -59,6 +59,7 @@ class MyRatedViewModel @Inject constructor(
         }
     }
     fun getMyRatedTvShow(){
+        _state.update { it.copy(isLoading = true,)}
         viewModelScope.launch {
             try {
                 val items = getRatedTVShowsUseCase().map { pagingData ->
@@ -66,7 +67,7 @@ class MyRatedViewModel @Inject constructor(
                 }.cachedIn(viewModelScope)
                 _state.update {
                     it.copy(
-                        MyRateType = MyRateType.Movies,
+                        MyRateType = MyRateType.TVShows,
                         MyRatedMedia = items,
                         isLoading = false,
                         errorList = emptyList()
@@ -115,8 +116,8 @@ class MyRatedViewModel @Inject constructor(
 
     override fun onClickMedia(id: Int) {
         when(_state.value.MyRateType){
-            MyRateType.Movies -> sendEvent(MyRatedEvents.NavigateToMovieDetails(id))
-            MyRateType.TVShows -> sendEvent(MyRatedEvents.NavigateToTVShowDetails(id))
+            MyRateType.Movies -> Log.e("TAG", "onClickMedia: movie", )
+            MyRateType.TVShows -> Log.e("TAG", "onClickMedia: tv", )
         }
     }
 }
