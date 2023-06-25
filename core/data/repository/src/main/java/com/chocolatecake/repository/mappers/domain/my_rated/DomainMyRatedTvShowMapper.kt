@@ -18,8 +18,9 @@ class DomainMyRatedTvShowMapper @Inject constructor() :
             id = input.id ?: 0,
             title = input.name ?: "",
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath ,
-            genreEntities = emptyList(),
-            rate = input.voteAverage ?: 0.0
+            genreEntities = input.genreIds?:emptyList(),
+            rate = input.rating ?: 0.0,
+            year = input.firstAirDate?:""
         )
     }
 }

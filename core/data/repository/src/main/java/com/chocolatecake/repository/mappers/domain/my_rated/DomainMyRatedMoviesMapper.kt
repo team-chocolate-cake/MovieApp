@@ -16,8 +16,9 @@ class DomainMyRatedMoviesMapper @Inject constructor() :
             id = input.id ?: 0,
             title = input.title ?: "",
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath ,
-            genreEntities = emptyList(),
-            myRate = input.voteAverage ?: 0.0
+            genreEntities = input.genreIds ?:emptyList(),
+            myRate = input.rating ?: 0.0,
+            year = input.releaseDate?:""
         )
     }
 }
