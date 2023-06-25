@@ -22,6 +22,7 @@ data class GameUiState(
             else -> 15
         }
 
+    val isCorrect: Boolean get() = correctAnswerPosition == userAnswer
     val isLastQuestion: Boolean get() = questionCount == totalQuestions
 }
 

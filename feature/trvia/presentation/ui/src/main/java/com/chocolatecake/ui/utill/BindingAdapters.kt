@@ -70,3 +70,15 @@ fun View.isVisibleAnimated(isVisible: Boolean) {
         withEndAction { this@isVisibleAnimated.alpha = newAlpha }
     }.start()
 }
+
+@BindingAdapter(value = ["app:isCorrect" , "app:onClick"])
+fun View.answerCardColor(isCorrect: Boolean, onClick: () -> Unit) {
+    setOnClickListener {
+        if (isCorrect){
+            this.background = context.getDrawable(R.drawable.correct_answer_background)
+        }else{
+            this.background = context.getDrawable(R.drawable.wrong_answer_background)
+        }
+        onClick()
+    }
+}
