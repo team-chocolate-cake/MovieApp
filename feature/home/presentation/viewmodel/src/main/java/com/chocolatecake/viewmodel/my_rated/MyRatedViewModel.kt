@@ -20,8 +20,19 @@ class MyRatedViewModel @Inject constructor(
     private val getRatedMoviesUseCase: GetMyRatedMoviesUseCase,
     private val myRatedMovieToMovieHorizontalUiMapper: MyRatedMovieToMovieHorizontalUiMapper,
     private val myRatedTvShowToMovieHorizontalUiMapper: MyRatedTvShowToMovieHorizontalUiMapper,
-) : BaseViewModel<MyRatedUiState, MyRatedEvents>(MyRatedUiState()) {
+) : BaseViewModel<MyRatedUiState, MyRatedEvents>(MyRatedUiState()) , MyRatedListner {
 
+
+    init {
+        getData()
+    }
+
+    private fun getData() {
+        when (_state.value.MyRateType) {
+            MyRateType.Movies -> getMyRatedMovies()
+            MyRateType.TVShows -> getMyRatedTvShow()
+        }
+    }
 
     fun getMyRatedMovies(){
         viewModelScope.launch {
@@ -70,5 +81,9 @@ class MyRatedViewModel @Inject constructor(
                 isLoading = false
             )
         }
+    }
+
+    override fun onBackPressed() {
+        sendEvent(MyRatedEvents.OnBackPressed)
     }
 }
