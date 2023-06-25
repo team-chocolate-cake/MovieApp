@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,6 +11,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background">
+
+        <ImageView
+            android:id="@+id/imageview_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_x_medium_20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/spacing_large_24dp"
+            android:src="@drawable/ic_back"
+            />
+
+        <TextView
+            style="@style/TextStyle.BodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            android:gravity="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageview_back"
+            app:layout_constraintTop_toTopOf="@id/imageview_back"
+            tools:text="Superstars" />
+
+        <View
+            android:id="@+id/view_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/spacing_custom_12dp"
+            android:layout_marginTop="@dimen/spacing_x_medium_20dp"
+            android:background="@drawable/frame"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+
+            app:layout_constraintTop_toBottomOf="@id/imageview_back"
+            tools:layout_editor_absoluteX="12dp" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/view_frame"
+            app:layout_constraintEnd_toEndOf="@id/view_frame"
+            app:layout_constraintStart_toStartOf="@id/view_frame"
+            app:layout_constraintTop_toTopOf="@id/view_frame"
+            android:layout_margin="@dimen/spacing_tiny_4dp"
+            tools:src="@drawable/movie_thumbnail" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55" />
+
+        <TextView
+            android:id="@+id/textview_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remaning_0"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="@id/view_frame"
+            app:layout_constraintTop_toBottomOf="@id/view_frame"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
+            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+            style="@style/TextStyle.BodyMedium"
+            />
+        
+        <Button
+            android:id="@+id/button_new_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pick_new_photo"
+            android:drawableEnd="@drawable/ic_play"
+            app:layout_constraintTop_toBottomOf="@id/textview_remaining"
+            android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
+            android:layout_marginHorizontal="@dimen/spacing_extra_large_28dp"
+            android:background="@drawable/jigsaw_button_background"
+            android:textColor="@color/on_primary"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/spacing_extra_extra_giant_56dp"
+            style="@style/TextStyle.TitleSmall"
+            android:textAllCaps="false"
+            />
+
+        <TextView
+            android:id="@+id/textview_u_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_new_photo"
+            app:layout_constraintStart_toStartOf="@id/button_new_photo"
+            app:layout_constraintEnd_toEndOf="@id/button_new_photo"
+            android:text="@string/you_finished_the_game"
+            android:layout_marginTop="24dp"
+            style="@style/TextStyle.BodyMedium"
+            />
+
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@+id/textview_u_finished"
+            android:src="@drawable/image_ballon"
+            android:scaleType="centerCrop"
+            />
+
         
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,5 +24,8 @@
     <string name="game_level_caption">The level is currently locked. To unlock it - you
 need to pass the last level %1$d</string>
     <string name="pass_prev_level">You must pass previous level first</string>
+    <string name="remaning_0">remaning 0</string>
+    <string name="pick_new_photo">pick new photo</string>
+    <string name="you_finished_the_game">You finished the game</string>
 
 </resources>
