@@ -86,8 +86,8 @@ class TvDetailsFragment :
                 Log.d("123123123", "collectChange: ${state.recommended}")
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
-                    TvDetailsItem.People(state.cast),
-                    TvDetailsItem.Recommended(state.recommended)
+                    TvDetailsItem.People(state.cast, state.seasons.isNotEmpty()),
+                    TvDetailsItem.Recommended(state.recommended,state.reviews.isNotEmpty())
                 ) + state.seasons.map { TvDetailsItem.Season(it) } + state.reviews.map {
                     TvDetailsItem.Review(
                         it
