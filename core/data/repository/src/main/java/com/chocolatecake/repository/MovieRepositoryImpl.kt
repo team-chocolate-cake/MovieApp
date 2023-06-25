@@ -444,16 +444,44 @@ class MovieRepositoryImpl @Inject constructor(
 
     //region my list
     override suspend fun getFavoriteMovies(): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
+//        return wrapApiCall { movieService.getFavoriteMovies() }.results
+//            ?.filterNotNull()?.let { movieDtos ->
+//                movieDtos.map { input ->
+//                    MovieEntity(
+//                        id = input.id ?: 0,
+//                        rate = input.voteAverage ?: 0.0,
+//                        title = input.title ?: "",
+//                        genreEntities = filterGenres(
+//                            input.genreIds?.filterNotNull() ?: emptyList(),
+//                            genresEntities
+//                        ),
+//                        imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
+//                        year = input.releaseDate ?: ""
+//                    )
+//                }
+//            } ?: emptyList()
+
         val result = wrapApiCall { movieService.getFavoriteMovies() }.results
         return result?.map { item ->
-            domainMovieMapper.map(input = item!!)
+            domainMovieMapper.map(input = item!!
+                ,filterGenres(
+                item.genreIds?.filterNotNull() ?: emptyList(),
+                genresEntities
+            ))
         } ?: emptyList()
     }
 
     override suspend fun getWatchlistMovies(): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
         val result = wrapApiCall { movieService.getWatchlist() }.results
         return result?.map { item ->
-            domainMovieMapper.map(input = item!!)
+            domainMovieMapper.map(
+                input = item!!
+                ,filterGenres(
+                item.genreIds?.filterNotNull() ?: emptyList(),
+                genresEntities
+            ))
         } ?: emptyList()
     }
 
@@ -613,9 +641,15 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     override suspend fun getDetailsList(listId: Int): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
         val result = wrapApiCall { movieService.getDetailsList(listId) }.items
         return result?.map { item ->
-            domainMovieItemListMapper.map(item)
+            domainMovieMapper.map(item ,
+                filterGenres(
+                    item.genreIds?.filterNotNull() ?: emptyList(),
+                    genresEntities
+                )
+            )
         } ?: emptyList()
     }
 

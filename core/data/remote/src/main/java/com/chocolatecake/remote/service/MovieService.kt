@@ -266,7 +266,7 @@ interface MovieService {
 
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)
-    : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
+    : Response<ListDetailsWrapperResponse<MovieRemoteDto>>
 
 
     @GET("movie/{movieId}/reviews")

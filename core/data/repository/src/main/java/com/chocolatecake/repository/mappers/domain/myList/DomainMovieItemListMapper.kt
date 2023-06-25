@@ -6,7 +6,8 @@ import com.chocolatecake.repository.BuildConfig
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
 
-class DomainMovieItemListMapper @Inject constructor()
+class DomainMovieItemListMapper @Inject constructor(
+)
     :Mapper<MovieItemListRemoteDto, MovieEntity> {
     override fun map(input: MovieItemListRemoteDto): MovieEntity {
         return MovieEntity(
@@ -16,6 +17,7 @@ class DomainMovieItemListMapper @Inject constructor()
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
             year = input.releaseDate ?: "",
             genreEntities = emptyList(),
+
         )
     }
 }
