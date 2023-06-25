@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chocolatecake.bases.BaseFooterAdapter
@@ -55,11 +56,11 @@ class MyRatedFragment : BaseFragment<FragmentMyRatedBinding , MyRatedUiState , M
 
     override fun onEvent(event: MyRatedEvents) {
         when(event){
-            is MyRatedEvents.NavigateToMovieDetails -> TODO()
-            is MyRatedEvents.NavigateToTVShowDetails -> TODO()
-            is MyRatedEvents.OnBackPressed -> TODO()
-            is MyRatedEvents.ShowMyRatedMoviesPressed -> TODO()
-            is MyRatedEvents.ShowMyRatedTvShowPressed -> TODO()
+            is MyRatedEvents.NavigateToMovieDetails -> findNavController().navigate(MyRatedFragmentDirections.actionMyRatedFragmentToMovieDetailsFragment(event.movieId))
+            is MyRatedEvents.NavigateToTVShowDetails -> findNavController().navigate(MyRatedFragmentDirections.actionMyRatedFragmentToMovieDetailsFragment(event.tvId))
+            is MyRatedEvents.OnBackPressed -> findNavController().popBackStack()
+            is MyRatedEvents.ShowMyRatedMoviesPressed -> viewModel.getMyRatedMovies()
+            is MyRatedEvents.ShowMyRatedTvShowPressed -> viewModel.getMyRatedTvShow()
         }
     }
 
