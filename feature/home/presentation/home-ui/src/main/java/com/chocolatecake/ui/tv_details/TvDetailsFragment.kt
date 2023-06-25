@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -82,6 +83,7 @@ class TvDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
+                Log.d("123123123", "collectChange: ${state.recommended}")
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast),

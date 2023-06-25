@@ -186,8 +186,15 @@ class MovieDetailsViewModel @Inject constructor(
                 call = { addToUserListUseCase(id, movieId!!) },
                 onSuccess = ::onDoneSuccess,
                 onError = {
-                    sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔"))
-                    Log.i("chip", "something went wrong")
+                    viewModelScope.launch {
+                        if (addToUserListUseCase(id, movieId!!).statusCode  == 8) {
+                            sendEvent(MovieDetailsUiEvent.OnDoneAdding("Error: status_code = 8"))
+                        } else if(addToUserListUseCase(id, movieId).statusCode  == 403) {
+                            sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔1"))
+                        }
+                        Log.i("chip", "something went wrong")
+                    }
+
                 }
             )
         }
@@ -202,7 +209,7 @@ class MovieDetailsViewModel @Inject constructor(
             call = { createUserListUseCase(listName) },
             onSuccess = ::onCreateUserNewList,
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong2"))
             }
         )
     }
@@ -214,7 +221,7 @@ class MovieDetailsViewModel @Inject constructor(
                 sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong3"))
             }
         )
     }
@@ -226,7 +233,7 @@ class MovieDetailsViewModel @Inject constructor(
                 sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong4"))
             }
         )
     }

@@ -21,6 +21,7 @@ data class TvDetailsUiState(
     val userSelectedLists: List<Int> = emptyList(),
     val isLogined: Boolean = false,
 ) {
+    val reviewsIsEmpty : Boolean get() = reviews.isEmpty()
     data class Info(
         val backdropImageUrl: String = "",
         val name: String = "",
