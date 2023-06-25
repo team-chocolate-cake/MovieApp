@@ -6,7 +6,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R

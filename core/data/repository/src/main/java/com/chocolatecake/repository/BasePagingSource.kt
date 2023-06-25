@@ -18,10 +18,11 @@ abstract class BasePagingSource<Value : Any>(
         val currentPage = params.key ?: 1
         return try {
             val response = fetchData(currentPage)
+            val nextKey = if (response.lastIndex >= currentPage) currentPage + 1 else null
             LoadResult.Page(
                 data = response,
                 prevKey = if (currentPage == 1) null else currentPage - 1,
-                nextKey = currentPage + 1
+                nextKey = nextKey
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
