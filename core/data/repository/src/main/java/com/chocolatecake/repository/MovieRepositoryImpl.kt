@@ -686,6 +686,6 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     override fun isLoginedOrNot(): Boolean {
-        return if(preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
+        return !preferenceStorage.sessionId.isNullOrBlank()
     }
 }
