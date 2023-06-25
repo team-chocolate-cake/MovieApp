@@ -2,42 +2,18 @@ package com.chocolatecake.ui.tv_details
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import com.chocolatecake.ui.home.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddToWatchlistFavouriteBottomSheet(private val watchlistFavouriteBottomSheet: WatchlistFavouriteListener) :
-    BottomSheetDialogFragment() {
-    private lateinit var binding: MyListBottomSheetCreateListBinding
-    val viewModel by activityViewModels<MovieDetailsViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.my_list_bottom_sheet_create_list,
-                container,
-                false
-            )
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.viewModel, viewModel)
-            return root
-        }
-    }
+    BaseBottomSheet<MyListBottomSheetCreateListBinding>() {
+    override val layoutIdFragment: Int= R.layout.my_list_bottom_sheet_create_list
+    override val viewModel by activityViewModels<MovieDetailsViewModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
