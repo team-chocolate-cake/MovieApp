@@ -38,7 +38,7 @@
             android:layout_marginHorizontal="@dimen/spacing_small_8dp"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:maxLines="1"
-            android:text="@{item.title}"
+            android:text="@{`Episode ` +String.valueOf(item.numberEpisode)}"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="@+id/view_card_background"
             app:layout_constraintStart_toEndOf="@+id/shape_image_view_episode"
@@ -105,23 +105,6 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/text_view_number_episode"
-            style="@style/TextStyle.Caption"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/spacing_tiny_4dp"
-            android:layout_marginTop="@dimen/spacing_tiny_4dp"
-            android:background="@drawable/box_background"
-            android:gravity="center"
-            android:maxWidth="@dimen/spacing_large_24dp"
-            android:minWidth="@dimen/height_text_number_episode"
-            android:text="@{String.valueOf(item.numberEpisode)}"
-            android:textColor="@color/on_background_87"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="@+id/shape_image_view_episode"
-            app:layout_constraintTop_toTopOf="@+id/shape_image_view_episode"
-            tools:text="999" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
