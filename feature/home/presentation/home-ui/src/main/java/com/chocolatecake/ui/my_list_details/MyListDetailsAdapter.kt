@@ -1,8 +1,8 @@
-package com.chocolatecake.ui.myListDetails
+package com.chocolatecake.ui.my_list_details
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsListener
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
+import com.chocolatecake.viewmodel.my_list_details.MyListDetailsListener
+import com.chocolatecake.viewmodel.my_list_details.MyListDetailsUiState
 
 
 

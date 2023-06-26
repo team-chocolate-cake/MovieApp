@@ -10,7 +10,6 @@ import com.chocolatecake.local.database.dto.ProfileLocalDto
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.local.database.dto.UserLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieInWatchHistoryLocalDto
-import com.chocolatecake.local.database.dto.movie.MovieListDetailsLocalDto
 import com.chocolatecake.local.database.dto.movie.MovieLocalDto
 import com.chocolatecake.local.database.dto.movie.NowPlayingMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.PopularMovieLocalDto
@@ -18,9 +17,7 @@ import com.chocolatecake.local.database.dto.movie.RecommendedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TopRatedMovieLocalDto
 import com.chocolatecake.local.database.dto.movie.TrendingMoviesLocalDto
 import com.chocolatecake.local.database.dto.movie.UpcomingMovieLocalDto
-import com.chocolatecake.local.database.dto.movie.WatchlistLocalDto
-import com.chocolatecake.local.database.dto.myList.ListLocalDto
-import com.chocolatecake.local.database.dto.myList.ListMovieLocalDto
+
 
 @Database(
     entities = [

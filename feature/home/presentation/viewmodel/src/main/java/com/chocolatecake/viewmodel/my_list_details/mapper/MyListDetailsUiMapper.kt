@@ -1,8 +1,8 @@
-package com.chocolatecake.viewmodel.myListDetails.mapper
+package com.chocolatecake.viewmodel.my_list_details.mapper
 
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.mapper.Mapper
-import com.chocolatecake.viewmodel.myListDetails.MovieUiState
+import com.chocolatecake.viewmodel.my_list_details.MovieUiState
 import javax.inject.Inject
 
 class MyListDetailsUiMapper @Inject constructor() : Mapper<MovieEntity, MovieUiState> {

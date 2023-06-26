@@ -1,6 +1,5 @@
 package com.chocolatecake.repository
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.chocolatecake.entities.EpisodeDetailsEntity
@@ -19,11 +18,7 @@ import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
-import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
-import com.chocolatecake.entities.myList.ListEntity
-import com.chocolatecake.entities.myList.ListMovieEntity
-import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
@@ -47,9 +42,6 @@ import com.chocolatecake.repository.mappers.cash.movie.LocalPopularMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.cash.movie.LocalUpcomingMovieMapper
-import com.chocolatecake.repository.mappers.cash.myList.LocalFavoriteMoviesMapper
-import com.chocolatecake.repository.mappers.cash.myList.LocalListMapper
-import com.chocolatecake.repository.mappers.cash.myList.LocalWatchlistMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreMapper
 import com.chocolatecake.repository.mappers.domain.DomainGenreTvMapper
 import com.chocolatecake.repository.mappers.domain.DomainMovieDetailsMapper
@@ -73,14 +65,7 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMappe
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainFavoriteMoviesMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainListMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainListMovieMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainMovieItemListMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
-import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
-import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
-import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
+import com.chocolatecake.repository.mappers.domain.movie.DomainMovieMapper
 import com.chocolatecake.repository.showmore.PopularMoviesShowMorePagingSource
 import com.chocolatecake.repository.showmore.TopRatedShowMorePagingSource
 import com.chocolatecake.repository.showmore.TrendingShowMorePagingSource

@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.myList
+package com.chocolatecake.ui.my_list
 
 import com.chocolatecake.bases.BaseAdapter
 import com.chocolatecake.ui.home.R

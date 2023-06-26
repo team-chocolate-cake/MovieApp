@@ -1,4 +1,4 @@
-package com.chocolatecake.viewmodel.myListDetails
+package com.chocolatecake.viewmodel.my_list_details
 
 
 import androidx.lifecycle.SavedStateHandle
@@ -12,7 +12,7 @@ import com.chocolatecake.usecase.myList.DeleteMovieFromDetailsListUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
 import com.chocolatecake.usecase.myList.GetMyWatchlistListUseCase
-import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
+import com.chocolatecake.viewmodel.my_list_details.mapper.MyListDetailsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import java.net.SocketTimeoutException

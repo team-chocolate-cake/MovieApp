@@ -6,11 +6,11 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.viewmodel.myListDetails.MovieUiState" />
+            type="com.chocolatecake.viewmodel.my_list_details.MovieUiState" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.viewmodel.myListDetails.MyListDetailsListener" />
+            type="com.chocolatecake.viewmodel.my_list_details.MyListDetailsListener" />
     </data>
 
 

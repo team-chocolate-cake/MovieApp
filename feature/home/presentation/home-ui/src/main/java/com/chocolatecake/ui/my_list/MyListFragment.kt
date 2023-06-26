@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.myList
+package com.chocolatecake.ui.my_list
 
 import android.os.Bundle
 import android.view.View

@@ -1,4 +1,4 @@
-package com.chocolatecake.repository.mappers.domain.myList
+package com.chocolatecake.repository.mappers.domain.movie
 
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity

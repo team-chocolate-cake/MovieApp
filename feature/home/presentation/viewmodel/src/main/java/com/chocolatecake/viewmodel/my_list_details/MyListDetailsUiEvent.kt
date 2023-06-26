@@ -1,6 +1,4 @@
-package com.chocolatecake.viewmodel.myListDetails
-
-import com.chocolatecake.viewmodel.myList.MyListUiEvent
+package com.chocolatecake.viewmodel.my_list_details
 
 
 sealed interface MyListDetailsUiEvent {

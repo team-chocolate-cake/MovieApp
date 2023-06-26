@@ -1,7 +1,6 @@
-package com.chocolatecake.ui.myList
+package com.chocolatecake.ui.my_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

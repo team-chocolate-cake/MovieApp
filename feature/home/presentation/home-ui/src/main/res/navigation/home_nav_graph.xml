@@ -160,7 +160,7 @@
     <fragment
         android:id="@+id/myListFragment"
         tools:layout="@layout/fragment_my_list"
-        android:name="com.chocolatecake.ui.myList.MyListFragment"
+        android:name="com.chocolatecake.ui.my_list.MyListFragment"
         android:label="MyListFragment" >
         <action
             android:id="@+id/action_myListFragment_to_myListDetailsFragment"
@@ -169,7 +169,7 @@
     <fragment
         android:id="@+id/myListDetailsFragment"
         tools:layout="@layout/fragment_my_list_details"
-        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
+        android:name="com.chocolatecake.ui.my_list_details.MyListDetailsFragment"
         android:label="MyListDetailsFragment" >
         <argument
             android:name="listId"

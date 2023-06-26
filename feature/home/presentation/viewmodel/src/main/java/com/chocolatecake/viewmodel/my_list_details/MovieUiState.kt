@@ -1,7 +1,4 @@
-package com.chocolatecake.viewmodel.myListDetails
-
-import android.net.Uri
-import com.chocolatecake.entities.GenreEntity
+package com.chocolatecake.viewmodel.my_list_details
 
 data class MovieUiState(
     val id: Int,

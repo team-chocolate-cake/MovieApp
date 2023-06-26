@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.myListDetails
+package com.chocolatecake.ui.my_list_details
 
 import android.os.Bundle
 import android.view.View
@@ -10,9 +10,9 @@ import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.common.base.SwipeToDeleteItem
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListDetailsBinding
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
-import com.chocolatecake.viewmodel.myListDetails.MyListDetailsViewModel
+import com.chocolatecake.viewmodel.my_list_details.MyListDetailsUiEvent
+import com.chocolatecake.viewmodel.my_list_details.MyListDetailsUiState
+import com.chocolatecake.viewmodel.my_list_details.MyListDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
