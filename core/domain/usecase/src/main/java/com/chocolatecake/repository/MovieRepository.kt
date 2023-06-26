@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
+import com.chocolatecake.entities.PeopleDataEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.ReviewEntity
@@ -142,4 +143,9 @@ interface MovieRepository {
 
 
     fun isLoginedOrNot(): Boolean
+
+    suspend fun getPersonDetails(person_id: Int): PeopleDataEntity
+    suspend fun getMoviesByPerson( person_id: Int): List<MovieEntity>
+    suspend fun getTvShowsByPerson( person_id: Int): List<TvShowEntity>
+
 }

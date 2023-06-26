@@ -4,6 +4,7 @@ import android.app.UiModeManager
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -199,5 +200,15 @@ fun <T> View.hideWhenError(list: List<T>?) {
 fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit) {
     this.setNavigationOnClickListener {
         onClick()
+
     }
 }
+    @BindingAdapter("convertGenderText")
+    fun TextView.convertGenderText(gender: String?) {
+        text = when (gender) {
+            "1" -> "female"
+            "2" -> "male"
+            else -> ""
+        }.takeIf { gender != null } ?: ""
+
+    }

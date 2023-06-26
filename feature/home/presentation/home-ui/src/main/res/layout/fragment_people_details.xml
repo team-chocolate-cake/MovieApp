@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.people.PeopleDetailsViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:elevation="2dp"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/arrow_left"
+                app:navigationIconTint="@color/on_background_87"
+                app:onClickNavigation="@{viewModel.backNavigate}"
+                app:titleTextAppearance="@style/TextStyle.TitleMedium"
+                app:titleTextColor="@color/on_background_87"/>
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shape_image_view_people"
+                android:layout_width="149dp"
+                android:layout_height="186dp"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.state.peopleData.imageUrl}"
+                app:layout_constraintBottom_toTopOf="@id/text_view_people_biography_title"
+                app:layout_constraintDimensionRatio="3:4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Large"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="149dp"
+                android:layout_height="186dp"
+                android:background="@drawable/gradient_background"
+                app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_people"
+                app:layout_constraintEnd_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintStart_toStartOf="@+id/shape_image_view_people" />
+
+            <TextView
+                android:id="@+id/text_view_people_name"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="1dp"
+                android:text="@{viewModel.state.peopleData.name}"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_people_acting"
+                app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Jason Statham" />
+
+            <TextView
+                android:id="@+id/text_view_people_acting"
+                style="@style/TextStyle.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="@{viewModel.state.peopleData.acting}"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_people_gender"
+                app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_people_name"
+                tools:text="Acting" />
+
+            <TextView
+                android:id="@+id/text_view_people_gender"
+                style="@style/TextStyle.Caption"
+                convertGenderText="@{viewModel.state.peopleData.gender}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_acting"
+                tools:text="Male" />
+
+            <TextView
+                android:id="@+id/text_view_people_movies_number"
+                style="@style/TextStyle.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:text="@{viewModel.state.peopleData.num_movies}"
+                android:textColor="@color/on_background_60"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_gender"
+                tools:text="Number of Movies: 30" />
+
+            <TextView
+                android:id="@+id/text_view_people_country"
+                style="@style/TextStyle.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginBottom="@dimen/spacing_extra_extra_giant_56dp"
+                android:text="@{viewModel.state.peopleData.placeOfBirth}"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintBottom_toBottomOf="@id/shape_image_view_people"
+                app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_people_movies_number"
+                tools:text="Beirut, Lebanon" />
+
+            <TextView
+                android:id="@+id/text_view_people_biography_title"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:text="@string/biography"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintBottom_toTopOf="@id/text_view_people_biography"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shape_image_view_people" />
+
+            <TextView
+                android:id="@+id/text_view_people_biography"
+                style="@style/TextStyle.BodySmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                android:text="@{viewModel.state.peopleData.biography}"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintBottom_toTopOf="@id/text_view_people_movies"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_people_biography_title"
+                tools:text="biography text" />
+
+
+            <TextView
+                android:id="@+id/text_view_people_movies"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:text="@string/movies"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view_people_movies"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_people_biography" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_people_movies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small_8dp"
+                android:layout_marginTop="@dimen/spacing_tiny_4dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:items="@{viewModel.state.movies}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_movies" />
+
+            <TextView
+                android:id="@+id/text_view_people_tv_shows"
+                style="@style/TextStyle.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
+                android:text="@string/tv_shows"
+                android:textColor="@color/on_background_87"
+                app:layout_constraintBottom_toTopOf="@id/recycler_view_people_tv_shows"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view_people_movies" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_people_tv_shows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_custom_12dp"
+                android:layout_marginTop="@dimen/spacing_tiny_4dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:items="@{viewModel.state.tvShows}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_tv_shows" />
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/primary"
+                app:isVisible="@{viewModel.state.loading}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
