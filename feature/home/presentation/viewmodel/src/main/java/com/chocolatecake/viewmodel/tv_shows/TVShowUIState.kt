@@ -3,6 +3,7 @@ package com.chocolatecake.viewmodel.tv_shows
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlin.math.roundToInt
 
 data class TVShowUIState(
     val tvShowsType: TVShowsType = TVShowsType.AIRING_TODAY,
@@ -21,7 +22,9 @@ data class TVShowsUI(
     val tvId: Int?,
     val imageUrl: String?,
     val rate: Double?
-)
+){
+    fun formattedRate(): Double =if (rate==null) 0.0 else (rate * 10.0).roundToInt() / 10.0
+}
 
 enum class TVShowsType {
     AIRING_TODAY,
