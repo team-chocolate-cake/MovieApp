@@ -11,9 +11,6 @@ data class MyRatedUiState (
     val errorList: List<String>? = emptyList(),
     val isLoading: Boolean = false
 )
-
-
-
 enum class RateType{
     Movies ,
     TVShows

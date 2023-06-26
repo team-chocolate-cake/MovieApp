@@ -43,7 +43,6 @@ class MyRatedFragment : BaseFragment<FragmentMyRatedBinding , MyRatedUiState , M
             }
         }
     }
-
     override fun onEvent(event: MyRatedEvents) {
         when(event){
             is MyRatedEvents.NavigateToMovieDetails -> findNavController().navigate(MyRatedFragmentDirections.actionMyRatedFragmentToMovieDetailsFragment(event.movieId))
@@ -53,6 +52,4 @@ class MyRatedFragment : BaseFragment<FragmentMyRatedBinding , MyRatedUiState , M
             is MyRatedEvents.ShowMyRatedTvShowPressed -> viewModel.getMyRatedTvShow()
         }
     }
-
-
 }
