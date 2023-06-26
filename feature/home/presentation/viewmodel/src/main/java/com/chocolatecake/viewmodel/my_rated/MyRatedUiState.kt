@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 data class MyRatedUiState (
-    val MyRateType: MyRateType = com.chocolatecake.viewmodel.my_rated.MyRateType.Movies,
+    val MyRateType: RateType = RateType.Movies,
     val MyRatedMedia: Flow<PagingData<MovieHorizontalUIState>> = emptyFlow(),
     val errorList: List<String>? = emptyList(),
     val isLoading: Boolean = false
@@ -14,7 +14,7 @@ data class MyRatedUiState (
 
 
 
-enum class MyRateType{
+enum class RateType{
     Movies ,
     TVShows
 }
