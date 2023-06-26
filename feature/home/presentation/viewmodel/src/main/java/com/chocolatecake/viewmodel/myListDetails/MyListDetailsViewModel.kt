@@ -1,11 +1,9 @@
 package com.chocolatecake.viewmodel.myListDetails
 
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
-import com.chocolatecake.bases.ListType
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
@@ -14,17 +12,11 @@ import com.chocolatecake.usecase.myList.DeleteMovieFromDetailsListUseCase
 import com.chocolatecake.usecase.myList.GetMyFavoriteListUseCase
 import com.chocolatecake.usecase.myList.GetMyListDetailsByListIdUseCase
 import com.chocolatecake.usecase.myList.GetMyWatchlistListUseCase
-import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
-import com.chocolatecake.usecase.myList.MakeAsWatchlistUseCase
-import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
-import com.chocolatecake.viewmodel.search.SearchUiEvent
-import com.chocolatecake.viewmodel.search.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import java.net.SocketTimeoutException
 import javax.inject.Inject
-import kotlin.Error
 
 @HiltViewModel
 class MyListDetailsViewModel @Inject constructor(
