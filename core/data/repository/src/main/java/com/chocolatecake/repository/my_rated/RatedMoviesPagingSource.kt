@@ -17,7 +17,7 @@ class RatedMoviesPagingSource @Inject constructor(
     private val movieDao: MovieDao,
 ) : BasePagingSource<MyRatedMovieEntity>(service) {
     override suspend fun fetchData(page: Int): List<MyRatedMovieEntity> {
-        val response = service.getRatedMovies(page).body()?.movies?.filterNotNull()
+        val response = service.getRatedMovies(page).body()?.results?.filterNotNull()
         val genreMovieMapper = domainGenreMapper.map(movieDao.getGenresMovies())
         return response?.map { mapper.map(it , genreMovieMapper) } ?: emptyList()
     }
