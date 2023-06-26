@@ -2,7 +2,7 @@ package com.chocolatecake.viewmodel.my_rated
 
 
 sealed interface MyRatedEvents{
-    object OnBackPressed:MyRatedEvents
+    object NavigateBack:MyRatedEvents
 
     object ShowMyRatedMoviesPressed:MyRatedEvents
 

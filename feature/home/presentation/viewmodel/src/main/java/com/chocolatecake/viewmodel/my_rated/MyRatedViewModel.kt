@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.my_rated
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
@@ -111,7 +110,7 @@ class MyRatedViewModel @Inject constructor(
     }
 
     override fun onBackPressed() {
-        sendEvent(MyRatedEvents.OnBackPressed)
+        sendEvent(MyRatedEvents.NavigateBack)
     }
 
     override fun onClickMovieChip() {
