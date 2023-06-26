@@ -145,5 +145,14 @@
                 app:showWhenError="@{viewModel.state.errors}" />
         </LinearLayout>
         <!--endregion-->
+
+        <Button
+            android:id="@+id/button_play_video"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center|right"
+            android:onClick="@{()->viewModel.onClickPlayButton()}"
+            android:layout_height="wrap_content"
+            android:text="Play Trailer" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

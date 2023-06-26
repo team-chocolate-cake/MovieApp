@@ -11,6 +11,7 @@ import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvDetailsBinding
 import com.chocolatecake.ui.tv_details.adapter.TvDetailsAdapter
+import com.chocolatecake.usecase.youtube_trailer.MediaType
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
@@ -56,13 +57,21 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnShowMoreCast -> showSnackBar("Show More Cast")
             is TvDetailsUiEvent.OnShowMoreRecommended -> showSnackBar("Show More Recommended")
-            is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
+            is TvDetailsUiEvent.PlayButton -> navigateToTrailerFragment(event.youtubeKey)
             is TvDetailsUiEvent.OnSaveButtonClick -> showAddToWatchlistFavouriteBottomSheet()
             is TvDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
         }
+    }
+
+    private fun navigateToTrailerFragment(videoKey: String) {
+        findNavController().navigate(
+            TvDetailsFragmentDirections
+                .actionTvDetailsFragmentToTrailerFragment3(videoKey)
+        )
+        showSnackBar(videoKey)
     }
 
     private fun setAdapter() {
@@ -143,7 +152,6 @@ class TvDetailsFragment :
 
         }
     }
-
 
 
     override fun onFavourite() {

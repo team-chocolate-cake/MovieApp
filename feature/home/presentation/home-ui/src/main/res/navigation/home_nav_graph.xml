@@ -98,9 +98,7 @@
         <action
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment" />
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
-            app:destination="@id/trailerFragment" />
+
     </fragment>
 
 
@@ -151,8 +149,9 @@
             android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
             app:destination="@id/seasonDetailsFragment" />
         <action
-            android:id="@+id/action_tvDetailsFragment_to_trailerFragment"
+            android:id="@+id/action_tvDetailsFragment_to_trailerFragment3"
             app:destination="@id/trailerFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -212,21 +211,8 @@
         android:label="TrailerFragment"
         tools:layout="@layout/fragment_trailer">
         <argument
-            android:name="seriesId"
-            app:argType="integer" />
-        <argument
-            android:name="seasonNumber"
-            app:argType="integer" />
-        <argument
-            android:name="episodeNumber"
-            app:argType="integer" />
-        <argument
-            android:name="mediaId"
-            app:argType="integer" />
-        <argument
-            android:name="type"
-            app:argType="com.chocolatecake.usecase.youtube_trailer.MediaType" />
-
+            android:name="videoKey"
+            app:argType="string" />
     </fragment>
 
 </navigation>
