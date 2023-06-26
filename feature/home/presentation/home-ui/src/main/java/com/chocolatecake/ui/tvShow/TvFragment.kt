@@ -82,10 +82,11 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     }
 
     private fun doNothingWhenTheSameChipIsReselected() {
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
-            if (chip?.isChecked == true) {
-                // Do nothing when the same chip is reselected
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId.first())
+            chip.let {
+                group.forEach { itemChip -> itemChip.isClickable = true }
+                chip.isClickable = false
             }
         }
     }

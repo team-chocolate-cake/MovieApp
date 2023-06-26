@@ -23,7 +23,7 @@ data class TVShowsUI(
     val imageUrl: String,
     val rate: Double
 ) {
-    fun formattedRate(): Double = ((rate.times(100)).roundToInt()) / 100.0
+    fun formattedRate(): Double = (rating * 10.0).toInt() / 10.0
 }
 
 enum class TVShowsType {
