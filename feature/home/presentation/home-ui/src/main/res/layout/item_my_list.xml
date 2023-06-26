@@ -112,7 +112,7 @@
                         app:layout_constraintTop_toTopOf="@id/image_button_show_delete"
                         app:layout_constraintBottom_toBottomOf="@id/image_button_show_delete"
                         android:textColor="@color/on_background_87"
-                        app:isVisibleOrGone="@{!viewModel.state.isDelete}" />
+                        app:isVisible="@{!viewModel.state.isShowDelete}" />
 
 <!--                    <LinearLayout-->
 <!--                        android:id="@+id/material_card_view_delete_list"-->

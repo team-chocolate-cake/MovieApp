@@ -9,6 +9,4 @@ data class MyListUiState(
 
     ){
     val isFailure: Boolean = error?.isNotEmpty() == true
-    val isDelete: Boolean = isShowDelete
-
 }

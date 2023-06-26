@@ -95,7 +95,7 @@ class MyListViewModel @Inject constructor(
                 deleteListUseCase.invoke(listId = listId)
             },
             onSuccess = ::onDeleteListSuccess,
-            onError = ::onError,
+            onError = ::onErrorDelete ,
         )
     }
 
@@ -120,6 +120,16 @@ class MyListViewModel @Inject constructor(
         }
     }
 
+    private fun onErrorDelete(throwable: Throwable) {
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false,
+                isShowDelete = false
+            )
+        }
+        getData()
+    }
 
     private fun showErrorWithSnackBar(messages: String) {
         sendEvent(MyListUiEvent.ShowSnackBar(messages))

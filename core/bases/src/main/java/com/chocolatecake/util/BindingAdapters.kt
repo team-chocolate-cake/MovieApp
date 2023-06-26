@@ -3,6 +3,7 @@ package com.chocolatecake.util
 import android.annotation.SuppressLint
 import android.app.UiModeManager
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -21,6 +22,7 @@ fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
 
 @BindingAdapter(value = ["app:isVisible"])
 fun View.isVisible(isVisible: Boolean) {
+    Log.i("bb", "isVisible:  $isVisible")
     if (isVisible) {
         this.visibility = View.VISIBLE
     } else {

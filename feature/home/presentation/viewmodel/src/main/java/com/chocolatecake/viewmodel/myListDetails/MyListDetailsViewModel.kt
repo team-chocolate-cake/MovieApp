@@ -164,7 +164,6 @@ class MyListDetailsViewModel @Inject constructor(
             }
 
             else -> {
-                Log.i("bb", "onDeleteMediaSuccess: $listId ")
                 getAllMovieListDetails(listId)
             }
         }
