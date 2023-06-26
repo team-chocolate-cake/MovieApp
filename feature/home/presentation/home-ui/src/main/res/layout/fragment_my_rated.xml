@@ -8,9 +8,10 @@
             type="com.chocolatecake.viewmodel.my_rated.MyRatedViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_my_rated_scene"
         tools:context="com.chocolatecake.ui.my_rated.MyRatedFragment">
 
         <androidx.appcompat.widget.Toolbar
@@ -87,7 +88,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:orientation="vertical"
-            app:isVisible="@{!viewModel.state.loading}"
+            app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.errorList.empty}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +106,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <include
+            android:id="@+id/lottie_animation_view_no_network"
+            layout="@layout/layout_no_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{!viewModel.state.errorList.empty}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

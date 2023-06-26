@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+
+    <ConstraintSet android:id="@+id/start">
+
+        <Constraint
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+            app:visibilityMode="ignore"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:id="@+id/recycler_view_media" />
+        <Constraint
+            android:id="@+id/chipGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:visibilityMode="ignore"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:visibilityMode="ignore"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            app:visibilityMode="ignore"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <Constraint
+            android:id="@+id/lottie_animation_view_no_network"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/chipGroup"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:visibilityMode="ignore"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            android:alpha="0"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/recycler_view_media"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:visibilityMode="ignore"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            app:visibilityMode="ignore"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            app:visibilityMode="ignore"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <Constraint
+            android:id="@+id/lottie_animation_view_no_network"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            app:visibilityMode="ignore"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+    </ConstraintSet>
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start">
+        <KeyFrameSet>
+
+        </KeyFrameSet>
+        <OnSwipe
+            app:dragDirection="dragUp"
+            motion:touchAnchorId="@+id/recycler_view_media"
+            />
+    </Transition>
+</MotionScene>
