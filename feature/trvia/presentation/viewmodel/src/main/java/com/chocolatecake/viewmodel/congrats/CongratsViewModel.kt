@@ -28,22 +28,31 @@ class CongratsViewModel @Inject constructor(
             GameType.TV_SHOW -> userEntity.tvShowGameLevel
             GameType.MEMORIZE -> userEntity.memorizeGameLevel
         }
-        _state.update { it.copy(
-            level = level,
-            userName = userEntity.username,
-            points = userEntity.totalPoints
-        ) }
+        val numOfQuestions = when (gameType) {
+            GameType.PEOPLE -> userEntity.numPeopleQuestionsPassed
+            GameType.MOVIE -> userEntity.numMoviesQuestionsPassed
+            GameType.TV_SHOW -> userEntity.numTvShowQuestionsPassed
+            else -> -1
+        }
+        _state.update {
+            it.copy(
+                level = level,
+                userName = userEntity.username,
+                points = userEntity.totalPoints,
+                isCompletedLevel = numOfQuestions == 15
+            )
+        }
     }
 
     private fun onError(throwable: Throwable) {
 
     }
 
-     fun onClickNextLevel() {
+    fun onClickNextLevel() {
         sendEvent(CongratsUIEvent.NavigateToNextLevel(gameType))
     }
 
-     fun onClickReturn() {
+    fun onClickReturn() {
         sendEvent(CongratsUIEvent.NavigateToGameTypeScreen)
     }
 

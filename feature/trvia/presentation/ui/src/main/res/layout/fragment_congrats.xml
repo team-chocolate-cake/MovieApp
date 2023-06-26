@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large_24dp"
             android:gravity="center"
+            app:isVisible="@{!viewModel.state.completedLevel}"
             android:text="@{@string/reward_text(viewModel.state.points, viewModel.state.level)}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="@+id/text_view_congrats"
@@ -58,6 +59,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_next_level"
+            app:isVisible="@{!viewModel.state.completedLevel}"
             style="@style/PrimaryButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/spacing_extra_giant_48dp"
