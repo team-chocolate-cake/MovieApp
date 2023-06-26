@@ -2,6 +2,7 @@ package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.DeleteMovieRequest
 import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
@@ -267,10 +268,10 @@ interface MovieService {
     suspend fun getDetailsList(@Path("list_id") listId: Int)
             : Response<ListDetailsWrapperResponse<MovieRemoteDto>>
 
-    @GET("list/{list_id}/remove_item")
+    @POST("list/{list_id}/remove_item")
     suspend fun deleteMovieDetailsList(
         @Path("list_id") listId: Int,
-        @Body media_id: Int,
+        @Body movieRequest: DeleteMovieRequest,
     ): Response<StatusResponse>
 
 

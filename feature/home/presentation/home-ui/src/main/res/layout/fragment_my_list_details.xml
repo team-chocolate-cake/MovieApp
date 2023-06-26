@@ -77,6 +77,7 @@
                 android:paddingTop="@dimen/spacing_small_8dp"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/spacing_medium_16dp"
+                app:isVisible="@{!viewModel.state.isFailure}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_my_list_details" />

@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
 import com.chocolatecake.bases.ListType
+import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
@@ -120,7 +121,9 @@ class MyListDetailsViewModel @Inject constructor(
                 deleteWatchlist(mediaId)
             }
 
-            ListName.watchlist.name -> {
+            else-> {
+                Log.i("bb", "onDeleteMediaSuccess: $listId ")
+                Log.i("bb", "onDeleteMediaSuccess: $mediaId ")
                 deleteMovieFromListDetails(mediaId)
             }
         }
@@ -129,7 +132,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun deleteFavorite(mediaId: Int) {
         tryToExecute(
             call = { deleteFavoriteUseCase(mediaId, "movie", false) },
-            onSuccess = { onDeleteMediaSuccess(true) },
+            onSuccess = ::onDeleteMediaSuccess ,
             onError = ::onError,
         )
     }
@@ -137,7 +140,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun deleteWatchlist(mediaId: Int) {
         tryToExecute(
             call = { deleteWatchlistUseCase(mediaId, "movie", false) },
-            onSuccess = { onDeleteMediaSuccess(true) },
+            onSuccess = ::onDeleteMediaSuccess ,
             onError = ::onError,
         )
     }
@@ -146,22 +149,14 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = {
                 deleteMovieFromDetailsListUseCase(listId = listId, mediaId = mediaId)
-                Log.i(
-                    "bb", "deleteMovieFromListDetails: ${
-                        deleteMovieFromDetailsListUseCase(
-                            listId = listId,
-                            mediaId = mediaId
-                        )
-                    }"
-                )
             },
-            onSuccess = { onDeleteMediaSuccess(true) },
+            onSuccess =  ::onDeleteMediaSuccess ,
             onError = ::onError,
         )
     }
 
 
-    private fun onDeleteMediaSuccess(isDelete: Boolean = false) {
+    private fun onDeleteMediaSuccess(isDelete: StatusEntity ) {
         _state.update { it.copy(isLoading = false) }
         when (listName) {
             ListName.favorite.name -> {
@@ -173,6 +168,7 @@ class MyListDetailsViewModel @Inject constructor(
             }
 
             else -> {
+                Log.i("bb", "onDeleteMediaSuccess: $listId ")
                 getAllMovieListDetails(listId)
             }
         }

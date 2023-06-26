@@ -30,6 +30,7 @@ import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.dto.SearchHistoryLocalDto
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.DeleteMovieRequest
 import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.RateRequest
@@ -638,7 +639,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteMovieDetailsList(listId: Int, mediaId: Int): StatusEntity {
-        val call = wrapApiCall { movieService.deleteMovieDetailsList(listId = listId,  mediaId)}.also {
+        val call = wrapApiCall { movieService.deleteMovieDetailsList(listId = listId, DeleteMovieRequest(mediaId = mediaId) )}.also {
             Log.i("bb", "deleteMovieDetailsList: $it ")
         }
         return domainStatusMapper.map(call)
