@@ -39,7 +39,6 @@ class PeopleGuessingFragment :
     override fun onEvent(event: GameUIEvent) {
         when (event) {
             GameUIEvent.NavigateToLoserScreen -> {
-                showSnackBar("Game Over !👍")
                 findNavController().navigate(
                     PeopleGuessingFragmentDirections.actionPeopleGuessingFragmentToGameoverFragment(
                         gameType = GameType.PEOPLE
