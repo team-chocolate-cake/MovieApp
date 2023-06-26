@@ -8,6 +8,6 @@ class GetTvShowYoutubeDetailsUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
     suspend operator fun invoke(tvShowId: Int): YoutubeVideoDetailsEntity {
-        return movieRepository.getTvShowYoutubeDetails(tvShowId)
+        return movieRepository.getTrailerVideoForTvShow(tvShowId)
     }
 }

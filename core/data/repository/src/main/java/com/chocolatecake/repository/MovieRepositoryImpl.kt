@@ -675,18 +675,30 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     /// region trailer
-    override suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity {
+    override suspend fun getTrailerVideoForTvShow(tvShowID: Int): YoutubeVideoDetailsEntity {
         val call =
-            wrapApiCall { movieService.getTvShowYoutubeVideoDetails(tvShowID) }.results?.first()
+            wrapApiCall { movieService.getTrailerVideoForTvShow(tvShowID) }.results?.first()
                 ?: YoutubeVideoDetailsRemoteDto()
         return domainYoutubeDetailsMapper.map(call)
     }
 
-    override suspend fun getMovieYoutubeDetails(movieID: Int): YoutubeVideoDetailsEntity {
+    override suspend fun getTrailerVideoForMovie(movieID: Int): YoutubeVideoDetailsEntity {
         val call =
-            wrapApiCall { movieService.getMovieYoutubeVideoDetails(movieID) }.results?.first()
+            wrapApiCall { movieService.getTrailerVideoForMovie(movieID) }.results?.first()
                 ?: YoutubeVideoDetailsRemoteDto()
         return domainYoutubeDetailsMapper.map(call)
+    }
+
+    override suspend fun getVideoEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): YoutubeVideoDetailsEntity {
+        val response =
+            wrapApiCall {movieService.getEpisodeVideos(seriesId, seasonNumber, episodeNumber)}
+                .results?.first()?:YoutubeVideoDetailsRemoteDto()
+
+        return domainYoutubeDetailsMapper.map(response)
     }
 
     /// endregion

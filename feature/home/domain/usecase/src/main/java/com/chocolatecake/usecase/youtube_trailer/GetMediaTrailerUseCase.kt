@@ -10,11 +10,11 @@ class GetMediaTrailerUseCase @Inject constructor(
     suspend operator fun invoke(mediaType: MediaType, mediaID: Int): YoutubeVideoDetailsEntity {
         val result = when (mediaType) {
             MediaType.MOVIE -> {
-                movieRepository.getMovieYoutubeDetails(mediaID)
+                movieRepository.getTrailerVideoForMovie(mediaID)
             }
 
             MediaType.TV_SHOW -> {
-                movieRepository.getTvShowYoutubeDetails(mediaID)
+                movieRepository.getTrailerVideoForTvShow(mediaID)
             }
         }
         return result
