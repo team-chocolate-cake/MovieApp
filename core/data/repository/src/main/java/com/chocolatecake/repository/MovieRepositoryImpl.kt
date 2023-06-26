@@ -86,6 +86,7 @@ import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.TopRatedTVShowsPagingSource
+import java.util.Random
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -140,7 +141,8 @@ class MovieRepositoryImpl @Inject constructor(
     private val favoriteMoviesMapper: RemoteFavoriteBodyMapper,
     private val watchlistMapper: WatchlistRequestMapper,
     private val domainReviewsMapper: DomainReviewsMapper,
-    private val domainUserListsMapper: DomainUserListsMapper
+    private val domainUserListsMapper: DomainUserListsMapper,
+    private val random: Random
 ) : BaseRepository(), MovieRepository {
 
     /// region showMore
@@ -167,8 +169,16 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     /// region movies
-    override suspend fun getPopularMovies(): List<MovieEntity> {
+    override suspend fun getPopularMoviesFromDatabase(): List<MovieEntity> {
         return domainPopularMovieMapper.map(movieDao.getPopularMovies())
+    }
+
+    override suspend fun getPopularMoviesFromRemote(): List<MovieEntity> {
+        val page = random.nextInt(500) + 1
+        val call =
+            wrapApiCall { movieService.getPopularMovies(page = page) }.results?.filterNotNull()
+                ?: emptyList()
+        return domainMovieMapper.map(call)
     }
 
     override suspend fun refreshPopularMovies() {
@@ -227,8 +237,16 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getPopularPeople(): List<PeopleEntity> {
+    override suspend fun getPopularPeopleFromDatabase(): List<PeopleEntity> {
         return domainPeopleMapper.map(movieDao.getPopularPeople())
+    }
+
+    override suspend fun getPopularPeopleFromRemote(): List<PeopleEntity> {
+        val page = random.nextInt(500) + 1
+        val call =
+            wrapApiCall { movieService.getPopularPeople(page = page) }.results?.filterNotNull()
+                ?: emptyList()
+        return domainPeopleRemoteMapper.map(call)
     }
 
     override suspend fun refreshPopularPeople() {
@@ -521,7 +539,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
 
-
     override suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean {
 
         val result = movieService.addWatchlist(
@@ -534,8 +551,6 @@ class MovieRepositoryImpl @Inject constructor(
 
         return result
     }
-
-
 
 
     override suspend fun addList(name: String): Boolean {
@@ -686,6 +701,6 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     override fun isLoginedOrNot(): Boolean {
-        return if(preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
+        return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
     }
 }
