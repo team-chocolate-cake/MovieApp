@@ -233,15 +233,6 @@ interface MovieService {
     suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
 
 
-    @POST("account/{account_id}/favorite")
-    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<MovieResponse>
-
-
-    @GET("account/{account_id}/watchlist/{media_type}")
-    suspend fun getWatchlistByMediaType(
-        @Path("media_type") mediaType: String,
-    ): Response<DataWrapperResponse<MovieRemoteDto>>
-
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getWatchlist(): Response<DataWrapperResponse<MovieRemoteDto>>
 
@@ -261,9 +252,6 @@ interface MovieService {
     @GET("account/{account_id}/lists")
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
 
-
-//    @GET("list/{list_id}/add_item")
-//    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
 
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)
