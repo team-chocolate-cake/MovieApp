@@ -20,8 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class WatchHistoryFragment
-    : BaseFragment<FragmentWatchHistoryBinding, WatchHistoryUiState, WatchHistoryUiEvent>(),
-    WatchHistoryToolBarCallBack {
+    : BaseFragment<FragmentWatchHistoryBinding, WatchHistoryUiState, WatchHistoryUiEvent>() {
 
     override val layoutIdFragment = R.layout.fragment_watch_history
     override val viewModel by viewModels<WatchHistoryViewModel>()
@@ -37,7 +36,7 @@ class WatchHistoryFragment
     }
 
     private fun setupRecyclerAdapter() {
-        adapter = WatchHistoryAdapter(mutableListOf(), viewModel, this)
+        adapter = WatchHistoryAdapter(mutableListOf(), viewModel)
         binding.watchHistoryRecyclerView.adapter = adapter
     }
 
@@ -47,6 +46,7 @@ class WatchHistoryFragment
             is WatchHistoryUiEvent.NavigateToMovieDetails -> navigateToMovieDetails(event.movieId)
             is WatchHistoryUiEvent.ShowDeleteSnackBar -> deletionIndicatorSnackBar.show()
             is WatchHistoryUiEvent.Error -> showSnackBar(getString(R.string.cannot_fetch_movies))
+            is WatchHistoryUiEvent.OnClickBack -> onBackButtonPressed()
         }
     }
 
@@ -131,11 +131,8 @@ class WatchHistoryFragment
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun setSearchQueryState(query: CharSequence?) {
-        viewModel.setSearchQuery(query)
-    }
 
-    override fun onBackButtonPressed() {
+    fun onBackButtonPressed() {
         findNavController().popBackStack()
     }
 
