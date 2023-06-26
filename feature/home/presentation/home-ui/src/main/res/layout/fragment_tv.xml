@@ -114,9 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:onClick="@{() -> viewModel.scrollToTopScreen()}"
-            android:src="@drawable/ic_arrow_top"
-            tools:layout_editor_absoluteX="380dp"
-            tools:layout_editor_absoluteY="672dp" />
+            android:src="@drawable/ic_arrow_top" />
 
         <ProgressBar
             android:id="@+id/progressBar"

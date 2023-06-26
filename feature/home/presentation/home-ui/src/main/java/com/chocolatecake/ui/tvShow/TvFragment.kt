@@ -71,7 +71,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
 
     private fun showOnTheAirResult() = viewModel.getOnTheAirTVShows()
     private fun scrollToTopScreen() {
-        binding.recyclerViewTvShows.smoothScrollToPosition(0)
+        binding.recyclerViewTvShows.scrollToPosition(0)
     }
 
     private fun showAiringTodayResult() = viewModel.getAiringTodayTVShows()

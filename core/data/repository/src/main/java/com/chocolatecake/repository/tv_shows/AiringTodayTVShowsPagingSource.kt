@@ -20,5 +20,4 @@ class AiringTodayTVShowsPagingSource @Inject constructor(
         val response = service.getAiringTodayTVShows(page).body()?.results?.filterNotNull()
         return response?.map { mapper.map(it) } ?: emptyList()
     }
-
 }
