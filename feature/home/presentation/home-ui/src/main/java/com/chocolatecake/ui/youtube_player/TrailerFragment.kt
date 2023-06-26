@@ -1,11 +1,10 @@
 package com.chocolatecake.ui.youtube_player
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTrailerBinding
 import com.chocolatecake.viewmodel.youtube_trailer.TrailerInteraction
@@ -20,6 +19,15 @@ class TrailerFragment :
     override val layoutIdFragment = R.layout.fragment_trailer
     override val viewModel: TrailerViewModel by viewModels()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
     override fun onEvent(event: TrailerInteraction) {
 
     }
