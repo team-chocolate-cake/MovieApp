@@ -22,23 +22,12 @@ fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
 
 @BindingAdapter(value = ["app:isVisible"])
 fun View.isVisible(isVisible: Boolean) {
-    Log.i("bb", "isVisible:  $isVisible")
     if (isVisible) {
         this.visibility = View.VISIBLE
     } else {
         this.visibility = View.INVISIBLE
     }
 }
-
-@BindingAdapter(value = ["app:isVisibleCardDelete"])
-fun com.google.android.material.card.MaterialCardView.isVisibleCardDelete(isVisible: Boolean) {
-    if (isVisible) {
-        this.visibility = View.VISIBLE
-    } else {
-        this.visibility = View.INVISIBLE
-    }
-}
-
 
 
 @BindingAdapter(value = ["app:isVisibleOrGone"])

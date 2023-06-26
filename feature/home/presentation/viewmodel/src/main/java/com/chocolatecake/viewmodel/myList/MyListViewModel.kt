@@ -23,8 +23,6 @@ class MyListViewModel @Inject constructor(
     private val createList: CreateListUseCase,
 ) : BaseViewModel<MyListUiState, MyListUiEvent>(MyListUiState()), MyListListener {
 
-
-
     init {
         getData()
     }
@@ -86,7 +84,6 @@ class MyListViewModel @Inject constructor(
 
     override fun onClickShowDelete() {
        _state.update { it.copy(isShowDelete = true , error = null  ) }
-        Log.i("bb", "onClickShowDelete:  ${_state.value.isShowDelete}  ")
     }
 
     override fun onClickDelete(listId: Int) {
