@@ -1,6 +1,6 @@
 package com.chocolatecake.ui.profile
 
-import android.content.res.Configuration
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,6 +21,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     override val layoutIdFragment: Int = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
+
+    companion object {
+        private const val PREF_THEME_STATE = "theme_state"
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,11 +72,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
     }
 
     private fun changeAppTheme() {
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val switchButtonTheme = binding.switchBottonTheme
-        val uiNight =   resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        switchButtonTheme.isChecked = uiNight != Configuration.UI_MODE_NIGHT_NO
+        val savedThemeState = sharedPreferences.getBoolean(PREF_THEME_STATE, false)
+        switchButtonTheme.isChecked = savedThemeState
 
         switchButtonTheme.setOnCheckedChangeListener { _, isChecked ->
+            sharedPreferences.edit().putBoolean(PREF_THEME_STATE, isChecked).apply()
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
