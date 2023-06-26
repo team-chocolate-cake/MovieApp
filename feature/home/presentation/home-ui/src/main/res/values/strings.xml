@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_items_found">No items found</string>
     <string name="no_items_have">No items have</string>
-    <string name="search">search</string>
+    <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="watchlist">Watchlist</string>
     <string name="watch_history">Watch History</string>

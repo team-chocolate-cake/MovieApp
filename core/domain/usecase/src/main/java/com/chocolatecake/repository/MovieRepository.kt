@@ -23,6 +23,7 @@ import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
+import kotlin.random.Random
 
 interface MovieRepository {
 
@@ -31,7 +32,8 @@ interface MovieRepository {
     suspend fun getPopularMoviesPaging(): Pager<Int, MovieEntity>
     suspend fun getTopRateMoviesPaging(): Pager<Int, MovieEntity>
     suspend fun getTrendingMoviesPaging(): Pager<Int, MovieEntity>
-    suspend fun getPopularMovies(): List<MovieEntity>
+    suspend fun getPopularMoviesFromDatabase(): List<MovieEntity>
+    suspend fun getPopularMoviesFromRemote(): List<MovieEntity>
     suspend fun refreshPopularMovies()
 
     suspend fun getNowPlayingMovies(): List<MovieEntity>
@@ -43,8 +45,9 @@ interface MovieRepository {
     suspend fun getUpcomingMovies(): List<MovieEntity>
     suspend fun refreshUpcomingMovies()
 
-    suspend fun getPopularPeople(): List<PeopleEntity>
+    suspend fun getPopularPeopleFromDatabase(): List<PeopleEntity>
     suspend fun refreshTrendingMovies()
+    suspend fun getPopularPeopleFromRemote(): List<PeopleEntity>
 
     suspend fun getTrendingMovies(): List<MovieEntity>
     suspend fun refreshPopularPeople()
