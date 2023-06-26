@@ -7,21 +7,18 @@ import com.chocolatecake.repository.BuildConfig
 import com.chocolatecake.repository.mappers.Mapper
 import javax.inject.Inject
 
-class DomainMyRatedTvShowMapper @Inject constructor(
-    val genreEntities: List<GenreEntity>
-) :
-    Mapper<MyRatedTvShowDto, MyRatedTvShowEntity> {
+class DomainMyRatedTvShowMapper @Inject constructor() {
 
-    override fun map(input: MyRatedTvShowDto): MyRatedTvShowEntity {
+    fun map(input: MyRatedTvShowDto, genreEntities: List<GenreEntity>): MyRatedTvShowEntity {
         return MyRatedTvShowEntity(
             id = input.id ?: 0,
             title = input.name ?: "",
-            imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath ,
+            imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
             genreEntities = genreEntities.filter {
                 it.genreID in (input.genreIds?.filterNotNull() ?: emptyList())
             },
             rate = input.rating ?: 0.0,
-            year = input.firstAirDate?:""
+            year = input.firstAirDate ?: ""
         )
     }
 }
