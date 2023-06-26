@@ -11,6 +11,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.trivia.R
+import com.chocolatecake.viewmodel.common.AnswerListener
+import com.chocolatecake.viewmodel.common.model.GameUiState
 import com.github.guilhe.views.CircularProgressView
 
 @BindingAdapter(value = ["app:timerColor", "app:maxTime"])
@@ -71,14 +73,22 @@ fun View.isVisibleAnimated(isVisible: Boolean) {
     }.start()
 }
 
-@BindingAdapter(value = ["app:isCorrect" , "app:onClick"])
-fun View.answerCardColor(isCorrect: Boolean, onClick: () -> Unit) {
-    setOnClickListener {
-        if (isCorrect){
-            this.background = context.getDrawable(R.drawable.correct_answer_background)
+@BindingAdapter(value = ["app:listener", "app:answer", "app:userAnswer"])
+fun TextView.setAnswerCardColor(
+    listener: AnswerListener,
+    answer: GameUiState.AnswerUiState?,
+    userAnswer: Int?,
+) {
+    background = if (userAnswer != null && userAnswer == answer?.position) {
+        if (answer.isCorrect){
+            context.getDrawable(R.drawable.correct_answer_background)
         }else{
-            this.background = context.getDrawable(R.drawable.wrong_answer_background)
+            context.getDrawable(R.drawable.wrong_answer_background)
         }
-        onClick()
+    }else{
+        context.getDrawable(R.drawable.textfield_background)
+    }
+    setOnClickListener {
+        listener.onClickAnswer(answer?.position ?: 0)
     }
 }
