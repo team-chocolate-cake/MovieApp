@@ -1,6 +1,8 @@
 package com.chocolatecake.viewmodel.episode_details
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
@@ -12,6 +14,7 @@ import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +29,6 @@ class EpisodeDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
-
     private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 454
     private val seasonNumber = savedStateHandle.get<Int>("seasonNumber") ?: 1
     private val episodeNumber = savedStateHandle.get<Int>("episodeNumber") ?: 1
@@ -37,16 +39,16 @@ class EpisodeDetailsViewModel @Inject constructor(
 
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         _state.update { it.copy(isLoading = true) }
-        getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
-        getCastData(seriesId, seasonNumber, episodeNumber)
-        getEpisodeVideo(seriesId, seasonNumber, episodeNumber)
+      //  getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
+      // getCastData(seriesId, seasonNumber, episodeNumber)
+      getEpisodeVideo(seriesId, seasonNumber, episodeNumber)
     }
 
     /// region refresh
     fun refresh() {
-        _state.value = EpisodeDetailsUiState(refreshing = true)
-        getData(seriesId, episodeNumber, episodeNumber)
-        _state.value = EpisodeDetailsUiState(refreshing = false)
+        _state.update { it.copy(refreshing = true, onErrors = emptyList(), isLoading = true) }
+        getData(seriesId, seasonNumber, episodeNumber)
+        _state.update { it.copy(refreshing = false, onErrors = emptyList(), isLoading = false) }
     }
     /// endregion
 
@@ -69,35 +71,40 @@ class EpisodeDetailsViewModel @Inject constructor(
                 seasonNumber = episodeDetails.seasonNumber,
                 episodeRate = episodeDetails.episodeRate,
                 episodeOverview = episodeDetails.episodeOverview,
+                onErrors = emptyList(),
                 isLoading = false,
-                onErrors = emptyList()
+                refreshing = false
             )
         }
     }
-
     /// endregion
 
     ///region video
     private fun getEpisodeVideo(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
+
+        try {viewModelScope.launch {
+        }}
+        catch (th :Throwable){
+
+        }
         executeEpisodeDetails(
-            call = {
-                episodeVideoUseCase.invoke(
-                    seriesId,
-                    seasonNumber,
-                    episodeNumber,
-                )
-            },
+            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
             mapper = trailerUiMapper,
             onSuccess = ::onSuccessEpisodeVideo,
             onError = ::onError
-
         )
+
     }
 
     private fun onSuccessEpisodeVideo(trailerUiState: TrailerUiState) {
         _state.update {
-            it.copy(trailerKey = trailerUiState.videoKey)
+            it.copy(
+                trailerKey = trailerUiState.videoKey,
+                refreshing = true, onErrors = emptyList()
+            )
         }
+        Log.d("banan-error","Video error ${_state.value.onErrors}")
+
     }
 
     /// endregion
@@ -107,26 +114,27 @@ class EpisodeDetailsViewModel @Inject constructor(
         tryToExecute(
             call = {
                 setEpisodeRatingUseCase(
-                    seriesId, seasonNumber, episodeNumber, _state.value.userRate
+                    seriesId,
+                    seasonNumber,
+                    episodeNumber,
+                    _state.value.userRate
                 )
-            }, onSuccess = ::onRatingSuccess, onError = ::onRatingError
+            },
+            onSuccess = ::onRatingSuccess,
+            onError = ::onRatingError
         )
     }
 
     private fun onRatingSuccess(episodeRateSatusEntity: RatingEpisodeDetailsStatusEntity) {
-        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was successfully :)"))
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was added successfully 🥰"))
     }
 
     private fun onRatingError(th: Throwable) {
-        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was failed :("))
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating("Something Went Wrong 🤔\nPlease Try Again Later."))
     }
 
     fun updateRatingState(rate: Float) {
-        _state.update {
-            it.copy(
-                userRate = rate
-            )
-        }
+        _state.update { it.copy(userRate = rate, onErrors = emptyList()) }
     }
 
     /// endregion
@@ -139,19 +147,32 @@ class EpisodeDetailsViewModel @Inject constructor(
             onSuccess = ::onSuccessCast,
             onError = ::onError
         )
+
     }
 
     private fun onSuccessCast(cast: List<PeopleUIState>) {
-        _state.update { it.copy(cast = cast) }
+        _state.update { it.copy(cast = cast, refreshing = false, onErrors = emptyList()) }
     }
 
     /// endregion
 
     ///  region error
+
     private fun onError(th: Throwable) {
-        val errors = _state.value.onErrors.toMutableList()
-        errors.add(th.message.toString())
-        _state.update { it.copy(onErrors = errors, isLoading = false) }
+        val errorMessage = th.message ?: "No network connection"
+        Log.d("banan-error", "No network connection")
+        _state.update {
+            it.copy(
+                onErrors = listOf(errorMessage),
+                isLoading = false,
+                refreshing = false
+            )
+        }
+        Log.d("banan-error", _state.value.onErrors.toString())
+//        _state.update {
+//            it.copy(onErrors = emptyList())
+    //            }
+//
     }
     /// endregion
 
@@ -167,6 +188,6 @@ class EpisodeDetailsViewModel @Inject constructor(
     override fun onClickPeople(id: Int) {
         sendEvent(EpisodeDetailsUiEvent.ClickCast(id))
     }
-
     /// endregion
+
 }

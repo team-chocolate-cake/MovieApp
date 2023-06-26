@@ -31,20 +31,10 @@ class EpisodeDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest {
-                binding.item = it
-            }
-        }
 
         binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
-    }
-
-    private fun setAdapter() {
-        collectLatest { peopleAdapter.setItems(viewModel.state.value.cast) }
-        binding.recyclerViewPeople.adapter = peopleAdapter
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
@@ -54,6 +44,19 @@ class EpisodeDetailsFragment :
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
         }
+    }
+
+    override fun onApplyRateBottomSheet() {
+        viewModel.setRating()
+    }
+
+    override fun updateRatingValue(rate: Float) {
+        viewModel.updateRatingState(rate)
+    }
+
+    private fun setAdapter() {
+        collectLatest { peopleAdapter.setItems(viewModel.state.value.cast) }
+        binding.recyclerViewPeople.adapter = peopleAdapter
     }
 
     private fun navigateToBack() {
@@ -70,18 +73,5 @@ class EpisodeDetailsFragment :
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }
-
-    override fun onApplyRateBottomSheet() {
-        viewModel.setRating()
-    }
-
-    override fun updateRatingValue(rate: Float) {
-        viewModel.updateRatingState(rate)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
 
 }
