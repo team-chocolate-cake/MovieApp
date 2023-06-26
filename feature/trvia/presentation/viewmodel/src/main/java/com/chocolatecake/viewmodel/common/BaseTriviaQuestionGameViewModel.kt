@@ -27,11 +27,19 @@ abstract class BaseTriviaQuestionGameViewModel(
 
     protected fun getData() {
         _state.update { it.copy(isLoading = true) }
+        getCurrentUser()
+        getUserQuestion()
+    }
+
+    private fun getCurrentUser() {
         tryToExecute(
             getCurrentUserUseCase::invoke,
             ::onSuccessUser,
             ::onError
         )
+    }
+
+    private fun getUserQuestion() {
         tryToExecute(
             call = getQuestion::invoke,
             ::onSuccessQuestion,
