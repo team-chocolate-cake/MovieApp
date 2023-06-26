@@ -107,19 +107,21 @@
 
         <TextView
             android:id="@+id/text_view_number_episode"
+            style="@style/TextStyle.Caption"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/spacing_tiny_4dp"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
-            android:gravity="center"
-            android:minWidth="@dimen/height_text_number_episode"
-            android:minHeight="@dimen/height_text_number_episode"
             android:background="@drawable/box_background"
+            android:gravity="center"
+            android:maxWidth="@dimen/spacing_large_24dp"
+            android:minWidth="@dimen/height_text_number_episode"
             android:text="@{String.valueOf(item.numberEpisode)}"
             android:textColor="@color/on_background_87"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="@+id/shape_image_view_episode"
             app:layout_constraintTop_toTopOf="@+id/shape_image_view_episode"
-            tools:text="11" />
+            tools:text="999" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
