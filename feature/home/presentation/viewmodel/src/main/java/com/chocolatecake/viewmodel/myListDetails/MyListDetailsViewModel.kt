@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
 import com.chocolatecake.bases.ListType
+import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
 import com.chocolatecake.usecase.myList.DeleteMovieFromDetailsListUseCase
@@ -16,8 +17,11 @@ import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
 import com.chocolatecake.usecase.myList.MakeAsWatchlistUseCase
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.mapper.MyListDetailsUiMapper
+import com.chocolatecake.viewmodel.search.SearchUiEvent
+import com.chocolatecake.viewmodel.search.SearchUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 import kotlin.Error
 
@@ -40,6 +44,11 @@ class MyListDetailsViewModel @Inject constructor(
     private val listId = savedStateHandle.get<Int>("listId") ?: 0
 
     init {
+        getData()
+    }
+
+
+    fun getData() {
         when (listName) {
             ListName.favorite.name -> {
                 getAllFavorite()
@@ -60,7 +69,7 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getFavoriteUseCase().map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
-            onError = ::onGetAllMoviesError
+            onError = ::onError,
         )
     }
 
@@ -69,7 +78,7 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getWatchlistUseCase().map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
-            onError = ::onGetAllMoviesError
+            onError = ::onError,
         )
     }
 
@@ -78,7 +87,7 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getMovieListDetailsUseCase(listId).map { myListDetailsUiMapper.map(it) } },
             onSuccess = ::onGetAllMoviesSuccess,
-            onError = ::onGetAllMoviesError
+            onError = ::onError,
         )
     }
 
@@ -86,25 +95,13 @@ class MyListDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 movies = items,
-                isLoading = false
+                isLoading = false,
+                error = null,
             )
         }
         Log.i("jk", items.toString())
     }
 
-    private fun onGetAllMoviesError(throwable: Throwable) {
-        _state.update {
-            it.copy(
-                isLoading = false,
-                errors = listOf(
-                    Error(
-                        2,
-                        throwable.message.toString()
-                    )
-                )
-            )
-        }
-    }
 
     fun deleteMedia(position: Int) {
 
@@ -133,10 +130,7 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { deleteFavoriteUseCase(mediaId, "movie", false) },
             onSuccess = { onDeleteMediaSuccess(true) },
-            onError = {
-                _state.update { it.copy(isLoading = false) }
-                sendEvent(MyListDetailsUiEvent.ShowSnackBar("something went wrong"))
-            },
+            onError = ::onError,
         )
     }
 
@@ -144,23 +138,25 @@ class MyListDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { deleteWatchlistUseCase(mediaId, "movie", false) },
             onSuccess = { onDeleteMediaSuccess(true) },
-            onError = {
-                _state.update { it.copy(isLoading = false) }
-                sendEvent(MyListDetailsUiEvent.ShowSnackBar("something went wrong"))
-            },
+            onError = ::onError,
         )
     }
 
     private fun deleteMovieFromListDetails(mediaId: Int) {
         tryToExecute(
-            call = { deleteMovieFromDetailsListUseCase(listId= listId , mediaId= mediaId)
-                Log.i("bb", "deleteMovieFromListDetails: $deleteMovieFromDetailsListUseCase(listId= listId , mediaId= mediaId)")
-                   },
-            onSuccess = { onDeleteMediaSuccess(true) },
-            onError = {
-                _state.update { it.copy(isLoading = false) }
-                sendEvent(MyListDetailsUiEvent.ShowSnackBar("something went wrong"))
+            call = {
+                deleteMovieFromDetailsListUseCase(listId = listId, mediaId = mediaId)
+                Log.i(
+                    "bb", "deleteMovieFromListDetails: ${
+                        deleteMovieFromDetailsListUseCase(
+                            listId = listId,
+                            mediaId = mediaId
+                        )
+                    }"
+                )
             },
+            onSuccess = { onDeleteMediaSuccess(true) },
+            onError = ::onError,
         )
     }
 
@@ -182,9 +178,25 @@ class MyListDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun onDeleteMediaError(throwable: Exception) {
-        _state.update { it.copy(isLoading = false) }
+
+    private fun onError(throwable: Throwable) {
+        if (throwable == NoNetworkThrowable()) {
+            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        } else if (throwable == SocketTimeoutException()) {
+            showErrorWithSnackBar(throwable.message ?: "time out!")
+        }
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false
+            )
+        }
     }
+
+    private fun showErrorWithSnackBar(messages: String) {
+        sendEvent(MyListDetailsUiEvent.ShowSnackBar(messages))
+    }
+
 
     override fun onClickItem(itemId: Int) {
         sendEvent(

@@ -11,6 +11,7 @@ import com.chocolatecake.ui.common.base.SwipeToDeleteMedia
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListDetailsBinding
 import com.chocolatecake.ui.watch_history.SwipeGesture
+import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsViewModel
@@ -77,6 +78,8 @@ class MyListDetailsFragment :
             is MyListDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
+
+            is MyListDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
 
             else -> {}
         }

@@ -1,16 +1,15 @@
 package com.chocolatecake.viewmodel.myList
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.myList.CreateListUseCase
 import com.chocolatecake.usecase.myList.GetListsCreatedUseCase
-import com.chocolatecake.usecase.myList.MakeAsFavoriteUseCase
 import com.chocolatecake.viewmodel.myList.mapper.MyListUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,19 +19,16 @@ class MyListViewModel @Inject constructor(
     private val createList: CreateListUseCase,
 ) : BaseViewModel<MyListUiState, MyListUiEvent>(MyListUiState()), MyListListener {
 
-
-    val newListName = MutableStateFlow("")
-
     init {
-        getAllList()
+        getData()
     }
 
-    private fun getAllList() {
+     fun getData() {
         _state.update { it.copy(isLoading = true) }
         tryToExecute(
             call = { getMovies().map { myListUiMapper.map(it) } },
             onSuccess = ::onGetAllListSuccess,
-            onError = ::onGetAllListError
+            onError = ::onError,
         )
     }
 
@@ -40,24 +36,10 @@ class MyListViewModel @Inject constructor(
         _state.update {
             it.copy(
                 movieList = items,
-                isLoading = false
-            )
-        }
-    }
-
-    private fun onGetAllListError(throwable: Throwable) {
-        _state.update {
-            it.copy(
                 isLoading = false,
-                errors = listOf(
-                    Error(
-                        2,
-                        throwable.message.toString()
-                    )
-                )
+                error = null,
             )
         }
-        sendEvent(MyListUiEvent.ShowSnackBar("something went wrong"))
     }
 
 
@@ -84,18 +66,35 @@ class MyListViewModel @Inject constructor(
                 createList.invoke(listName)
             },
             onSuccess = ::onCreateUserNewList,
-            onError = ::onCreateUserNewListError
+            onError = ::onError,
         )
     }
 
-    private fun onCreateUserNewList(item: Boolean) {
-        sendEvent(MyListUiEvent.ShowSnackBar("New List Was Added Successfully"))
-        getAllList()
+
+    private fun onError(throwable: Throwable) {
+        if (throwable == NoNetworkThrowable()) {
+            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+        } else if (throwable == SocketTimeoutException()) {
+            showErrorWithSnackBar(throwable.message ?: "time out!")
+        }
+        _state.update {
+            it.copy(
+                error = listOf(throwable.message ?: "No Network Connection"),
+                isLoading = false,
+            )
+        }
     }
 
-    private fun onCreateUserNewListError(throwable: Throwable) {
-        sendEvent(MyListUiEvent.OnCreateNewList("something went wrong"))
+    private fun showErrorWithSnackBar(messages: String) {
+        sendEvent(MyListUiEvent.ShowSnackBar(messages))
     }
+
+
+    private fun onCreateUserNewList(item: Boolean) {
+        sendEvent(MyListUiEvent.ShowSnackBar("New List Was Added Successfully"))
+        getData()
+    }
+
 
     override fun onClickBackButton() {
         sendEvent(MyListUiEvent.OnClickBack)
