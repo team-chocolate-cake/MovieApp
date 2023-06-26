@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseTriviaQuestionGameViewModel(
     state: GameUiState,
-) : BaseViewModel<GameUiState, GameUIEvent>(state), AnswerListener {
+) : BaseViewModel<GameUiState, GameUIEvent>(state), QuestionListener {
     abstract val gameType: GameType
     abstract val getCurrentUserUseCase: GetCurrentUserUseCase
     abstract val updateUserPointsUseCase: UpdateUserPointsUseCase
@@ -96,7 +96,7 @@ abstract class BaseTriviaQuestionGameViewModel(
     //endregion
 
     //region handle question
-    override fun onClickAnswer(questionChosenPosition: Int) {
+    override fun onClickQuestion(questionChosenPosition: Int) {
         val isCorrectAnswer = _state.value.correctAnswerPosition == questionChosenPosition
         when {
             (!isCorrectAnswer && state.value.heartCount == 1) -> handleIncorrectAnswerWithNoHearts()
