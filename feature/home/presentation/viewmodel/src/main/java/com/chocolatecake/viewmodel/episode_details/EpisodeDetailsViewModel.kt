@@ -82,17 +82,24 @@ class EpisodeDetailsViewModel @Inject constructor(
     ///region video
     private fun getEpisodeVideo(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
 
-        try {viewModelScope.launch {
-        }}
-        catch (th :Throwable){
-
+        viewModelScope.launch {
+            try {
+                val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
+                val mappedData = trailerUiMapper.map(inputData)
+                onSuccessEpisodeVideo(mappedData)
+                Log.e("banan","we are in try scope ")
+            } catch (th: Throwable) {
+                onError(th)
+                Log.e("banan","we are in catch scope ")
+            }
         }
-        executeEpisodeDetails(
-            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
-            mapper = trailerUiMapper,
-            onSuccess = ::onSuccessEpisodeVideo,
-            onError = ::onError
-        )
+
+//        executeEpisodeDetails(
+//            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
+//            mapper = trailerUiMapper,
+//            onSuccess = ::onSuccessEpisodeVideo,
+//            onError = ::onError
+//        )
 
     }
 
