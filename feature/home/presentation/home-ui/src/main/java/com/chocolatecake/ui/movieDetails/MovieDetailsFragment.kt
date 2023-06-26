@@ -79,7 +79,7 @@ class MovieDetailsFragment :
             }
 
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
-                //todo
+                navigateToTrailerVideo(event.videoKey)
             }
 
             is MovieDetailsUiEvent.RateMovie -> {
@@ -107,6 +107,13 @@ class MovieDetailsFragment :
             is MovieDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             else -> {}
         }
+    }
+
+    private fun navigateToTrailerVideo(videoKey: String) {
+        findNavController().navigate(
+            MovieDetailsFragmentDirections
+                .actionMovieDetailsFragmentToTrailerFragment(videoKey)
+        )
     }
 
     private fun showRatingBottomSheet(movieId: Int) {

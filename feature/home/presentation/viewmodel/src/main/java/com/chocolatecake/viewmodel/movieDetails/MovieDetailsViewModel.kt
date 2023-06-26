@@ -92,7 +92,7 @@ class MovieDetailsViewModel @Inject constructor(
                     title = movieDetails.title,
                     overview = movieDetails.overview,
                     voteAverage = movieDetails.voteAverage.toFloat().div(2f),
-                    videos = movieDetails.videos.results.map { it.key },
+                    videoKey = movieDetails.videos.results.first().key,
                     isLogined = checkIsLoginedOrNotUseCase()
                 ),
                 recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
@@ -250,8 +250,8 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
 
-    override fun onClickPlayTrailer(keys: List<String>) {
-        sendEvent(MovieDetailsUiEvent.PlayVideoTrailer(keys))
+    override fun onClickPlayTrailer() {
+        sendEvent(MovieDetailsUiEvent.PlayVideoTrailer(state.value.movieUiState.videoKey))
     }
 
 

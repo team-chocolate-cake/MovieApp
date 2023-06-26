@@ -98,6 +98,9 @@
         <action
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
+            app:destination="@id/trailerFragment" />
 
     </fragment>
 
