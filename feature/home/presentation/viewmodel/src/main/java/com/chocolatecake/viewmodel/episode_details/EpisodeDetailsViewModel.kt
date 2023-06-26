@@ -89,7 +89,14 @@ class EpisodeDetailsViewModel @Inject constructor(
                 onSuccessEpisodeVideo(mappedData)
                 Log.e("banan","we are in try scope ")
             } catch (th: Throwable) {
-                onError(th)
+//                onError(th)
+//                _state.update {
+//                    it.copy(
+//                        onErrors = emptyList(),
+//                        isLoading = false,
+//                        refreshing = false
+//                    )
+//                }
                 Log.e("banan","we are in catch scope ")
             }
         }

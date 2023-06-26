@@ -25,6 +25,13 @@ fun <T> View.hideWhenNoProductionCode(productionCode:String){
     }
 }
 
+
+@BindingAdapter(value = ["app:hideLottieWhenNoProductionCode"])
+fun <T> View.hideLottieWhenNoProductionCode(productionCode:String){
+    if (productionCode.isBlank())
+        this.visibility = View.GONE
+}
+
 @BindingAdapter(value = ["app:hideWhenNoResultText"])
 fun <T> View.hideWhenNoResultText(text:String){
     if (text.isEmpty()){
