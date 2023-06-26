@@ -16,29 +16,32 @@
         android:layout_height="match_parent"
         android:background="@color/background">
 
-        <TextView
-            android:id="@+id/text_view_level_games"
-            style="@style/TextStyle.TitleMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_medium_16dp"
-            android:text="@string/popcorn_puzzles"
-            android:textColor="@color/on_background_87"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:elevation="2dp"
+            android:layout_width="match_parent"
+            app:title="@string/popcorn_puzzles"
+            android:gravity="center_vertical"
+            app:titleTextAppearance="@style/TextStyle.TitleMedium"
+            app:navigationIconTint="@color/on_background_87"
+            app:titleTextColor="@color/on_background_87"
+            app:onClickNavigation="@{viewModel.onClickBackIcon}"
+            app:navigationIcon="@drawable/arrow_left"
+            android:layout_height="?android:attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_level_games"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
-            android:layout_marginTop="@dimen/spacing_large_24dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_view_level_games"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_level_games"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:itemCount="3"
             tools:listitem="@layout/item_card_level" />
 
