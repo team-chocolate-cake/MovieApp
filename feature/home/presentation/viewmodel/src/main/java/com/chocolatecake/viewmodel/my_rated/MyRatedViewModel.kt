@@ -3,18 +3,21 @@ package com.chocolatecake.viewmodel.my_rated
 import androidx.lifecycle.viewModelScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
+import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.usecase.my_rated.GetMyRatedMoviesUseCase
 import com.chocolatecake.usecase.my_rated.GetMyRatedTVShowsUseCase
 import com.chocolatecake.viewmodel.common.listener.MovieListener
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedMovieToMovieHorizontalUiMapper
 import com.chocolatecake.viewmodel.my_rated.mappers.MyRatedTvShowToMovieHorizontalUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,49 +35,51 @@ class MyRatedViewModel @Inject constructor(
 
     private fun getData() {
         when (_state.value.MyRateType) {
-            RateType.Movies -> getMyRatedMovies()
-            RateType.TVShows -> getMyRatedTvShow()
+            RateType.Movies -> fetchMyRatedMovies()
+            RateType.TVShows -> fetchMyRatedTvShow()
         }
     }
 
-    fun getMyRatedMovies(){
+    fun fetchMyRatedMovies(){
         _state.update { it.copy(isLoading = true,)}
-        viewModelScope.launch {
-            try {
-                val items = getRatedMoviesUseCase().map { pagingData ->
-                    pagingData.map { movie -> myRatedMovieToMovieHorizontalUiMapper.map(movie) }
-                }.cachedIn(viewModelScope)
-                _state.update {
-                    it.copy(
-                        MyRateType = RateType.Movies,
-                        MyRatedMedia = items,
-                        isLoading = false,
-                        errorList = emptyList()
-                    )
-                }
-            } catch (throwable: Throwable) {
-                onError(throwable)
-            }
+        tryToExecute(
+            call = {getRatedMoviesUseCase()},
+            onSuccess = ::onSuccessRatedMovie,
+            onError = ::onError
+        )
+    }
+    fun fetchMyRatedTvShow(){
+        _state.update { it.copy(isLoading = true,)}
+        tryToExecute(
+            call = {getRatedTVShowsUseCase()},
+            onSuccess = ::onSuccessRatedTvShow,
+            onError = ::onError
+        )
+    }
+    private fun onSuccessRatedMovie(flow: Flow<PagingData<MyRatedMovieEntity>>) {
+        val items = flow.map { pagingData ->
+            pagingData.map { movie -> myRatedMovieToMovieHorizontalUiMapper.map(movie) }
+        }.cachedIn(viewModelScope)
+        _state.update {
+            it.copy(
+                MyRateType = RateType.Movies,
+                MyRatedMedia = items,
+                isLoading = false,
+                errorList = emptyList()
+            )
         }
     }
-    fun getMyRatedTvShow(){
-        _state.update { it.copy(isLoading = true,)}
-        viewModelScope.launch {
-            try {
-                val items = getRatedTVShowsUseCase().map { pagingData ->
-                    pagingData.map { tvShow -> myRatedTvShowToMovieHorizontalUiMapper.map(tvShow) }
-                }.cachedIn(viewModelScope)
-                _state.update {
-                    it.copy(
-                        MyRateType = RateType.TVShows,
-                        MyRatedMedia = items,
-                        isLoading = false,
-                        errorList = emptyList()
-                    )
-                }
-            } catch (throwable: Throwable) {
-                onError(throwable)
-            }
+    private fun onSuccessRatedTvShow(flow: Flow<PagingData<MyRatedTvShowEntity>>) {
+        val items = flow.map { pagingData ->
+            pagingData.map { tvShow -> myRatedTvShowToMovieHorizontalUiMapper.map(tvShow) }
+        }.cachedIn(viewModelScope)
+        _state.update {
+            it.copy(
+                MyRateType = RateType.TVShows,
+                MyRatedMedia = items,
+                isLoading = false,
+                errorList = emptyList()
+            )
         }
     }
 

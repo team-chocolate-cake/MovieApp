@@ -48,8 +48,8 @@ class MyRatedFragment : BaseFragment<FragmentMyRatedBinding , MyRatedUiState , M
             is MyRatedEvents.NavigateToMovieDetails -> findNavController().navigate(MyRatedFragmentDirections.actionMyRatedFragmentToMovieDetailsFragment(event.movieId))
             is MyRatedEvents.NavigateToTVShowDetails -> findNavController().navigate(MyRatedFragmentDirections.actionMyRatedFragmentToMovieDetailsFragment(event.tvId))
             is MyRatedEvents.NavigateBack -> findNavController().popBackStack()
-            is MyRatedEvents.ShowMyRatedMoviesPressed -> viewModel.getMyRatedMovies()
-            is MyRatedEvents.ShowMyRatedTvShowPressed -> viewModel.getMyRatedTvShow()
+            is MyRatedEvents.ShowMyRatedMoviesPressed -> viewModel.fetchMyRatedMovies()
+            is MyRatedEvents.ShowMyRatedTvShowPressed -> viewModel.fetchMyRatedTvShow()
         }
     }
 }
