@@ -646,6 +646,11 @@ class MovieRepositoryImpl @Inject constructor(
 
     }
 
+    override suspend fun deleteList(listId: Int): StatusEntity {
+        return domainStatusMapper.map(wrapApiCall { movieService.deleteList(listId = listId)})
+    }
+
+
 
     override suspend fun getListCreated(): List<ListCreatedEntity> {
         return wrapApiCall { movieService.getLists() }.results

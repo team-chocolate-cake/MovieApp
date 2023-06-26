@@ -28,6 +28,17 @@ fun View.isVisible(isVisible: Boolean) {
     }
 }
 
+@BindingAdapter(value = ["app:isVisibleCardDelete"])
+fun com.google.android.material.card.MaterialCardView.isVisibleCardDelete(isVisible: Boolean) {
+    if (isVisible) {
+        this.visibility = View.VISIBLE
+    } else {
+        this.visibility = View.INVISIBLE
+    }
+}
+
+
+
 @BindingAdapter(value = ["app:isVisibleOrGone"])
 fun View.isVisibleOrGone(isVisible: Boolean?) {
     if (isVisible == true) {

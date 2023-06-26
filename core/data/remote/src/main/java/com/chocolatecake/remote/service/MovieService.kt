@@ -40,6 +40,7 @@ import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -256,6 +257,9 @@ interface MovieService {
 
     @POST("list")
     suspend fun addList(@Body listRequest: ListRequest): Response<ListResponse>
+    @DELETE("list/{list_id}")
+    suspend fun deleteList(@Path("list_id") listId: Int): Response<StatusResponse>
+
 
     @GET("account/{account_id}/lists")
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>

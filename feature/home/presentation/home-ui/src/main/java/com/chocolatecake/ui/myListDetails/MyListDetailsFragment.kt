@@ -7,11 +7,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.common.base.SwipeToDeleteMedia
+import com.chocolatecake.ui.common.base.SwipeToDeleteItem
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyListDetailsBinding
-import com.chocolatecake.ui.watch_history.SwipeGesture
-import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiEvent
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsUiState
 import com.chocolatecake.viewmodel.myListDetails.MyListDetailsViewModel
@@ -24,7 +22,7 @@ class MyListDetailsFragment :
     override val layoutIdFragment: Int = R.layout.fragment_my_list_details
     override val viewModel: MyListDetailsViewModel by viewModels()
     private lateinit var myListDetailsAdapter: MyListDetailsAdapter
-    private lateinit var swipeToDeleteMedia: SwipeToDeleteMedia
+    private lateinit var swipeToDeleteMedia: SwipeToDeleteItem
     private lateinit var touchHelper: ItemTouchHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,7 +32,7 @@ class MyListDetailsFragment :
     }
 
     private fun swipeToDeleteMediaSetup() {
-        swipeToDeleteMedia = object : SwipeToDeleteMedia() {
+        swipeToDeleteMedia = object : SwipeToDeleteItem() {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,

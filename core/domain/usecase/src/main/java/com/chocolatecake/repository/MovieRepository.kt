@@ -118,6 +118,7 @@ interface MovieRepository {
 
 
     suspend fun deleteMovieDetailsList(listId: Int ,mediaId: Int ): StatusEntity
+    suspend fun deleteList(listId: Int): StatusEntity
 
 
     suspend fun getListCreated(): List<ListCreatedEntity>

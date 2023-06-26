@@ -48,7 +48,6 @@ class MyListDetailsViewModel @Inject constructor(
         getData()
     }
 
-
     fun getData() {
         when (listName) {
             ListName.favorite.name -> {
@@ -100,7 +99,6 @@ class MyListDetailsViewModel @Inject constructor(
                 error = null,
             )
         }
-        Log.i("jk", items.toString())
     }
 
 
@@ -122,8 +120,6 @@ class MyListDetailsViewModel @Inject constructor(
             }
 
             else-> {
-                Log.i("bb", "onDeleteMediaSuccess: $listId ")
-                Log.i("bb", "onDeleteMediaSuccess: $mediaId ")
                 deleteMovieFromListDetails(mediaId)
             }
         }

@@ -30,6 +30,7 @@
                 android:scaleType="centerCrop"
                 android:onClick="@{()->viewModel.onClickBackButton()}"
                 android:src="@drawable/arrow_left" />
+
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
@@ -46,7 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="@{viewModel.listName}"
                 android:textColor="@color/on_background_87"/>
 
@@ -81,7 +81,6 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/item_my_list_details" />
-
 
 
             <TextView
