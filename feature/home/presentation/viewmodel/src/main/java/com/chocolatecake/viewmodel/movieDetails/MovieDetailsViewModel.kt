@@ -24,6 +24,11 @@ import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.movieDetails.mapper.CastUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.RecommendedUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.ReviewDetailsUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.ReviewsUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.UpperUiStateMapper
 import com.chocolatecake.viewmodel.movieDetails.mapper.UserListsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +50,11 @@ class MovieDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
+    private val recommendedUiStateMapper: RecommendedUiStateMapper,
+    private val upperUiStateMapper: UpperUiStateMapper,
+    private val reviewsUiStateMapper: ReviewsUiStateMapper,
+    private val castUiStateMapper: CastUiStateMapper,
+    private val reviewDetailsUiStateMapper: ReviewDetailsUiStateMapper,
     private val stringsRes: StringsRes
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
@@ -86,44 +96,11 @@ class MovieDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 id = movieDetails.id,
-                movieUiState = UpperUiState(
-                    id = movieDetails.id,
-                    backdropPath = movieDetails.backdropPath,
-                    genres = movieDetails.genres,
-                    title = movieDetails.title,
-                    overview = movieDetails.overview,
-                    voteAverage = movieDetails.voteAverage.toFloat().div(2f),
-                    videos = movieDetails.videos.results.map { it.key },
-                    isLogined = checkIsLoginedOrNotUseCase()
-                ),
-                recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
-                    MediaVerticalUIState(
-                        id = it.id,
-                        rate = it.voteAverage,
-                        imageUrl = it.posterPath,
-                    )
-                },
-                reviewUiState = movieDetails.reviewEntity.reviews.map {
-                    ReviewUiState(
-                        name = it.name,
-                        avatar_path = it.avatar_path,
-                        content = it.content,
-                        created_at = it.created_at
-                    )
-                },
-                castUiState =
-                movieDetails.credits.cast.map {
-                    PeopleUIState(
-                        id = it.id,
-                        name = it.name,
-                        imageUrl = it.profilePath
-                    )
-                },
-                reviewsDetails = ReviewDetailsUiState(
-                    page = movieDetails.reviewEntity.page,
-                    totalPages = movieDetails.reviewEntity.totalPages,
-                    totalReviews = movieDetails.reviewEntity.totalResults
-                ),
+                movieUiState = upperUiStateMapper.map(movieDetails),
+                recommendedUiState = recommendedUiStateMapper.map(movieDetails.recommendations.recommendedMovies) ,
+                reviewUiState = reviewsUiStateMapper.map(movieDetails.reviewEntity.reviews),
+                castUiState = castUiStateMapper.map(movieDetails.credits.cast),
+                reviewsDetails = reviewDetailsUiStateMapper.map(movieDetails),
                 isLoading = false
             )
         }
