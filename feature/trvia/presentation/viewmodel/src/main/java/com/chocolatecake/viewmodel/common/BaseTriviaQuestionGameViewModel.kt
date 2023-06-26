@@ -23,6 +23,7 @@ abstract class BaseTriviaQuestionGameViewModel(
     abstract val updateUserPointsUseCase: UpdateUserPointsUseCase
     abstract val getQuestion: suspend () -> QuestionEntity
     private var timerJob: Job? = null
+    abstract val gameType: GameType
 
 
     protected fun getData() {
@@ -47,17 +48,7 @@ abstract class BaseTriviaQuestionGameViewModel(
         )
     }
 
-    private fun onSuccessUser(user: UserEntity) {
-        _state.update {
-            it.copy(
-                level = user.peopleGameLevel,
-                points = user.totalPoints,
-                questionCount = user.numPeopleQuestionsPassed + 1,
-                isError = false,
-                isLoading = false
-            )
-        }
-    }
+    abstract fun onSuccessUser(user: UserEntity)
 
     open fun onSuccessQuestion(questionEntity: QuestionEntity) {
         _state.update {
@@ -105,6 +96,7 @@ abstract class BaseTriviaQuestionGameViewModel(
     override fun onClickAnswer(position: Int) {
         val heartCount = _state.value.heartCount
         val correctAnswer = _state.value.correctAnswerPosition
+
         if (correctAnswer != position) {
             if (heartCount - 1 == 0) {
                 onEmptyHearts()
@@ -115,7 +107,9 @@ abstract class BaseTriviaQuestionGameViewModel(
             return
         }
         if (_state.value.isLastQuestion) {
-            onUserWins()
+            viewModelScope.launch {
+                onUserWins()
+            }
             return
         }
         updateToNextQuestion()
@@ -124,17 +118,17 @@ abstract class BaseTriviaQuestionGameViewModel(
     private fun onEmptyHearts() {
         state.value.apply {
             when {
-                (level == 1 && points < 30) ||
-                        (level == 2 && points < 60) ||
-                        (level == 3 && points < 150) -> {
+                (level == 1 && points < HeartsDifficultyPoints.EASY.points) ||
+                        (level == 2 && points < HeartsDifficultyPoints.MEDIUM.points) ||
+                        (level == 3 && points < HeartsDifficultyPoints.HARD.points) -> {
                     sendEvent(GameUIEvent.NavigateToLoserScreen)
                 }
 
                 else -> {
                     val numberOfPoints = when (level) {
-                        1 -> 30
-                        2 -> 60
-                        3 -> 150
+                        1 -> HeartsDifficultyPoints.EASY.points
+                        2 -> HeartsDifficultyPoints.MEDIUM.points
+                        3 -> HeartsDifficultyPoints.HARD.points
                         else -> 0
                     }
                     sendEvent(GameUIEvent.ShowBuyHeartDialog(numberOfPoints))
@@ -147,8 +141,10 @@ abstract class BaseTriviaQuestionGameViewModel(
     private fun onUserWins() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
+                updateUserPointsUseCase(_state.value.points)
+                updateQuestionCountUseCase(_state.value.questionCount)
                 levelUpUseCase()
-                sendEvent(GameUIEvent.NavigateToWinnerScreen(GameType.MOVIE))
+                sendEvent(GameUIEvent.NavigateToWinnerScreen(gameType))
             }.onFailure(::onError)
         }
     }
@@ -169,8 +165,18 @@ abstract class BaseTriviaQuestionGameViewModel(
     abstract suspend fun updateQuestionCountUseCase(questionCount: Int)
 
     fun buyHearts(numberOfPoints: Int) {
-        _state.update { it.copy(points = it.points - numberOfPoints) }
-        _state.update { it.copy(heartCount = 3) }
+        _state.update { it.copy(points = it.points - numberOfPoints, heartCount = 3) }
+        viewModelScope.launch {
+            updateUserPointsUseCase(_state.value.points)
+        }
         initTimer()
+    }
+
+    companion object {
+        enum class HeartsDifficultyPoints(val points: Int) {
+            EASY(30),
+            MEDIUM(60),
+            HARD(150)
+        }
     }
 }
