@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/tvFragment"
-        android:name="com.chocolatecake.ui.tvShow.TvFragment"
+        android:name="com.chocolatecake.ui.tv_shows.TvFragment"
         android:label="TvFragment"
         tools:layout="@layout/fragment_tv">
         <action

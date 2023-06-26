@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.tvShow
+package com.chocolatecake.ui.tv_shows
 
 import android.os.Bundle
 import android.view.View

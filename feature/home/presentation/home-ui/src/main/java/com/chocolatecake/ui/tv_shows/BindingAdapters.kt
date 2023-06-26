@@ -1,12 +1,9 @@
-package com.chocolatecake.ui.tvShow
+package com.chocolatecake.ui.tv_shows
 
-import android.view.View
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @BindingAdapter(value = ["app:selectedTVShowType"])
 fun ChipGroup.setSelectedTVShowsChip(type: TVShowsType) {
