@@ -15,4 +15,7 @@ data class EpisodeDetailsUiState(
     val productionCode: String = "",
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
-)
+){
+    val isFailure: Boolean get() =
+        onErrors.isNotEmpty()
+}

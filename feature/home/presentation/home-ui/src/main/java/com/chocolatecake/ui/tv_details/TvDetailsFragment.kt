@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.tv_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,6 @@ import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -28,7 +26,6 @@ class TvDetailsFragment :
     private lateinit var addToWatchlistFavouriteBottomSheet: AddToWatchlistFavouriteBottomSheet
     private lateinit var tvDetailsAdapter: TvDetailsAdapter
     private val args: TvDetailsFragmentArgs by navArgs()
-
     override val layoutIdFragment: Int = R.layout.fragment_tv_details
     override val viewModel: TvDetailsViewModel by viewModels()
 
@@ -52,7 +49,6 @@ class TvDetailsFragment :
                         )
                     )
             }
-
             is TvDetailsUiEvent.OnRecommended -> navigateToTvDetails(event.id)
             is TvDetailsUiEvent.Back -> navigateBack()
             is TvDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
@@ -64,6 +60,7 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
+            is TvDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
         }
     }
 
@@ -83,18 +80,19 @@ class TvDetailsFragment :
 
     private fun collectChange() {
         collectLatest {
-            viewModel.state.collectLatest { state ->
-                Log.d("123123123", "collectChange: ${state.recommended}")
+            viewModel.state.collect { state ->
                 val tvDetailsItems = mutableListOf(
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast, state.seasons.isNotEmpty()),
-                    TvDetailsItem.Recommended(state.recommended,state.reviews.isNotEmpty())
-                ) + state.seasons.map { TvDetailsItem.Season(it) } + state.reviews.map {
-                    TvDetailsItem.Review(
-                        it
-                    )
-                }
+                )
+                tvDetailsItems.addAll(state.seasons.map { TvDetailsItem.Season(it) }
+                        + TvDetailsItem.Recommended(state.recommended, state.reviews.isNotEmpty())
+                        + state.reviews.map {
+                    TvDetailsItem.Review(it)
+                })
                 tvDetailsAdapter.setItems(tvDetailsItems)
+                binding.nestedRecycler.smoothScrollToPosition(0)
+                binding.appBarLayout.setExpanded(true,true)
             }
         }
     }
@@ -142,7 +140,6 @@ class TvDetailsFragment :
                     }
                 }
             }
-
         }
     }
     //endregion
@@ -166,5 +163,4 @@ class TvDetailsFragment :
         binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_unpressed)
     }
     //endregion
-
 }

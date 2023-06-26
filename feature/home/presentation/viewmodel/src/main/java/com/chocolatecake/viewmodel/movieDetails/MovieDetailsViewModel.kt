@@ -1,9 +1,9 @@
 package com.chocolatecake.viewmodel.movieDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.UserListEntity
@@ -45,6 +45,7 @@ class MovieDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
+    private val stringsRes: StringsRes
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
@@ -153,7 +154,6 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     //region user lists
-
     fun emptyUserLists() {
         _state.update {
             it.copy(userLists = emptyList())
@@ -165,7 +165,7 @@ class MovieDetailsViewModel @Inject constructor(
             call = { getUserListsUseCase() },
             onSuccess = ::onGetUserListsUseCase,
             onError = {
-                Log.i("lists", "something went wrong $it")
+                sendEvent(MovieDetailsUiEvent.ShowSnackBar(stringsRes.someThingError))
             }
         )
     }
@@ -177,7 +177,6 @@ class MovieDetailsViewModel @Inject constructor(
                 userLists = item.userLists
             )
         }
-        Log.i("lists", "user lists => ${state.value.userLists}")
     }
 
     fun onDone(listsId: List<Int>) {
@@ -186,12 +185,10 @@ class MovieDetailsViewModel @Inject constructor(
                 call = { addToUserListUseCase(id, movieId!!) },
                 onSuccess = ::onDoneSuccess,
                 onError = {
-                    Log.i("chi2222222p", "something went wrong")
-                    sendEvent(MovieDetailsUiEvent.OnErrorAdding("Duplicate entry: The data you tried to submit already exists."))
+                    sendEvent(MovieDetailsUiEvent.ShowSnackBar(stringsRes.duplicateEntity))
                 }
             )
         }
-        _state.update { it.copy(userSelectedLists = emptyList()) }
     }
 
     private fun onDoneSuccess(statusEntity: StatusEntity) {
@@ -203,7 +200,7 @@ class MovieDetailsViewModel @Inject constructor(
             call = { createUserListUseCase(listName) },
             onSuccess = ::onCreateUserNewList,
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong2"))
+                sendEvent(MovieDetailsUiEvent.OnCreateNewList(stringsRes.someThingError))
             }
         )
     }
@@ -212,10 +209,10 @@ class MovieDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { addToFavouriteUseCase(movieId!!, "movie") },
             onSuccess = {
-                sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
+                sendEvent(MovieDetailsUiEvent.OnFavourite(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong3"))
+                sendEvent(MovieDetailsUiEvent.OnFavourite(stringsRes.someThingError))
             }
         )
     }
@@ -224,26 +221,26 @@ class MovieDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { addToWatchList(movieId!!, "movie") },
             onSuccess = {
-                sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
+                sendEvent(MovieDetailsUiEvent.OnWatchList(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong4"))
+                sendEvent(MovieDetailsUiEvent.OnWatchList(stringsRes.someThingError))
             }
         )
     }
 
     private fun onCreateUserNewList(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.OnCreateNewList("New List Was Added Successfully"))
+        sendEvent(MovieDetailsUiEvent.OnCreateNewList(stringsRes.newListAddSuccessFully))
         getUserLists()
     }
     //endregion
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
+        sendEvent(MovieDetailsUiEvent.ApplyRating(stringsRes.ratingAddSuccessFully))
     }
 
     private fun onRatingError(error: Throwable) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
+        sendEvent(MovieDetailsUiEvent.ApplyRating(stringsRes.someThingErrorWhenAddRating))
     }
 
     override fun onClickPeople(id: Int) {
@@ -282,17 +279,12 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onChipClick(id: Int) {
-        val updatedList = state.value.userSelectedLists.toMutableList()
-        if (updatedList.remove(id)) Unit else updatedList.add(id)
-
         _state.update {
             it.copy(
-                userSelectedLists = updatedList
+                userSelectedLists = (it.userSelectedLists + id).distinct()
             )
         }
-        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
-
 }
 
 private fun MovieDetailsEntity.toHistoryEntity(): MovieInWatchHistoryEntity {

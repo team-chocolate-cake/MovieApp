@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.movieDetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
@@ -50,7 +49,6 @@ class MovieDetailsFragment :
     private fun collectChange() {
         collectLatest {
             viewModel.state.collect { state ->
-                Log.d("123123123", "collectChange: ${state.recommendedUiState}")
                 movieDetailsAdapter.setItems(
                     mutableListOf(
                         MovieDetailsItem.Upper(state.movieUiState),
@@ -66,6 +64,7 @@ class MovieDetailsFragment :
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
+                binding.appBarLayout.setExpanded(true,true)
             }
         }
     }
@@ -75,19 +74,15 @@ class MovieDetailsFragment :
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
-
             is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
                 //todo
             }
-
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 //todo
             }
-
             is MovieDetailsUiEvent.RateMovie -> {
                 showRatingBottomSheet(event.movieId)
             }
-
             is MovieDetailsUiEvent.NavigateToMovie -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(
@@ -95,17 +90,13 @@ class MovieDetailsFragment :
                     )
                 )
             }
-
             is MovieDetailsUiEvent.SaveToList -> showAddToListBottomSheet()
-
             is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
-
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
-
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
-            is MovieDetailsUiEvent.OnErrorAdding -> showSnackBar(event.message)
+            is MovieDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             else -> {}
@@ -152,7 +143,6 @@ class MovieDetailsFragment :
                     }
                 }
             }
-
         }
     }
 

@@ -1,10 +1,8 @@
 package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -45,6 +43,7 @@ class EpisodeDetailsFragment :
     private fun setAdapter() {
         collectLatest { peopleAdapter.setItems(viewModel.state.value.cast) }
         binding.recyclerViewPeople.adapter = peopleAdapter
+        binding.recyclerViewPeople.smoothScrollToPosition(0)
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
