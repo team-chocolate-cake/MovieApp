@@ -10,6 +10,10 @@ import com.chocolatecake.ui.home.databinding.FragmentTrailerBinding
 import com.chocolatecake.viewmodel.youtube_trailer.TrailerInteraction
 import com.chocolatecake.viewmodel.youtube_trailer.TrailerViewModel
 import com.chocolatecake.viewmodel.youtube_trailer.YoutubePlayerUIState
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +26,24 @@ class TrailerFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        binding.youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                binding.youtubePlayerSeekbar.youtubePlayerSeekBarListener =
+                    object : YouTubePlayerSeekBarListener {
+                        override fun seekTo(time: Float) {
+                            youTubePlayer.seekTo(time)
+                        }
+                    }
+            }
+        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
+
     override fun onEvent(event: TrailerInteraction) {
 
     }

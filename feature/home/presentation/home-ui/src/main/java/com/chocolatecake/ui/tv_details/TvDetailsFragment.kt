@@ -11,7 +11,6 @@ import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentTvDetailsBinding
 import com.chocolatecake.ui.tv_details.adapter.TvDetailsAdapter
-import com.chocolatecake.usecase.youtube_trailer.MediaType
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
 import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel

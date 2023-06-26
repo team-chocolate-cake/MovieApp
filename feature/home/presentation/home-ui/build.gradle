@@ -80,7 +80,8 @@ dependencies {
 
     /// youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
-    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28'
+   // implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:11.1.0'
+ //   implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28'
 
     /// refresh-layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
