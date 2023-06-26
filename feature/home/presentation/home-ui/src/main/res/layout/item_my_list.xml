@@ -81,66 +81,40 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical">
 
-                    <ImageButton
-                        android:id="@+id/image_button_show_delete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_medium_16dp"
-                        android:background="@null"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:onClick="@{()->listener.onClickShowDelete()}"
-                        android:src="@drawable/ic_show_delete"
-                        app:tint="@color/on_background_38"
-                        tools:ignore="MissingConstraints" />
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/image_button_show_delete"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/spacing_medium_16dp"-->
+<!--                        android:background="@null"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        android:onClick="@{()->listener.onClickShowDelete()}"-->
+<!--                        android:src="@drawable/ic_show_delete"-->
+<!--                        app:tint="@color/on_background_38"-->
+<!--                        tools:ignore="MissingConstraints" />-->
 
+<!--                    app:layout_constraintEnd_toStartOf="@id/image_button_show_delete"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/image_button_show_delete"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/image_button_show_delete"-->
 
 
                     <TextView
                         android:id="@+id/text_view_delete_list"
-                        style="@style/TextStyle.BodyMedium"
+                        style="@style/TextStyle.BodySmall"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/background"
+                        android:background="@color/card"
                         android:onClick="@{()-> listener.onClickDelete(item.id)}"
                         android:paddingHorizontal="@dimen/spacing_medium_16dp"
                         android:paddingVertical="@dimen/spacing_medium_16dp"
                         android:text="@string/delete"
-                        app:layout_constraintEnd_toStartOf="@id/image_button_show_delete"
-                        app:layout_constraintTop_toTopOf="@id/image_button_show_delete"
-                        app:layout_constraintBottom_toBottomOf="@id/image_button_show_delete"
-                        android:textColor="@color/on_background_87"
-                        app:isVisible="@{!viewModel.state.isShowDelete}" />
-
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/material_card_view_delete_list"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:paddingHorizontal="@dimen/spacing_small_8dp"-->
-<!--                        android:paddingVertical="@dimen/spacing_small_8dp"-->
-<!--                        app:strokeWidth="0dp"-->
-<!--                        app:cardCornerRadius="@dimen/radius_small"-->
-<!--                        app:layout_constraintEnd_toStartOf="@id/image_button_show_delete"-->
-<!--                        app:layout_constraintTop_toTopOf="@id/image_button_show_delete"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@id/image_button_show_delete"-->
-<!--                        android:background="@color/background"-->
-<!--                        app:isVisible="@{viewModel.state.isShowDelete}"-->
-<!--                        android:onClick="@{()-> listener.onClickDelete(item.id)}">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/text_view_delete_list"-->
-<!--                            style="@style/TextStyle.BodyMedium"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="@dimen/spacing_tiny_4dp"-->
-<!--                            android:text="Delete"-->
-<!--                            android:textColor="@color/on_background_87" />-->
-
-
-<!--                    </LinearLayout>-->
-
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/on_background_87" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
