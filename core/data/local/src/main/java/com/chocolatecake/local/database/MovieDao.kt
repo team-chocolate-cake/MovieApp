@@ -126,7 +126,6 @@ interface MovieDao {
     @Query("delete from GENRES_MOVIES_TABLE")
     suspend fun clearAllGenresMovies()
 
-
     @Query("select * from GENRES_TVS_TABLE")
     suspend fun getGenresTvs(): List<GenresTvsLocalDto>
 
@@ -151,49 +150,4 @@ interface MovieDao {
     suspend fun searchWatchHistory(keyword: String): List<MovieInWatchHistoryLocalDto>
 
     // endregion
-
-
-    //region my list
-    @Query("select * from MOVIE_TABLE")
-    suspend fun getFavoriteMovies(): List<MovieLocalDto>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteMovie(movies: MovieLocalDto)
-
-    @Query("select * from MOVIE_TABLE")
-    suspend fun getFavoriteByMediaType(): List<MovieLocalDto>
-
-//    @Query("select * from TV_TABLE")
-//    suspend fun getFavoriteTv(): List<TvLocalDto>
-
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertFavoriteTv(movies: List<TvLocalDto>)
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWatchlist(movies: List<WatchlistLocalDto>)
-
-    @Query("select * from WATCHLIST_TABLE  where mediaType like :mediaType")
-    suspend fun getWatchlistByMediaType(mediaType: String): List<WatchlistLocalDto>
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertList(movies: List<ListLocalDto>)
-
-    @Query("select * from LIST_TABLE")
-    suspend fun getLists(): List<ListLocalDto>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovieToList(movie: ListMovieLocalDto)
-
-//    @Query("select * from LIST_MOVIE_TABLE GROUP BY listId")
-//    suspend fun getMoviesList(): List<ListMovieLocalDto>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDetailsList(movie: List<MovieListDetailsLocalDto>)
-
-    @Query("select * from MOVIE_LIST_DETAILS_TABLE")
-    suspend fun getDetailsList(): List<MovieListDetailsLocalDto>
-
-    //endregion
 }

@@ -38,10 +38,6 @@ import com.chocolatecake.local.database.dto.myList.ListMovieLocalDto
         MovieLocalDto::class,
         UserLocalDto::class,
         MovieInWatchHistoryLocalDto::class,
-        WatchlistLocalDto::class,
-        ListLocalDto::class,
-        ListMovieLocalDto::class,
-        MovieListDetailsLocalDto::class,
     ],
     version = 1,
     exportSchema = false
