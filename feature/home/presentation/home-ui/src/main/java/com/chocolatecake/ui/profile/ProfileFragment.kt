@@ -69,7 +69,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
 
     private fun changeAppTheme() {
         val switchButtonTheme = binding.switchBottonTheme
-        val uiNight = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val uiNight =   resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         switchButtonTheme.isChecked = uiNight != Configuration.UI_MODE_NIGHT_NO
 
         switchButtonTheme.setOnCheckedChangeListener { _, isChecked ->
