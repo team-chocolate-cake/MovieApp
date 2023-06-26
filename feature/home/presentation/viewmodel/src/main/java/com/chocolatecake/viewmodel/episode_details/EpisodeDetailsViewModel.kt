@@ -86,24 +86,8 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
                 val mappedData = trailerUiMapper.map(inputData)
                 onSuccessEpisodeVideo(mappedData)
-                Log.e("banan", "we are in try scope ")
-            } catch (th: Throwable) {
-                _state.update {
-                    it.copy(
-                        trailerKey = ""
-                    )
-                }
-                Log.e("banan", "we are in catch scope ")
-            }
+            } catch (th: Throwable) { _state.update { it.copy(trailerKey = "") } }
         }
-
-//        executeEpisodeDetails(
-//            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
-//            mapper = trailerUiMapper,
-//            onSuccess = ::onSuccessEpisodeVideo,
-//            onError = ::onError
-//        )
-
     }
 
     private fun onSuccessEpisodeVideo(trailerUiState: TrailerUiState) {
@@ -156,7 +140,6 @@ class EpisodeDetailsViewModel @Inject constructor(
             onSuccess = ::onSuccessCast,
             onError = ::onError
         )
-
     }
 
     private fun onSuccessCast(cast: List<PeopleUIState>) {
@@ -178,11 +161,6 @@ class EpisodeDetailsViewModel @Inject constructor(
                 trailerKey = ""
             )
         }
-        Log.d("banan-error", _state.value.onErrors.toString())
-//        _state.update {
-//            it.copy(onErrors = emptyList())
-        //            }
-//
     }
     /// endregion
 
@@ -199,5 +177,4 @@ class EpisodeDetailsViewModel @Inject constructor(
         sendEvent(EpisodeDetailsUiEvent.ClickCast(id))
     }
     /// endregion
-
 }
