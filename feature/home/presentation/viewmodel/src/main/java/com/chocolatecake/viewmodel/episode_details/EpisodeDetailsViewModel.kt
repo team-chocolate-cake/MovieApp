@@ -107,7 +107,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 trailerKey = trailerUiState.videoKey,
-                refreshing = true, onErrors = emptyList()
+                refreshing = false, onErrors = emptyList()
             )
         }
         Log.d("banan-error","Video error ${_state.value.onErrors}")
