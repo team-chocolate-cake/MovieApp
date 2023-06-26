@@ -159,6 +159,7 @@ interface MovieService {
     ): Response<ProfileRemoteDto>
     ///endregion
 
+
     /// region movie details
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
@@ -261,8 +262,8 @@ interface MovieService {
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
 
 
-    @GET("list/{list_id}/add_item")
-    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
+//    @GET("list/{list_id}/add_item")
+//    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
 
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)

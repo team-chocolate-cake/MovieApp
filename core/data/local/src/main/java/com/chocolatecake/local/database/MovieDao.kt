@@ -186,8 +186,8 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieToList(movie: ListMovieLocalDto)
 
-    @Query("select * from LIST_MOVIE_TABLE GROUP BY listId")
-    suspend fun getMoviesList(): List<ListMovieLocalDto>
+//    @Query("select * from LIST_MOVIE_TABLE GROUP BY listId")
+//    suspend fun getMoviesList(): List<ListMovieLocalDto>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDetailsList(movie: List<MovieListDetailsLocalDto>)
