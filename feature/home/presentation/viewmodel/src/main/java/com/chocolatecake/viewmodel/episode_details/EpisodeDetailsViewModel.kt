@@ -39,8 +39,8 @@ class EpisodeDetailsViewModel @Inject constructor(
 
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         _state.update { it.copy(isLoading = true) }
-        //  getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
-        // getCastData(seriesId, seasonNumber, episodeNumber)
+        getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
+        getCastData(seriesId, seasonNumber, episodeNumber)
         getEpisodeVideo(seriesId, seasonNumber, episodeNumber)
     }
 
@@ -81,12 +81,28 @@ class EpisodeDetailsViewModel @Inject constructor(
 
     ///region video
     private fun getEpisodeVideo(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
-        executeEpisodeDetails(
-            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
-            mapper = trailerUiMapper,
-            onSuccess = ::onSuccessEpisodeVideo,
-            onError = ::onError
-        )
+        viewModelScope.launch {
+            try {
+                val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
+                val mappedData = trailerUiMapper.map(inputData)
+                onSuccessEpisodeVideo(mappedData)
+                Log.e("banan", "we are in try scope ")
+            } catch (th: Throwable) {
+                _state.update {
+                    it.copy(
+                        trailerKey = ""
+                    )
+                }
+                Log.e("banan", "we are in catch scope ")
+            }
+        }
+
+//        executeEpisodeDetails(
+//            call = { episodeVideoUseCase(seriesId, seasonNumber, episodeNumber) },
+//            mapper = trailerUiMapper,
+//            onSuccess = ::onSuccessEpisodeVideo,
+//            onError = ::onError
+//        )
 
     }
 
@@ -97,7 +113,6 @@ class EpisodeDetailsViewModel @Inject constructor(
                 refreshing = false, onErrors = emptyList()
             )
         }
-        Log.d("banan-error", "Video error ${_state.value.onErrors}")
 
     }
 
