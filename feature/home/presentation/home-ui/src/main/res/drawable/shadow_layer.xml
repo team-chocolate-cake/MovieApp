@@ -1,7 +1,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:shape="rectangle"
-    tools:ignore="MissingDefaultResource">>
+    tools:ignore="MissingDefaultResource">
 
     <gradient
         android:angle="90"

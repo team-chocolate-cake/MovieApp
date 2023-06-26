@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:src="@tools:sample/backgrounds/scenic" />
 
         <View
