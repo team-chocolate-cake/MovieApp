@@ -36,7 +36,7 @@ class PeopleGuessingViewModel @Inject constructor(
     }
 
     private fun getData() {
-        _state.update { it.copy(isLoading = true) }
+        _state.update { it.copy(isLoading = true, userAnswer = null) }
         tryToExecute(
             getCurrentUserUseCase::invoke,
             ::onSuccessUser,
@@ -53,7 +53,14 @@ class PeopleGuessingViewModel @Inject constructor(
         _state.update {
             it.copy(
                 question = questionEntity.question,
-                answers = questionEntity.choices,
+                answers = questionEntity.choices.mapIndexed {
+                        indexAnswer, answer ->
+                    GameUiState.AnswerUiState(
+                        indexAnswer,
+                        answer,
+                        isCorrect = indexAnswer == questionEntity.correctAnswerPosition
+                    )
+                    },
                 correctAnswerPosition = questionEntity.correctAnswerPosition,
                 imageUrl = questionEntity.imageUrl,
                 isError = false,
@@ -112,22 +119,26 @@ class PeopleGuessingViewModel @Inject constructor(
     }
 
     override fun onClickAnswer(position: Int) {
-        val heartCount = _state.value.heartCount
-        val correctAnswer = _state.value.correctAnswerPosition
-        if (correctAnswer != position) {
-            if (heartCount - 1 == 0) {
-                onUserLose()
-            } else {
-                _state.update { it.copy(heartCount = heartCount - 1) }
-                updateCurrentQuestion()
+        viewModelScope.launch {
+            _state.update { it.copy(userAnswer = position) }
+            delay(500)
+            val heartCount = _state.value.heartCount
+            val correctAnswer = _state.value.correctAnswerPosition
+            if (correctAnswer != position) {
+                if (heartCount - 1 == 0) {
+                    onUserLose()
+                } else {
+                    _state.update { it.copy(heartCount = heartCount - 1) }
+                    updateCurrentQuestion()
+                }
+                return@launch
             }
-            return
+            if (_state.value.isLastQuestion) {
+                onUserWins()
+                return@launch
+            }
+            updateToNextQuestion()
         }
-        if (_state.value.isLastQuestion) {
-            onUserWins()
-            return
-        }
-        updateToNextQuestion()
     }
 
     private fun onUserWins() {
