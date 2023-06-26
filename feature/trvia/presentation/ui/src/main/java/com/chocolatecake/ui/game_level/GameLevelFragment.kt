@@ -45,6 +45,15 @@ class GameLevelFragment :
                 findNavController().navigate(GameLevelFragmentDirections.actionGameLevelFragmentToTvShowGuessingFragment())
             }
 
+            GameLevelUIEvent.ResetLevels -> {
+
+              viewModel.resetGameLevelFromUser()
+
+            }
+            GameLevelUIEvent.BackNavigate->{
+                findNavController().popBackStack()
+            }
+
             is GameLevelUIEvent.ShowYouMustPassPreviousLevelFirst -> {
                 showSnackBar(getString(R.string.pass_prev_level))
             }

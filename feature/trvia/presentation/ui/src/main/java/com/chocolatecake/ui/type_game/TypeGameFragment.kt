@@ -9,13 +9,15 @@ import com.chocolatecake.ui.trivia.databinding.FragmentTypeGamesBinding
 import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.game_type.GameTypeUIEvent
 import com.chocolatecake.viewmodel.game_type.GameTypeViewModel
+import com.chocolatecake.ui.sound_when_play.SoundManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUIEvent>() {
     override val layoutIdFragment: Int = R.layout.fragment_type_games
     override val viewModel: BaseViewModel<Unit, GameTypeUIEvent> by viewModels<GameTypeViewModel>()
-
+    @Inject lateinit var soundManager : SoundManager
 
     override fun onEvent(event: GameTypeUIEvent) {
         when (event) {
@@ -51,6 +53,15 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
             is GameTypeUIEvent.ShowSnackbar -> {
                 showSnackBar("Coming Soon!!!")
             }
+
+            GameTypeUIEvent.PlaySound -> {
+                soundManager.toggleSound(R.raw.sound)
+            }
+            GameTypeUIEvent.BackNavigate->{
+                findNavController().popBackStack()
+                soundManager.stopSound()
+            }
+
         }
     }
 }
