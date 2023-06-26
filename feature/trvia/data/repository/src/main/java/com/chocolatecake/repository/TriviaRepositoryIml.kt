@@ -4,15 +4,22 @@ import com.chocolatecake.entities.BoardEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.QuestionEntity
+import com.chocolatecake.entities.TVShowsEntity
 import com.chocolatecake.entities.UserEntity
+import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.local.database.TriviaDao
 import com.chocolatecake.local.database.dto.UserLocalDto
+import com.chocolatecake.remote.service.MovieService
+import com.chocolatecake.repository.mappers.domain.tv.TVShowsDomainMapper
 import javax.inject.Inject
 
 class TriviaRepositoryIml @Inject constructor(
     private val triviaDao: TriviaDao,
     private val movieRepository: MovieRepository,
     private val fakeQuestions: FakeQuestions,
+    private val movieDao: MovieDao,
+    private val movieService: MovieService,
+    private val tvShowsDomainMapper: TVShowsDomainMapper
 ) : BaseRepository(), TriviaRepository {
 
     /// region user
@@ -92,7 +99,7 @@ class TriviaRepositoryIml @Inject constructor(
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> movies.map { it.title }
             FakeQuestions.Companion.QuestionType.RATE -> movies.map { it.rate.toString() }
-            FakeQuestions.Companion.QuestionType.GENRE -> geOtherGenres(selectedMovie.genreEntities) + selectedGenre
+            FakeQuestions.Companion.QuestionType.GENRE -> getOtherGenresMovies(selectedMovie.genreEntities) + selectedGenre
         }
 
         val answer = when (question.second) {
@@ -109,15 +116,47 @@ class TriviaRepositoryIml @Inject constructor(
         )
     }
 
-    private suspend fun geOtherGenres(genreEntities: List<GenreEntity>): List<String> {
+    private suspend fun getOtherGenresMovies(genreEntities: List<GenreEntity>): List<String> {
         val allGenres = movieRepository.getGenresMovies()
         val otherGenres = allGenres.subtract(genreEntities.toSet()).distinct()
         return otherGenres.map { it.genreName }.take(3)
     }
 
+    private suspend fun getOtherGenresTvShows(genreEntities: List<GenreEntity>): List<String> {
+        val allGenres = movieRepository.getGenresTvs()
+        val otherGenres = allGenres.subtract(genreEntities.toSet()).distinct()
+        return otherGenres.map { it.genreName }.take(3)
+    }
+
+    override suspend fun getPopularTvShows(): List<TVShowsEntity> {
+        val result = wrapApiCall { movieService.getPopularTVShows() }
+      return tvShowsDomainMapper.map(result.results?.filterNotNull() ?: emptyList())
+    }
 
     override suspend fun getTvShowQuestion(level: Int, questionNumber: Int): QuestionEntity {
-        TODO("Not yet implemented")
+        val tvShows = getPopularTvShows().filter { !it.imageUrl.contains("null") }
+            .shuffled().take(4)
+        val question = fakeQuestions.getTvQuestion(level)
+        val selectedTvShow = tvShows.random()
+        val selectedGenre = movieRepository.getTvDetailsInfo(selectedTvShow.id).genres?.first() ?: "Action"
+
+        val choices: List<String> = when (question.second) {
+            FakeQuestions.Companion.QuestionType.NAME -> tvShows.map { it.title }
+            FakeQuestions.Companion.QuestionType.RATE -> tvShows.map { it.rate.toString() }
+            FakeQuestions.Companion.QuestionType.GENRE -> getOtherGenresTvShows(selectedTvShow.genreEntities) + selectedGenre.toString()
+        }
+         val answer = when (question.second) {
+             FakeQuestions.Companion.QuestionType.NAME -> choices.indexOf(selectedTvShow.title)
+             FakeQuestions.Companion.QuestionType.RATE -> choices.indexOf(selectedTvShow.rate.toString())
+             FakeQuestions.Companion.QuestionType.GENRE -> choices.indexOf(selectedGenre)
+         }
+
+        return QuestionEntity(
+            question = question.first,
+            imageUrl = selectedTvShow.imageUrl,
+            choices = choices,
+            correctAnswerPosition = answer
+        )
     }
 
     override suspend fun getBoard(level: Int): BoardEntity {
