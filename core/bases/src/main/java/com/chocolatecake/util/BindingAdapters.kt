@@ -145,6 +145,15 @@ fun <T> View.showWhenNoResult(list: List<T>?) {
     }
 }
 
+@BindingAdapter(value = ["app:hideWhenLoading"])
+fun View.hideWhenLoading(isLoading: Boolean?) {
+    visibility = if (isLoading == true) {
+        View.INVISIBLE
+    } else {
+        View.VISIBLE
+    }
+}
+
 @BindingAdapter("app:showWhenError")
 fun <T> View.showWhenError(list: List<T>?) {
     if (list?.isNotEmpty() == true) {
