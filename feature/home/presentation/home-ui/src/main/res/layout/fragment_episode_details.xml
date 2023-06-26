@@ -137,7 +137,6 @@
                     android:text="@{viewModel.state.episodeOverview}"
                     android:textColor="@color/on_background_60"
                     app:hideWhenError="@{viewModel.state.onErrors}"
-                    app:hideWhenNoResultText="@{viewModel.state.episodeOverview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ratingBar"
