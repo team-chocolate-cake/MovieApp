@@ -4,15 +4,14 @@ import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
 import java.util.Date
 import kotlin.math.abs
 
-class WatchHistoryRecyclerItemsCreator {
+class WatchHistoryRecyclerItemsCreator() {
     private val currentDate = Date()
 
     fun createItems(moviesInDataBase: List<MovieUiState>): List<WatchHistoryRecyclerItem> {
         val moviesForRecyclerView = mutableListOf<WatchHistoryRecyclerItem>()
-        moviesForRecyclerView += WatchHistoryRecyclerItem.SearchBar
         var latestDateFound: Date? = null
 
-        for (movie in moviesInDataBase) {
+        for (movie in moviesInDataBase.sortedByDescending { it.dateWatched }) {
             if (isNotSameTitle(latestDateFound, movie)) {
                 moviesForRecyclerView +=
                     WatchHistoryRecyclerItem.Title(composeTitle(movie.dateWatched))

@@ -1,6 +1,5 @@
-package com.chocolatecake.ui.tvShow
+package com.chocolatecake.ui.tv_shows
 
-import android.view.View
 import androidx.databinding.BindingAdapter
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.tv_shows.TVShowsType

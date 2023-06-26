@@ -18,103 +18,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/view_card_answer_one"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/textfield_background"
-            android:onClick="@{()-> listener.onClickAnswer(0)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/text_view_answer_one"
             style="@style/TextStyle.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:onClick="@{()-> listener.onClickAnswer(0)}"
-            android:text="@{`A | ` + item.answers[0]}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
+            android:background="@drawable/textfield_background"
+            android:gravity="center_vertical"
+            android:text="@{`A | ` + item.answers[0].answer}"
             android:textColor="@color/on_background_87"
-            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_one"
+            android:paddingHorizontal="@dimen/spacing_small_8dp"
+            app:answer="@{item.answers[0]}"
+            app:listener="@{listener}"
+            app:userAnswer="@{item.userAnswer}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="A |  The BlackList" />
 
-        <View
-            android:id="@+id/view_card_answer_two"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="@dimen/spacing_medium_16dp"
-            android:background="@drawable/textfield_background"
-            android:onClick="@{()-> listener.onClickAnswer(1)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_card_answer_one" />
-
         <TextView
             android:id="@+id/text_view_answer_two"
             style="@style/TextStyle.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:onClick="@{()-> listener.onClickAnswer(1)}"
-            android:text="@{`B | ` + item.answers[1]}"
-            android:textColor="@color/on_background_87"
-            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_two"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_card_answer_two"
-            tools:text="B |  The BlackList" />
-
-        <View
-            android:id="@+id/view_card_answer_three"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:background="@drawable/textfield_background"
-            android:onClick="@{()-> listener.onClickAnswer(2)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_vertical"
+            android:text="@{`B | ` + item.answers[1].answer}"
+            android:textColor="@color/on_background_87"
+            android:paddingHorizontal="@dimen/spacing_small_8dp"
+            app:answer="@{item.answers[1]}"
+            app:listener="@{listener}"
+            app:userAnswer="@{item.userAnswer}"
+            app:layout_constraintTop_toBottomOf="@id/text_view_answer_one"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_card_answer_two" />
+            tools:text="B |  The BlackList" />
 
         <TextView
             android:id="@+id/text_view_answer_three"
             style="@style/TextStyle.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:onClick="@{()-> listener.onClickAnswer(2)}"
-            android:text="@{`C | ` + item.answers[2]}"
-            android:textColor="@color/on_background_87"
-            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_three"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_card_answer_three"
-            tools:text="C |  The BlackList" />
-
-        <View
-            android:id="@+id/view_card_answer_four"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:background="@drawable/textfield_background"
-            android:onClick="@{()-> listener.onClickAnswer(3)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_vertical"
+            android:text="@{`C | ` + item.answers[2].answer}"
+            android:textColor="@color/on_background_87"
+            android:paddingHorizontal="@dimen/spacing_small_8dp"
+            app:answer="@{item.answers[2]}"
+            app:listener="@{listener}"
+            app:userAnswer="@{item.userAnswer}"
+            app:layout_constraintTop_toBottomOf="@id/text_view_answer_two"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_card_answer_three" />
+            tools:text="C |  The BlackList" />
 
         <TextView
             android:id="@+id/text_view_answer_four"
             style="@style/TextStyle.BodyMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_medium_16dp"
-            android:onClick="@{()-> listener.onClickAnswer(3)}"
-            android:text="@{`D | ` + item.answers[3]}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:background="@drawable/textfield_background"
+            android:gravity="center_vertical"
+            android:text="@{`D | ` + item.answers[3].answer}"
             android:textColor="@color/on_background_87"
-            app:layout_constraintBottom_toBottomOf="@+id/view_card_answer_four"
+            android:paddingHorizontal="@dimen/spacing_small_8dp"
+            app:answer="@{item.answers[3]}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/view_card_answer_four"
+            app:layout_constraintTop_toBottomOf="@id/text_view_answer_three"
+            app:listener="@{listener}"
+            app:userAnswer="@{item.userAnswer}"
             tools:text="D |  The BlackList" />
 
 

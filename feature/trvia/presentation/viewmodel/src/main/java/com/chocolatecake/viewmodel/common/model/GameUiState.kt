@@ -8,7 +8,7 @@ data class GameUiState(
     val heartCount: Int = 3,
     val points: Int = 0,
     val question: String = "",
-    val answers: List<String> = emptyList(),
+    val answers: List<AnswerUiState> = emptyList(),
     val correctAnswerPosition: Int = 0,
     val imageUrl: String = "",
     val userAnswer: Int? = null,
@@ -23,6 +23,12 @@ data class GameUiState(
         }
 
     val isLastQuestion: Boolean get() = questionCount == totalQuestions
+
+    data class AnswerUiState(
+        val position: Int,
+        val answer: String,
+        val isCorrect: Boolean,
+    )
 }
 
 enum class GameType{
