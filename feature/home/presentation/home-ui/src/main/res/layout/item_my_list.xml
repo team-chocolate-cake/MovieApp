@@ -81,26 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical">
 
-<!--                    <ImageButton-->
-<!--                        android:id="@+id/image_button_show_delete"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="@dimen/spacing_medium_16dp"-->
-<!--                        android:background="@null"-->
-<!--                        android:scaleType="centerCrop"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        android:onClick="@{()->listener.onClickShowDelete()}"-->
-<!--                        android:src="@drawable/ic_show_delete"-->
-<!--                        app:tint="@color/on_background_38"-->
-<!--                        tools:ignore="MissingConstraints" />-->
-
-<!--                    app:layout_constraintEnd_toStartOf="@id/image_button_show_delete"-->
-<!--                    app:layout_constraintTop_toTopOf="@id/image_button_show_delete"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@id/image_button_show_delete"-->
-
-
                     <TextView
                         android:id="@+id/text_view_delete_list"
                         style="@style/TextStyle.BodySmall"
