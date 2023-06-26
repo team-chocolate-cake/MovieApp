@@ -1,10 +1,8 @@
 package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -31,7 +29,6 @@ class EpisodeDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-
         binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
@@ -61,7 +58,6 @@ class EpisodeDetailsFragment :
 
     private fun navigateToBack() {
         findNavController().popBackStack()
-        Toast.makeText(requireActivity(), "back button clicked", Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToCastDetails() {
@@ -73,5 +69,4 @@ class EpisodeDetailsFragment :
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }
-
 }

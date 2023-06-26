@@ -8,7 +8,6 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel" />
-
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsListener" />
@@ -62,13 +61,13 @@
                     android:layout_height="@dimen/height_image_details"
                     android:foreground="@drawable/main_image_gradient"
                     android:scaleType="centerCrop"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:hideWhenLoading="@{viewModel.state.loading}"
                     app:imageUrl="@{viewModel.state.imageUrl}"
+                    app:layout_constraintDimensionRatio="16:9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
-                    app:hideWhenLoading="@{viewModel.state.loading}"
-                    app:layout_constraintDimensionRatio="16:9"
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
@@ -79,8 +78,8 @@
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@{viewModel.state.episodeName}"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     android:textColor="@color/on_background_87"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/image_view_episode_image"
                     tools:text="The Super Mario Bros." />
@@ -137,8 +136,8 @@
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@{viewModel.state.episodeOverview}"
                     android:textColor="@color/on_background_60"
-                    app:hideWhenNoResultText="@{viewModel.state.episodeOverview}"
                     app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:hideWhenNoResultText="@{viewModel.state.episodeOverview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ratingBar"
@@ -149,12 +148,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
-                    android:layout_marginTop="@dimen/spacing_medium_16dp"
-                    app:setVideoId="@{viewModel.state.trailerKey}"
-                    app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"/>
+                    app:setVideoId="@{viewModel.state.trailerKey}" />
 
                 <TextView
                     android:id="@+id/text_view_actors"
@@ -175,19 +174,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:layout_marginBottom="@dimen/spacing_small_8dp"
                     android:clipToPadding="false"
                     android:contentDescription="@string/rate_the_episode"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/spacing_custom_12dp"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:hideWhenNoList="@{viewModel.state.cast}"
                     app:items="@{viewModel.state.cast}"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_actors"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/spacing_small_8dp"
                     tools:listitem="@layout/item_people" />
 
                 <Button
