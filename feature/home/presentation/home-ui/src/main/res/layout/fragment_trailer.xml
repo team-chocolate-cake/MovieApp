@@ -10,7 +10,7 @@
             type="com.chocolatecake.viewmodel.youtube_trailer.TrailerViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -19,14 +19,11 @@
             android:id="@+id/youtube_player"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:setVideoId="@{viewModel.state.videoKey}" />
-
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
-            android:id="@+id/youtube_player_seekbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:color="#DA00FF"
-            app:fontSize="12sp" />
 
         <include
             android:id="@+id/lottie_animation_view_no_network"
@@ -34,10 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:isVisible="@{viewModel.state.isError}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
