@@ -18,6 +18,9 @@
             android:id="@+id/action_homeFragment_to_showMoreFragment"
             app:destination="@id/showMoreFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
         <deepLink app:uri="movie://home" />
     </fragment>
 
@@ -196,5 +199,19 @@
         <argument
             android:name="episodeNumber"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/peopleDetailsFragment"
+        android:name="com.chocolatecake.ui.people.PeopleDetailsFragment"
+        android:label="PeopleDetailsFragment" >
+        <argument
+            android:name="peopleId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_peopleDetailsFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_peopleDetailsFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>

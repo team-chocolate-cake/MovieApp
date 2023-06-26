@@ -6,12 +6,14 @@ import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.people.PeopleDetailsUiState
 import javax.inject.Inject
 
-class MoviesByPeopleUiMapper @Inject constructor():  Mapper<MovieEntity, MediaVerticalUIState> {
-    override fun map(input: MovieEntity): MediaVerticalUIState {
-        return MediaVerticalUIState(
-            input.id,
-            input.imageUrl,
-            input.rate
+class MoviesByPeopleUiMapper @Inject constructor() :
+    Mapper<MovieEntity, PeopleDetailsUiState.PeopleMediaUiState> {
+    override fun map(input: MovieEntity): PeopleDetailsUiState.PeopleMediaUiState {
+        return PeopleDetailsUiState.PeopleMediaUiState(
+            id = input.id,
+            name = "movies",
+            imageUrl = input.imageUrl,
+            rate = input.rate
         )
     }
 }

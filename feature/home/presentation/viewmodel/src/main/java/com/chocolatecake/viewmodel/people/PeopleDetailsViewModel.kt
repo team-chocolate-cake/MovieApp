@@ -6,6 +6,7 @@ import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.usecase.GetMoviesByPeopleUseCase
 import com.chocolatecake.usecase.GetPeopleDetailsUseCase
 import com.chocolatecake.usecase.GetTvShowsByPeopleUseCase
+import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.people.mapper.MoviesByPeopleUiMapper
 import com.chocolatecake.viewmodel.people.mapper.PeopleDataUiMapper
@@ -49,8 +50,9 @@ class PeopleDetailsViewModel @Inject constructor(
                 peopleData = peopleDataUiState,
                 isLoading = false
             )
+        }
+        Log.e("num_people_movies", num_people_movies)
     }
-        Log.e("num_people_movies",num_people_movies)  }
 
     private fun onErrorGetPersonData(e: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
@@ -60,7 +62,7 @@ class PeopleDetailsViewModel @Inject constructor(
 
     fun getMoviesByPeople(personId: Int) {
         tryToExecute(
-            call =  {getMoviesByPeopleUseCase.invoke(personId)} ,
+            call = { getMoviesByPeopleUseCase.invoke(personId) },
             onSuccess = ::onSuccessGetMoviesByPeople,
             onError = ::onErrorGetMoviesByPeople,
             mapper = moviesByPeopleUiMapper
@@ -68,15 +70,15 @@ class PeopleDetailsViewModel @Inject constructor(
     }
 
 
-    private fun onSuccessGetMoviesByPeople(moviesUiState: List<MediaVerticalUIState>) {
+    private fun onSuccessGetMoviesByPeople(moviesUiState: List<PeopleDetailsUiState.PeopleMediaUiState>) {
         _state.update {
             it.copy(
                 Movies = moviesUiState,
                 isLoading = false,
             )
         }
-        num_people_movies=moviesUiState.size.toString()
-        Log.e("num_people_movies",num_people_movies)
+        num_people_movies = moviesUiState.size.toString()
+        Log.e("num_people_movies", num_people_movies)
     }
 
     private fun onErrorGetMoviesByPeople(e: Throwable) {
@@ -88,7 +90,7 @@ class PeopleDetailsViewModel @Inject constructor(
 
     fun getTvShowsByPeople(personId: Int) {
         tryToExecute(
-            call = { getTvShowsByPeopleUseCase(personId)} ,
+            call = { getTvShowsByPeopleUseCase(personId) },
             onSuccess = ::onSuccessGetTvShowsByPeople,
             onError = ::onErrorGetTvShowsByPeople,
             mapper = tvShowsByPeopleUiMapper
@@ -96,10 +98,10 @@ class PeopleDetailsViewModel @Inject constructor(
     }
 
 
-    private fun onSuccessGetTvShowsByPeople(tvShowsUiState: List<MediaVerticalUIState>) {
+    private fun onSuccessGetTvShowsByPeople(tvShowsUiState: List<PeopleDetailsUiState.PeopleMediaUiState>) {
         _state.update {
             it.copy(
-                TvShows =tvShowsUiState ,
+                TvShows = tvShowsUiState,
                 isLoading = false
             )
         }
@@ -111,21 +113,17 @@ class PeopleDetailsViewModel @Inject constructor(
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
-
-    override fun onClickMovies(itemId: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onClickTvShows(itemId: Int) {
-        TODO("Not yet implemented")
+    override fun onClickMedia(itemId: Int, name: String) {
+        if (name == "movies") {
+            sendEvent(PeopleDetailsUiEvent.ClickMovieEvent(itemId))
+        } else if (name == "tvShows") {
+            sendEvent(PeopleDetailsUiEvent.ClickTvShowsEvent(itemId))
+        }
     }
 
     override fun backNavigate() {
         sendEvent(PeopleDetailsUiEvent.BackNavigate)
-
-    }
-
-    override fun onClickMedia(id: Int) {
-        TODO("Not yet implemented")
     }
 }
+
+

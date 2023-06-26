@@ -71,6 +71,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
 
             is HomeUiEvent.PopularPeopleEvent -> {
                 showSnackBar("${event.itemId}")
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPeopleDetailsFragment(
+                                event.itemId
+                            )
+                        )
             }
 
             is HomeUiEvent.RecommendedMovieEvent -> {
