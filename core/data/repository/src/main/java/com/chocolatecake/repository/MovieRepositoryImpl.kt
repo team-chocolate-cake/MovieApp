@@ -169,11 +169,11 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     /// region movies
-    override suspend fun getPopularMoviesFromDatabaseDto(): List<MovieEntity> {
+    override suspend fun getPopularMoviesFromDatabase(): List<MovieEntity> {
         return domainPopularMovieMapper.map(movieDao.getPopularMovies())
     }
 
-    override suspend fun getPopularMoviesFromRemoteDto(): List<MovieEntity> {
+    override suspend fun getPopularMoviesFromRemote(): List<MovieEntity> {
         val page = random.nextInt(500) + 1
         val call =
             wrapApiCall { movieService.getPopularMovies(page = page) }.results?.filterNotNull()
@@ -237,11 +237,11 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getPopularPeopleFromDatabaseDto(): List<PeopleEntity> {
+    override suspend fun getPopularPeopleFromDatabase(): List<PeopleEntity> {
         return domainPeopleMapper.map(movieDao.getPopularPeople())
     }
 
-    override suspend fun getPopularPeopleFromRemoteDto(): List<PeopleEntity> {
+    override suspend fun getPopularPeopleFromRemote(): List<PeopleEntity> {
         val page = random.nextInt(500) + 1
         val call =
             wrapApiCall { movieService.getPopularPeople(page = page) }.results?.filterNotNull()

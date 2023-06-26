@@ -32,8 +32,8 @@ interface MovieRepository {
     suspend fun getPopularMoviesPaging(): Pager<Int, MovieEntity>
     suspend fun getTopRateMoviesPaging(): Pager<Int, MovieEntity>
     suspend fun getTrendingMoviesPaging(): Pager<Int, MovieEntity>
-    suspend fun getPopularMoviesFromDatabaseDto(): List<MovieEntity>
-    suspend fun getPopularMoviesFromRemoteDto(): List<MovieEntity>
+    suspend fun getPopularMoviesFromDatabase(): List<MovieEntity>
+    suspend fun getPopularMoviesFromRemote(): List<MovieEntity>
     suspend fun refreshPopularMovies()
 
     suspend fun getNowPlayingMovies(): List<MovieEntity>
@@ -45,9 +45,9 @@ interface MovieRepository {
     suspend fun getUpcomingMovies(): List<MovieEntity>
     suspend fun refreshUpcomingMovies()
 
-    suspend fun getPopularPeopleFromDatabaseDto(): List<PeopleEntity>
+    suspend fun getPopularPeopleFromDatabase(): List<PeopleEntity>
     suspend fun refreshTrendingMovies()
-    suspend fun getPopularPeopleFromRemoteDto(): List<PeopleEntity>
+    suspend fun getPopularPeopleFromRemote(): List<PeopleEntity>
 
     suspend fun getTrendingMovies(): List<MovieEntity>
     suspend fun refreshPopularPeople()
