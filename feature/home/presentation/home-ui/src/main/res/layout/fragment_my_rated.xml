@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/on_background_87"
-                android:text="My Rated"
+                android:text="@string/my_rated"
                 style="@style/TextStyle.TitleMedium"
                 />
 
@@ -69,7 +69,7 @@
                 android:textAlignment="center"
                 android:checked="true"
                 android:onClick="@{()-> viewModel.onClickMovieChip()}"
-                android:text="Movie" />
+                android:text="@string/movie" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_tv_show"
@@ -80,7 +80,7 @@
                 android:textAlignment="center"
                 android:layout_height="@dimen/spacing_giant_32dp"
                 android:onClick="@{()-> viewModel.onClickTvShowChip()}"
-                android:text="Tv Show" />
+                android:text="@string/tv_show" />
 
 
         </com.google.android.material.chip.ChipGroup>
