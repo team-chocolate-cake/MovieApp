@@ -24,15 +24,15 @@
 
             <ImageButton
                 android:id="@+id/backButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="@dimen/spacing_large_24dp"
+                android:layout_height="@dimen/spacing_large_24dp"
+                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginTop="@dimen/spacing_medium_16dp"
                 android:background="@null"
                 android:onClick="@{()->viewModel.onBackPressed()}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/arrow_left"
-                android:layout_marginEnd="16dp"/>
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,10 +62,10 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_movie"
                 style="@style/TextStyle.BodySmall.ChipStyle"
-                android:layout_width="180dp"
-                app:chipCornerRadius="8dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/width_chip_myrated"
+                app:chipCornerRadius="@dimen/radius_default"
+                android:layout_height="@dimen/spacing_giant_32dp"
+                android:layout_weight="@dimen/spacing_one_1dp"
                 android:textAlignment="center"
                 android:checked="true"
                 android:onClick="@{()-> viewModel.onClickMovieChip()}"
@@ -74,11 +74,11 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_tv_show"
                 style="@style/TextStyle.BodySmall.ChipStyle"
-                android:layout_width="180dp"
-                app:chipCornerRadius="8dp"
-                android:layout_weight="1"
+                android:layout_width="@dimen/width_chip_myrated"
+                app:chipCornerRadius="@dimen/radius_default"
+                android:layout_weight="@dimen/spacing_one_1dp"
                 android:textAlignment="center"
-                android:layout_height="32dp"
+                android:layout_height="@dimen/spacing_giant_32dp"
                 android:onClick="@{()-> viewModel.onClickTvShowChip()}"
                 android:text="Tv Show" />
 
@@ -88,7 +88,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_media"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/spacing_zero_0dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:orientation="vertical"
             app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.errorList.empty}"

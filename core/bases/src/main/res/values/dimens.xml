@@ -73,4 +73,5 @@
     <dimen name="height_image_people">80dp</dimen>
     <dimen name="width_image_review">35dp</dimen>
     <dimen name="height_image_review">35dp</dimen>
+    <dimen name="width_chip_myrated">180dp</dimen>
 </resources>
