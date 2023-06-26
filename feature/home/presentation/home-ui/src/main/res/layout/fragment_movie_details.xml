@@ -190,7 +190,5 @@
                 android:text="@{viewModel.state.onErrors.toString()}"
                 android:textColor="@color/on_background_87" />
         </LinearLayout>
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

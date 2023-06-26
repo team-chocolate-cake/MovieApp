@@ -98,6 +98,10 @@
         <action
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
+            app:destination="@id/trailerFragment" />
+
     </fragment>
 
 
@@ -147,6 +151,10 @@
         <action
             android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
             app:destination="@id/seasonDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_trailerFragment3"
+            app:destination="@id/trailerFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -161,18 +169,18 @@
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        tools:layout="@layout/fragment_my_list"
         android:name="com.chocolatecake.ui.myList.MyListFragment"
-        android:label="MyListFragment" >
+        android:label="MyListFragment"
+        tools:layout="@layout/fragment_my_list">
         <action
             android:id="@+id/action_myListFragment_to_myListDetailsFragment"
             app:destination="@id/myListDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myListDetailsFragment"
-        tools:layout="@layout/fragment_my_list_details"
         android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
-        android:label="MyListDetailsFragment" >
+        android:label="MyListDetailsFragment"
+        tools:layout="@layout/fragment_my_list_details">
         <argument
             android:name="listId"
             app:argType="integer" />
@@ -188,7 +196,7 @@
         android:id="@+id/episodeDetailsFragment"
         android:name="com.chocolatecake.ui.episode_details.EpisodeDetailsFragment"
         android:label="EpisodeDetailsFragment"
-        tools:layout="@layout/fragment_episode_details" >
+        tools:layout="@layout/fragment_episode_details">
         <argument
             android:name="seriesId"
             app:argType="integer" />
@@ -198,5 +206,18 @@
         <argument
             android:name="episodeNumber"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeDetailsFragment_to_trailerFragment"
+            app:destination="@id/trailerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/trailerFragment"
+        android:name="com.chocolatecake.ui.youtube_player.TrailerFragment"
+        android:label="TrailerFragment"
+        tools:layout="@layout/fragment_trailer">
+        <argument
+            android:name="videoKey"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

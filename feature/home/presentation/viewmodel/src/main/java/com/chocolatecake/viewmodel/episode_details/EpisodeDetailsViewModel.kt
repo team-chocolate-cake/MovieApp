@@ -75,21 +75,6 @@ class EpisodeDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun <EpisodeDetailsEntity, EpisodeDetailsUiState> executeEpisodeDetails(
-        call: suspend () -> EpisodeDetailsEntity,
-        onSuccess: (EpisodeDetailsUiState) -> Unit,
-        mapper: Mapper<EpisodeDetailsEntity, EpisodeDetailsUiState>,
-        onError: (Throwable) -> Unit,
-        dispatcher: CoroutineDispatcher = Dispatchers.IO
-    ) {
-        viewModelScope.launch(dispatcher) {
-            try {
-                mapper.map(call()).also(onSuccess)
-            } catch (th: Throwable) {
-                onError(th)
-            }
-        }
-    }
     /// endregion
 
     /// region set rating

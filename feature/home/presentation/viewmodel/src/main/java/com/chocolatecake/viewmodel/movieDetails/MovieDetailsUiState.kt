@@ -28,7 +28,7 @@ data class UpperUiState(
     val title: String = "",
     val overview: String = "",
     val voteAverage: Float = 0f,
-    val videos: List<String> = emptyList(),
+    val videoKey: String = "",
     val isLogined: Boolean = false,
 )
 

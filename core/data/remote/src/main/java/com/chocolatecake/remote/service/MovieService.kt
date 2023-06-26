@@ -91,6 +91,26 @@ interface MovieService {
 
     ///endregion
 
+    /// region trailer
+    @GET("movie/{movie_id}/videos")
+    suspend fun getTrailerVideoForMovie(
+        @Path("movie_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTrailerVideoForTvShow(
+        @Path("tv_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}/videos")
+    suspend fun getEpisodeVideos(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+    ///endregion
+
     /// region tv
 
     @GET("tv/airing_today")
@@ -179,7 +199,7 @@ interface MovieService {
     ): Response<SeasonDetailsDto>
     ///endregion
 
-    /// region tv
+    /// region tv details
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") tvShowId: Int
@@ -205,10 +225,6 @@ interface MovieService {
         @Path("tv_id") tvShowId: Int
     ): Response<DataWrapperResponse<TVShowsRemoteDto>>
 
-    @GET("tv/{tv_id}/videos")
-    suspend fun getTvShowYoutubeVideoDetails(
-        @Path("tv_id") tvShowId: Int
-    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 
     //region my list
@@ -305,4 +321,8 @@ interface MovieService {
     ): Response<EpisodeDetailsCastRemoteDto>
 
 ///endregion
+
+    /// region trailer
+
+    /// endregion
 }

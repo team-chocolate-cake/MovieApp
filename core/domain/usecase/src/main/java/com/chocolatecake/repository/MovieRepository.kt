@@ -91,7 +91,14 @@ interface MovieRepository {
     suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity
     suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
     suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity>
-    suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity
+    suspend fun getTrailerVideoForTvShow(tvShowID: Int): YoutubeVideoDetailsEntity
+    suspend fun getTrailerVideoForMovie(movieID: Int): YoutubeVideoDetailsEntity
+
+    suspend fun getVideoEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): YoutubeVideoDetailsEntity
 
     suspend fun getUserLists(): List<UserListEntity>
     suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity

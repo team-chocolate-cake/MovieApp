@@ -56,13 +56,21 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnShowMoreCast -> showSnackBar("Show More Cast")
             is TvDetailsUiEvent.OnShowMoreRecommended -> showSnackBar("Show More Recommended")
-            is TvDetailsUiEvent.PlayButton -> showSnackBar("youtube key => ${event.youtubeKey}")
+            is TvDetailsUiEvent.PlayButton -> navigateToTrailerFragment(event.youtubeKey)
             is TvDetailsUiEvent.OnSaveButtonClick -> showAddToWatchlistFavouriteBottomSheet()
             is TvDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is TvDetailsUiEvent.onCreateNewList -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
         }
+    }
+
+    private fun navigateToTrailerFragment(videoKey: String) {
+        findNavController().navigate(
+            TvDetailsFragmentDirections
+                .actionTvDetailsFragmentToTrailerFragment3(videoKey)
+        )
+        showSnackBar(videoKey)
     }
 
     private fun setAdapter() {
@@ -143,7 +151,6 @@ class TvDetailsFragment :
 
         }
     }
-
 
 
     override fun onFavourite() {
