@@ -56,6 +56,7 @@ class TvDetailsViewModel @Inject constructor(
     private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
+
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
 

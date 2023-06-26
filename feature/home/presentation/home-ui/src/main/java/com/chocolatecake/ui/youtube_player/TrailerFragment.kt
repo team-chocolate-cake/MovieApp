@@ -1,6 +1,9 @@
 package com.chocolatecake.ui.youtube_player
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.ui.home.R
@@ -20,5 +23,4 @@ class TrailerFragment :
     override fun onEvent(event: TrailerInteraction) {
 
     }
-
 }
