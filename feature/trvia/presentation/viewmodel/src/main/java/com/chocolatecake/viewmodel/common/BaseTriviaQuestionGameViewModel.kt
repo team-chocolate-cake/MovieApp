@@ -19,12 +19,15 @@ import kotlinx.coroutines.launch
 abstract class BaseTriviaQuestionGameViewModel(
     state: GameUiState,
 ) : BaseViewModel<GameUiState, GameUIEvent>(state), AnswerListener {
+    abstract val gameType: GameType
     abstract val getCurrentUserUseCase: GetCurrentUserUseCase
     abstract val updateUserPointsUseCase: UpdateUserPointsUseCase
     abstract val getQuestion: suspend () -> QuestionEntity
     private var timerJob: Job? = null
-    abstract val gameType: GameType
 
+    abstract suspend fun levelUpUseCase()
+    abstract fun onSuccessUser(user: UserEntity)
+    abstract suspend fun updateQuestionCountUseCase(questionCount: Int)
 
     protected fun getData() {
         _state.update { it.copy(isLoading = true) }
@@ -32,6 +35,7 @@ abstract class BaseTriviaQuestionGameViewModel(
         getUserQuestion()
     }
 
+    //region user data
     private fun getCurrentUser() {
         tryToExecute(
             getCurrentUserUseCase::invoke,
@@ -48,7 +52,6 @@ abstract class BaseTriviaQuestionGameViewModel(
         )
     }
 
-    abstract fun onSuccessUser(user: UserEntity)
 
     open fun onSuccessQuestion(questionEntity: QuestionEntity) {
         _state.update {
@@ -63,12 +66,9 @@ abstract class BaseTriviaQuestionGameViewModel(
         }
         initTimer()
     }
+    //endregion
 
-    private fun onError(throwable: Throwable) {
-        _state.update { it.copy(isError = true) }
-        sendEvent(GameUIEvent.ShowSnackbar(throwable.message.toString()))
-    }
-
+    //region timer
     private fun initTimer() {
         _state.update { it.copy(countDownTimer = 30) }
         timerJob?.cancel()
@@ -93,54 +93,57 @@ abstract class BaseTriviaQuestionGameViewModel(
         }
     }
 
-    override fun onClickAnswer(position: Int) {
-        val heartCount = _state.value.heartCount
-        val correctAnswer = _state.value.correctAnswerPosition
+    //endregion
 
-        if (correctAnswer != position) {
-            if (heartCount - 1 == 0) {
-                onEmptyHearts()
-            } else {
-                _state.update { it.copy(heartCount = heartCount - 1) }
-                getData()
-            }
-            return
+    //region handle question
+    override fun onClickAnswer(questionChosenPosition: Int) {
+        val isCorrectAnswer = _state.value.correctAnswerPosition == questionChosenPosition
+        when {
+            (!isCorrectAnswer && state.value.heartCount == 1) -> handleIncorrectAnswerWithNoHearts()
+            (!isCorrectAnswer) -> handleIncorrectAnswerWithRemainingHearts()
+            else -> onQuestionCompletion()
         }
-        if (_state.value.isLastQuestion) {
-            viewModelScope.launch {
-                onUserWins()
-            }
-            return
-        }
-        updateToNextQuestion()
     }
 
-    private fun onEmptyHearts() {
+    private fun handleIncorrectAnswerWithNoHearts() {
         state.value.apply {
             when {
-                (level == 1 && points < HeartsDifficultyPoints.EASY.points) ||
-                        (level == 2 && points < HeartsDifficultyPoints.MEDIUM.points) ||
-                        (level == 3 && points < HeartsDifficultyPoints.HARD.points) -> {
+                points < requiredPointsForHearts(level) ->
                     sendEvent(GameUIEvent.NavigateToLoserScreen)
-                }
 
                 else -> {
-                    val numberOfPoints = when (level) {
-                        1 -> HeartsDifficultyPoints.EASY.points
-                        2 -> HeartsDifficultyPoints.MEDIUM.points
-                        3 -> HeartsDifficultyPoints.HARD.points
-                        else -> 0
-                    }
-                    sendEvent(GameUIEvent.ShowBuyHeartDialog(numberOfPoints))
+                    sendEvent(GameUIEvent.ShowBuyHeartDialog(requiredPointsForHearts(level)))
                     timerJob?.cancel()
                 }
             }
         }
     }
 
+    private fun requiredPointsForHearts(level: Int): Int {
+        return when (level) {
+            1 -> HEARTS_POINTS_FOR_EASY_LEVEL
+            2 -> HEARTS_POINTS_FOR_MEDIUM_LEVEL
+            3 -> HEARTS_POINTS_FOR_HARD_LEVEL
+            else -> 0
+        }
+    }
+
+    private fun handleIncorrectAnswerWithRemainingHearts() {
+        _state.update { it.copy(heartCount = state.value.heartCount - 1) }
+        getData()
+    }
+
+    private fun onQuestionCompletion() {
+        if (_state.value.isLastQuestion) {
+            viewModelScope.launch { onUserWins() }
+        } else {
+            updateToNextQuestion()
+        }
+    }
+
     private fun onUserWins() {
         viewModelScope.launch(Dispatchers.IO) {
-            kotlin.runCatching {
+            runCatching {
                 updateUserPointsUseCase(_state.value.points)
                 updateQuestionCountUseCase(_state.value.questionCount)
                 levelUpUseCase()
@@ -149,11 +152,9 @@ abstract class BaseTriviaQuestionGameViewModel(
         }
     }
 
-    abstract suspend fun levelUpUseCase()
-
     private fun updateToNextQuestion() {
         viewModelScope.launch(Dispatchers.IO) {
-            kotlin.runCatching {
+            runCatching {
                 updateQuestionCountUseCase(_state.value.questionCount)
                 _state.update { it.copy(points = it.points + (it.level * 10)) }
                 updateUserPointsUseCase(_state.value.points)
@@ -161,8 +162,7 @@ abstract class BaseTriviaQuestionGameViewModel(
             }.onFailure(::onError)
         }
     }
-
-    abstract suspend fun updateQuestionCountUseCase(questionCount: Int)
+    //endregion
 
     fun buyHearts(numberOfPoints: Int) {
         _state.update { it.copy(points = it.points - numberOfPoints, heartCount = 3) }
@@ -172,11 +172,14 @@ abstract class BaseTriviaQuestionGameViewModel(
         initTimer()
     }
 
+    private fun onError(throwable: Throwable) {
+        _state.update { it.copy(isError = true) }
+        sendEvent(GameUIEvent.ShowSnackbar(throwable.message.toString()))
+    }
+
     companion object {
-        enum class HeartsDifficultyPoints(val points: Int) {
-            EASY(30),
-            MEDIUM(60),
-            HARD(150)
-        }
+        const val HEARTS_POINTS_FOR_EASY_LEVEL = 30
+        const val HEARTS_POINTS_FOR_MEDIUM_LEVEL = 60
+        const val HEARTS_POINTS_FOR_HARD_LEVEL = 150
     }
 }
