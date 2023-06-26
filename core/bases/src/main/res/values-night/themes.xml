@@ -3,6 +3,9 @@
     <style name="Base.Theme.MovieApp" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="background">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+
     </style>
 
     <!--endregion-->
