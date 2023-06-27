@@ -75,7 +75,11 @@ class MovieDetailsFragment :
                 findNavController().popBackStack()
             }
             is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
-                //todo
+                findNavController().navigate(
+                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPeopleDetailsFragment(
+                        event.itemId
+                    )
+                )
             }
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 navigateToTrailerVideo(event.videoKey)

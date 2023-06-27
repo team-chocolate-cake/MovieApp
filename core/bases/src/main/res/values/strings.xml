@@ -33,5 +33,7 @@
     <string name="new_list_was_added_successfully">New List Was Added Successfully</string>
     <string name="rating_was_added_successfully">rating was added successfully 🥰</string>
     <string name="something_went_wrong_please_try_again_later">Something Went Wrong 🤔\nPlease Try Again Later.</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
 
 </resources>

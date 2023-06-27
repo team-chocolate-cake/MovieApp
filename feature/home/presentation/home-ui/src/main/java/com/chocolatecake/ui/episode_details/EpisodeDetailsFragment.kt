@@ -49,7 +49,7 @@ class EpisodeDetailsFragment :
     override fun onEvent(event: EpisodeDetailsUiEvent) {
         when (event) {
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
-            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
+            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
         }
@@ -60,8 +60,12 @@ class EpisodeDetailsFragment :
         Toast.makeText(requireActivity(), "back button clicked", Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToCastDetails() {
-        //toDo findNavController().navigate()
+    private fun navigateToCastDetails(itemId: Int) {
+        findNavController().navigate(
+            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(
+                itemId
+            )
+        )
     }
 
     private fun showBottomSheet() {

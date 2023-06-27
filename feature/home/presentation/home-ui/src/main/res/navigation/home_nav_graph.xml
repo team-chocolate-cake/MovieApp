@@ -18,6 +18,9 @@
             android:id="@+id/action_homeFragment_to_showMoreFragment"
             app:destination="@id/showMoreFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
         <deepLink app:uri="movie://home" />
     </fragment>
 
@@ -35,6 +38,9 @@
         <action
             android:id="@+id/action_searchFragment_to_tvDetailsFragment"
             app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
 
     <fragment
@@ -102,6 +108,9 @@
             android:id="@+id/action_movieDetailsFragment_to_trailerFragment"
             app:destination="@id/trailerFragment" />
 
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
 
 
@@ -154,7 +163,15 @@
         <action
             android:id="@+id/action_tvDetailsFragment_to_trailerFragment3"
             app:destination="@id/trailerFragment" />
-
+        <action
+            android:id="@+id/action_tvDetailsFragment_self2"
+            app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_peopleDetailsFragment2"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -230,5 +247,22 @@
         <action
             android:id="@+id/action_myRatedFragment_to_tvDetailsFragment"
             app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_episodeDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/peopleDetailsFragment"
+        android:name="com.chocolatecake.ui.people.PeopleDetailsFragment"
+        android:label="PeopleDetailsFragment" >
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_peopleDetailsFragment_to_tvDetailsFragment"
+            app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_peopleDetailsFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 </navigation>

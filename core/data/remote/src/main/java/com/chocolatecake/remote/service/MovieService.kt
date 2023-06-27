@@ -20,6 +20,8 @@ import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTVRemoteDto
 import com.chocolatecake.remote.response.dto.ListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
+import com.chocolatecake.remote.response.dto.MoviesByPeopleResponse
+import com.chocolatecake.remote.response.dto.PeopleDetailsResponse
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.StatusResponse
 import com.chocolatecake.remote.response.dto.TVShowsRemoteDto
@@ -27,6 +29,7 @@ import com.chocolatecake.remote.response.dto.TvDetailsCreditRemoteDto
 import com.chocolatecake.remote.response.dto.TvDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.TvRemoteDto
 import com.chocolatecake.remote.response.dto.TvReviewRemoteDto
+import com.chocolatecake.remote.response.dto.TvShowsByPeopleResponse
 import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
@@ -338,4 +341,17 @@ interface MovieService {
 
     ///endregion
 
+
+//people details region
+
+    @GET("person/{person_id}")
+    suspend fun getPerson(@Path("person_id") person_id: Int):Response<PeopleDetailsResponse>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getMoviesByPerson(@Path("person_id") person_id: Int):Response<MoviesByPeopleResponse>
+
+    @GET("person/{person_id}/tv_credits")
+    suspend fun getTvShowsByPerson(@Path("person_id") person_id: Int):Response<TvShowsByPeopleResponse>
+
+    //end region
 }

@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
+import com.chocolatecake.entities.PeopleDetailsEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.ReviewEntity
@@ -17,15 +18,10 @@ import com.chocolatecake.entities.UserListEntity
 import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
-import com.chocolatecake.entities.myList.FavoriteBodyRequestEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
-import com.chocolatecake.entities.myList.ListEntity
-import com.chocolatecake.entities.myList.ListMovieEntity
-import com.chocolatecake.entities.myList.WatchlistRequestEntity
 import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
-import kotlin.random.Random
 
 interface MovieRepository {
 
@@ -149,4 +145,8 @@ interface MovieRepository {
     suspend fun getRatedMovies(): Pager<Int, MyRatedMovieEntity>
 
     suspend fun getRatedTvShows(): Pager<Int, MyRatedTvShowEntity>
+
+    suspend fun getPersonDetails(person_id: Int): PeopleDetailsEntity
+    suspend fun getMoviesByPerson( person_id: Int): List<MovieEntity>
+    suspend fun getTvShowsByPerson( person_id: Int): List<TvShowEntity>
 }
