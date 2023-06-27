@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
-            app:isVisibleOrGone="@{!item.people.empty}"
+            android:visibility="gone"
             android:text="@string/show_more"
             android:onClick="@{()->listener.onShowMoreCast()}"
             android:textColor="@color/primary"
