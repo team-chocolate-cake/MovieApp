@@ -9,7 +9,7 @@ import com.chocolatecake.bases.BaseFooterAdapter
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMyRatedBinding
-import com.chocolatecake.ui.tvShow.collectLast
+import com.chocolatecake.ui.tv_shows.collectLast
 import com.chocolatecake.viewmodel.my_rated.MyRatedEvents
 import com.chocolatecake.viewmodel.my_rated.MyRatedUiState
 import com.chocolatecake.viewmodel.my_rated.MyRatedViewModel
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyRatedFragment : BaseFragment<FragmentMyRatedBinding , MyRatedUiState , MyRatedEvents>() {
+class MyRatedFragment : BaseFragment<FragmentMyRatedBinding, MyRatedUiState , MyRatedEvents>() {
 
     override val layoutIdFragment: Int = R.layout.fragment_my_rated
     override val viewModel: MyRatedViewModel by viewModels()
