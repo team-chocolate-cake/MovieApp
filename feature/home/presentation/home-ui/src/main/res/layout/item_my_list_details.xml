@@ -85,7 +85,7 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:drawableTint="@color/star"
-            android:text="@{String.valueOf(item.formattedRate())}"
+            android:text="@{String.valueOf(item.rate)}"
             android:textColor="@color/star"
             app:layout_constraintBottom_toBottomOf="@+id/text_view_year"
             app:layout_constraintEnd_toEndOf="@+id/text_view_genres"

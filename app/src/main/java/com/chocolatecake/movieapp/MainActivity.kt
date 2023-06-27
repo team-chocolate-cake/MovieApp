@@ -1,9 +1,11 @@
 package com.chocolatecake.movieapp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        changeAppTheme()
     }
 
     override fun onResume() {
@@ -63,11 +66,26 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
     }
+
+    private fun changeAppTheme() {
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+        val savedThemeState = sharedPreferences.getBoolean(PREF_THEME_STATE, false)
+        if (savedThemeState) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
+
     inner class CustomOnNavigationItemReselectedListener(private val navController: NavController) :
         BottomNavigationView.OnNavigationItemReselectedListener {
 
         override fun onNavigationItemReselected(item: MenuItem) {
             // Do nothing when the same item is reselected
         }
+    }
+
+    companion object {
+        private const val PREF_THEME_STATE = "theme_state"
     }
 }

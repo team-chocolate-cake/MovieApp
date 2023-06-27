@@ -26,6 +26,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getAccountDetails() {
         viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
             try {
                 val profileEntity = profileUiMapper.map(getAccountDetailsUseCase())
                 _state.update {
@@ -33,7 +34,8 @@ class ProfileViewModel @Inject constructor(
                         username = profileEntity.username,
                         avatarUrl = profileEntity.avatarUrl,
                         error = null,
-                        isLoggedIn = true
+                        isLoggedIn = true,
+                        isLoading = false
                     )
                 }
             } catch (th: Throwable) {

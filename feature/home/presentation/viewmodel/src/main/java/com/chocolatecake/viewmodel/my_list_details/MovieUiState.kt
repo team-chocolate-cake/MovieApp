@@ -9,5 +9,5 @@ data class MovieUiState(
     val rating: Double,
 ){
     val rate: Double
-        get() = (rating * 100.0).toInt() / 100.0
+        get() = (rating * 10.0).toInt() / 10.0
 }
