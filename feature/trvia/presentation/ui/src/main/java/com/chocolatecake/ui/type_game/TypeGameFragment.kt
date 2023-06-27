@@ -58,7 +58,6 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
 
             GameTypeUIEvent.NavigateToTvGame -> {
                 showSnackBar("Not Supported Yet !🤷‍")
-                // findNavController().navigate(TypeGameFragmentDirections.actionTypeGameFragmentToTvShowGuessingFragment())
             }
 
             is GameTypeUIEvent.ShowSnackbar -> {
@@ -74,7 +73,7 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
 
             GameTypeUIEvent.BackNavigate -> {
                 findNavController().popBackStack()
-                binding.imageButtonVolume.setBackgroundResource(R.drawable.ic_volume_mute)
+                binding.imageButtonVolume.setImageResource(R.drawable.ic_volume_mute)
                 soundManager.stopSound()
             }
 
