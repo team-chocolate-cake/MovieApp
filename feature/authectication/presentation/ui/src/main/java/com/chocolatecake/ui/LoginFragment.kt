@@ -62,7 +62,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginUiState, LoginUiEv
     override fun onEvent(event: LoginUiEvent) {
         when (event) {
             is LoginUiEvent.NavigateToHomeScreen -> {
-                findNavController().navigate(event.id)
+                val navController = findNavController()
+                navController.popBackStack(navController.graph.startDestinationId, false)
+                navController.navigate(event.id)
             }
 
             is LoginUiEvent.SignUpEvent -> {

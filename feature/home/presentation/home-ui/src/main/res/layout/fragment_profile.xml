@@ -285,9 +285,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="textview_error_occurred,lottie_animation_view_no_network"
-                app:isVisibleOrGone="@{viewModel.state.error != null}"
-                android:visibility="gone"
-                />
+                app:isVisibleOrGone="@{viewModel.state.error != null}" />
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/when_user_loggedin"
                 android:layout_width="wrap_content"
@@ -304,10 +302,9 @@
                 android:id="@+id/when_user_not_loggedin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:constraint_referenced_ids="button_login,
             image_view_login,text_view_login_title"
-                app:hideWhenNotLoggedIn="@{(!viewModel.state.loading) &amp;&amp; viewModel.state.loggedIn}" />
+                app:isVisibleOrGone="@{(!viewModel.state.loading) &amp;&amp; !viewModel.state.loggedIn}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
