@@ -18,6 +18,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:isVisibleOrGone="@{(!viewModel.state.loading) &amp;&amp; (!viewModel.state.failure)}"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -25,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 app:contentScrim="@color/card"
+                android:nestedScrollingEnabled="false"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <FrameLayout
@@ -49,6 +51,16 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/main_image_gradient"
                         android:scaleType="centerCrop" />
+                    <ImageButton
+                        android:id="@+id/image_button_play"
+                        android:layout_gravity="bottom|end"
+                        android:src="@drawable/movie_play"
+                        android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                        android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                        android:background="@drawable/play_button_background"
+                        android:layout_width="@dimen/spacing_extra_giant_48dp"
+                        android:layout_height="@dimen/spacing_extra_giant_48dp"
+                        app:tint="@color/on_background_60" />
                 </FrameLayout>
 
                 <androidx.appcompat.widget.Toolbar
@@ -65,6 +77,7 @@
                         android:layout_height="24dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        app:tint="@color/on_background_60"
                         android:background="@null"
                         android:onClick="@{()->viewModel.onClickBackButton()}"
                         android:scaleType="centerCrop"
@@ -75,9 +88,9 @@
                         style="@style/TextStyle.TitleMedium"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:layout_marginLeft="4dp"
                         android:text="@{viewModel.state.movieUiState.title}"
                         android:textColor="@color/on_background_87"
                         android:visibility="invisible" />
@@ -87,14 +100,15 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="end"
-                        app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@null"
+                        app:tint="@color/on_background_60"
                         android:backgroundTint="@color/on_primary"
                         android:onClick="@{()-> viewModel.onClickSaveButton()}"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_save" />
+                        android:src="@drawable/ic_save_unpressed"
+                        app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }" />
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

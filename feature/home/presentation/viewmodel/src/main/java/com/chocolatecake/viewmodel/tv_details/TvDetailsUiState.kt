@@ -22,6 +22,10 @@ data class TvDetailsUiState(
     val userSelectedLists: List<Int> = emptyList(),
     val isLogined: Boolean = false,
 ) {
+    val reviewsIsEmpty : Boolean get() = reviews.isEmpty()
+    val isFailure: Boolean get() =
+        errors.isNotEmpty()
+
     data class Info(
         val backdropImageUrl: String = "",
         val name: String = "",
@@ -29,5 +33,6 @@ data class TvDetailsUiState(
         val description: String = "",
         val genres: List<String> = emptyList(),
         val isLogined: Boolean = false,
+        )
     )
 }

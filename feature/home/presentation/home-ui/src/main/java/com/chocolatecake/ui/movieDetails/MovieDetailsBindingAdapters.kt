@@ -31,7 +31,7 @@ fun ChipGroup.setGenresMovieDetails(
             this.context,
             null,
             0,
-            com.chocolatecake.bases.R.style.MovieDetailsChipStyle
+            com.chocolatecake.bases.R.style.MediaDetailsChipStyle
         )
         chip.setChipDrawable(chipDrawable)
         chip.isEnabled = false

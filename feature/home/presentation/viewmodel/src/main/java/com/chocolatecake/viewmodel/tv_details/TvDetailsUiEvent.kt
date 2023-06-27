@@ -10,6 +10,7 @@ sealed interface TvDetailsUiEvent {
     object Back : TvDetailsUiEvent
     object OnShowMoreCast : TvDetailsUiEvent
     object OnShowMoreRecommended : TvDetailsUiEvent
+    data class ShowSnackBar(val message: String) : TvDetailsUiEvent
     data class OnSaveButtonClick(val tvShowId: Int) : TvDetailsUiEvent
     data class OnDoneAdding(val message: String):TvDetailsUiEvent
     data class onCreateNewList(val message:String):TvDetailsUiEvent

@@ -8,11 +8,18 @@ abstract class BaseRepository {
 
     protected suspend fun <T> wrapApiCall(call: suspend () -> Response<T>): T {
         return try {
-            call().takeIf { it.isSuccessful }?.body() ?: throw UnauthorizedThrowable()
+            val result = call()
+            if (result.code() == UNAUTHORIZED_CODE) {
+                throw UnauthorizedThrowable()
+            }
+            if (result.code() == TIMEOUT_CODE) {
+                throw TimeoutThrowable()
+            }
+            result.body() ?: throw ParsingThrowable()
         } catch (e: UnknownHostException) {
             throw NoNetworkThrowable()
         } catch (e: Exception) {
-            throw Throwable(e.message)
+            throw ApiThrowable(e.message)
         }
     }
 
@@ -31,5 +38,10 @@ abstract class BaseRepository {
                 }
         } catch (_: Throwable) {
         }
+    }
+
+    private companion object {
+        const val UNAUTHORIZED_CODE = 401
+        const val TIMEOUT_CODE = 401
     }
 }

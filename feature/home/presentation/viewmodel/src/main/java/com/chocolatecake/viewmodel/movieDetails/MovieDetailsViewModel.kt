@@ -1,9 +1,9 @@
 package com.chocolatecake.viewmodel.movieDetails
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.entities.UserListEntity
@@ -24,6 +24,11 @@ import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
+import com.chocolatecake.viewmodel.movieDetails.mapper.CastUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.RecommendedUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.ReviewDetailsUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.ReviewsUiStateMapper
+import com.chocolatecake.viewmodel.movieDetails.mapper.UpperUiStateMapper
 import com.chocolatecake.viewmodel.movieDetails.mapper.UserListsUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +50,12 @@ class MovieDetailsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val insertMovieToWatchHistoryUseCase: InsertMovieToWatchHistoryUseCase,
     private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
+    private val recommendedUiStateMapper: RecommendedUiStateMapper,
+    private val upperUiStateMapper: UpperUiStateMapper,
+    private val reviewsUiStateMapper: ReviewsUiStateMapper,
+    private val castUiStateMapper: CastUiStateMapper,
+    private val reviewDetailsUiStateMapper: ReviewDetailsUiStateMapper,
+    private val stringsRes: StringsRes
 ) : BaseViewModel<MovieDetailsUiState, MovieDetailsUiEvent>(MovieDetailsUiState()),
     MovieDetailsListener, MediaListener, PeopleListener, ChipListener {
 
@@ -85,44 +96,11 @@ class MovieDetailsViewModel @Inject constructor(
         _state.update {
             it.copy(
                 id = movieDetails.id,
-                movieUiState = UpperUiState(
-                    id = movieDetails.id,
-                    backdropPath = movieDetails.backdropPath,
-                    genres = movieDetails.genres,
-                    title = movieDetails.title,
-                    overview = movieDetails.overview,
-                    voteAverage = movieDetails.voteAverage.toFloat().div(2f),
-                    videoKey = movieDetails.videos.results.first().key,
-                    isLogined = checkIsLoginedOrNotUseCase()
-                ),
-                recommendedUiState = movieDetails.recommendations.recommendedMovies.map {
-                    MediaVerticalUIState(
-                        id = it.id,
-                        rate = it.voteAverage,
-                        imageUrl = it.posterPath,
-                    )
-                },
-                reviewUiState = movieDetails.reviewEntity.reviews.map {
-                    ReviewUiState(
-                        name = it.name,
-                        avatar_path = it.avatar_path,
-                        content = it.content,
-                        created_at = it.created_at
-                    )
-                },
-                castUiState =
-                movieDetails.credits.cast.map {
-                    PeopleUIState(
-                        id = it.id,
-                        name = it.name,
-                        imageUrl = it.profilePath
-                    )
-                },
-                reviewsDetails = ReviewDetailsUiState(
-                    page = movieDetails.reviewEntity.page,
-                    totalPages = movieDetails.reviewEntity.totalPages,
-                    totalReviews = movieDetails.reviewEntity.totalResults
-                ),
+                movieUiState = upperUiStateMapper.map(movieDetails),
+                recommendedUiState = recommendedUiStateMapper.map(movieDetails.recommendations.recommendedMovies) ,
+                reviewUiState = reviewsUiStateMapper.map(movieDetails.reviewEntity.reviews),
+                castUiState = castUiStateMapper.map(movieDetails.credits.cast),
+                reviewsDetails = reviewDetailsUiStateMapper.map(movieDetails),
                 isLoading = false
             )
         }
@@ -153,7 +131,6 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     //region user lists
-
     fun emptyUserLists() {
         _state.update {
             it.copy(userLists = emptyList())
@@ -165,7 +142,7 @@ class MovieDetailsViewModel @Inject constructor(
             call = { getUserListsUseCase() },
             onSuccess = ::onGetUserListsUseCase,
             onError = {
-                Log.i("lists", "something went wrong $it")
+                sendEvent(MovieDetailsUiEvent.ShowSnackBar(stringsRes.someThingError))
             }
         )
     }
@@ -177,7 +154,6 @@ class MovieDetailsViewModel @Inject constructor(
                 userLists = item.userLists
             )
         }
-        Log.i("lists", "user lists => ${state.value.userLists}")
     }
 
     fun onDone(listsId: List<Int>) {
@@ -186,15 +162,14 @@ class MovieDetailsViewModel @Inject constructor(
                 call = { addToUserListUseCase(id, movieId!!) },
                 onSuccess = ::onDoneSuccess,
                 onError = {
-                    sendEvent(MovieDetailsUiEvent.OnDoneAdding("something went wrong 😔"))
-                    Log.i("chip", "something went wrong")
+                    sendEvent(MovieDetailsUiEvent.ShowSnackBar(stringsRes.duplicateEntity))
                 }
             )
         }
     }
 
     private fun onDoneSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.OnDoneAdding("adding was successful"))
+        sendEvent(MovieDetailsUiEvent.OnDoneAdding(statusEntity.statusMessage))
     }
 
     fun createUserNewList(listName: String) {
@@ -202,7 +177,7 @@ class MovieDetailsViewModel @Inject constructor(
             call = { createUserListUseCase(listName) },
             onSuccess = ::onCreateUserNewList,
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnCreateNewList("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnCreateNewList(stringsRes.someThingError))
             }
         )
     }
@@ -211,10 +186,10 @@ class MovieDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { addToFavouriteUseCase(movieId!!, "movie") },
             onSuccess = {
-                sendEvent(MovieDetailsUiEvent.OnFavourite("added successfully"))
+                sendEvent(MovieDetailsUiEvent.OnFavourite(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnFavourite("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnFavourite(stringsRes.someThingError))
             }
         )
     }
@@ -223,26 +198,26 @@ class MovieDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { addToWatchList(movieId!!, "movie") },
             onSuccess = {
-                sendEvent(MovieDetailsUiEvent.OnWatchList("added successfully"))
+                sendEvent(MovieDetailsUiEvent.OnWatchList(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(MovieDetailsUiEvent.OnWatchList("something went wrong"))
+                sendEvent(MovieDetailsUiEvent.OnWatchList(stringsRes.someThingError))
             }
         )
     }
 
     private fun onCreateUserNewList(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.OnCreateNewList("New List Was Added Successfully"))
+        sendEvent(MovieDetailsUiEvent.OnCreateNewList(stringsRes.newListAddSuccessFully))
         getUserLists()
     }
     //endregion
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
+        sendEvent(MovieDetailsUiEvent.ApplyRating(stringsRes.ratingAddSuccessFully))
     }
 
     private fun onRatingError(error: Throwable) {
-        sendEvent(MovieDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
+        sendEvent(MovieDetailsUiEvent.ApplyRating(stringsRes.someThingErrorWhenAddRating))
     }
 
     override fun onClickPeople(id: Int) {
@@ -281,17 +256,12 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     override fun onChipClick(id: Int) {
-        val updatedList = state.value.userSelectedLists.toMutableList()
-        if (updatedList.remove(id)) Unit else updatedList.add(id)
-
         _state.update {
             it.copy(
-                userSelectedLists = updatedList
+                userSelectedLists = (it.userSelectedLists + id).distinct()
             )
         }
-        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
-
 }
 
 private fun MovieDetailsEntity.toHistoryEntity(): MovieInWatchHistoryEntity {

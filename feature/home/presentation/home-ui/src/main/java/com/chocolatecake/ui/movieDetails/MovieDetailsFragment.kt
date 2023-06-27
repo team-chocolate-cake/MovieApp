@@ -64,6 +64,7 @@ class MovieDetailsFragment :
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
+                binding.appBarLayout.setExpanded(true,true)
             }
         }
     }
@@ -73,19 +74,15 @@ class MovieDetailsFragment :
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
-
             is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
                 //todo
             }
-
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 navigateToTrailerVideo(event.videoKey)
             }
-
             is MovieDetailsUiEvent.RateMovie -> {
                 showRatingBottomSheet(event.movieId)
             }
-
             is MovieDetailsUiEvent.NavigateToMovie -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(
@@ -93,16 +90,13 @@ class MovieDetailsFragment :
                     )
                 )
             }
-
             is MovieDetailsUiEvent.SaveToList -> showAddToListBottomSheet()
-
             is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
-
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
-
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
+            is MovieDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             else -> {}
@@ -156,11 +150,11 @@ class MovieDetailsFragment :
                     }
                 }
             }
-
         }
     }
 
     private fun showAddToListBottomSheet() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_pressed)
         addToListBottomSheet = AddToListBottomSheet(this)
         addToListBottomSheet.show(childFragmentManager, "BOTTOM")
     }
@@ -175,6 +169,10 @@ class MovieDetailsFragment :
 
     override fun onFavourite() {
         viewModel.addToFavourite()
+    }
+
+    override fun onDismiss() {
+        binding.saveButton.setBackgroundResource(com.chocolatecake.bases.R.drawable.ic_save_unpressed)
     }
 
     override fun onWatchlist() {

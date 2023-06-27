@@ -26,7 +26,7 @@
         <item name="postSplashScreenTheme">@style/Theme.MovieApp</item>
     </style>
 
-    <style name="MovieDetailsChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+    <style name="MediaDetailsChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipStrokeColor">@color/on_background_38</item>
         <item name="chipBackgroundColor">@null</item>
         <item name="chipStrokeWidth">1dp</item>
