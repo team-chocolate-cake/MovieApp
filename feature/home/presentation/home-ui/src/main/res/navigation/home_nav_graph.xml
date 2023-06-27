@@ -150,6 +150,12 @@
         <action
             android:id="@+id/action_tvDetailsFragment_to_seasonDetailsFragment"
             app:destination="@id/seasonDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_self2"
+            app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -205,7 +211,7 @@
         android:name="com.chocolatecake.ui.people.PeopleDetailsFragment"
         android:label="PeopleDetailsFragment" >
         <argument
-            android:name="peopleId"
+            android:name="personId"
             app:argType="integer" />
         <action
             android:id="@+id/action_peopleDetailsFragment_to_tvDetailsFragment"

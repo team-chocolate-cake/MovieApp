@@ -11,8 +11,8 @@ class DomainMoviesByPeopleMapper @Inject constructor() : Mapper<CastItem?, Movie
 
         return MovieEntity(
             id = input?.id ?: 0,
-            input?.title ?: "",
-            (BuildConfig.IMAGE_BASE_PATH + input?.posterPath),
+            title = input?.title ?: "",
+            imageUrl = (BuildConfig.IMAGE_BASE_PATH + input?.posterPath),
             genreEntities = emptyList(),
             rate = input?.voteAverage
                 ?: 0.0

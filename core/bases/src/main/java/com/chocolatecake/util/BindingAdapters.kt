@@ -203,11 +203,12 @@ fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit)
 
     }
 }
+
     @BindingAdapter("convertGenderText")
     fun TextView.convertGenderText(gender: String?) {
         text = when (gender) {
-            "1" -> "female"
-            "2" -> "male"
+            "1" -> context.getString(R.string.female)
+            "2" -> context.getString(R.string.male)
             else -> ""
         }.takeIf { gender != null } ?: ""
 

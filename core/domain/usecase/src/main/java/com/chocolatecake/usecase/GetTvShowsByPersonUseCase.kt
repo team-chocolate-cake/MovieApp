@@ -4,7 +4,7 @@ import com.chocolatecake.entities.TvShowEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
-class GetTvShowsByPeopleUseCase @Inject constructor(
+class GetTvShowsByPersonUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
     suspend operator fun invoke(person_id:Int): List<TvShowEntity> {

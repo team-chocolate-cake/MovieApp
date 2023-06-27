@@ -1,6 +1,6 @@
 package com.chocolatecake.entities
 
-data class PeopleDataEntity(
+data class PeopleDetailsEntity(
     val id: Int,
     val name: String,
     val imageUrl: String,

@@ -2,14 +2,13 @@ package com.chocolatecake.viewmodel.people.mapper
 
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.mapper.Mapper
-import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
-import com.chocolatecake.viewmodel.people.PeopleDetailsUiState
+import com.chocolatecake.viewmodel.people.PersonDetailsUiState
 import javax.inject.Inject
 
 class MoviesByPeopleUiMapper @Inject constructor() :
-    Mapper<MovieEntity, PeopleDetailsUiState.PeopleMediaUiState> {
-    override fun map(input: MovieEntity): PeopleDetailsUiState.PeopleMediaUiState {
-        return PeopleDetailsUiState.PeopleMediaUiState(
+    Mapper<MovieEntity, PersonDetailsUiState.PeopleMediaUiState> {
+    override fun map(input: MovieEntity): PersonDetailsUiState.PeopleMediaUiState {
+        return PersonDetailsUiState.PeopleMediaUiState(
             id = input.id,
             name = "movies",
             imageUrl = input.imageUrl,

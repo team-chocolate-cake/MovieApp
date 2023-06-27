@@ -6,20 +6,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.chocolatecake.bases.BaseFragment
-import com.chocolatecake.ui.common.adapters.MediaVerticalAdapter
-import com.chocolatecake.ui.home.HomeFragmentDirections
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentPeopleDetailsBinding
 import com.chocolatecake.ui.people.adapter.PeopleDetailsRecyclerAdapter
 
 import com.chocolatecake.viewmodel.people.PeopleDetailsUiEvent
-import com.chocolatecake.viewmodel.people.PeopleDetailsUiState
+import com.chocolatecake.viewmodel.people.PersonDetailsUiState
 import com.chocolatecake.viewmodel.people.PeopleDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PeopleDetailsFragment :
-    BaseFragment<FragmentPeopleDetailsBinding, PeopleDetailsUiState, PeopleDetailsUiEvent>() {
+    BaseFragment<FragmentPeopleDetailsBinding, PersonDetailsUiState, PeopleDetailsUiEvent>() {
     override val layoutIdFragment: Int
         get() = R.layout.fragment_people_details
     override val viewModel: PeopleDetailsViewModel by viewModels()
@@ -28,10 +26,6 @@ class PeopleDetailsFragment :
     private lateinit var peopleTvShowsAdapter: PeopleDetailsRecyclerAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getTvShowsByPeople(args.peopleId)
-        viewModel.getPersonData(args.peopleId)
-        viewModel.getMoviesByPeople(args.peopleId)
-
         setAdapters()
         getData()
     }
@@ -48,8 +42,8 @@ class PeopleDetailsFragment :
     private fun getData() {
         collectLatest {
             viewModel.state.collect { state ->
-                peopleMoviesAdapter.setItems(state.Movies)
-                peopleTvShowsAdapter.setItems(state.TvShows)
+                peopleMoviesAdapter.setItems(state.movies)
+                peopleTvShowsAdapter.setItems(state.tvShows)
                 if (state.onErrors.isNotEmpty()) {
                     state.onErrors.last().let {
                         showSnackBar(it)

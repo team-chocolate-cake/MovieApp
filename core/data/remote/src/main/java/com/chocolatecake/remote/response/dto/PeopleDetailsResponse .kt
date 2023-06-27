@@ -4,45 +4,45 @@ import com.google.gson.annotations.SerializedName
 
 data class PeopleDetailsResponse(
 
-    @field:SerializedName("also_known_as")
+    @SerializedName("also_known_as")
     val alsoKnownAs: List<String?>? = null,
 
-    @field:SerializedName("birthday")
+    @SerializedName("birthday")
     val birthday: String? = null,
 
-    @field:SerializedName("gender")
+    @SerializedName("gender")
     val gender: Int? = null,
 
-    @field:SerializedName("imdb_id")
+    @SerializedName("imdb_id")
     val imdbId: String? = null,
 
-    @field:SerializedName("known_for_department")
+    @SerializedName("known_for_department")
     val knownForDepartment: String? = null,
 
-    @field:SerializedName("profile_path")
+    @SerializedName("profile_path")
     val profilePath: String? = null,
 
-    @field:SerializedName("biography")
+    @SerializedName("biography")
     val biography: String? = null,
 
-    @field:SerializedName("deathday")
+    @SerializedName("deathday")
     val deathday: Any? = null,
 
-    @field:SerializedName("place_of_birth")
+    @SerializedName("place_of_birth")
     val placeOfBirth: String? = null,
 
-    @field:SerializedName("popularity")
+    @SerializedName("popularity")
     val popularity: Any? = null,
 
-    @field:SerializedName("name")
+    @SerializedName("name")
     val name: String? = null,
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int? = null,
 
-    @field:SerializedName("adult")
+    @SerializedName("adult")
     val adult: Boolean? = null,
 
-    @field:SerializedName("homepage")
+    @SerializedName("homepage")
     val homepage: Any? = null
 )

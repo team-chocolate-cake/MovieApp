@@ -1,13 +1,11 @@
 package com.chocolatecake.viewmodel.people
 
-import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.usecase.GetMoviesByPeopleUseCase
+import com.chocolatecake.usecase.GetMoviesByPersonUseCase
 import com.chocolatecake.usecase.GetPeopleDetailsUseCase
-import com.chocolatecake.usecase.GetTvShowsByPeopleUseCase
-import com.chocolatecake.viewmodel.common.listener.MediaListener
-import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
+import com.chocolatecake.usecase.GetTvShowsByPersonUseCase
 import com.chocolatecake.viewmodel.people.mapper.MoviesByPeopleUiMapper
 import com.chocolatecake.viewmodel.people.mapper.PeopleDataUiMapper
 import com.chocolatecake.viewmodel.people.mapper.TvShowsByPeopleUiMapper
@@ -19,18 +17,29 @@ import javax.inject.Inject
 @HiltViewModel
 class PeopleDetailsViewModel @Inject constructor(
     private val getPeopleDetailsUseCase: GetPeopleDetailsUseCase,
-    private val getMoviesByPeopleUseCase: GetMoviesByPeopleUseCase,
-    private val getTvShowsByPeopleUseCase: GetTvShowsByPeopleUseCase,
+    private val getMoviesByPersonUseCase: GetMoviesByPersonUseCase,
+    private val getTvShowsByPersonUseCase: GetTvShowsByPersonUseCase,
     private val peopleDataUiMapper: PeopleDataUiMapper,
     private val moviesByPeopleUiMapper: MoviesByPeopleUiMapper,
-    private val tvShowsByPeopleUiMapper: TvShowsByPeopleUiMapper
+    private val tvShowsByPeopleUiMapper: TvShowsByPeopleUiMapper,
+    savedStateHandle: SavedStateHandle,
 
-) : BaseViewModel<PeopleDetailsUiState, PeopleDetailsUiEvent>(PeopleDetailsUiState()),
+    ) : BaseViewModel<PersonDetailsUiState, PeopleDetailsUiEvent>(PersonDetailsUiState()),
     PeopleDetailsListener {
+    private val personId =
+        savedStateHandle.get<Int>("personId") ?: 3
 
-    var num_people_movies = ""
+    init {
+        refreshScreen()
+    }
+    fun refreshScreen() {
+        getPersonData()
+        getMoviesByPeople()
+        getTvShowsByPeople()
+        _state.update { it.copy(onErrors = emptyList(), isLoading = true) }
+    }
 
-    fun getPersonData(personId: Int) {
+    fun getPersonData() {
         viewModelScope.launch {
             try {
                 val data = getPeopleDetailsUseCase(personId)
@@ -44,14 +53,13 @@ class PeopleDetailsViewModel @Inject constructor(
 
     }
 
-    private fun onSuccessGetPersonData(peopleDataUiState: PeopleDetailsUiState.PeopleDataUiState) {
+    private fun onSuccessGetPersonData(personInfoUiState: PersonDetailsUiState.PersonInfoUiState) {
         _state.update {
             it.copy(
-                peopleData = peopleDataUiState,
+                peopleData = personInfoUiState,
                 isLoading = false
             )
         }
-        Log.e("num_people_movies", num_people_movies)
     }
 
     private fun onErrorGetPersonData(e: Throwable) {
@@ -60,9 +68,9 @@ class PeopleDetailsViewModel @Inject constructor(
         _state.update { it.copy(onErrors = errors, isLoading = false) }
     }
 
-    fun getMoviesByPeople(personId: Int) {
+    fun getMoviesByPeople() {
         tryToExecute(
-            call = { getMoviesByPeopleUseCase.invoke(personId) },
+            call = { getMoviesByPersonUseCase.invoke(personId) },
             onSuccess = ::onSuccessGetMoviesByPeople,
             onError = ::onErrorGetMoviesByPeople,
             mapper = moviesByPeopleUiMapper
@@ -70,15 +78,13 @@ class PeopleDetailsViewModel @Inject constructor(
     }
 
 
-    private fun onSuccessGetMoviesByPeople(moviesUiState: List<PeopleDetailsUiState.PeopleMediaUiState>) {
+    private fun onSuccessGetMoviesByPeople(list: List<PersonDetailsUiState.PeopleMediaUiState>) {
         _state.update {
             it.copy(
-                Movies = moviesUiState,
+                movies = list,
                 isLoading = false,
             )
         }
-        num_people_movies = moviesUiState.size.toString()
-        Log.e("num_people_movies", num_people_movies)
     }
 
     private fun onErrorGetMoviesByPeople(e: Throwable) {
@@ -88,9 +94,9 @@ class PeopleDetailsViewModel @Inject constructor(
     }
 
 
-    fun getTvShowsByPeople(personId: Int) {
+    fun getTvShowsByPeople() {
         tryToExecute(
-            call = { getTvShowsByPeopleUseCase(personId) },
+            call = { getTvShowsByPersonUseCase(personId) },
             onSuccess = ::onSuccessGetTvShowsByPeople,
             onError = ::onErrorGetTvShowsByPeople,
             mapper = tvShowsByPeopleUiMapper
@@ -98,10 +104,10 @@ class PeopleDetailsViewModel @Inject constructor(
     }
 
 
-    private fun onSuccessGetTvShowsByPeople(tvShowsUiState: List<PeopleDetailsUiState.PeopleMediaUiState>) {
+    private fun onSuccessGetTvShowsByPeople(list: List<PersonDetailsUiState.PeopleMediaUiState>) {
         _state.update {
             it.copy(
-                TvShows = tvShowsUiState,
+                tvShows = list,
                 isLoading = false
             )
         }

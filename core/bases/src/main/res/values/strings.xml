@@ -27,5 +27,7 @@
     <string name="retry">retry</string>
     <string name="item_deleted">Item Deleted</string>
     <string name="undo">UNDO</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
 
 </resources>

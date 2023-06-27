@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import com.chocolatecake.entities.EpisodeDetailsEntity
 import com.chocolatecake.entities.GenreEntity
 import com.chocolatecake.entities.MovieEntity
-import com.chocolatecake.entities.PeopleDataEntity
+import com.chocolatecake.entities.PeopleDetailsEntity
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.entities.ReviewEntity
@@ -693,7 +693,7 @@ class MovieRepositoryImpl @Inject constructor(
         return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
     }
 // region people details
-    override suspend fun getPersonDetails(person_id: Int): PeopleDataEntity {
+    override suspend fun getPersonDetails(person_id: Int): PeopleDetailsEntity {
         return domainPeopleDetailsMapper.map(wrapApiCall { movieService.getPerson(person_id) })
     }
 

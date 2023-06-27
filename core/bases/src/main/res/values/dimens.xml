@@ -15,6 +15,8 @@
     <dimen name="spacing_giant_32dp">32dp</dimen>
     <dimen name="spacing_extra_giant_48dp">48dp</dimen>
     <dimen name="spacing_extra_extra_giant_56dp">56dp</dimen>
+    <dimen name="spacing__extra_extra_extra_giant_70dp">70dp</dimen>
+
 
     <!--text dimens-->
     <dimen name="text_tiny">11sp</dimen>
