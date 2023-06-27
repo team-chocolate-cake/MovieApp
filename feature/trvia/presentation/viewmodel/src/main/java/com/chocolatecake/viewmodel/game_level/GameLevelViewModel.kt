@@ -80,7 +80,7 @@ class GameLevelViewModel @Inject constructor(
         }
     }
 
-    fun onClickButton() {
+    fun onClickRestart() {
         sendEvent(GameLevelUIEvent.ResetLevels)
     }
 
