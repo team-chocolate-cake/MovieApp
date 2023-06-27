@@ -41,8 +41,7 @@
                     android:layout_height="?android:attr/actionBarSize"
                     android:background="@android:color/transparent"
                     android:elevation="2dp"
-                    android:onClick="@{()-> viewModel.clickToBack()}"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:onClickNavigation="@{()->viewModel.clickToBack()}"                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:navigationIcon="@drawable/ic_back" />
