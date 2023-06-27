@@ -44,4 +44,7 @@
     <string name="movie">Movie</string>
     <string name="tv_show">Tv Show</string>
     <string name="my_rated">My Rated</string>
+    <string name="new_list_button">New List</string>
+    <string name="my_list_title">My List</string>
+    <string name="delete">Delete</string>
 </resources>

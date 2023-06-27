@@ -110,23 +110,13 @@ interface MovieRepository {
     suspend fun getFavoriteMovies(): List<MovieEntity>
     suspend fun getWatchlistMovies(): List<MovieEntity>
 
-    suspend fun addFavoriteMovie(favoriteBody: FavoriteBodyRequestEntity): Boolean
-    suspend fun getFavoriteByMediaType(mediaType: String): List<MovieEntity>
-
-
-    suspend fun getWatchlistByMediaType(mediaType: String): List<MovieEntity>
-    suspend fun addWatchlist(watchlistRequest: WatchlistRequestEntity): Boolean
-
-
     suspend fun addList(name:String): Boolean
-    suspend fun getLists(): List<ListEntity>
-    suspend fun refreshLists()
-
-    suspend fun getMovieList(): List<ListMovieEntity>
-
-    suspend fun addMovieToList( movie: ListMovieEntity): Boolean
 
     suspend fun getDetailsList(listId: Int): List<MovieEntity>
+
+
+    suspend fun deleteMovieDetailsList(listId: Int ,mediaId: Int ): StatusEntity
+    suspend fun deleteList(listId: Int): StatusEntity
 
 
     suspend fun getListCreated(): List<ListCreatedEntity>

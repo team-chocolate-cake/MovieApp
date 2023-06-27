@@ -2,6 +2,7 @@ package com.chocolatecake.remote.service
 
 import com.chocolatecake.remote.request.AddMediaToListRequest
 import com.chocolatecake.remote.request.CreateUserListRequest
+import com.chocolatecake.remote.request.DeleteMovieRequest
 import com.chocolatecake.remote.request.FavoriteRequest
 import com.chocolatecake.remote.request.ListRequest
 import com.chocolatecake.remote.request.LoginRequest
@@ -13,13 +14,11 @@ import com.chocolatecake.remote.response.DataWrapperResponse
 import com.chocolatecake.remote.response.GenresWrapperResponse
 import com.chocolatecake.remote.response.ListDetailsWrapperResponse
 import com.chocolatecake.remote.response.ListResponse
-import com.chocolatecake.remote.response.MovieResponse
 import com.chocolatecake.remote.response.auth.RequestTokenResponse
 import com.chocolatecake.remote.response.auth.SessionResponse
 import com.chocolatecake.remote.response.dto.GenreMovieRemoteDto
 import com.chocolatecake.remote.response.dto.GenreTVRemoteDto
 import com.chocolatecake.remote.response.dto.ListRemoteDto
-import com.chocolatecake.remote.response.dto.MovieItemListRemoteDto
 import com.chocolatecake.remote.response.dto.MovieRemoteDto
 import com.chocolatecake.remote.response.dto.PeopleRemoteDto
 import com.chocolatecake.remote.response.dto.StatusResponse
@@ -41,6 +40,7 @@ import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
 import com.chocolatecake.remote.response.movieDetails.ReviewsDto
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -179,6 +179,7 @@ interface MovieService {
     ): Response<ProfileRemoteDto>
     ///endregion
 
+
     /// region movie details
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
@@ -233,6 +234,7 @@ interface MovieService {
     ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 
+
     //region my list
     @GET("account/account_id/lists")
     suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
@@ -250,20 +252,6 @@ interface MovieService {
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
 
-    @GET("account/{account_id}/favorite/{media_type}")
-    suspend fun getFavoriteByMediaType(
-        @Path("media_type") mediaType: String,
-    ): Response<DataWrapperResponse<MovieRemoteDto>>
-
-
-    @POST("account/{account_id}/favorite")
-    suspend fun addFavoriteMovie(@Body markAsFavorite: FavoriteRequest): Response<MovieResponse>
-
-
-    @GET("account/{account_id}/watchlist/{media_type}")
-    suspend fun getWatchlistByMediaType(
-        @Path("media_type") mediaType: String,
-    ): Response<DataWrapperResponse<MovieRemoteDto>>
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getWatchlist(): Response<DataWrapperResponse<MovieRemoteDto>>
@@ -277,17 +265,23 @@ interface MovieService {
 
     @POST("list")
     suspend fun addList(@Body listRequest: ListRequest): Response<ListResponse>
+    @DELETE("list/{list_id}")
+    suspend fun deleteList(@Path("list_id") listId: Int): Response<StatusResponse>
+
 
     @GET("account/{account_id}/lists")
     suspend fun getLists(): Response<DataWrapperResponse<ListRemoteDto>>
 
 
-    @GET("list/{list_id}/add_item")
-    suspend fun addMovieToList(@Body mediaId: Int): Response<MovieResponse>
-
     @GET("list/{list_id}")
     suspend fun getDetailsList(@Path("list_id") listId: Int)
-            : Response<ListDetailsWrapperResponse<MovieItemListRemoteDto>>
+            : Response<ListDetailsWrapperResponse<MovieRemoteDto>>
+
+    @POST("list/{list_id}/remove_item")
+    suspend fun deleteMovieDetailsList(
+        @Path("list_id") listId: Int,
+        @Body movieRequest: DeleteMovieRequest,
+    ): Response<StatusResponse>
 
 
     @GET("movie/{movieId}/reviews")
@@ -325,7 +319,7 @@ interface MovieService {
         @Path("episode_number") episodeNumber: Int
     ): Response<EpisodeDetailsCastRemoteDto>
 
-    ///endregion
+///endregion
 
     /// region trailer
 

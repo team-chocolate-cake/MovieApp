@@ -169,18 +169,18 @@
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        android:name="com.chocolatecake.ui.myList.MyListFragment"
-        android:label="MyListFragment"
-        tools:layout="@layout/fragment_my_list">
+        tools:layout="@layout/fragment_my_list"
+        android:name="com.chocolatecake.ui.my_list.MyListFragment"
+        android:label="MyListFragment" >
         <action
             android:id="@+id/action_myListFragment_to_myListDetailsFragment"
             app:destination="@id/myListDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myListDetailsFragment"
-        android:name="com.chocolatecake.ui.myListDetails.MyListDetailsFragment"
-        android:label="MyListDetailsFragment"
-        tools:layout="@layout/fragment_my_list_details">
+        tools:layout="@layout/fragment_my_list_details"
+        android:name="com.chocolatecake.ui.my_list_details.MyListDetailsFragment"
+        android:label="MyListDetailsFragment" >
         <argument
             android:name="listId"
             app:argType="integer" />

@@ -2,7 +2,6 @@ package com.chocolatecake.viewmodel.episode_details
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
@@ -14,7 +13,6 @@ import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

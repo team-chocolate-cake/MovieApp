@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.ui.common.base.SwipeToDeleteItem
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentWatchHistoryBinding
 import com.chocolatecake.viewmodel.watch_history.WatchHistoryViewModel
@@ -64,14 +65,12 @@ class WatchHistoryFragment
         touchHelper.attachToRecyclerView(itemRv)
     }
 
-    private fun swipeGestureAnonymousObject() = object : SwipeGesture() {
+    private fun swipeGestureAnonymousObject() = object : SwipeToDeleteItem() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             try {
                 finishNotCompletedDeletion()
                 handleSwipes(direction, viewHolder.absoluteAdapterPosition)
-            } catch (e: Exception) {
-//                createToast(getString(R.string.error_occured))
-            }
+            } catch (e: Exception) { }
         }
     }
 
