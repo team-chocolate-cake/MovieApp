@@ -1,6 +1,5 @@
 package com.chocolatecake.viewmodel.myList
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.StatusEntity
@@ -86,7 +85,11 @@ class MyListViewModel @Inject constructor(
        _state.update { it.copy(isShowDelete = true , error = null  ) }
     }
 
-    override fun onClickDelete(listId: Int) {
+    override fun onClickDelete(listId: Int, listName: String) {
+        sendEvent(MyListUiEvent.ShowConfirmDeleteDialog(listId, listName))
+    }
+
+    fun deleteList(listId: Int){
         tryToExecute(
             call = {
                 deleteListUseCase.invoke(listId = listId)

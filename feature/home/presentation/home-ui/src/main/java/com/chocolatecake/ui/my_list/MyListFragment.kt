@@ -10,6 +10,7 @@ import com.chocolatecake.ui.home.databinding.FragmentMyListBinding
 import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,8 +64,23 @@ class MyListFragment :
             }
             is MyListUiEvent.OnCreateNewList -> { showSnackBar(event.message) }
 
-            else -> {}
+            is MyListUiEvent.ShowConfirmDeleteDialog -> {
+                showDialog(event.listId, event.listName)
+            }
         }
+    }
+
+    private fun showDialog(listId: Int, listName: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Are you sure that you want to delete $listName?")
+            .setPositiveButton("Confirm") { _, _ ->
+                viewModel.deleteList(listId)
+            }
+            .setNeutralButton("Cancel"){ dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 

@@ -19,6 +19,8 @@ import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
+import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
+import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
@@ -66,9 +68,11 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMappe
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
-import com.chocolatecake.repository.showmore.PopularMoviesShowMorePagingSource
-import com.chocolatecake.repository.showmore.TopRatedShowMorePagingSource
-import com.chocolatecake.repository.showmore.TrendingShowMorePagingSource
+import com.chocolatecake.repository.mappers.domain.showmore.PopularMoviesShowMorePagingSource
+import com.chocolatecake.repository.mappers.domain.showmore.TopRatedShowMorePagingSource
+import com.chocolatecake.repository.mappers.domain.showmore.TrendingShowMorePagingSource
+import com.chocolatecake.repository.my_rated.RatedMoviesPagingSource
+import com.chocolatecake.repository.my_rated.RatedTvShowPagingSource
 import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.OnTheAirTVShowsPagingSource
 import com.chocolatecake.repository.tv_shows.PopularTVShowsPagingSource
@@ -154,10 +158,11 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getPopularMoviesFromRemote(): List<MovieEntity> {
         val page = random.nextInt(500) + 1
-        val call =
+        val moviesRemoteDTOs =
             wrapApiCall { movieService.getPopularMovies(page = page) }.results?.filterNotNull()
                 ?: emptyList()
-        return domainMovieMapper.map(call)
+        val genres = getGenresMovies()
+        return domainMovieMapper.map(moviesRemoteDTOs, genres)
     }
 
     override suspend fun refreshPopularMovies() {

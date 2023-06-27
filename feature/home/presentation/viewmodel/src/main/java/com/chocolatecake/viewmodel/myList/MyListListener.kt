@@ -9,5 +9,5 @@ interface MyListListener : BaseInteractionListener {
 
     fun onClickBackButton()
     fun onClickShowDelete()
-    fun onClickDelete(listId: Int)
+    fun onClickDelete(listId: Int, listName: String)
 }
