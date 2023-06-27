@@ -173,6 +173,10 @@ class EpisodeDetailsViewModel @Inject constructor(
         sendEvent(EpisodeDetailsUiEvent.ClickToRate(episodeId))
     }
 
+    override fun clickToPlayFullScreen(videoKey:String) {
+        sendEvent(EpisodeDetailsUiEvent.ClickToPlayFullScreen(videoKey))
+    }
+
     override fun onClickPeople(id: Int) {
         sendEvent(EpisodeDetailsUiEvent.ClickCast(id))
     }

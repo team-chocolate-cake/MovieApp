@@ -8,6 +8,7 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel" />
+
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.episode_details.EpisodeDetailsListener" />
@@ -30,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background"
+                android:paddingBottom="@dimen/spacing_medium_16dp"
                 tools:context=".ui.episodeDetails.EpisodeDetailsFragment">
 
                 <androidx.appcompat.widget.Toolbar
@@ -79,7 +81,6 @@
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@{viewModel.state.episodeName}"
                     android:textColor="@color/on_background_87"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/image_view_episode_image"
                     tools:text="The Super Mario Bros." />
@@ -91,8 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
-                    android:text='@{@string/season + String.valueOf(viewModel.state.seasonNumber) + " | " + @string/episode + String.valueOf(viewModel.state.episodeNumber)}'
-                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    android:text='@{@string/season + " " + String.valueOf(viewModel.state.seasonNumber) + " | "
+                    + @string/episode + " "  + String.valueOf(viewModel.state.episodeNumber)}'
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_episode_name"
                     tools:text="Season 1 | Episode 1" />
@@ -106,7 +107,6 @@
                     android:onClick="@{()-> viewModel.clickToRate(viewModel.state.episodeNumber)}"
                     android:text="@string/rate_the_episode"
                     android:textColor="@color/primary"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/ratingBar" />
@@ -123,7 +123,6 @@
                     android:numStars="5"
                     android:rating="@{viewModel.state.episodeRate}"
                     android:stepSize="1"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_view_season" />
 
@@ -136,23 +135,59 @@
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@{viewModel.state.episodeOverview}"
                     android:textColor="@color/on_background_60"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/ratingBar"
                     tools:text="@tools:sample/lorem/random" />
 
-                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:id="@+id/youtube_player"
+                <TextView
+                    android:id="@+id/text_view_trailer"
+                    style="@style/TextStyle.BodyLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:text="@string/trailer"
+                    android:textColor="@color/on_background_87"
+                    app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
+                    app:layout_constraintBottom_toBottomOf="@+id/play_full_screen"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/play_full_screen" />
+
+                <Button
+                    android:id="@+id/play_full_screen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
-                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:elevation="@dimen/spacing_zero_0dp"
+                    app:cardCornerRadius="@dimen/spacing_medium_16dp"
                     app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
-                    app:setVideoId="@{viewModel.state.trailerKey}" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_trailer">
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/youtube_player"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
+                        app:setVideoId="@{viewModel.state.trailerKey}" />
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <TextView
                     android:id="@+id/text_view_actors"
@@ -166,14 +201,13 @@
                     app:hideWhenError="@{viewModel.state.onErrors}"
                     app:hideWhenNoList="@{viewModel.state.cast}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/youtube_player" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_view" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_people"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small_8dp"
-                    android:layout_marginBottom="@dimen/spacing_small_8dp"
                     android:clipToPadding="false"
                     android:contentDescription="@string/rate_the_episode"
                     android:orientation="horizontal"
@@ -182,13 +216,13 @@
                     app:hideWhenNoList="@{viewModel.state.cast}"
                     app:items="@{viewModel.state.cast}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_actors"
                     tools:listitem="@layout/item_people" />
 
                 <Button
+                    android:id="@+id/button"
                     style="@style/TextStyle.TitleMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -216,4 +250,3 @@
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
-
