@@ -150,19 +150,27 @@
                     android:text="@string/trailer"
                     android:textColor="@color/on_background_87"
                     app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
-                    app:layout_constraintBottom_toBottomOf="@+id/play_full_screen"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/play_full_screen" />
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"/>
 
-                <Button
-                    android:id="@+id/play_full_screen"
+
+                <TextView
+                    android:id="@+id/text_view_play_full_screen"
+                    style="@style/TextStyle.LabelBody"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                    android:drawableStart="@drawable/ic_play"
+                    android:drawablePadding="@dimen/spacing_small_8dp"
+                    android:drawableTint="@color/primary"
+                    android:text="@string/play_full_screen"
+                    android:textColor="@color/primary"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_trailer"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
-                    android:layout_marginTop="@dimen/spacing_medium_16dp"
-                    />
+                    app:layout_constraintTop_toTopOf="@id/text_view_trailer" />
+
+
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card_view"
