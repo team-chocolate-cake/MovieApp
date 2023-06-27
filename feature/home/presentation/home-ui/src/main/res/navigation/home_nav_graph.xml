@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_searchFragment_to_tvDetailsFragment"
             app:destination="@id/tvDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
 
     <fragment
@@ -101,6 +104,9 @@
         <action
             android:id="@+id/action_movieDetailsFragment_self"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
 
 
@@ -156,6 +162,9 @@
         <action
             android:id="@+id/action_tvDetailsFragment_to_peopleDetailsFragment"
             app:destination="@id/peopleDetailsFragment" />
+        <action
+            android:id="@+id/action_tvDetailsFragment_to_peopleDetailsFragment2"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -205,6 +214,9 @@
         <argument
             android:name="episodeNumber"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/peopleDetailsFragment"

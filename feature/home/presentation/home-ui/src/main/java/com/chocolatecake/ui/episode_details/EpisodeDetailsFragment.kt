@@ -1,10 +1,8 @@
 package com.chocolatecake.ui.episode_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.adapters.ViewGroupBindingAdapter.setListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -50,7 +48,7 @@ class EpisodeDetailsFragment :
     override fun onEvent(event: EpisodeDetailsUiEvent) {
         when (event) {
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
-            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
+            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
         }
@@ -61,8 +59,8 @@ class EpisodeDetailsFragment :
         Toast.makeText(requireActivity(), "back button clicked", Toast.LENGTH_SHORT).show()
     }
 
-    private fun navigateToCastDetails() {
-        //toDo findNavController().navigate()
+    private fun navigateToCastDetails(itemId: Int) {
+        EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(itemId)
     }
 
     private fun showBottomSheet() {

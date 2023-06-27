@@ -99,7 +99,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchUiState, Search
     }
 
     private fun navigateToPeople(peopleId: Int) {
-        showSnackBar("Navigate To People: $peopleId")
+        findNavController().navigate(
+            SearchFragmentDirections.actionSearchFragmentToPeopleDetailsFragment(
+                peopleId
+            )
+        )
     }
 
     private fun navigateToTv(tvId: Int) {
