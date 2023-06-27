@@ -679,7 +679,7 @@ class MovieRepositoryImpl @Inject constructor(
     /// endregion
 
     override fun isLoginedOrNot(): Boolean {
-        return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
+        return !preferenceStorage.sessionId.isNullOrBlank()
     }
 
 
@@ -698,8 +698,8 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
     /// endregion
-}
-// region people details
+
+    // region people details
     override suspend fun getPersonDetails(person_id: Int): PeopleDetailsEntity {
         return domainPeopleDetailsMapper.map(wrapApiCall { movieService.getPerson(person_id) })
     }

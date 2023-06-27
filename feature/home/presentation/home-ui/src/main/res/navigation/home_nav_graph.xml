@@ -226,6 +226,9 @@
         <action
             android:id="@+id/action_episodeDetailsFragment_to_trailerFragment"
             app:destination="@id/trailerFragment" />
+        <action
+            android:id="@+id/action_episodeDetailsFragment_to_peopleDetailsFragment"
+            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/trailerFragment"
@@ -247,9 +250,6 @@
         <action
             android:id="@+id/action_myRatedFragment_to_tvDetailsFragment"
             app:destination="@id/tvDetailsFragment" />
-        <action
-            android:id="@+id/action_episodeDetailsFragment_to_peopleDetailsFragment"
-            app:destination="@id/peopleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/peopleDetailsFragment"
