@@ -40,12 +40,16 @@ class EpisodeDetailsFragment :
             is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
-            is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen()
+            is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen(event.videoKey)
         }
     }
 
-    private fun navigateToPlayFullScreen() {
-   //ToDo   findNavController().navigate()
+    private fun navigateToPlayFullScreen(videoKey: String) {
+        findNavController().navigate(
+            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToTrailerFragment(
+                videoKey
+            )
+        )
     }
 
     override fun onApplyRateBottomSheet() {

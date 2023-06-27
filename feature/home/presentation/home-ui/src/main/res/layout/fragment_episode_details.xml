@@ -165,6 +165,7 @@
                     android:drawablePadding="@dimen/spacing_small_8dp"
                     android:drawableTint="@color/primary"
                     android:text="@string/play_full_screen"
+                    android:onClick="@{()->viewModel.clickToPlayFullScreen(viewModel.state.trailerKey)}"
                     android:textColor="@color/primary"
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_trailer"
                     app:layout_constraintEnd_toEndOf="parent"
