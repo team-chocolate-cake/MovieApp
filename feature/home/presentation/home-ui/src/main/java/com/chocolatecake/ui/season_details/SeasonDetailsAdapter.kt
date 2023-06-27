@@ -38,10 +38,7 @@ class SeasonDetailsAdapter (
 
     private fun bindOverview(holder: OverviewViewHolder, position: Int){
         val overview = list[position] as SeasonDetailsItem.OverviewItem
-        holder.binding.item = overview.overview
-        if(overview.overview == ""){
-            holder.binding.overviewRegion.visibility = ViewGroup.GONE
-        }
+        holder.binding.item = overview
     }
 
     private fun bindEpisodes(holder: EpisodeViewHolder, position: Int){

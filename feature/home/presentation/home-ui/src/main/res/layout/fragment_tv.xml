@@ -116,11 +116,11 @@
             android:onClick="@{() -> viewModel.scrollToTopScreen()}"
             android:src="@drawable/ic_arrow_top" />
 
-        <ProgressBar
+        <include
+            layout="@layout/layout_loading"
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/primary"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:isVisible="@{viewModel.state.loading}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -35,7 +35,7 @@ class SeasonDetailsFragment
         collectLatest {
             viewModel.state.collectLatest { state ->
                 val seasonDetailsItems = mutableListOf(
-                    SeasonDetailsItem.OverviewItem(state.overview)
+                    SeasonDetailsItem.OverviewItem(state.overview, state.episodes.isEmpty())
                 ) + state.episodes.map { SeasonDetailsItem.EpisodeItem(it) }
                 seasonDetailsAdapter.setItems(seasonDetailsItems)
             }

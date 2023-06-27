@@ -19,11 +19,11 @@ data class TVShowUIState(
 }
 
 data class TVShowsUI(
-    val tvId: Int,
-    val imageUrl: String,
-    val rate: Double
-) {
-    fun formattedRate(): Double = (rate * 10.0).toInt() / 10.0
+    val tvId: Int?,
+    val imageUrl: String?,
+    val rate: Double?
+){
+    fun formattedRate(): Double = if (rate==null) 0.0 else (rate * 10.0).roundToInt() / 10.0
 }
 
 enum class TVShowsType {

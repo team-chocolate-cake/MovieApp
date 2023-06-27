@@ -119,13 +119,12 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <ProgressBar
+        <include
+            layout="@layout/layout_loading"
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/primary"
-            android:visibility="gone"
             app:isVisible="@{viewModel.state.loading}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

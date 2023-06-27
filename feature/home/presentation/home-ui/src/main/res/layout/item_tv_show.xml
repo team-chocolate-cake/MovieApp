@@ -58,7 +58,7 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/spacing_tiny_4dp"
             android:gravity="center"
-            android:text="@{String.valueOf(item.formattedRate)}"
+            android:text="@{String.valueOf(item.formattedRate())}"
             android:textColor="@color/background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

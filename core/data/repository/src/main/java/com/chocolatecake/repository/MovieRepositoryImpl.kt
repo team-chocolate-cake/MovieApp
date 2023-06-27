@@ -174,9 +174,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshPopularMovies() {
         refreshWrapper(
-            movieService::getPopularMovies,
+            { movieService.getPopularMovies(random.nextInt(20) + 1) },
             localPopularMovieMapper::map,
-            movieDao::insertPopularMovies
+            movieDao::insertPopularMovies,
+            clearOldLocalData = movieDao::clearAllPopularMovies
         )
     }
 
@@ -186,9 +187,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshNowPlayingMovies() {
         refreshWrapper(
-            movieService::getNowPlayingMovies,
+            { movieService.getNowPlayingMovies(random.nextInt(20) + 1) },
             localNowPlayingMovieMapper::map,
-            movieDao::insertNowPlayingMovies
+            movieDao::insertNowPlayingMovies,
+            clearOldLocalData = movieDao::clearAllNowPlayingMovies
         )
     }
 
@@ -198,9 +200,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshTopRatedMovies() {
         refreshWrapper(
-            movieService::getTopRatedMovies,
+            { movieService.getTopRatedMovies(random.nextInt(20) + 1) },
             localTopRatedMovieMapper::map,
-            movieDao::insertTopRatedMovies
+            movieDao::insertTopRatedMovies,
+            clearOldLocalData = movieDao::clearAllTopRatedMovies
         )
     }
 
@@ -210,9 +213,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshUpcomingMovies() {
         refreshWrapper(
-            movieService::getUpcomingMovies,
+            { movieService.getUpcomingMovies(random.nextInt(20) + 1) },
             localUpcomingMovieMapper::map,
-            movieDao::insertUpcomingMovies
+            movieDao::insertUpcomingMovies,
+            clearOldLocalData = movieDao::clearAllUpcomingMovies
         )
     }
 
@@ -242,9 +246,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun refreshPopularPeople() {
         refreshWrapper(
-            movieService::getPopularPeople,
+            { movieService.getPopularPeople(random.nextInt(20) + 1) },
             localPopularPeopleMapper::map,
-            movieDao::insertPopularPeople
+            movieDao::insertPopularPeople,
+            clearOldLocalData = movieDao::clearAllPopularPeople
         )
     }
     /// endregion

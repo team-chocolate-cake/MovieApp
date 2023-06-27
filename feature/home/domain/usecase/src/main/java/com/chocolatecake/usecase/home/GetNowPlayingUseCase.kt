@@ -10,7 +10,9 @@ class GetNowPlayingUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(limit: Int = 10): List<MovieEntity> {
         refreshIfNeededUseCase()
-        return movieRepository.getNowPlayingMovies().take(limit)
+        return movieRepository.getNowPlayingMovies()
+            .also { if (it.isEmpty()) movieRepository.refreshNowPlayingMovies() }
+            .take(limit)
     }
 
 }

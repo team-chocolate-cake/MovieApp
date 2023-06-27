@@ -6,4 +6,3 @@ class NoNetworkThrowable: ApiThrowable("No Network")
 class TimeoutThrowable:ApiThrowable("Not Logged In")
 class ParsingThrowable:ApiThrowable("Parsing Error")
 
-

@@ -19,6 +19,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 @BindingAdapter(value = ["app:items"])
 fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
     (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
+    smoothScrollToPosition(0)
 }
 
 @BindingAdapter(value = ["app:isVisible"])
@@ -56,18 +57,17 @@ fun EditText.setTipError(errorMessage: String?) {
     else error = errorMessage
 }
 
+/// region image glide
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageUrl: String?) {
-    if (imageUrl?.contains("null") == true) {
-        Glide.with(context)
-            .load("https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png")
-            .thumbnail(Glide.with(context).load(R.raw.loading_images))
-            .centerCrop()
-            .into(this)
-    } else Glide.with(context)
-        .load(imageUrl)
-        .thumbnail(Glide.with(context).load(R.raw.loading_images))
+    val imageLink = if (imageUrl == null || imageUrl.contains("null"))
+        "https://pbs.twimg.com/profile_images/1243623122089041920/gVZIvphd_400x400.jpg" else imageUrl
+
+    Glide.with(context)
+        .load(imageLink)
+        .thumbnail(Glide.with(context).load(R.raw.dots_loading))
         .centerCrop()
+        .error(android.R.drawable.stat_notify_error)
         .into(this)
 }
 
@@ -87,19 +87,17 @@ fun ImageView.loadImageWithPlaceholderColor(imageUri: String?, imagePlaceholderC
 
 @BindingAdapter(value = ["app:profileUrl"])
 fun ImageView.loadProfileImage(profileUrl: String?) {
-    if (profileUrl == "https://image.tmdb.org/t/p/w500null") {
-        Glide.with(context)
-            .load("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-            .fitCenter()
-            .centerCrop()
-            .into(this)
-    } else Glide.with(context)
-        .load(profileUrl)
-        .fitCenter()
-        .centerCrop()
-        .into(this)
+    val imageLink = if (profileUrl == null || profileUrl.contains("null"))
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" else profileUrl
 
+    Glide.with(context)
+        .load(imageLink)
+        .thumbnail(Glide.with(context).load(R.raw.dots_loading))
+        .centerCrop()
+        .error(android.R.drawable.stat_notify_error)
+        .into(this)
 }
+/// endregion
 
 @BindingAdapter(value = ["app:hideResult", "app:query"])
 fun <T> View.hideResult(list: List<T>?, text: String) {
