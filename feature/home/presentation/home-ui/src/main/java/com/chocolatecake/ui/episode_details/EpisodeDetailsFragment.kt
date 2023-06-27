@@ -29,7 +29,9 @@ class EpisodeDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-
+        binding.swipeToRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+        }
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {

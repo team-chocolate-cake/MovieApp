@@ -81,7 +81,6 @@
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@{viewModel.state.episodeName}"
-
                     android:textColor="@color/on_background_87"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/image_view_episode_image"
@@ -93,9 +92,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
-
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text='@{@string/season + " " + String.valueOf(viewModel.state.seasonNumber) + " | " + @string/episode + " " + String.valueOf(viewModel.state.episodeNumber)}'
+                    app:isVisible="@{!viewModel.state.failure}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_episode_name"
                     tools:text="Season 1 | Episode 1" />
@@ -107,9 +106,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/spacing_medium_16dp"
                     android:onClick="@{()-> viewModel.clickToRate(viewModel.state.episodeNumber)}"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     android:text="@string/rate_the_episode"
                     android:textColor="@color/primary"
+                    app:isVisible="@{!viewModel.state.failure}"
                     app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/ratingBar" />
@@ -121,11 +120,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    app:isVisible="@{!viewModel.state.failure}"
                     android:contentDescription="@string/rate_the_episode"
                     android:isIndicator="true"
                     android:numStars="5"
                     android:rating="@{viewModel.state.episodeRate}"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     android:stepSize="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_view_season" />
@@ -137,10 +136,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
                     android:layout_marginTop="@dimen/spacing_medium_16dp"
-                    app:hideWhenNoResultText="@{viewModel.state.episodeOverview}"
                     android:text="@{viewModel.state.episodeOverview}"
-                    app:hideWhenError="@{viewModel.state.onErrors}"
                     android:textColor="@color/on_background_60"
+                    app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:hideWhenNoResultText="@{viewModel.state.episodeOverview}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -153,13 +152,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_medium_16dp"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
                     android:text="@string/trailer"
                     android:textColor="@color/on_background_87"
                     app:hideWhenError="@{viewModel.state.onErrors}"
                     app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/spacing_medium_16dp"/>
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_episode_description" />
 
 
                 <TextView
@@ -171,11 +170,11 @@
                     android:drawableStart="@drawable/ic_play"
                     android:drawablePadding="@dimen/spacing_small_8dp"
                     android:drawableTint="@color/primary"
+                    android:onClick="@{()->viewModel.clickToPlayFullScreen(viewModel.state.trailerKey)}"
                     android:text="@string/play_full_screen"
+                    android:textColor="@color/primary"
                     app:hideWhenError="@{viewModel.state.onErrors}"
                     app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
-                    android:onClick="@{()->viewModel.clickToPlayFullScreen(viewModel.state.trailerKey)}"
-                    android:textColor="@color/primary"
                     app:layout_constraintBottom_toBottomOf="@+id/text_view_trailer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/text_view_trailer" />
@@ -188,8 +187,8 @@
                     android:layout_marginTop="@dimen/spacing_small_8dp"
                     android:elevation="@dimen/spacing_zero_0dp"
                     app:cardCornerRadius="@dimen/spacing_medium_16dp"
-                    app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
                     app:hideWhenError="@{viewModel.state.onErrors}"
+                    app:hideWhenNoProductionCode="@{viewModel.state.trailerKey}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_trailer">
