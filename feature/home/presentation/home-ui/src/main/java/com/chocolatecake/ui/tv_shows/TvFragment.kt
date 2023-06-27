@@ -2,6 +2,7 @@ package com.chocolatecake.ui.tv_shows
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController

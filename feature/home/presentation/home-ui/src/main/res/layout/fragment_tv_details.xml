@@ -19,6 +19,7 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:isVisibleOrGone="@{(!viewModel.state.loading) &amp;&amp; (!viewModel.state.failure)}"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -26,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 app:contentScrim="@color/card"
+                android:nestedScrollingEnabled="false"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <ImageView
@@ -37,6 +39,17 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"
                     tools:src="@tools:sample/backgrounds/scenic" />
+
+                <ImageButton
+                    android:id="@+id/image_button_play"
+                    android:layout_width="@dimen/spacing_extra_giant_48dp"
+                    android:layout_height="@dimen/spacing_extra_giant_48dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                    android:layout_marginBottom="@dimen/spacing_medium_16dp"
+                    android:background="@drawable/play_button_background"
+                    android:src="@drawable/movie_play"
+                    app:tint="@color/on_background_60" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -55,16 +68,17 @@
                         android:background="@null"
                         android:onClick="@{()->viewModel.onBack()}"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_left" />
+                        android:src="@drawable/arrow_left"
+                        app:tint="@color/on_background_60" />
 
                     <TextView
                         android:id="@+id/text_view_tool_bar_name"
                         style="@style/TextStyle.TitleMedium"
                         android:layout_width="250dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/spacing_tiny_4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text="@{viewModel.state.info.name}"
                         android:textColor="@color/on_background_87"
                         android:visibility="invisible" />
@@ -77,11 +91,12 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@null"
+                        app:tint="@color/on_background_60"
                         android:backgroundTint="@color/on_primary"
-                        app:isVisible="@{!viewModel.state.isLoading &amp; viewModel.state.logined}"
                         android:onClick="@{()-> viewModel.onClickSaveButton()}"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_save" />
+                        android:src="@drawable/ic_save_unpressed"
+                        app:isVisible="@{!viewModel.state.isLoading &amp; viewModel.state.logined}" />
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -94,6 +109,8 @@
             android:id="@+id/nestedRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/spacing_medium_16dp"
             app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.errors.empty}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

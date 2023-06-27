@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.tv_details
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.chocolatecake.ui.home.BR
+import com.chocolatecake.bases.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
 import com.chocolatecake.ui.movieDetails.setGenreChips
@@ -63,14 +64,17 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.map { it.userLists }.distinctUntilChanged().collectLatest {
-                Log.i("list","new list => ${viewModel.state.value.userLists}")
+                Log.i("list", "new list => ${viewModel.state.value.userLists}")
                 binding.chipGroupGenere.setGenreChips(viewModel.state.value.userLists, viewModel)
                 viewModel.emptyUserLists()
             }
         }
         binding.materialButtonCreate.setOnClickListener {
             creeateButton.onClickCreate(binding.textInputEditTextListName.text.toString())
-            binding.chipGroupGenere.removeViewsInLayout(0,binding.chipGroupGenere.childCount -1)
+            binding.chipGroupGenere.removeViewsInLayout(0, binding.chipGroupGenere.childCount - 3)
+            binding.groupCreateList.visibility = View.GONE
+            binding.chipAddNewList.isChecked = false
+            binding.textInputEditTextListName.setText("")
 
             viewLifecycleOwner.lifecycleScope.launch {
                 delay(300)
@@ -85,6 +89,11 @@ class AddToListBottomSheet(private val creeateButton: CreateListener) :
         }
 
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        creeateButton.onDismiss()
+    }
 }
 
 interface CreateListener {
@@ -92,4 +101,5 @@ interface CreateListener {
     fun onDone(listsId: List<Int>)
     fun onFavourite()
     fun onWatchlist()
+    fun onDismiss()
 }

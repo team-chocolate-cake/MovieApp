@@ -36,6 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:nestedScrollingEnabled="false"
             android:id="@+id/recyclerViewPeople"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

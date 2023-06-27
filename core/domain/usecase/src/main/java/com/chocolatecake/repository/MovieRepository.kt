@@ -22,6 +22,8 @@ import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
+import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
+import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import kotlin.random.Random
 
@@ -91,7 +93,14 @@ interface MovieRepository {
     suspend fun rateTvShow(rate: Double, tvShowID: Int): StatusEntity
     suspend fun getTvShowReviews(tvShowID: Int): List<ReviewEntity>
     suspend fun getTvShowRecommendations(tvShowID: Int): List<TvShowEntity>
-    suspend fun getTvShowYoutubeDetails(tvShowID: Int): YoutubeVideoDetailsEntity
+    suspend fun getTrailerVideoForTvShow(tvShowID: Int): YoutubeVideoDetailsEntity
+    suspend fun getTrailerVideoForMovie(movieID: Int): YoutubeVideoDetailsEntity
+
+    suspend fun getVideoEpisodeDetails(
+        seriesId: Int,
+        seasonNumber: Int,
+        episodeNumber: Int
+    ): YoutubeVideoDetailsEntity
 
     suspend fun getUserLists(): List<UserListEntity>
     suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
@@ -151,4 +160,9 @@ interface MovieRepository {
 
 
     fun isLoginedOrNot(): Boolean
+
+
+    suspend fun getRatedMovies(): Pager<Int, MyRatedMovieEntity>
+
+    suspend fun getRatedTvShows(): Pager<Int, MyRatedTvShowEntity>
 }

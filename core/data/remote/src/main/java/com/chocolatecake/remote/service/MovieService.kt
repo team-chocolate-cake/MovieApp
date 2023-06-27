@@ -33,6 +33,8 @@ import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.my_rated.MyRatedMovieDto
+import com.chocolatecake.remote.response.dto.my_rated.MyRatedTvShowDto
 import com.chocolatecake.remote.response.dto.profile.ProfileRemoteDto
 import com.chocolatecake.remote.response.dto.season_details.SeasonDetailsDto
 import com.chocolatecake.remote.response.movieDetails.MovieDetailsDto
@@ -88,6 +90,26 @@ interface MovieService {
         @Path("time_window") timeWindow: String = "day",
         @Query("page") page: Int = 1
     ): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    ///endregion
+
+    /// region trailer
+    @GET("movie/{movie_id}/videos")
+    suspend fun getTrailerVideoForMovie(
+        @Path("movie_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+    @GET("tv/{tv_id}/videos")
+    suspend fun getTrailerVideoForTvShow(
+        @Path("tv_id") tvShowId: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
+
+    @GET("tv/{series_id}/season/{season_number}/episode/{episode_number}/videos")
+    suspend fun getEpisodeVideos(
+        @Path("series_id") seriesId: Int,
+        @Path("season_number") seasonNumber: Int,
+        @Path("episode_number") episodeNumber: Int
+    ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
 
     ///endregion
 
@@ -179,7 +201,7 @@ interface MovieService {
     ): Response<SeasonDetailsDto>
     ///endregion
 
-    /// region tv
+    /// region tv details
     @GET("tv/{tv_id}")
     suspend fun getTvDetails(
         @Path("tv_id") tvShowId: Int
@@ -313,4 +335,22 @@ interface MovieService {
 
 
 ///endregion
+
+    /// region trailer
+
+    /// endregion
+
+    /// region My rating
+    @GET("account/{account_id}/rated/movies")
+    suspend fun getRatedMovies(
+        @Query("page") page: Int = 1
+    ): Response<DataWrapperResponse<MyRatedMovieDto>>
+
+    @GET("account/{account_id}/rated/tv")
+    suspend fun getRatedTv(
+        @Query("page") page: Int = 1
+    ): Response<DataWrapperResponse<MyRatedTvShowDto>>
+
+    ///endregion
+
 }

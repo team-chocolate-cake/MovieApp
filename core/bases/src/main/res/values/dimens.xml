@@ -74,5 +74,5 @@
     <dimen name="width_image_review">35dp</dimen>
     <dimen name="height_image_review">35dp</dimen>
     <dimen name="width_video_player">165dp</dimen>
-
+    <dimen name="width_chip_myrated">180dp</dimen>
 </resources>

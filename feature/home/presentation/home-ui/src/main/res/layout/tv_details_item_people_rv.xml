@@ -27,6 +27,7 @@
             android:text="@string/cast"
             android:textColor="@color/on_background_87"
             style="@style/TextStyle.TitleMedium"
+            app:isVisibleOrGone="@{!item.people.empty}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_medium_16dp"
+            app:isVisibleOrGone="@{!item.people.empty}"
             android:text="@string/show_more"
             android:onClick="@{()->listener.onShowMoreCast()}"
             android:textColor="@color/primary"
@@ -41,12 +43,14 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:nestedScrollingEnabled="false"
             android:id="@+id/recycler_view_people"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small_8dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
+            app:isVisibleOrGone="@{!item.people.empty}"
             android:paddingHorizontal="@dimen/spacing_custom_12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,12 +62,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/seasons"
+            android:layout_marginTop="@dimen/spacing_medium_16dp"
+            android:textColor="@color/on_background_87"
             app:layout_constraintTop_toBottomOf="@id/recycler_view_people"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/spacing_medium_16dp"
             style="@style/TextStyle.TitleMedium"
-            android:layout_marginTop="@dimen/spacing_medium_16dp"
-            />
+            app:isVisibleOrGone="@{item.seasonNotEmpty}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

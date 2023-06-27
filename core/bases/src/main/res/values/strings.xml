@@ -27,5 +27,11 @@
     <string name="retry">retry</string>
     <string name="item_deleted">Item Deleted</string>
     <string name="undo">UNDO</string>
+    <string name="duplicate_entry">Duplicate entry: The Media you tried to add already exists.</string>
+    <string name="some_thing_error">something went wrong</string>
+    <string name="added_successfully">added successfully</string>
+    <string name="new_list_was_added_successfully">New List Was Added Successfully</string>
+    <string name="rating_was_added_successfully">rating was added successfully 🥰</string>
+    <string name="something_went_wrong_please_try_again_later">Something Went Wrong 🤔\nPlease Try Again Later.</string>
 
 </resources>

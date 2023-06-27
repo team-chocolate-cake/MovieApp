@@ -3,6 +3,7 @@ package com.chocolatecake.viewmodel.tv_details
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.PeopleEntity
 import com.chocolatecake.entities.ReviewEntity
 import com.chocolatecake.entities.SeasonEntity
@@ -54,8 +55,10 @@ class TvDetailsViewModel @Inject constructor(
     private val addToFavouriteUseCase: AddToFavouriteUseCase,
     private val addToWatchList: AddToWatchList,
     private val checkIsLoginedOrNotUseCase: CheckIsLoginedOrNotUseCase,
+    private val stringsRes: StringsRes,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TvDetailsUiState, TvDetailsUiEvent>(TvDetailsUiState()), TvDetailsListeners {
+
     private val tvShowId =
         savedStateHandle.get<Int>("tvShowId") ?: 44217
 
@@ -63,14 +66,13 @@ class TvDetailsViewModel @Inject constructor(
         getData()
     }
 
-
     private fun getData() {
         _state.update { it.copy(isLogined = checkIsLoginedOrNotUseCase()) }
+        getTvRecommendations()
         getYoutubeDetails()
         getTvShowInfo()
         getTvShowCast()
         getTvSeasons()
-        getTvRecommendations()
         getTvReviews()
     }
 
@@ -106,7 +108,6 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
     }
-
     //endregion
 
     //region youtube
@@ -116,7 +117,7 @@ class TvDetailsViewModel @Inject constructor(
             call = { getTvShowYoutubeDetailsUseCase(tvShowId) },
             onSuccess = ::onYoutubeDetailsSuccess,
             onError = {
-                Log.i("err", "the error $it")
+                sendEvent(TvDetailsUiEvent.ShowSnackBar(stringsRes.someThingError))
             }
         )
     }
@@ -141,7 +142,6 @@ class TvDetailsViewModel @Inject constructor(
         )
     }
 
-
     private fun onTvDetailsCastSuccess(castEntity: List<PeopleEntity>) {
         updateLoading(false)
         val item = TvDetailsCastUiMapper().map(castEntity)
@@ -151,17 +151,16 @@ class TvDetailsViewModel @Inject constructor(
             )
         }
     }
-
     //endregion
 
     fun addToFavourite() {
         tryToExecute(
             call = { addToFavouriteUseCase(tvShowId, "tv") },
             onSuccess = {
-                sendEvent(TvDetailsUiEvent.OnFavourite("added successfully"))
+                sendEvent(TvDetailsUiEvent.OnFavourite(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(TvDetailsUiEvent.OnFavourite("something went wrong"))
+                sendEvent(TvDetailsUiEvent.OnFavourite(stringsRes.someThingError))
             }
         )
     }
@@ -170,10 +169,10 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { addToWatchList(tvShowId, "tv") },
             onSuccess = {
-                sendEvent(TvDetailsUiEvent.OnWatchList("added successfully"))
+                sendEvent(TvDetailsUiEvent.OnWatchList(stringsRes.addSuccessfully))
             },
             onError = {
-                sendEvent(TvDetailsUiEvent.OnWatchList("something went wrong"))
+                sendEvent(TvDetailsUiEvent.OnWatchList(stringsRes.someThingError))
             }
         )
     }
@@ -206,7 +205,6 @@ class TvDetailsViewModel @Inject constructor(
         )
     }
 
-
     private fun onTvShowRecommendationsSuccess(recommendations: List<TvShowEntity>) {
         updateLoading(false)
         val item = tvShowUiMapper.map(recommendations)
@@ -228,20 +226,18 @@ class TvDetailsViewModel @Inject constructor(
 
     }
 
-
     fun onRatingSubmit() {
         tryToExecute(
             call = { tvShowUseCase(_state.value.userRating.toDouble(), tvShowId) },
             onSuccess = ::onRatingSuccess,
             onError = {
-                Log.i("Click", "${_state.value.userRating.toDouble()}")
-                sendEvent(TvDetailsUiEvent.ApplyRating("Something Went Wrong 🤔\nPlease Try Again Later."))
+                sendEvent(TvDetailsUiEvent.ApplyRating(stringsRes.someThingErrorWhenAddRating))
             }
         )
     }
 
     private fun onRatingSuccess(statusEntity: StatusEntity) {
-        sendEvent(TvDetailsUiEvent.ApplyRating("rating was added successfully 🥰"))
+        sendEvent(TvDetailsUiEvent.ApplyRating(stringsRes.ratingAddSuccessFully))
         val item = TvRatingUiMapper().map(statusEntity)
         _state.update {
             it.copy(
@@ -278,7 +274,7 @@ class TvDetailsViewModel @Inject constructor(
             call = { getUserListsUseCase() },
             onSuccess = ::onGetUserListsUseCase,
             onError = {
-                Log.i("lists", "something went wrong $it")
+                sendEvent(TvDetailsUiEvent.ShowSnackBar(stringsRes.someThingError))
             }
         )
     }
@@ -290,7 +286,6 @@ class TvDetailsViewModel @Inject constructor(
                 userLists = item.userLists
             )
         }
-        Log.i("lists", "user lists => ${state.value.userLists}")
     }
 
     fun onDone(listsId: List<Int>) {
@@ -299,7 +294,7 @@ class TvDetailsViewModel @Inject constructor(
                 call = { addToUserListUseCase(id, tvShowId) },
                 onSuccess = ::onDoneSuccess,
                 onError = {
-                    Log.i("chip", "something went wrong")
+                    Log.i("chip", stringsRes.someThingError)
                 }
             )
         }
@@ -315,7 +310,7 @@ class TvDetailsViewModel @Inject constructor(
             call = { createUserListUseCase(listName) },
             onSuccess = ::onCreateUserNewList,
             onError = {
-                sendEvent(TvDetailsUiEvent.onCreateNewList("something went wrong"))
+                sendEvent(TvDetailsUiEvent.onCreateNewList(stringsRes.someThingError))
             }
         )
     }
@@ -364,7 +359,6 @@ class TvDetailsViewModel @Inject constructor(
                 userSelectedLists = updatedList
             )
         }
-        Log.i("chip", "selected lists => ${state.value.userSelectedLists}")
     }
 
     fun onBack() {
@@ -393,4 +387,3 @@ class TvDetailsViewModel @Inject constructor(
     }
     //endregion
 }
-

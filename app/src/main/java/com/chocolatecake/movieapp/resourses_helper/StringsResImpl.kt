@@ -18,6 +18,18 @@ class StringsResImpl @Inject constructor(
 
     override val usernameIsRequired: String = getString(R.string.username_is_required)
 
+    override val duplicateEntity: String = getString(R.string.duplicate_entry)
+
+    override val someThingError: String = getString(R.string.some_thing_error)
+
+    override val addSuccessfully: String = getString(R.string.added_successfully)
+
+    override val newListAddSuccessFully: String = getString(R.string.new_list_was_added_successfully)
+
+    override val ratingAddSuccessFully: String = getString(R.string.rating_was_added_successfully)
+
+    override val someThingErrorWhenAddRating: String = getString(R.string.something_went_wrong_please_try_again_later)
+
 
     private fun getString(@StringRes stringsRes: Int): String {
         return context.getString(stringsRes)

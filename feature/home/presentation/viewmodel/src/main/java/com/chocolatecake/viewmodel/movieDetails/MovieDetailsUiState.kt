@@ -18,7 +18,10 @@ data class MovieDetailsUiState(
     val userRating: Float = 0f,
     val userLists: List<UserListUi> = emptyList(),
     val userSelectedLists: List<Int> = emptyList()
-)
+){
+    val isFailure: Boolean get() =
+        onErrors.isNotEmpty()
+}
 
 
 data class UpperUiState(
@@ -28,7 +31,7 @@ data class UpperUiState(
     val title: String = "",
     val overview: String = "",
     val voteAverage: Float = 0f,
-    val videos: List<String> = emptyList(),
+    val videoKey: String = "",
     val isLogined: Boolean = false,
 )
 
