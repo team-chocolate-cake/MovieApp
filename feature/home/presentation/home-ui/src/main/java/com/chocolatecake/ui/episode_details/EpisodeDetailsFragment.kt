@@ -60,7 +60,11 @@ class EpisodeDetailsFragment :
     }
 
     private fun navigateToCastDetails(itemId: Int) {
-        EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(itemId)
+        findNavController().navigate(
+            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(
+                itemId
+            )
+        )
     }
 
     private fun showBottomSheet() {
