@@ -29,35 +29,44 @@ class EpisodeDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collectLatest {
-                binding.item = it
-            }
-        }
-
         binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
     }
 
+    override fun onEvent(event: EpisodeDetailsUiEvent) {
+        when (event) {
+            is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
+            is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
+            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
+            is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
+            is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen(event.videoKey)
+        }
+    }
+
+    private fun navigateToPlayFullScreen(videoKey: String) {
+        findNavController().navigate(
+            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToTrailerFragment(
+                videoKey
+            )
+        )
+    }
+
+    override fun onApplyRateBottomSheet() {
+        viewModel.setRating()
+    }
+
+    override fun updateRatingValue(rate: Float) {
+        viewModel.updateRatingState(rate)
+    }
+
     private fun setAdapter() {
         collectLatest { peopleAdapter.setItems(viewModel.state.value.cast) }
         binding.recyclerViewPeople.adapter = peopleAdapter
-        binding.recyclerViewPeople.smoothScrollToPosition(0)
-    }
-
-    override fun onEvent(event: EpisodeDetailsUiEvent) {
-        when (event) {
-            is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
-            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
-            is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
-            is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
-        }
     }
 
     private fun navigateToBack() {
         findNavController().popBackStack()
-        Toast.makeText(requireActivity(), "back button clicked", Toast.LENGTH_SHORT).show()
     }
 
     private fun navigateToCastDetails(itemId: Int) {
@@ -72,13 +81,5 @@ class EpisodeDetailsFragment :
         val bottomSheet = EpisodeRateBottomSheet()
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
-    }
-
-    override fun onApplyRateBottomSheet() {
-        viewModel.setRating()
-    }
-
-    override fun updateRatingValue(rate: Float) {
-        viewModel.updateRatingState(rate)
     }
 }

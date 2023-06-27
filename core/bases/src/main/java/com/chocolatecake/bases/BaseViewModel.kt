@@ -53,6 +53,7 @@ abstract class BaseViewModel<STATE, EVENT>(initialState: STATE) : ViewModel() {
     protected fun sendEvent(event: EVENT) {
         viewModelScope.launch { _event.emit(event) }
     }
+
     protected fun <INPUT, OUTPUT> executeEpisodeDetails(
         call: suspend () -> INPUT,
         onSuccess: (OUTPUT) -> Unit,
@@ -68,5 +69,4 @@ abstract class BaseViewModel<STATE, EVENT>(initialState: STATE) : ViewModel() {
             }
         }
     }
-
 }

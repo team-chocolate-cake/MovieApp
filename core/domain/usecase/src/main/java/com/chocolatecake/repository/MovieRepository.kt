@@ -138,7 +138,6 @@ interface MovieRepository {
         value: Float
     ): RatingEpisodeDetailsStatusEntity
 
-
     fun isLoginedOrNot(): Boolean
 
 

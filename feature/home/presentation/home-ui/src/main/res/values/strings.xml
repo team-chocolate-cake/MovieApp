@@ -37,7 +37,10 @@
     <string name="apply">Apply</string>
     <string name="share_your_love_for_this_episode">Share your love for this Episode!</string>
     <string name="rating_description">Help us by rating the episode with stars based on your satisfaction level!</string>
-    <string name="try_again">try again :(</string>
+    <string name="try_again">try again 🤔</string>
+    <string name="trailer">Trailer</string>
+    <string name="play_icon">Play Icon</string>
+    <string name="play_full_screen">Play Full Screen</string>
     <string name="movie">Movie</string>
     <string name="tv_show">Tv Show</string>
     <string name="my_rated">My Rated</string>

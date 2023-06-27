@@ -24,16 +24,17 @@ fun <T> View.hideWhenNoProductionCode(productionCode:String){
         this.visibility = View.VISIBLE
     }
 }
-@BindingAdapter("textMaxChars")
-fun TextView.setTextMaxChars(text: CharSequence?) {
-    if (text != null && text.length > 10) {
-        this.text = text.subSequence(0, 10)
-    } else {
-        this.text = text
+
+@BindingAdapter(value = ["app:hideWhenNoResultText"])
+fun <T> View.hideWhenNoResultText(text:String){
+    if (text.isEmpty()){
+        this.visibility = View.GONE
+    }else{
+        this.visibility = View.VISIBLE
     }
 }
 
-@BindingAdapter("app:refreshing")
+@BindingAdapter("app:setRefreshing")
 fun setRefreshing(view: SwipeRefreshLayout, refreshing: Boolean) {
     view.isRefreshing = refreshing
 }

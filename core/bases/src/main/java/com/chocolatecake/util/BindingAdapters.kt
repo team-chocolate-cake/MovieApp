@@ -164,21 +164,14 @@ fun <T> View.showWhenNoResult(list: List<T>?) {
     }
 }
 
-@BindingAdapter(value = ["app:hideWhenLoading"])
-fun View.hideWhenLoading(isLoading: Boolean?) {
-    visibility = if (isLoading == true) {
-        View.INVISIBLE
-    } else {
-        View.VISIBLE
-    }
-}
 
 @BindingAdapter("app:showWhenError")
 fun <T> View.showWhenError(list: List<T>?) {
-    if (list?.isNotEmpty() == true) {
-        this.visibility = View.VISIBLE
-    } else {
+    if (list?.isEmpty() == true) {
         this.visibility = View.GONE
+
+    } else {
+        this.visibility = View.VISIBLE
     }
 }
 
@@ -216,7 +209,23 @@ fun SwitchCompat.toggleUiMode(uiModeManager: UiModeManager) {
 
 @BindingAdapter("app:hideWhenError")
 fun <T> View.hideWhenError(list: List<T>?) {
-    if (list?.isNotEmpty() == true) {
+    if (list?.isEmpty() == true) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
+
+@BindingAdapter("app:hideWhenRefresh")
+fun <T> View.hideWhenRefresh(isRefresh: Boolean?) = if (isRefresh == true) {
+    this.visibility = View.GONE
+} else {
+    this.visibility = View.VISIBLE
+}
+
+@BindingAdapter("app:hideWhenLoading")
+fun <T> View.hideWhenLoading(isLoading: Boolean?) {
+    if (isLoading == true) {
         this.visibility = View.GONE
     } else {
         this.visibility = View.VISIBLE
