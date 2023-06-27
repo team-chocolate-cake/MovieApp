@@ -8,8 +8,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.viewmodel.common.AnswerListener
 import com.chocolatecake.viewmodel.common.model.GameUiState
@@ -49,15 +47,6 @@ fun LinearLayout.createHearts(heartCount: Int) {
     val inflater = LayoutInflater.from(context)
     repeat(heartCount) {
         addView(inflater.inflate(R.layout.item_heart, this, false))
-    }
-}
-
-@BindingAdapter("app:spanWhenLevel")
-fun RecyclerView.spanWhenLevel(level: Int) {
-    val layoutManager = layoutManager as? GridLayoutManager
-    layoutManager?.spanCount = when (level) {
-        1, 2 -> 3
-        else -> 4
     }
 }
 

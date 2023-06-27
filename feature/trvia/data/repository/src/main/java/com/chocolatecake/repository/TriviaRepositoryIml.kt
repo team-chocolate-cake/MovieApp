@@ -122,22 +122,16 @@ class TriviaRepositoryIml @Inject constructor(
 
     override suspend fun getBoard(level: Int): BoardEntity {
         val size = when (level) {
-            1 -> 9
-            2 -> 12
+            1 -> 12
+            2 -> 16
             else -> 20
         }
-        val movies = movieRepository.getPopularMoviesFromRemote().shuffled().take(size - 1)
-        val choice = movies.random()
-        val modifiedMovies = (movies + choice).shuffled()
-        val pairOfCorrectPositions = Pair(
-            modifiedMovies.indexOf(choice),
-            modifiedMovies.lastIndexOf(choice)
-        )
+        val movies = movieRepository.getPopularMovies().take(size / 2)
         val itemsEntity =
-            modifiedMovies.mapIndexed { position, item ->
+            (movies + movies).shuffled().mapIndexed { position, item ->
                 BoardEntity.ItemBoardEntity(item.imageUrl, position)
             }
-        return BoardEntity(itemsEntity, pairOfCorrectPositions)
+        return BoardEntity(itemsEntity)
     }
     /// endregion
 
