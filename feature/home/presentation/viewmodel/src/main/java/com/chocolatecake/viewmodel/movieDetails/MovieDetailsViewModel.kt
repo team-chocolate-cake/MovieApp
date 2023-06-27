@@ -22,8 +22,6 @@ import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.ChipListener
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
-import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
-import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.movieDetails.mapper.CastUiStateMapper
 import com.chocolatecake.viewmodel.movieDetails.mapper.RecommendedUiStateMapper
 import com.chocolatecake.viewmodel.movieDetails.mapper.ReviewDetailsUiStateMapper
@@ -64,6 +62,7 @@ class MovieDetailsViewModel @Inject constructor(
     init {
         _state.update { it.copy(isLoading = true, isLogined = checkIsLoginedOrNotUseCase()) }
         if (movieId != null) {
+            _state.update { it.copy(id = movieId) }
             getMovieDetails(movieId)
         } else {
             val errors = _state.value.onErrors.toMutableList()
@@ -83,7 +82,6 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
-        errors.add(th.message.toString())
         when (th) {
             is NoNetworkThrowable -> errors.add("noNetwork")
             is UnauthorizedThrowable -> errors.add("noNetwork")
@@ -101,7 +99,8 @@ class MovieDetailsViewModel @Inject constructor(
                 reviewUiState = reviewsUiStateMapper.map(movieDetails.reviewEntity.reviews),
                 castUiState = castUiStateMapper.map(movieDetails.credits.cast),
                 reviewsDetails = reviewDetailsUiStateMapper.map(movieDetails),
-                isLoading = false
+                isLoading = false,
+                onErrors = emptyList()
             )
         }
         viewModelScope.launch(Dispatchers.IO) {
