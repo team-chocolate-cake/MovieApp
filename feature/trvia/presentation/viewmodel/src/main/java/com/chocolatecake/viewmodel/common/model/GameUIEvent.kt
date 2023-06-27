@@ -5,4 +5,5 @@ sealed interface GameUIEvent {
     object NavigateToLoserScreen: GameUIEvent
     object ShowTimeOut : GameUIEvent
     data class ShowSnackbar(val message: String): GameUIEvent
+    data class ShowBuyHeartDialog(val numberOfPoints:Int):GameUIEvent
 }
