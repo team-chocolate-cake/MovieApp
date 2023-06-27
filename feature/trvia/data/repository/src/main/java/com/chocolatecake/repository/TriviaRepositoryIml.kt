@@ -126,7 +126,7 @@ class TriviaRepositoryIml @Inject constructor(
             2 -> 16
             else -> 20
         }
-        val movies = movieRepository.getPopularMovies().take(size / 2)
+        val movies = movieRepository.getPopularMoviesFromRemote().take(size / 2)
         val itemsEntity =
             (movies + movies).shuffled().mapIndexed { position, item ->
                 BoardEntity.ItemBoardEntity(item.imageUrl, position)

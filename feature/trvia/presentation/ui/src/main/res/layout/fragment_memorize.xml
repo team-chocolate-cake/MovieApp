@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="@+id/text_view_timer"
             app:layout_constraintStart_toStartOf="@+id/text_view_timer"
             app:layout_constraintTop_toTopOf="parent"
-            app:max="30"
+            app:max="@{viewModel.state.initialCounter}"
             app:progress="@{viewModel.state.countDownTimer}"
             app:progressBackgroundColor="@color/background"
             app:progressBarRounded="true"
