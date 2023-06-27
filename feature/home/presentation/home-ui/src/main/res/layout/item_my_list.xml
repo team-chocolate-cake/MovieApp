@@ -12,6 +12,11 @@
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.myList.MyListListener" />
+
+
+            <variable
+                name="viewModel"
+                type="com.chocolatecake.viewmodel.myList.MyListViewModel" />
     </data>
 
 
@@ -35,34 +40,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/spacing_small_8dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 android:paddingTop="@dimen/spacing_custom_12dp">
 
-                <TextView
-                    android:id="@+id/text_view_season_title"
-                    style="@style/TextStyle.BodyLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@{item.name}"
-                    android:textColor="@color/on_background_87"
-                    tools:text="My Favourite" />
 
-                <TextView
-                    android:id="@+id/text_view_description"
-                    style="@style/TextStyle.BodySmall"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_tiny_4dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{String.valueOf(item.itemCount)+` items`}"
-                    android:textColor="@color/on_background_60"
-                    app:layout_constraintEnd_toEndOf="@id/text_view_season_title"
-                    app:layout_constraintStart_toStartOf="@id/text_view_season_title"
-                    app:layout_constraintTop_toBottomOf="@id/text_view_season_title"
-                    tools:text="9 item" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_season_title"
+                        style="@style/TextStyle.BodyLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:text="@{item.name}"
+                        android:textColor="@color/on_background_87"
+                        tools:text="My Favourite" />
+
+                    <TextView
+                        android:id="@+id/text_view_description"
+                        style="@style/TextStyle.BodySmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_tiny_4dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{String.valueOf(item.itemCount)+` items`}"
+                        android:textColor="@color/on_background_60"
+                        tools:text="9 item" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/text_view_delete_list"
+                        style="@style/TextStyle.BodySmall"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/card"
+                        android:onClick="@{()-> listener.onClickDelete(item.id)}"
+                        android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                        android:paddingVertical="@dimen/spacing_medium_16dp"
+                        android:text="@string/delete"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/on_background_87" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
 
@@ -78,8 +113,7 @@
                     android:layout_marginEnd="@dimen/spacing_tiny_2dp"
                     android:layout_weight="2.5"
                     android:scaleType="centerCrop"
-
-                    app:imageUrl="@{item.posterPath[0]}"
+                    app:imageUri="@{item.posterPath[0]}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -88,7 +122,7 @@
                     android:layout_marginEnd="@dimen/spacing_tiny_2dp"
                     android:layout_weight="2"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{item.posterPath[1]}"
+                    app:imageUri="@{item.posterPath[1]}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <com.google.android.material.imageview.ShapeableImageView
@@ -96,7 +130,7 @@
                     android:layout_height="@dimen/height_image"
                     android:layout_weight="1.5"
                     android:scaleType="centerCrop"
-                    app:imageUrl="@{item.posterPath[2]}"
+                    app:imageUri="@{item.posterPath[2]}"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
             </LinearLayout>

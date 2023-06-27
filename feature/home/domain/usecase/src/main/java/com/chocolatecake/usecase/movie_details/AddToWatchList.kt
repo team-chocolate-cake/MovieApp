@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddToWatchList @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    suspend operator fun invoke(movieId:Int,mediaType:String): StatusEntity {
-        return movieRepository.addWatchlist(movieId,mediaType,true)
+    suspend operator fun invoke(movieId:Int,mediaType:String, isWatchlist: Boolean=true): StatusEntity {
+        return movieRepository.addWatchlist(movieId,mediaType,isWatchlist)
     }
 }

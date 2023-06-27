@@ -19,6 +19,7 @@
                 android:elevation="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize">
+
                 <ImageButton
                     android:id="@+id/backButton"
                     android:layout_width="24dp"
@@ -29,6 +30,7 @@
                     android:scaleType="centerCrop"
                     android:onClick="@{()->viewModel.onClickBackButton()}"
                     android:src="@drawable/arrow_left" />
+
             </androidx.appcompat.widget.Toolbar>
 
 
@@ -47,21 +49,22 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="My List"
+                    android:text="@string/my_list_title"
                     android:layout_marginEnd="@dimen/spacing_small_8dp"
                     android:textColor="@color/on_background_87"/>
 
                 <Button
                     android:id="@+id/button_login"
+                    style="@style/TextStyle.TitleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button_background"
+                    android:onClick="@{() -> viewModel.onClickNewList()}"
                     android:paddingHorizontal="@dimen/spacing_medium_16dp"
                     android:paddingVertical="@dimen/spacing_small_8dp"
-                    android:background="@drawable/button_background"
-                    android:text="New List"
-                    android:onClick="@{() -> viewModel.onClickNewList()}"
-                    style="@style/TextStyle.TitleSmall"
-                    android:textColor="@color/on_primary"/>
+                    android:text="@string/new_list_button"
+                    android:textColor="@color/on_primary"
+                    app:isVisible="@{!viewModel.state.isFailure}" />
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,9 +75,10 @@
                     android:id="@+id/recycler_view_my_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/spacing_small_8dp"
+                    android:paddingTop="@dimen/spacing_small_8dp"
                     android:clipToPadding="false"
                     android:paddingBottom="@dimen/spacing_medium_16dp"
+                    app:isVisible="@{!viewModel.state.isFailure &amp;&amp; (!viewModel.state.loading)  }"
                     app:items="@{viewModel.state.movieList}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -88,24 +92,50 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="@string/no_items_have"
-                    app:isVisible="@{(!viewModel.state.loading) &amp;&amp;  (viewModel.state.movieList.size()==0)}"
+                    app:isVisible="@{(!viewModel.state.loading) &amp;&amp;  (viewModel.state.movieList.size()==0) &amp;&amp; (!viewModel.state.isFailure)}"
                     app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
                     app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
                     app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_empty" />
-
 
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/lottie_animation_view_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:isVisible="@{(!viewModel.state.loading)  &amp;&amp;  (viewModel.state.movieList.size()==0)}"
+                    app:isVisible="@{(!viewModel.state.loading)  &amp;&amp;  (viewModel.state.movieList.size()==0)  &amp;&amp; (!viewModel.state.isFailure)}"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/no_item_have" />
+
+
+                <include
+                    android:id="@+id/lottie_animation_view_no_network"
+                    layout="@layout/layout_no_connection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:isVisibleOrGone="@{viewModel.state.isFailure &amp;&amp; (!viewModel.state.loading) }" />
+
+                <TextView
+                    android:id="@+id/text_view_try_again"
+                    style="@style/TextStyle.TitleMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/spacing_medium_16dp"
+                    android:text="@string/try_again"
+                    android:onClick="@{() -> viewModel.getData()}"
+                    android:textColor="@color/on_background_60"
+                    app:isVisibleOrGone="@{viewModel.state.isFailure &amp;&amp; (!viewModel.state.loading) }"
+                    app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_no_network"
+                    app:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
+                    app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"

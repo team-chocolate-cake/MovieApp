@@ -1,5 +1,4 @@
-package com.chocolatecake.repository.showmore
-
+package com.chocolatecake.repository.mappers.domain.showmore
 import com.chocolatecake.entities.MovieEntity
 import com.chocolatecake.local.database.MovieDao
 import com.chocolatecake.remote.service.MovieService
