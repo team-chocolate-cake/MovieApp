@@ -12,5 +12,5 @@ data class MovieUiState(
     val dateWatched: Date?
 ){
     val rate: Double
-        get() = (rating * 100.0).toInt() / 100.0
+        get() = (rating * 10.0).toInt() / 10.0
 }

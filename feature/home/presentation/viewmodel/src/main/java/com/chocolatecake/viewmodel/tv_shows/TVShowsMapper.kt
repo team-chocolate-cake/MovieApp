@@ -6,12 +6,12 @@ import com.chocolatecake.mapper.Mapper
 import javax.inject.Inject
 
 class TVShowsMapper @Inject constructor() :
-    Mapper<TVShowsEntity?, TVShowsUI> {
-    override fun map(input: TVShowsEntity?): TVShowsUI {
+    Mapper<TVShowsEntity, TVShowsUI> {
+    override fun map(input: TVShowsEntity): TVShowsUI {
         return TVShowsUI(
-            tvId = input?.id,
-            imageUrl = input?.imageUrl,
-            rate = input?.rate
+            tvId = input.id,
+            imageUrl = input.imageUrl,
+            rate = input.rate
         )
     }
 }

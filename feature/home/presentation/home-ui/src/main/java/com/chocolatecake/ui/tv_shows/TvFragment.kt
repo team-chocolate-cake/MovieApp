@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.tvShow
+package com.chocolatecake.ui.tv_shows
 
 import android.os.Bundle
 import android.view.View
@@ -29,7 +29,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        handleMultiClickChip()
+        doNothingWhenTheSameChipIsReselected()
     }
 
     private fun setAdapter() {
@@ -65,10 +65,15 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
             is TVShowsInteraction.ShowPopularTVShowsResult -> showPopularResult()
             is TVShowsInteraction.NavigateToTVShowDetails -> navigateToTv(event.tvId)
             is TVShowsInteraction.ShowSnackBar -> showSnackBar(event.messages)
+            is TVShowsInteraction.ScrollToTopRecycler -> scrollToTopScreen()
         }
     }
 
     private fun showOnTheAirResult() = viewModel.getOnTheAirTVShows()
+    private fun scrollToTopScreen() {
+        binding.recyclerViewTvShows.scrollToPosition(0)
+    }
+
     private fun showAiringTodayResult() = viewModel.getAiringTodayTVShows()
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
@@ -76,11 +81,12 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
         findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
     }
 
-    private fun handleMultiClickChip() {
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val chip = group.findViewById<Chip>(checkedId)
-            if (chip?.isChecked == true) {
-                // Do nothing when the same chip is reselected
+    private fun doNothingWhenTheSameChipIsReselected() {
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId.first())
+            chip.let {
+                group.forEach { itemChip -> itemChip.isClickable = true }
+                chip.isClickable = false
             }
         }
     }

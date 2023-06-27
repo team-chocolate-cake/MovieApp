@@ -2,10 +2,8 @@ package com.chocolatecake.viewmodel.watch_history
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
-import com.chocolatecake.entities.MovieInWatchHistoryEntity
 import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.GetAllWatchHistoryMoviesUseCase
-import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.MediaListener
 import com.chocolatecake.viewmodel.watch_history.mappers.MovieDomainMapper
@@ -21,7 +19,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,20 +68,22 @@ class WatchHistoryViewModel @Inject constructor(
     }
 
     @OptIn(FlowPreview::class)
-    private fun initSearchCallBacks() = viewModelScope.launch {
-        var oldValue = ""
-        state.debounce(600)
-            .filter { oldValue != state.value.searchInput }
-            .collect {
-                onSearchInputChanged(it.searchInput)
-                oldValue = state.value.searchInput
-            }
+    private fun initSearchCallBacks() {
+        var oldValue = state.value.searchInput
+        viewModelScope.launch {
+            state.debounce(600)
+                .filter { oldValue != state.value.searchInput }
+                .collect {
+                    onSearchInputChanged(it.searchInput)
+                    oldValue = state.value.searchInput
+                }
+        }
     }
 
-    private suspend fun onSearchInputChanged(newSearchInput: String) {
-        _state.update { it.copy(searchInput = newSearchInput, isLoading = true) }
+    fun onSearchInputChanged(newSearchInput: CharSequence) {
+        _state.update { it.copy(searchInput = newSearchInput.toString(), isLoading = true) }
         viewModelScope.launch {
-            tryToSearchInMovies(newSearchInput)
+            tryToSearchInMovies(newSearchInput.toString())
         }
     }
 
@@ -273,4 +272,7 @@ class WatchHistoryViewModel @Inject constructor(
         }
     }
 
+    fun onClickBack(){
+        sendEvent(WatchHistoryUiEvent.OnClickBack)
+    }
 }

@@ -10,12 +10,97 @@
             type="com.chocolatecake.viewmodel.watch_history.WatchHistoryViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/watchHistoryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout_details"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:contentScrim="@color/card"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_extra_extra_giant_56dp" />
+
+                    <EditText
+                        android:id="@+id/edittext_search"
+                        style="@style/TextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
+                        android:layout_margin="@dimen/spacing_medium_16dp"
+                        android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
+                        android:afterTextChanged="@{(query)-> viewModel.onSearchInputChanged(query)}"
+                        android:background="@drawable/edittext_background"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="@dimen/spacing_small_8dp"
+                        android:drawableTint="@color/on_background_60"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                        android:text="@{viewModel.state.searchInput}"
+                        android:textAppearance="@style/TextStyle.LabelSmall"
+                        android:textColor="@color/on_background_87"
+                        android:textColorHint="@color/on_background_60"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:elevation="2dp"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <ImageButton
+                        android:id="@+id/backButton"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@null"
+                        android:onClick="@{()->viewModel.onClickBack()}"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/arrow_left" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/spacing_medium_16dp"
+                        android:text="Watch History"
+                        android:textAppearance="@style/TextStyle.BodyMedium"
+                        android:textColor="@color/on_background_87"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/imageView" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/watch_history_recycler_view"
@@ -25,12 +110,14 @@
             android:paddingBottom="@dimen/spacing_medium_16dp"
             app:items="@{viewModel.state.movies}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/watch_history_recycler_view_card" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation_view_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             app:isVisible="@{(!viewModel.state.loading) &amp;&amp; (viewModel.state.movies.size() &lt;= 1)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,11 +131,12 @@
         <TextView
             android:id="@+id/textview_no_items_found"
             style="@style/TextStyle.TitleMedium"
-            android:textColor="@color/on_background_60"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/no_items_found"
+            android:textColor="@color/on_background_60"
             app:isVisible="@{(!viewModel.state.loading) &amp;&amp; (viewModel.state.movies.size() &lt;= 1)}"
             app:layout_constraintEnd_toEndOf="@id/lottie_animation_view_empty"
             app:layout_constraintStart_toStartOf="@id/lottie_animation_view_empty"
@@ -58,6 +146,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:indeterminateTint="@color/primary"
             app:isVisible="@{viewModel.state.isLoading}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -66,5 +155,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="gone" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

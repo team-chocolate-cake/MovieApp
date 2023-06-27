@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.tvShow
+package com.chocolatecake.ui.tv_shows
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
