@@ -23,6 +23,8 @@ import com.chocolatecake.entities.myList.ListCreatedEntity
 import com.chocolatecake.entities.myList.ListEntity
 import com.chocolatecake.entities.myList.ListMovieEntity
 import com.chocolatecake.entities.myList.WatchlistRequestEntity
+import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
+import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
 import com.chocolatecake.local.PreferenceStorage
 import com.chocolatecake.local.database.MovieDao
@@ -79,6 +81,8 @@ import com.chocolatecake.repository.mappers.domain.myList.DomainMovieMapper
 import com.chocolatecake.repository.mappers.domain.myList.DomainWatchlistMapper
 import com.chocolatecake.repository.mappers.remote.RemoteFavoriteBodyMapper
 import com.chocolatecake.repository.mappers.remote.WatchlistRequestMapper
+import com.chocolatecake.repository.my_rated.RatedMoviesPagingSource
+import com.chocolatecake.repository.my_rated.RatedTvShowPagingSource
 import com.chocolatecake.repository.showmore.PopularMoviesShowMorePagingSource
 import com.chocolatecake.repository.showmore.TopRatedShowMorePagingSource
 import com.chocolatecake.repository.showmore.TrendingShowMorePagingSource
@@ -92,6 +96,8 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
     private val movieDao: MovieDao,
+    private val ratedMoviesPagingSource: RatedMoviesPagingSource,
+    private val ratedTvShowPagingSource: RatedTvShowPagingSource,
     private val airingTodayTvShowsPagingSource: AiringTodayTVShowsPagingSource,
     private val topRatedTvShowsPagingSource: TopRatedTVShowsPagingSource,
     private val onTheAirTVShowsPagingSource: OnTheAirTVShowsPagingSource,
@@ -724,4 +730,21 @@ class MovieRepositoryImpl @Inject constructor(
     override fun isLoginedOrNot(): Boolean {
         return if (preferenceStorage.sessionId == null || preferenceStorage.sessionId == "") false else true
     }
+
+
+    /// region myRated
+    override suspend fun getRatedMovies(): Pager<Int, MyRatedMovieEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { ratedMoviesPagingSource }
+        )
+    }
+
+    override suspend fun getRatedTvShows(): Pager<Int, MyRatedTvShowEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { ratedTvShowPagingSource }
+        )
+    }
+    /// endregion
 }
