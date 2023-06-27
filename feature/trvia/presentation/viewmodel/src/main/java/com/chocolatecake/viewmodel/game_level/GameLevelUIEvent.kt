@@ -1,7 +1,5 @@
 package com.chocolatecake.viewmodel.game_level
 
-import com.chocolatecake.viewmodel.game_type.GameTypeUIEvent
-
 sealed interface GameLevelUIEvent {
     object NavigateToPeopleGame : GameLevelUIEvent
     object NavigateToMovieGame : GameLevelUIEvent
@@ -11,4 +9,5 @@ sealed interface GameLevelUIEvent {
     object ResetLevels : GameLevelUIEvent
     object BackNavigate : GameLevelUIEvent
     data class ShowSnckbar(val message: String) : GameLevelUIEvent
+    object PlaySound : GameLevelUIEvent
 }

@@ -12,6 +12,9 @@ class SoundManager @Inject constructor(@ApplicationContext private val context: 
     var isSoundOn: Boolean = false
 
     fun playSound(soundResourceId: Int) {
+        if(isSoundOn){
+            return
+        }
         mediaPlayer = MediaPlayer.create(context, soundResourceId)
         mediaPlayer?.start()
         isSoundOn = true

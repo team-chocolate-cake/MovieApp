@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
+import com.chocolatecake.ui.sound_when_play.SoundManager
 import com.chocolatecake.ui.trivia.R
 import com.chocolatecake.ui.trivia.databinding.FragmentLevelGameBinding
 import com.chocolatecake.viewmodel.game_level.GameLevelUIEvent
@@ -12,6 +13,7 @@ import com.chocolatecake.viewmodel.game_level.GameLevelUIState
 import com.chocolatecake.viewmodel.game_level.GameLevelViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class GameLevelFragment :
@@ -19,6 +21,9 @@ class GameLevelFragment :
     override val layoutIdFragment: Int = R.layout.fragment_level_game
     override val viewModel by viewModels<GameLevelViewModel>()
     private lateinit var adapter: GameLevelAdapter
+
+    @Inject
+    lateinit var soundManager: SoundManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,10 +52,11 @@ class GameLevelFragment :
 
             GameLevelUIEvent.ResetLevels -> {
 
-              viewModel.resetGameLevelFromUser()
+                viewModel.resetGameLevelFromUser()
 
             }
-            GameLevelUIEvent.BackNavigate->{
+
+            GameLevelUIEvent.BackNavigate -> {
                 findNavController().popBackStack()
             }
 
@@ -59,6 +65,12 @@ class GameLevelFragment :
             }
 
             is GameLevelUIEvent.ShowSnckbar -> showSnackBar(event.message)
+            GameLevelUIEvent.PlaySound -> {
+                val volumeDrawableRes =
+                    if (soundManager.isSoundOn) R.drawable.ic_volume_mute else R.drawable.ic_volume_full
+                binding.imageButtonVolume.setImageResource(volumeDrawableRes)
+                soundManager.toggleSound(R.raw.sound)
+            }
         }
     }
 }

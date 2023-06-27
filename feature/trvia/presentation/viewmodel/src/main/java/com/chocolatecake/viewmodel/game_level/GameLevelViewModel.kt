@@ -103,4 +103,7 @@ class GameLevelViewModel @Inject constructor(
     fun onClickBackIcon() {
         sendEvent(GameLevelUIEvent.BackNavigate)
     }
+    fun toggleSound() {
+        sendEvent(GameLevelUIEvent.PlaySound)
+    }
 }
