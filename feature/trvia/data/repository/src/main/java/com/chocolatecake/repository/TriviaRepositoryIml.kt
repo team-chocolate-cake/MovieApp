@@ -138,7 +138,7 @@ class TriviaRepositoryIml @Inject constructor(
             .shuffled().take(4)
         val question = fakeQuestions.getTvQuestion(level)
         val selectedTvShow = tvShows.random()
-        val selectedGenre = movieRepository.getTvDetailsInfo(selectedTvShow.id).genres?.first() ?: "Action"
+        val selectedGenre = movieRepository.getTvDetailsInfo(selectedTvShow.id).genres.first().genreName
 
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> tvShows.map { it.title }
