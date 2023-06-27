@@ -97,7 +97,6 @@ class EpisodeDetailsViewModel @Inject constructor(
                 refreshing = false, onErrors = emptyList()
             )
         }
-
     }
 
     /// endregion
