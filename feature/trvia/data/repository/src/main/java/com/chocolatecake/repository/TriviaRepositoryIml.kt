@@ -87,7 +87,7 @@ class TriviaRepositoryIml @Inject constructor(
         val question = fakeQuestions.getMovieQuestion(level)
         val selectedMovie = movies.random()
         val selectedGenre =
-            movieRepository.getMoviesDetails(selectedMovie.id).genres?.first() ?: "Action"
+            movieRepository.getMoviesDetails(selectedMovie.id).genres.first() ?: "Action"
 
         val choices: List<String> = when (question.second) {
             FakeQuestions.Companion.QuestionType.NAME -> movies.map { it.title }

@@ -696,18 +696,6 @@ class MovieRepositoryImpl @Inject constructor(
         })
     }
 
-    override suspend fun getVideoEpisodeDetails(
-        seriesId: Int,
-        seasonNumber: Int,
-        episodeNumber: Int
-    ): YoutubeVideoDetailsEntity {
-        val response =
-        wrapApiCall {movieService.getEpisodeVideos(seriesId, seasonNumber, episodeNumber)}
-            .results?.first()?:YoutubeVideoDetailsRemoteDto()
-
-        return domainYoutubeDetailsMapper.map(response)
-    }
-
     /// endregion
 
     /// region trailer
