@@ -15,7 +15,7 @@ class UpperUiStateMapper @Inject constructor() :
             title = input.title,
             overview = input.overview,
             voteAverage = input.voteAverage.toFloat().div(2f),
-            videos = input.videos.results.map { it.key },
+            videoKey = input.videos.results.map { it.key }.first(),
         )
     }
 

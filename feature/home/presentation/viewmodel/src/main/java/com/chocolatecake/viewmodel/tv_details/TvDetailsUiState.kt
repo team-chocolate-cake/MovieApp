@@ -34,5 +34,5 @@ data class TvDetailsUiState(
         val genres: List<String> = emptyList(),
         val isLogined: Boolean = false,
         )
-    )
+
 }
