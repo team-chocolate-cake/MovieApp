@@ -21,6 +21,7 @@
             android:layout_height="@dimen/zero_height"
             android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingVertical="@dimen/spacing_medium_16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

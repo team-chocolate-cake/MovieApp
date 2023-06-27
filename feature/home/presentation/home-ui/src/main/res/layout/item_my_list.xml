@@ -28,7 +28,8 @@
         android:layout_marginTop="@dimen/spacing_medium_16dp"
         app:strokeWidth="0dp"
         android:layout_marginEnd="@dimen/spacing_medium_16dp"
-        android:background="@drawable/custom_my_listl_card_background"
+        android:backgroundTint="@color/card"
+        app:cardCornerRadius="@dimen/spacing_tiny_4dp"
         android:onClick="@{()-> listener.onClickItem(item.id , item.listType , item.name )}">
 
         <LinearLayout
@@ -47,8 +48,8 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
+                    android:layout_weight="9"
                     android:orientation="vertical">
 
                     <TextView
@@ -75,28 +76,18 @@
 
                 </LinearLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+
+                <TextView
+                    android:id="@+id/text_view_delete_list"
+                    style="@style/TextStyle.BodySmall"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/text_view_delete_list"
-                        style="@style/TextStyle.BodySmall"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:background="@color/card"
-                        android:onClick="@{()-> listener.onClickDelete(item.id, item.name)}"
-                        android:paddingHorizontal="@dimen/spacing_medium_16dp"
-                        android:paddingVertical="@dimen/spacing_medium_16dp"
-                        android:text="@string/delete"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/on_background_87" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:onClick="@{()-> listener.onClickDelete(item.id, item.name)}"
+                    android:paddingVertical="@dimen/spacing_medium_16dp"
+                    android:text="@string/delete"
+                    android:textColor="@color/on_background_87" />
 
             </LinearLayout>
 

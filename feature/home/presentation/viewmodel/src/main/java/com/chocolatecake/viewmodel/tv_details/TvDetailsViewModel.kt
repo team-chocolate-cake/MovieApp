@@ -116,9 +116,7 @@ class TvDetailsViewModel @Inject constructor(
         tryToExecute(
             call = { getTvShowYoutubeDetailsUseCase(tvShowId) },
             onSuccess = ::onYoutubeDetailsSuccess,
-            onError = {
-                sendEvent(TvDetailsUiEvent.ShowSnackBar(stringsRes.someThingError))
-            }
+            onError = {}
         )
     }
 
