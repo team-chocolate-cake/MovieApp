@@ -29,16 +29,14 @@ class EpisodeDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        binding.swipeToRefreshLayout.setOnRefreshListener {
-            viewModel.refresh()
-        }
+
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
         when (event) {
+            is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
             is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails()
-            is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
             is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen(event.videoKey)
         }

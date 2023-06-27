@@ -34,16 +34,7 @@ fun <T> View.hideWhenNoResultText(text:String){
     }
 }
 
-@BindingAdapter("textMaxChars")
-fun TextView.setTextMaxChars(text: CharSequence?) {
-    if (text != null && text.length > 10) {
-        this.text = text.subSequence(0, 10)
-    } else {
-        this.text = text
-    }
-}
-
-@BindingAdapter("app:refreshing")
+@BindingAdapter("app:setRefreshing")
 fun setRefreshing(view: SwipeRefreshLayout, refreshing: Boolean) {
     view.isRefreshing = refreshing
 }
