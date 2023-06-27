@@ -29,6 +29,7 @@ class EpisodeDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
+
     private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 454
     private val seasonNumber = savedStateHandle.get<Int>("seasonNumber") ?: 1
     private val episodeNumber = savedStateHandle.get<Int>("episodeNumber") ?: 1
@@ -86,7 +87,9 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
                 val mappedData = trailerUiMapper.map(inputData)
                 onSuccessEpisodeVideo(mappedData)
-            } catch (th: Throwable) { _state.update { it.copy(trailerKey = "") } }
+            } catch (th: Throwable) {
+                _state.update { it.copy(trailerKey = "") }
+            }
         }
     }
 
@@ -172,7 +175,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         sendEvent(EpisodeDetailsUiEvent.ClickToRate(episodeId))
     }
 
-    override fun clickToPlayFullScreen(videoKey:String) {
+    override fun clickToPlayFullScreen(videoKey: String) {
         sendEvent(EpisodeDetailsUiEvent.ClickToPlayFullScreen(videoKey))
     }
 
