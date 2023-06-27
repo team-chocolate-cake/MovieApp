@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -235,5 +236,16 @@ fun <T> View.hideWhenLoading(isLoading: Boolean?) {
 fun androidx.appcompat.widget.Toolbar.addNavigationListener(onClick: () -> Unit) {
     this.setNavigationOnClickListener {
         onClick()
+
     }
 }
+
+    @BindingAdapter("convertGenderText")
+    fun TextView.convertGenderText(gender: String?) {
+        text = when (gender) {
+            "1" -> context.getString(R.string.female)
+            "2" -> context.getString(R.string.male)
+            else -> ""
+        }.takeIf { gender != null } ?: ""
+
+    }

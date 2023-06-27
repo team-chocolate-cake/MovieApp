@@ -39,7 +39,14 @@ class TvDetailsFragment :
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
             is TvDetailsUiEvent.Rate -> showRateBottomSheet()
-            is TvDetailsUiEvent.OnPersonClick -> showSnackBar("Actor id ${event.id}")
+            is TvDetailsUiEvent.OnPersonClick -> {
+                findNavController()
+                    .navigate(
+                        TvDetailsFragmentDirections.actionTvDetailsFragmentToPeopleDetailsFragment(
+                            event.id
+                        )
+                    )
+            }
             is TvDetailsUiEvent.OnSeasonClick -> {
                 findNavController()
                     .navigate(
