@@ -57,7 +57,9 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
             }
 
             GameTypeUIEvent.NavigateToTvGame -> {
-                showSnackBar("Not Supported Yet !🤷‍")
+                 findNavController().navigate(TypeGameFragmentDirections.actionTypeGameFragmentToGameLevelFragment(
+                     GameType.TV_SHOW
+                 ))
             }
 
             is GameTypeUIEvent.ShowSnackbar -> {

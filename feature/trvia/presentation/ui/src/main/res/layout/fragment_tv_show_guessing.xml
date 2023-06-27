@@ -5,14 +5,21 @@
 
     <data>
         <variable
-            name="item"
-            type="com.chocolatecake.viewmodel.common.model.GameUiState" />
+            name="viewModel"
+            type="com.chocolatecake.viewmodel.tv_show_guessing.TvShowGuessingViewModel" />
     </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:fillViewport="true"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        app:isVisible="@{!viewModel.state.error}">
 
         <include
             android:id="@+id/include_item_header_game"
@@ -34,7 +41,8 @@
             android:layout_marginTop="@dimen/spacing_large_24dp"
             android:textColor="@color/on_background_87"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{item.question}"
+            android:text="@{viewModel.state.question}"
+            app:isVisible="@{!viewModel.state.loading}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/include_item_header_game"
             tools:text="What is the name of this TV Show?" />
@@ -42,11 +50,13 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_people"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.imageUrl}"
+            app:imageUrl="@{viewModel.state.imageUrl}"
             android:layout_marginTop="@dimen/spacing_large_24dp"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            app:isVisible="@{!viewModel.state.loading}"
+            app:layout_constraintDimensionRatio="4:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_questions"
@@ -60,9 +70,22 @@
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:isVisible="@{!viewModel.state.loading}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view_people" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary"
+            app:isVisible="@{viewModel.state.loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
