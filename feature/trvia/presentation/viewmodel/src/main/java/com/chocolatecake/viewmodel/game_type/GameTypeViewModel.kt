@@ -7,6 +7,9 @@ import javax.inject.Inject
 @HiltViewModel
 class GameTypeViewModel @Inject constructor() : BaseViewModel<Unit, GameTypeUIEvent>(Unit) {
 
+    fun toggleSound() {
+        sendEvent(GameTypeUIEvent.PlaySound)
+    }
     fun onClickGamePeople() {
         sendEvent(GameTypeUIEvent.NavigateToPeopleGame)
     }
@@ -22,7 +25,9 @@ class GameTypeViewModel @Inject constructor() : BaseViewModel<Unit, GameTypeUIEv
     fun onClickGameMemorize() {
         sendEvent(GameTypeUIEvent.NavigateToMemorizeBoard)
     }
-
+    fun onClickBackIcon() {
+        sendEvent(GameTypeUIEvent.BackNavigate)
+    }
     fun onClickCommingSoon() {
         sendEvent(GameTypeUIEvent.ShowSnackbar)
     }
