@@ -1,6 +1,7 @@
 package com.chocolatecake.viewmodel.movieDetails.mapper
 
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
+import com.chocolatecake.entities.movieDetails.MovieVideoEntity
 import com.chocolatecake.mapper.Mapper
 import com.chocolatecake.viewmodel.movieDetails.UpperUiState
 import javax.inject.Inject
@@ -15,8 +16,12 @@ class UpperUiStateMapper @Inject constructor() :
             title = input.title,
             overview = input.overview,
             voteAverage = input.voteAverage.toFloat().div(2f),
-            videoKey = input.videos.results.map { it.key }.first(),
+            videoKey = getTheFirstVideoKeyInList(input.videos.results),
         )
+    }
+
+    private fun getTheFirstVideoKeyInList(results: List<MovieVideoEntity>): String {
+        return if (results.isNotEmpty()) results.map { it.key }.first() else ""
     }
 
 }

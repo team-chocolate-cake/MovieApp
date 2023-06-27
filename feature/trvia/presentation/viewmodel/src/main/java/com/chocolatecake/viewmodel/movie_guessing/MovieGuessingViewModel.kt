@@ -7,7 +7,7 @@ import com.chocolatecake.usecase.game.UpdateUserPointsUseCase
 import com.chocolatecake.usecase.game.levelup.LevelUpMoviesUseCase
 import com.chocolatecake.usecase.game.questions.GetCurrentMovieQuestion
 import com.chocolatecake.usecase.game.questions.UpdateMoviesQuestionCountUseCase
-import com.chocolatecake.viewmodel.common.BaseTriviaQuestionGameViewModel
+import com.chocolatecake.viewmodel.common.BaseTriviaAnswerGameViewModel
 import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class MovieGuessingViewModel @Inject constructor(
     private val updateMovieQuestionCountUseCase: UpdateMoviesQuestionCountUseCase,
     override val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpMovieUseCase: LevelUpMoviesUseCase,
-) : BaseTriviaQuestionGameViewModel(state = GameUiState()) {
+) : BaseTriviaAnswerGameViewModel(state = GameUiState()) {
     override val gameType = GameType.MOVIE
     init {
         getData()

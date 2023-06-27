@@ -7,7 +7,7 @@ import com.chocolatecake.usecase.game.UpdateUserPointsUseCase
 import com.chocolatecake.usecase.game.levelup.LevelUpPeopleUseCase
 import com.chocolatecake.usecase.game.questions.GetCurrentPeopleQuestion
 import com.chocolatecake.usecase.game.questions.UpdatePeopleQuestionCountUseCase
-import com.chocolatecake.viewmodel.common.BaseTriviaQuestionGameViewModel
+import com.chocolatecake.viewmodel.common.BaseTriviaAnswerGameViewModel
 import com.chocolatecake.viewmodel.common.model.GameType
 import com.chocolatecake.viewmodel.common.model.GameUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +21,7 @@ class PeopleGuessingViewModel @Inject constructor(
     private val updatePeopleQuestionCountUseCase: UpdatePeopleQuestionCountUseCase,
     override val updateUserPointsUseCase: UpdateUserPointsUseCase,
     private val levelUpPeopleUseCase: LevelUpPeopleUseCase,
-) : BaseTriviaQuestionGameViewModel(state = GameUiState()) {
+) : BaseTriviaAnswerGameViewModel(state = GameUiState()) {
     override val gameType = GameType.PEOPLE
 
     init {

@@ -16,9 +16,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class BaseTriviaQuestionGameViewModel(
+abstract class BaseTriviaAnswerGameViewModel(
     state: GameUiState,
-) : BaseViewModel<GameUiState, GameUIEvent>(state), QuestionListener {
+) : BaseViewModel<GameUiState, GameUIEvent>(state), AnswerListener {
     abstract val gameType: GameType
     abstract val getCurrentUserUseCase: GetCurrentUserUseCase
     abstract val updateUserPointsUseCase: UpdateUserPointsUseCase
@@ -30,7 +30,7 @@ abstract class BaseTriviaQuestionGameViewModel(
     abstract suspend fun updateQuestionCountUseCase(questionCount: Int)
 
     protected fun getData() {
-        _state.update { it.copy(isLoading = true) }
+        _state.update { it.copy(isLoading = true, userAnswer = null) }
         getCurrentUser()
         getUserQuestion()
     }
@@ -57,7 +57,13 @@ abstract class BaseTriviaQuestionGameViewModel(
         _state.update {
             it.copy(
                 question = questionEntity.question,
-                answers = questionEntity.choices,
+                answers = questionEntity.choices.mapIndexed { index, answer ->
+                    GameUiState.AnswerUiState(
+                        index,
+                        answer,
+                        index == questionEntity.correctAnswerPosition
+                    )
+                },
                 correctAnswerPosition = questionEntity.correctAnswerPosition,
                 imageUrl = questionEntity.imageUrl,
                 isError = false,
@@ -96,12 +102,16 @@ abstract class BaseTriviaQuestionGameViewModel(
     //endregion
 
     //region handle question
-    override fun onClickQuestion(questionChosenPosition: Int) {
-        val isCorrectAnswer = _state.value.correctAnswerPosition == questionChosenPosition
-        when {
-            (!isCorrectAnswer && state.value.heartCount == 1) -> handleIncorrectAnswerWithNoHearts()
-            (!isCorrectAnswer) -> handleIncorrectAnswerWithRemainingHearts()
-            else -> onQuestionCompletion()
+    override fun onClickAnswer(answerPosition: Int) {
+        viewModelScope.launch {
+            _state.update { it.copy(userAnswer = answerPosition) }
+            delay(500)
+            val isCorrectAnswer = _state.value.correctAnswerPosition == answerPosition
+            when {
+                (!isCorrectAnswer && state.value.heartCount == 1) -> handleIncorrectAnswerWithNoHearts()
+                (!isCorrectAnswer) -> handleIncorrectAnswerWithRemainingHearts()
+                else -> onQuestionCompletion()
+            }
         }
     }
 
