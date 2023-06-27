@@ -6,7 +6,4 @@ interface EpisodeDetailsListener : BaseInteractionListener {
     fun clickToBack()
     fun clickToRate(episodeId: Int)
     fun clickToPlayFullScreen(videoKey: String)
-
-
-
 }
