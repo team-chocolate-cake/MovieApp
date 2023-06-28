@@ -26,7 +26,8 @@ The Movies App is an Android application built using Kotlin and follows the MVVM
 
 The app follows the recommended architecture from Google with dependency inversion, which includes the following components:
 
-![Architecture](https://github.com/team-chocolate-cake/MovieApp/assets/83292287/932f0c37-c624-487f-a8f2-13980080ede3)
+![Architecture](https://github.com/team-chocolate-cake/MovieApp/assets/83292287/c898ecb6-be4a-4c07-86e5-420b23ed4e5f)
+
 
 - **UI (Presentation)**: The UI layer handles the app's user interface and interactions. It includes activities, fragments, and XML layouts responsible for displaying information to the user and receiving user input.
 
