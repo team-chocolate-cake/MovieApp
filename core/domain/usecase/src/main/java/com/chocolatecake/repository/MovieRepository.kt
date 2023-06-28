@@ -104,7 +104,9 @@ interface MovieRepository {
 
 
     suspend fun getFavoriteMovies(): List<MovieEntity>
+    suspend fun getFavoriteTv(): List<MovieEntity>
     suspend fun getWatchlistMovies(): List<MovieEntity>
+    suspend fun getWatchlistTv(): List<MovieEntity>
 
     suspend fun addList(name:String): Boolean
 

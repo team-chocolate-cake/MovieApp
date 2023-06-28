@@ -255,9 +255,16 @@ interface MovieService {
     @GET("account/{account_id}/favorite/movies")
     suspend fun getFavoriteMovies(): Response<DataWrapperResponse<MovieRemoteDto>>
 
+    @GET("account/{account_id}/favorite/tv")
+    suspend fun getFavoriteTv(): Response<DataWrapperResponse<TvRemoteDto>>
+
+
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getWatchlist(): Response<DataWrapperResponse<MovieRemoteDto>>
+
+    @GET("account/{account_id}/watchlist/tv")
+    suspend fun getWatchlistTv(): Response<DataWrapperResponse<TvRemoteDto>>
 
 
     @POST("account/{account_id}/watchlist")

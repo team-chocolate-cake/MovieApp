@@ -2,11 +2,11 @@ package com.chocolatecake.entities
 
 data class TvEntity(
     val id: Int,
-    val name: String,
+    val title: String,
     val imageUrl: String,
     val genreEntities: List<GenreEntity>,
     val rate: Double,
-    val year: String
+    val year: String,
 ){
     fun convertGenreListToString(): String {
         return genreEntities.joinToString(" | ") { it.genreName }

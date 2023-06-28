@@ -10,7 +10,7 @@ class TvUiMapper @Inject constructor()  : Mapper<TvEntity, MovieHorizontalUIStat
         return MovieHorizontalUIState(
             id = input.id,
             rate = input.rate,
-            title = input.name,
+            title = input.title,
             imageUrl = input.imageUrl,
             year = input.extractYearFromDate(),
             genres = input.convertGenreListToString()
