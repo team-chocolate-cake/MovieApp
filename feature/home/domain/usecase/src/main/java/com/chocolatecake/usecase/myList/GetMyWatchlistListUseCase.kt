@@ -8,6 +8,6 @@ class GetMyWatchlistListUseCase @Inject constructor(
     private val movieRepository: MovieRepository,
 ) {
     suspend operator fun invoke(): List<MovieEntity> {
-        return  movieRepository.getWatchlistMovies()
+        return  movieRepository.getWatchlistMovies() + movieRepository.getWatchlistTv()
     }
 }
