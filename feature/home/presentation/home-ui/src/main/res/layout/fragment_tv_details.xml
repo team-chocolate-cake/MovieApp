@@ -69,7 +69,7 @@
                         <LinearLayout
                             android:layout_weight="1"
                             android:layout_gravity="start|center_vertical"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <ImageButton
@@ -92,6 +92,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_tiny_4dp"
                                 android:ellipsize="end"
+                                android:paddingStart="4dp"
                                 android:maxLines="1"
                                 android:text="@{viewModel.state.info.name}"
                                 android:textColor="@color/on_background_87"
