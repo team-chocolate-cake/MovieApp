@@ -44,7 +44,7 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) :
         binding.materialButtonCreate.setOnClickListener {
             val listName = binding.textInputEditTextListName.text.toString().trim()
             if (listName == "") {
-                showSnackBar("Entry failed")
+                showSnackBar(getString(R.string.empty_fail))
             } else {
                 createButton.onClickCreate(listName)
             }
