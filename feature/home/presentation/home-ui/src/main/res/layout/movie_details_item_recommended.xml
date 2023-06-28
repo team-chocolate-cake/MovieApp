@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="listener"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsListener" />
+
         <variable
             name="item"
             type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.Recommended" />
@@ -15,36 +17,35 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        >
+        android:paddingBottom="16dp">
+
         <TextView
             android:id="@+id/textViewRecommended"
             style="@style/TextStyle.TitleMedium"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingBottom="8dp"
-            android:text="Recommended"
+            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:text="@string/recommended"
             android:textColor="@color/on_background_87"
-            android:textStyle="bold"
+            app:isVisibleOrGone="@{!item.list.empty}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:isVisibleOrGone="@{!item.list.empty}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:id="@+id/recyclerViewRecommened"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:items="@{item.list}"
-            android:paddingHorizontal="@dimen/spacing_custom_12dp"
             android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_custom_12dp"
+            app:isVisibleOrGone="@{!item.list.empty}"
+            app:items="@{item.list}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewRecommended"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_media_vertical"
-            app:isVisibleOrGone="@{!item.list.empty}"/>
+            tools:listitem="@layout/item_media_vertical" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,33 +54,31 @@
             android:layout_marginTop="8dp"
             android:weightSum="10"
             app:isVisibleOrGone="@{!item.emptyReviews}"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewRecommened"
-            >
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewRecommened">
 
             <TextView
                 android:id="@+id/text_view_comments_section_title"
+                style="@style/TextStyle.TitleMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="10"
-                tools:text="totals comments"
                 android:text="@{Integer.toString(item.totalReviews)+` Comments`}"
-                style="@style/TextStyle.TitleMedium"
                 android:textColor="@color/on_background_87"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"
-                />
+                tools:text="totals comments" />
+
             <TextView
                 android:id="@+id/text_view_comments_show_more"
+                style="@style/TextStyle.TitleMedium"
                 android:layout_width="wrap_content"
-                android:gravity="right"
                 android:layout_height="wrap_content"
-                app:isVisibleOrGone="@{item.totalPages}"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
                 android:onClick="@{()->listener.onClickShowMore(item.movieInt)}"
                 android:text="Show more"
-                style="@style/TextStyle.TitleMedium"
                 android:textColor="@color/primary"
-                android:layout_marginTop="8dp"
-                />
+                app:isVisibleOrGone="@{item.totalPages}" />
         </LinearLayout>
 
 
