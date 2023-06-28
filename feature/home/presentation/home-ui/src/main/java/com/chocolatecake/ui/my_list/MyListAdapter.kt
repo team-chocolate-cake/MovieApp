@@ -5,8 +5,6 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.viewmodel.myList.MyListListener
 import com.chocolatecake.viewmodel.myList.MyListUiState
 
-
-
 class  MyListAdapter(items: List<MyListUiState>, listener: MyListListener):
     BaseAdapter<MyListUiState>(items, listener) {
 

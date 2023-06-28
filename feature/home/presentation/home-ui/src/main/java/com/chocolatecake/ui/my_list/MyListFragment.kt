@@ -16,12 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyListFragment :
-    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>() ,CreateListener{
+    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>(), CreateListener {
 
     override val layoutIdFragment: Int = R.layout.fragment_my_list
     override val viewModel: MyListViewModel by viewModels()
     private lateinit var createListBottomSheet: CreateListBottomSheetFragment
-
 
     private lateinit var myListAdapter: MyListAdapter
 
@@ -56,14 +55,17 @@ class MyListFragment :
                 showBottomSheet()
             }
 
-            is MyListUiEvent.OnClickBack ->{
+            is MyListUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
 
             is MyListUiEvent.ShowSnackBar -> {
                 showSnackBar(event.message)
             }
-            is MyListUiEvent.OnCreateNewList -> { showSnackBar(event.message) }
+
+            is MyListUiEvent.OnCreateNewList -> {
+                showSnackBar(event.message)
+            }
 
             is MyListUiEvent.ShowConfirmDeleteDialog -> {
                 showDialog(event.listId, event.listName)
@@ -78,7 +80,7 @@ class MyListFragment :
             .setPositiveButton("Confirm") { _, _ ->
                 viewModel.deleteList(listId)
             }
-            .setNeutralButton("Cancel"){ dialog, _ ->
+            .setNeutralButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -94,11 +96,6 @@ class MyListFragment :
         viewModel.onCreateList(listName)
         createListBottomSheet.dismiss()
     }
-
-//    override fun failCreated(message: String) {
-//        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
-//        showSnackBar(message)
-//    }
 
     override fun onResume() {
         super.onResume()
