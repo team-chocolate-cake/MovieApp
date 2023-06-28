@@ -41,8 +41,8 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) :
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.materialButtonCreate.setOnClickListener {
-            if (binding.textInputEditTextListName.text == null || binding.textInputEditTextListName.text.toString() == "") {
-                createButton.failCreated("The filed is empty")
+            if (binding.textInputEditTextListName.text == null || binding.textInputEditTextListName.text.toString().trim() == "") {
+                createButton.failCreated("Entry failed")
                 dismiss()
             } else {
                 createButton.onClickCreate(binding.textInputEditTextListName.text.toString())
