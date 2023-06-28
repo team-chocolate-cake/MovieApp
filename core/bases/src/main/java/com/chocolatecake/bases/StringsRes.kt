@@ -19,4 +19,6 @@ interface StringsRes {
     val topRatedMovies:String
     val trending:String
     val timeOut:String
+    val today:String
+    val yesterday:String
 }

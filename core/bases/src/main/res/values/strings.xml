@@ -43,4 +43,6 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="time_out">Time Out !</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

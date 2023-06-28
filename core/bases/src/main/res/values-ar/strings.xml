@@ -44,4 +44,6 @@
     <string name="medium">متوسط</string>
     <string name="hard">صعب</string>
     <string name="time_out">انتهت المهلة !</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">البارحة</string>
 </resources>

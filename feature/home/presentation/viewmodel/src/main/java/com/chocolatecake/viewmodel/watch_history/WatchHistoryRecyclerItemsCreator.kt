@@ -1,10 +1,11 @@
 package com.chocolatecake.viewmodel.watch_history
 
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.viewmodel.watch_history.state_managment.MovieUiState
 import java.util.Date
 import kotlin.math.abs
 
-class WatchHistoryRecyclerItemsCreator() {
+class WatchHistoryRecyclerItemsCreator(private val stringsRes: StringsRes) {
     private val currentDate = Date()
 
     fun createItems(moviesInDataBase: List<MovieUiState>): List<WatchHistoryRecyclerItem> {
@@ -34,8 +35,8 @@ class WatchHistoryRecyclerItemsCreator() {
     private fun composeTitle(movieWatchedDate: Date?): String {
         if (movieWatchedDate == null) return ""
         return when (currentDate.getDaysDifferenceCount(movieWatchedDate)) {
-            THE_SAME_DAY -> "Today"
-            YESTERDAY -> "Yesterday"
+            THE_SAME_DAY -> stringsRes.today
+            YESTERDAY -> stringsRes.yesterday
             else -> movieWatchedDate.toString().substring(0..9)
         }
     }
