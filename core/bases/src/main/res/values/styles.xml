@@ -3,6 +3,7 @@
 
     <!--region Font-->
     <style name="TextStyle">
+        <item name="android:textDirection">locale</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
