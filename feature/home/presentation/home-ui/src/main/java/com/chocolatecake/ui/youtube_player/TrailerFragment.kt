@@ -10,9 +10,6 @@ import com.chocolatecake.ui.home.databinding.FragmentTrailerBinding
 import com.chocolatecake.viewmodel.youtube_trailer.TrailerInteraction
 import com.chocolatecake.viewmodel.youtube_trailer.TrailerViewModel
 import com.chocolatecake.viewmodel.youtube_trailer.YoutubePlayerUIState
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
