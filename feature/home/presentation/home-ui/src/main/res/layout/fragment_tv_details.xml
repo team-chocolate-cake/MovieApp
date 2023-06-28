@@ -61,44 +61,57 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                    <ImageButton
-                        android:id="@+id/backButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@null"
-                        android:onClick="@{()->viewModel.onBack()}"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_left"
-                        app:tint="@color/on_background_60" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_gravity="start|center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <ImageButton
+                                android:id="@+id/backButton"
+                                android:layout_width="24dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="16dp"
+                                android:background="@null"
+                                android:onClick="@{()->viewModel.onBack()}"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/arrow_left"
+                                app:tint="@color/on_background_60" />
 
-                    <TextView
-                        android:id="@+id/text_view_tool_bar_name"
-                        style="@style/TextStyle.TitleMedium"
-                        android:layout_width="250dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_tiny_4dp"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{viewModel.state.info.name}"
-                        android:textColor="@color/on_background_87"
-                        android:visibility="invisible" />
+                            <TextView
+                                android:id="@+id/text_view_tool_bar_name"
+                                style="@style/TextStyle.TitleMedium"
+                                android:layout_width="250dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/spacing_tiny_4dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{viewModel.state.info.name}"
+                                android:textColor="@color/on_background_87"
+                                android:visibility="invisible" />
+                        </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/saveButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@null"
-                        app:tint="@color/on_background_60"
-                        android:backgroundTint="@color/on_primary"
-                        android:onClick="@{()-> viewModel.onClickSaveButton()}"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_save_unpressed"
-                        app:isVisible="@{!viewModel.state.isLoading &amp; viewModel.state.logined}" />
+                        <ImageButton
+                            android:id="@+id/saveButton"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:background="@null"
+                            app:tint="@color/on_background_60"
+                            android:backgroundTint="@color/on_primary"
+                            android:onClick="@{()-> viewModel.onClickSaveButton()}"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_save_unpressed"
+                            app:isVisible="@{!viewModel.state.isLoading &amp; viewModel.state.logined}" />
+                    </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
