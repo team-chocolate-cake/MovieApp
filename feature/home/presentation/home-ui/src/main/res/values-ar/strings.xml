@@ -55,4 +55,7 @@
     <string name="list_name">اسم القائمة</string>
     <string name="close">اغلاق</string>
     <string name="save_to">الحفظ قي</string>
+    <string name="are_you_sure_that_you_want_to_delete_1d">هل انت متأكد من حذف %1s ؟</string>
+    <string name="cancel">الغاء</string>
+    <string name="confirm">تأكيد</string>
 </resources>

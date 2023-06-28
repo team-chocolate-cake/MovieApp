@@ -42,4 +42,5 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="time_out">Time Out !</string>
 </resources>

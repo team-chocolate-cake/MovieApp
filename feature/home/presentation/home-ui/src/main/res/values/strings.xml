@@ -55,4 +55,7 @@
     <string name="list_name">List Name</string>
     <string name="close">Close</string>
     <string name="save_to">Save to</string>
+    <string name="are_you_sure_that_you_want_to_delete_1d">Are you sure that you want to delete %1s ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>
