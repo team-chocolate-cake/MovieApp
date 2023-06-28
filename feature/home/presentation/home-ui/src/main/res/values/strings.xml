@@ -31,6 +31,7 @@
     <string name="login_title">Lights, Camera, Action! Login to Personalize Your Movie Experience</string>
     <string name="login">Login</string>
     <string name="season">Season</string>
+    <string name="number_of_movies">Number of Movies: </string>
     <string name="episode">Episode</string>
     <string name="rate_the_episode">ٌRate The Episode</string>
     <string name="actors">Actors</string>
