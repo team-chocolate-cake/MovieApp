@@ -1,7 +1,6 @@
 package com.chocolatecake.ui.game_level
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -34,7 +33,6 @@ class GameLevelFragment :
         val volumeDrawableRes =
             if (soundManager.isSoundOn) {R.drawable.ic_volume_full} else {R.drawable.ic_volume_mute}
         binding.imageButtonVolume.setImageResource(volumeDrawableRes)
-        Log.e("TAG", "onViewCreated: ${soundManager.isSoundOn}", )
     }
 
     override fun onEvent(event: GameLevelUIEvent) {
