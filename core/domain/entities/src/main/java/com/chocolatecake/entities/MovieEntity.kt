@@ -6,5 +6,6 @@ data class MovieEntity(
     val imageUrl: String,
     val genreEntities: List<GenreEntity>,
     val rate: Double,
-    val year: String = ""
+    val year: String = "",
+    val mediaType: String = "movie",
 )

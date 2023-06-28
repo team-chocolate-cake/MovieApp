@@ -36,7 +36,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
             ProfileUiEvent.NavigateToFavoriteScreen -> {
                 findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
-                        listType = ListType.movies.name,
+                        listType = ListType.movie.name,
                         listId = 0,
                         listName = ListName.favorite.name,
                     )
@@ -46,7 +46,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
             ProfileUiEvent.NavigateToWatchlistScreen -> {
                 findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToMyListDetailsFragment(
-                        listType = ListType.movies.name,
+                        listType = ListType.movie.name,
                         listId = 0,
                         listName = ListName.watchlist.name,
                     )
