@@ -21,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
@@ -46,7 +47,9 @@ class SearchViewModel @Inject constructor(
     //region init
     init {
         viewModelScope.launch {
-            query.debounce(1000)
+            query.onEach {
+                _state.update { it.copy(isLoading = true) }
+            }.debounce(500)
                 .collect { onSearchInputChanged(it) }
         }
     }
@@ -54,7 +57,6 @@ class SearchViewModel @Inject constructor(
 
     //region search input
     private fun onSearchInputChanged(newQuery: String) {
-        _state.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
             saveSearchHistoryInLocal(newQuery)
             getSearchHistory(newQuery)
@@ -124,6 +126,7 @@ class SearchViewModel @Inject constructor(
                 mediaType = SearchUiState.SearchMedia.TV,
                 searchMediaResult = tv,
                 isSelectedPeople = false,
+//                selectedGenresId = _state.value.selectedGenresId,
                 isLoading = false,
                 error = null
             )
@@ -152,6 +155,7 @@ class SearchViewModel @Inject constructor(
                 mediaType = SearchUiState.SearchMedia.MOVIE,
                 searchMediaResult = mediaUIState,
                 isSelectedPeople = false,
+//                selectedGenresId = _state.value.selectedGenresId,
                 isLoading = false,
                 error = null,
             )
@@ -231,8 +235,12 @@ class SearchViewModel @Inject constructor(
 
     override fun showResultTv() {
         sendEvent(SearchUiEvent.ShowTvResult)
-        _state.update { it.copy(selectedGenresId = null,
-            mediaType = SearchUiState.SearchMedia.TV) }
+        _state.update {
+            it.copy(
+                selectedGenresId = null,
+                mediaType = SearchUiState.SearchMedia.TV
+            )
+        }
     }
 
     override fun showResultPeople() {
