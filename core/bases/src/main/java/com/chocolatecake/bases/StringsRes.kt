@@ -10,4 +10,12 @@ interface StringsRes {
     val newListAddSuccessFully: String
     val ratingAddSuccessFully: String
     val someThingErrorWhenAddRating: String
+    val easy:String
+    val medium:String
+    val hard:String
+    val watchlist:String
+    val favourite:String
+    val popularMovies:String
+    val topRatedMovies:String
+    val trending:String
 }
