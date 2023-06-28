@@ -15,6 +15,7 @@ data class EpisodeDetailsUiState(
     val trailerKey: String = "",
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
+    val isLoggedIn:Boolean=false
 ){
     val isFailure: Boolean get() =
         onErrors.isNotEmpty()
