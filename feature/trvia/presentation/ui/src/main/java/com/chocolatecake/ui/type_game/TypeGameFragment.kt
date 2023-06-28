@@ -68,7 +68,7 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
 
             GameTypeUIEvent.PlaySound -> {
                 val volumeDrawableRes =
-                    if (soundManager.isSoundOn) R.drawable.ic_volume_mute else R.drawable.ic_volume_full
+                    if (soundManager.isSoundOn) {R.drawable.ic_volume_mute} else {R.drawable.ic_volume_full}
                 binding.imageButtonVolume.setImageResource(volumeDrawableRes)
                 soundManager.toggleSound(R.raw.sound)
             }
