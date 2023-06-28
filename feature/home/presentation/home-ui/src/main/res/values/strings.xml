@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_items_found">No items found</string>
     <string name="no_items_have">No items have</string>
+    <string name="items">%s items</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="watchlist">Watchlist</string>
@@ -48,4 +49,10 @@
     <string name="my_list_title">My List</string>
     <string name="delete">Delete</string>
     <string name="biography">Biography</string>
+    <string name="add_list">+ Add List</string>
+    <string name="done">Done</string>
+    <string name="create_list">Create List</string>
+    <string name="list_name">List Name</string>
+    <string name="close">Close</string>
+    <string name="save_to">Save to</string>
 </resources>

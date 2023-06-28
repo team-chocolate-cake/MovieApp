@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="popcorn_puzzles">ألغاز الفشار</string>
+    <string name="details">تتحداك هذه اللعبة لحل ألغاز الذاكرة استنادًا إلى الأفلام والمسلسلات والبرامج التلفزيونية. مع أربعة مستويات للعبة، اغمر نفسك في عالم السينما واختبر خبرتك في الترفيه.</string>
+    <string name="choose_your_game">اختر لعبتك</string>
+    <string name="lets_start">لنبدأ</string>
+    <string name="reward_text">لقد حصلت على %1$d نقطة وفتحت المستوى %2$d</string>
+    <string name="go_to_next_level">الانتقال إلى المستوى التالي</string>
+    <string name="return_to_home">العودة إلى الصفحة الرئيسية</string>
+    <string name="question_count_text">%1$d / %2$d</string>
+    <string name="level_text">المستوى رقم %1$d</string>
+    <string name="congrats_text">تهانينا! %1$s</string>
+    <string name="answer_text_one">أ | %1$s</string>
+    <string name="answer_text_two">ب | %1$s</string>
+    <string name="answer_text_three">ج | %1$s</string>
+    <string name="answer_text_four">د | %1$s</string>
+    <string name="characters">الشخصيات</string>
+    <string name="memorize">تذكر</string>
+    <string name="comming_soon">قريباً</string>
+    <string name="time_out">انتهى الوقت! 😥</string>
+    <string name="game_level_caption">المستوى مقفل حاليًا. لفتحه، يجب عليك اجتياز المستوى الأخير %1$d</string>
+    <string name="pass_prev_level">يجب أن تجتاز المستوى السابق أولاً</string>
+    <string name="trivia_losing_meesage">لقد خسرت، مبتدئ\nقم بشراء ثلاث قلوب بقيمة %1d أو العب مرة أخرى</string>
+    <string name="trivai_lost_title">لقد خسرت GG</string>
+    <string name="trivia_cancel_game">إلغاء اللعبة</string>
+    <string name="trivai_buy_dialog">شراء</string>
+</resources>
