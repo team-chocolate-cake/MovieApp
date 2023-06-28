@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_giant_32dp"
                 android:gravity="center"
-                android:text="Create List"
+                android:text="@string/create_list"
                 android:textAppearance="@style/TextStyle.TitleMedium"
                 android:textColor="@color/on_background_87"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 android:id="@+id/text_view_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Close"
+                android:text="@string/close"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/primary"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_title"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large_24dp"
-                android:text="List Name"
+                android:text="@string/list_name"
                 android:textColor="@color/on_background_60"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_title" />
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_large_24dp"
-                android:text="Save to"
+                android:text="@string/save_to"
                 android:textAppearance="@style/TextStyle.TitleMedium"
                 android:textColor="@color/on_background_87"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +137,7 @@
                 android:id="@+id/text_view_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Done"
+                android:text="@string/done"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/primary"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_save_to"
@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:paddingVertical="8dp"
-                    android:text="+ Add List"
+                    android:text="@string/add_list"
                     android:textAppearance="@style/TextStyle.BodySmall" />
 
                 <com.google.android.material.chip.Chip
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:paddingVertical="8dp"
-                    android:text="Favourite"
+                    android:text="@string/favorite"
                     android:textAppearance="@style/TextStyle.BodySmall" />
 
                 <com.google.android.material.chip.Chip
@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:paddingVertical="8dp"
-                    android:text="Whatchlist"
+                    android:text="@string/watchlist"
                     android:textAppearance="@style/TextStyle.BodySmall" />
             </com.google.android.material.chip.ChipGroup>
             <!--endregion-->
