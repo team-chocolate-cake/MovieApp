@@ -4,6 +4,7 @@ package com.chocolatecake.viewmodel.my_list_details
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyListDetailsViewModel @Inject constructor(
+    private val stringsRes: StringsRes,
     private val getFavoriteUseCase: GetMyFavoriteListUseCase,
     private val getWatchlistUseCase: GetMyWatchlistListUseCase,
     private val getMovieListDetailsUseCase: GetMyListDetailsByListIdUseCase,
@@ -33,7 +35,11 @@ class MyListDetailsViewModel @Inject constructor(
 
     private val listType = savedStateHandle.get<String>("listType") ?: ""
     private val _listName = savedStateHandle.get<String>("listName") ?: ""
-    val listName = _listName
+    val listName = when (_listName) {
+        "watchlist" -> stringsRes.watchlist
+        "favorite" -> stringsRes.favourite
+        else -> ""
+    }
     private val listId = savedStateHandle.get<Int>("listId") ?: 0
 
     init {
@@ -41,7 +47,7 @@ class MyListDetailsViewModel @Inject constructor(
     }
 
     fun getData() {
-        when (listName) {
+        when (_listName) {
             ListName.favorite.name -> {
                 getAllFavorite()
             }
@@ -102,7 +108,7 @@ class MyListDetailsViewModel @Inject constructor(
                 isLoading = true,
             )
         }
-        when (listName) {
+        when (_listName) {
             ListName.favorite.name -> {
                 deleteFavorite(mediaId)
             }
@@ -111,7 +117,7 @@ class MyListDetailsViewModel @Inject constructor(
                 deleteWatchlist(mediaId)
             }
 
-            else-> {
+            else -> {
                 deleteMovieFromListDetails(mediaId)
             }
         }
@@ -120,7 +126,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun deleteFavorite(mediaId: Int) {
         tryToExecute(
             call = { deleteFavoriteUseCase(mediaId, "movie", false) },
-            onSuccess = ::onDeleteMediaSuccess ,
+            onSuccess = ::onDeleteMediaSuccess,
             onError = ::onError,
         )
     }
@@ -128,7 +134,7 @@ class MyListDetailsViewModel @Inject constructor(
     private fun deleteWatchlist(mediaId: Int) {
         tryToExecute(
             call = { deleteWatchlistUseCase(mediaId, "movie", false) },
-            onSuccess = ::onDeleteMediaSuccess ,
+            onSuccess = ::onDeleteMediaSuccess,
             onError = ::onError,
         )
     }
@@ -138,15 +144,15 @@ class MyListDetailsViewModel @Inject constructor(
             call = {
                 deleteMovieFromDetailsListUseCase(listId = listId, mediaId = mediaId)
             },
-            onSuccess =  ::onDeleteMediaSuccess ,
+            onSuccess = ::onDeleteMediaSuccess,
             onError = ::onError,
         )
     }
 
 
-    private fun onDeleteMediaSuccess(isDelete: StatusEntity ) {
+    private fun onDeleteMediaSuccess(isDelete: StatusEntity) {
         _state.update { it.copy(isLoading = false) }
-        when (listName) {
+        when (_listName) {
             ListName.favorite.name -> {
                 getAllFavorite()
             }
