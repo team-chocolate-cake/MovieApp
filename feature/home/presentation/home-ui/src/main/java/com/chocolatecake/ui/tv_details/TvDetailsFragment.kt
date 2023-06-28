@@ -38,7 +38,7 @@ class TvDetailsFragment :
 
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
-            is TvDetailsUiEvent.Rate -> showRateBottomSheet()
+            is TvDetailsUiEvent.Rate -> checkIsLoggedInOrNot()
             is TvDetailsUiEvent.OnPersonClick -> {
                 findNavController()
                     .navigate(
@@ -68,6 +68,15 @@ class TvDetailsFragment :
             is TvDetailsUiEvent.OnFavourite -> showSnackBar(event.message)
             is TvDetailsUiEvent.OnWatchList -> showSnackBar(event.message)
             is TvDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
+        }
+    }
+
+    private fun checkIsLoggedInOrNot() {
+        val isLoggedIn = viewModel.state.value.isLogined
+        if (isLoggedIn) {
+            showRateBottomSheet()
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode")
         }
     }
 
@@ -131,7 +140,7 @@ class TvDetailsFragment :
     //region collapse toolbar
     private fun collapseState() {
         var pos = 0
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
             binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val firstVisibleItemPosition = recyclerView.layoutManager as LinearLayoutManager

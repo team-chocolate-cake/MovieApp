@@ -38,18 +38,19 @@ class EpisodeDetailsFragment :
         when (event) {
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
             is EpisodeDetailsUiEvent.ClickToRate -> checkIsLoggedInOrNot()
-            is EpisodeDetailsUiEvent.ClickCast -> "" //navigateToCastDetails(event.itemId)
+            is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
             is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen(event.videoKey)
         }
     }
 
     private fun checkIsLoggedInOrNot() {
-       if(viewModel.state.value.isLoggedIn) {
-           showBottomSheet()
-       }else{
-           showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
-       }
+        val isLoggedIn = viewModel.state.value.isLoggedIn
+        if (isLoggedIn) {
+            showBottomSheet()
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
+        }
     }
 
     private fun navigateToPlayFullScreen(videoKey: String) {
@@ -77,13 +78,13 @@ class EpisodeDetailsFragment :
         findNavController().popBackStack()
     }
 
-//    private fun navigateToCastDetails(itemId: Int) {
-//        findNavController().navigate(
-//            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(
-//                itemId
-//            )
-//        )
-//    }
+    private fun navigateToCastDetails(itemId: Int) {
+        findNavController().navigate(
+            EpisodeDetailsFragmentDirections.actionEpisodeDetailsFragmentToPeopleDetailsFragment(
+                itemId
+            )
+        )
+    }
 
     private fun showBottomSheet() {
         val bottomSheet = EpisodeRateBottomSheet()

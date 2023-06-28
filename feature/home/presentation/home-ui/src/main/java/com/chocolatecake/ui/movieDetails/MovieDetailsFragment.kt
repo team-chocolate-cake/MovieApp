@@ -64,7 +64,7 @@ class MovieDetailsFragment :
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
-                binding.appBarLayout.setExpanded(true,true)
+                binding.appBarLayout.setExpanded(true, true)
             }
         }
     }
@@ -74,6 +74,7 @@ class MovieDetailsFragment :
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
+
             is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPeopleDetailsFragment(
@@ -81,12 +82,15 @@ class MovieDetailsFragment :
                     )
                 )
             }
+
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 navigateToTrailerVideo(event.videoKey)
             }
+
             is MovieDetailsUiEvent.RateMovie -> {
-                showRatingBottomSheet(event.movieId)
+                checkIsLoggedInOrNot(event.movieId)
             }
+
             is MovieDetailsUiEvent.NavigateToMovie -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(
@@ -94,10 +98,12 @@ class MovieDetailsFragment :
                     )
                 )
             }
+
             is MovieDetailsUiEvent.SaveToList -> showAddToListBottomSheet()
             is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
+
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is MovieDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
@@ -112,6 +118,15 @@ class MovieDetailsFragment :
             MovieDetailsFragmentDirections
                 .actionMovieDetailsFragmentToTrailerFragment(videoKey)
         )
+    }
+
+    private fun checkIsLoggedInOrNot(movieId: Int) {
+        val isLoggedIn = viewModel.state.value.isLogined
+        if (isLoggedIn) {
+            showRatingBottomSheet(movieId)
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
+        }
     }
 
     private fun showRatingBottomSheet(movieId: Int) {
