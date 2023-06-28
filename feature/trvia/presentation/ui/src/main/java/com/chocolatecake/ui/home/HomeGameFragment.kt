@@ -32,7 +32,7 @@ class HomeGameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        soundManager.stopSound()
         binding.buttonStart.setOnClickListener {
             findNavController().navigate(HomeGameFragmentDirections.actionHomeGameFragmentToTypeGameFragment())
             soundManager.playSound(R.raw.sound)
