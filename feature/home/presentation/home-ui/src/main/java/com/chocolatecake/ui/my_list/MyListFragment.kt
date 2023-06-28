@@ -11,6 +11,7 @@ import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -94,9 +95,10 @@ class MyListFragment :
         createListBottomSheet.dismiss()
     }
 
-    override fun failCreated(message: String) {
-        showSnackBar(message)
-    }
+//    override fun failCreated(message: String) {
+//        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+//        showSnackBar(message)
+//    }
 
     override fun onResume() {
         super.onResume()
