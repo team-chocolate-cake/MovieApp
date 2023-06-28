@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.game_level
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,10 @@ class GameLevelFragment :
         adapter = GameLevelAdapter(mutableListOf(), viewModel)
         binding.recyclerViewLevelGames.adapter = adapter
         collectLatest { viewModel.state.collectLatest { state -> adapter.setItems(state.gameLevel) } }
+        val volumeDrawableRes =
+            if (soundManager.isSoundOn) {R.drawable.ic_volume_full} else {R.drawable.ic_volume_mute}
+        binding.imageButtonVolume.setImageResource(volumeDrawableRes)
+        Log.e("TAG", "onViewCreated: ${soundManager.isSoundOn}", )
     }
 
     override fun onEvent(event: GameLevelUIEvent) {
@@ -66,10 +71,10 @@ class GameLevelFragment :
 
             is GameLevelUIEvent.ShowSnckbar -> showSnackBar(event.message)
             GameLevelUIEvent.PlaySound -> {
-                val volumeDrawableRes =
-                    if (soundManager.isSoundOn) R.drawable.ic_volume_mute else R.drawable.ic_volume_full
-                binding.imageButtonVolume.setImageResource(volumeDrawableRes)
                 soundManager.toggleSound(R.raw.sound)
+                val volumeDrawableRes =
+                    if (soundManager.isSoundOn) {R.drawable.ic_volume_full} else {R.drawable.ic_volume_mute}
+                binding.imageButtonVolume.setImageResource(volumeDrawableRes)
             }
         }
     }
