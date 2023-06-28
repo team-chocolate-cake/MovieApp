@@ -72,14 +72,14 @@ fun ImageView.loadImage(imageUrl: String?) {
 }
 
 @SuppressLint("ResourceAsColor")
-@BindingAdapter(value = ["app:imageUri", "app:imagePlaceholderColor"], requireAll = false)
-fun ImageView.loadImageWithPlaceholderColor(imageUri: String?, imagePlaceholderColor: String?) {
+@BindingAdapter(value = ["app:imageUri"], requireAll = false)
+fun ImageView.loadImageWithPlaceholderColor(imageUri: String?) {
     if (imageUri != null) {
         Glide.with(context)
             .load(imageUri)
             .into(this)
     } else {
-        this?.let {
+        this.let {
             this.setBackgroundColor(R.color.background)
         }
     }
