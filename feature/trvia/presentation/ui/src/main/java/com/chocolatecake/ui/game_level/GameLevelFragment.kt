@@ -30,6 +30,9 @@ class GameLevelFragment :
         adapter = GameLevelAdapter(mutableListOf(), viewModel)
         binding.recyclerViewLevelGames.adapter = adapter
         collectLatest { viewModel.state.collectLatest { state -> adapter.setItems(state.gameLevel) } }
+        val volumeDrawableRes =
+            if (soundManager.isSoundOn) {R.drawable.ic_volume_full} else {R.drawable.ic_volume_mute}
+        binding.imageButtonVolume.setImageResource(volumeDrawableRes)
     }
 
     override fun onEvent(event: GameLevelUIEvent) {
@@ -66,10 +69,10 @@ class GameLevelFragment :
 
             is GameLevelUIEvent.ShowSnckbar -> showSnackBar(event.message)
             GameLevelUIEvent.PlaySound -> {
-                val volumeDrawableRes =
-                    if (soundManager.isSoundOn) R.drawable.ic_volume_mute else R.drawable.ic_volume_full
-                binding.imageButtonVolume.setImageResource(volumeDrawableRes)
                 soundManager.toggleSound(R.raw.sound)
+                val volumeDrawableRes =
+                    if (soundManager.isSoundOn) {R.drawable.ic_volume_full} else {R.drawable.ic_volume_mute}
+                binding.imageButtonVolume.setImageResource(volumeDrawableRes)
             }
         }
     }

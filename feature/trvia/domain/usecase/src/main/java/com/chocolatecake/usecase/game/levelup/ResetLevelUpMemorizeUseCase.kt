@@ -11,10 +11,9 @@ class ResetLevelUpMemorizeUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Boolean {
         val oldUser = getCurrentUserUseCase()
-        if (oldUser.memorizeGameLevel == 1 && oldUser.numMoviesQuestionsPassed == 0) return false
+        if (oldUser.memorizeGameLevel == 1 ) return false
         val updatedUser = oldUser.copy(
             memorizeGameLevel = 1,
-            numMoviesQuestionsPassed = 0
         )
         triviaRepository.updateUser(updatedUser)
         return true
