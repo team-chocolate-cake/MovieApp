@@ -34,8 +34,8 @@ class MovieDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
         binding.toolbar.title = ""
+        (activity as AppCompatActivity?)!!.setSupportActionBar(binding.toolbar)
         setAdapter()
         collectChange()
         collapseState()
