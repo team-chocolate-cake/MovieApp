@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_tiny_4dp"
-        android:layout_marginVertical="@dimen/spacing_tiny_4dp"
+        android:layout_marginVertical="@dimen/spacing_small_8dp"
         android:onClick="@{() -> listener.onClickPeople(item.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -27,7 +27,7 @@
             android:layout_height="@dimen/zero_height"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
-            app:imageUrl="@{item.imageUrl}"
+            app:profileUrl="@{item.imageUrl}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,10 +38,11 @@
         <TextView
             android:id="@+id/text_view_name_people"
             style="@style/TextStyle.BodySmall"
-            android:layout_width="70dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_tiny_4dp"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
             android:text="@{item.name}"
             android:textColor="@color/on_background_87"
