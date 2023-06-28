@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class StringsResImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : StringsRes {
     override val theRequestFailed: String = getString(R.string.the_request_failed)
 
@@ -43,6 +43,8 @@ class StringsResImpl @Inject constructor(
     override val popularMovies: String = getString(R.string.popular)
     override val topRatedMovies: String = getString(R.string.top_rated)
     override val trending: String = getString(R.string.trending)
+
+    override val timeOut: String =getString(R.string.time_out)
 
     private fun getString(@StringRes stringsRes: Int): String {
         return context.getString(stringsRes)

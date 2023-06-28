@@ -314,7 +314,7 @@ class TvDetailsViewModel @Inject constructor(
     }
 
     private fun onCreateUserNewList(statusEntity: StatusEntity) {
-        sendEvent(TvDetailsUiEvent.onCreateNewList("New List Was Added Successfully"))
+        sendEvent(TvDetailsUiEvent.onCreateNewList(stringsRes.newListAddSuccessFully))
         getUserLists()
     }
     //endregion

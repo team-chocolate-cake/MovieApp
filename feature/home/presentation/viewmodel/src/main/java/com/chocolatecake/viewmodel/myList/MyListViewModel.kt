@@ -2,6 +2,7 @@ package com.chocolatecake.viewmodel.myList
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
 import com.chocolatecake.usecase.myList.CreateListUseCase
@@ -20,6 +21,7 @@ class MyListViewModel @Inject constructor(
     private val deleteListUseCase: DeleteListUseCase,
     private val myListUiMapper: MyListUiMapper,
     private val createList: CreateListUseCase,
+    private val stringsRes:StringsRes
 ) : BaseViewModel<MyListUiState, MyListUiEvent>(MyListUiState()), MyListListener {
 
     init {
@@ -75,7 +77,7 @@ class MyListViewModel @Inject constructor(
     }
 
     private fun onCreateUserNewListSuccess(item: Boolean) {
-        sendEvent(MyListUiEvent.ShowSnackBar("New List Was Added Successfully"))
+        sendEvent(MyListUiEvent.ShowSnackBar(stringsRes.newListAddSuccessFully))
         getData()
     }
 
@@ -107,13 +109,13 @@ class MyListViewModel @Inject constructor(
 
     private fun onError(throwable: Throwable) {
         if (throwable == NoNetworkThrowable()) {
-            showErrorWithSnackBar(throwable.message ?: "No Network Connection")
+            showErrorWithSnackBar(throwable.message ?: stringsRes.someThingErrorWhenAddRating)
         } else if (throwable == SocketTimeoutException()) {
-            showErrorWithSnackBar(throwable.message ?: "time out!")
+            showErrorWithSnackBar(throwable.message ?: stringsRes.timeOut)
         }
         _state.update {
             it.copy(
-                error = listOf(throwable.message ?: "No Network Connection"),
+                error = listOf(throwable.message ?: stringsRes.someThingErrorWhenAddRating),
                 isLoading = false,
                 isShowDelete = false
             )
