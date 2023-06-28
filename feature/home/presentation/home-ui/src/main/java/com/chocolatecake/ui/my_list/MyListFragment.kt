@@ -97,5 +97,10 @@ class MyListFragment :
     override fun failCreated(message: String) {
         showSnackBar(message)
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getData()
+    }
 }
 
