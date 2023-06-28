@@ -63,7 +63,7 @@ class TvShowGuessingFragment: BaseFragment<FragmentTvShowGuessingBinding, GameUi
             }
             .setPositiveButton(getString(R.string.trivai_buy_dialog)) { _, _ ->
                 viewModel.buyHearts(numberOfPoints)
-            }
+            }.setCancelable(false)
             .show()
     }
 }
