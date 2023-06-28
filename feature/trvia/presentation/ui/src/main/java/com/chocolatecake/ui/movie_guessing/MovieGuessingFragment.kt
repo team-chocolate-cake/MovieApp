@@ -63,6 +63,7 @@ class MovieGuessingFragment :
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.trivai_lost_title))
             .setMessage(getString(R.string.trivia_losing_meesage, numberOfPoints))
+            .setCancelable(false)
             .setNeutralButton(getString(R.string.trivia_cancel_game)) { _, _ ->
                 findNavController().navigate(MovieGuessingFragmentDirections.actionMovieGuessingFragmentToTypeGameFragment())
             }
