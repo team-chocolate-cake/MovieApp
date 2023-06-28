@@ -94,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_large_24dp"
-            android:text="@string/tv_shows"
+            android:text="@string/tv"
             android:textColor="@color/on_primary"
             app:layout_constraintBottom_toBottomOf="@+id/view_card_type_game_tv_shows"
             app:layout_constraintStart_toStartOf="@+id/view_card_type_game_tv_shows"
