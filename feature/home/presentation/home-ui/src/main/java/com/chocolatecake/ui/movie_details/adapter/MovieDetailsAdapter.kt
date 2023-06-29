@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails.adapter
+package com.chocolatecake.ui.movie_details.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -37,10 +37,19 @@ class EpisodeDetailsFragment :
     override fun onEvent(event: EpisodeDetailsUiEvent) {
         when (event) {
             is EpisodeDetailsUiEvent.ClickToBack -> navigateToBack()
-            is EpisodeDetailsUiEvent.ClickToRate -> showBottomSheet()
+            is EpisodeDetailsUiEvent.ClickToRate -> checkIsLoggedInOrNot()
             is EpisodeDetailsUiEvent.ClickCast -> navigateToCastDetails(event.itemId)
             is EpisodeDetailsUiEvent.SubmitRating -> showSnackBar(event.message)
             is EpisodeDetailsUiEvent.ClickToPlayFullScreen -> navigateToPlayFullScreen(event.videoKey)
+        }
+    }
+
+    private fun checkIsLoggedInOrNot() {
+        val isLoggedIn = viewModel.state.value.isLoggedIn
+        if (isLoggedIn) {
+            showBottomSheet()
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
         }
     }
 

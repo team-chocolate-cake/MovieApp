@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.Recommended" />
+            type="com.chocolatecake.ui.movie_details.adapter.MovieDetailsItem.Recommended" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

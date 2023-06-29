@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails.adapter
+package com.chocolatecake.ui.movie_details.adapter
 
 import com.chocolatecake.viewmodel.common.model.MediaVerticalUIState
 import com.chocolatecake.viewmodel.common.model.PeopleUIState

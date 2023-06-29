@@ -38,7 +38,7 @@ class TvDetailsFragment :
 
     override fun onEvent(event: TvDetailsUiEvent) {
         when (event) {
-            is TvDetailsUiEvent.Rate -> showRateBottomSheet()
+            is TvDetailsUiEvent.Rate -> checkIsLoggedInOrNot()
             is TvDetailsUiEvent.OnPersonClick -> {
                 findNavController()
                     .navigate(
@@ -71,6 +71,15 @@ class TvDetailsFragment :
         }
     }
 
+    private fun checkIsLoggedInOrNot() {
+        val isLoggedIn = viewModel.state.value.isLogined
+        if (isLoggedIn) {
+            showRateBottomSheet()
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this TV Show")
+        }
+    }
+
     private fun navigateToTrailerFragment(videoKey: String) {
         findNavController().navigate(
             TvDetailsFragmentDirections
@@ -100,7 +109,8 @@ class TvDetailsFragment :
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast, state.seasons.isNotEmpty()),
                 )
-                tvDetailsItems.addAll(state.seasons.map { TvDetailsItem.Season(it) }
+                tvDetailsItems.addAll(
+                    state.seasons.map { TvDetailsItem.Season(it) }
                         + TvDetailsItem.Recommended(state.recommended, state.reviews.isNotEmpty())
                         + state.reviews.map {
                     TvDetailsItem.Review(it)
@@ -131,7 +141,7 @@ class TvDetailsFragment :
     //region collapse toolbar
     private fun collapseState() {
         var pos = 0
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
             binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val firstVisibleItemPosition = recyclerView.layoutManager as LinearLayoutManager

@@ -70,7 +70,6 @@
             android:onClick="@{()-> rateListener.onRateButtonClick()}"
             android:text="@string/rate_this_tv_show"
             android:textColor="@color/primary"
-            app:isVisible="@{item.upperUiState.logined}"
             app:layout_constraintBottom_toBottomOf="@+id/rating"
             app:layout_constraintEnd_toEndOf="parent" />
 

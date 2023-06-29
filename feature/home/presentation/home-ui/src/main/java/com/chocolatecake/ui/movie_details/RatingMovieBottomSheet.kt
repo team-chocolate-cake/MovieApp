@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails
+package com.chocolatecake.ui.movie_details
 
 import android.os.Bundle
 import android.util.Log

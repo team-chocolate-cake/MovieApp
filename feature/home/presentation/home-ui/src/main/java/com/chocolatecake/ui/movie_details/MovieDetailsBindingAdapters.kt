@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails
+package com.chocolatecake.ui.movie_details
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable

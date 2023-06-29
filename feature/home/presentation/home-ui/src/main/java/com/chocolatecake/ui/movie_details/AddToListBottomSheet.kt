@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.chocolatecake.bases.BR
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MyListBottomSheetCreateListBinding
-import com.chocolatecake.ui.movieDetails.setGenreChips
+import com.chocolatecake.ui.movie_details.setGenreChips
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
