@@ -18,6 +18,7 @@ import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.abs
 
 
@@ -130,13 +131,19 @@ class MovieDetailsFragment :
 
     private fun collapseState() {
         var pos = 0
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
             binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val firstVisibleItemPosition = recyclerView.layoutManager as LinearLayoutManager
                     pos = firstVisibleItemPosition.findFirstVisibleItemPosition()
                 }
             })
+            collectLatest {
+                viewModel.state.collectLatest { state ->
+                    binding.nestedRecycler.isNestedScrollingEnabled =
+                        !(state.reviewUiState.isEmpty()&&state.recommendedUiState.isEmpty())
+                }
+            }
             binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                 when {
                     // Fully expanded state
@@ -147,6 +154,7 @@ class MovieDetailsFragment :
                     // Fully collapsed state
                     abs(verticalOffset) >= appBarLayout.totalScrollRange -> {
                         binding.textViewToolBarName.visibility = View.VISIBLE
+                        binding.nestedRecycler.isNestedScrollingEnabled = true
                     }
                     // In between expanded and collapsed states
                     else -> {
