@@ -145,6 +145,12 @@ class MovieDetailsFragment :
     }
 
     private fun collapseState() {
+        collectLatest {
+            viewModel.state.collectLatest { state ->
+                binding.nestedRecycler.isNestedScrollingEnabled =
+                    !(state.reviewUiState.isEmpty()&&state.recommendedUiState.isEmpty())
+            }
+        }
         var pos = 0
         findNavController().addOnDestinationChangedListener { _, _, _ ->
             binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -153,12 +159,6 @@ class MovieDetailsFragment :
                     pos = firstVisibleItemPosition.findFirstVisibleItemPosition()
                 }
             })
-            collectLatest {
-                viewModel.state.collectLatest { state ->
-                    binding.nestedRecycler.isNestedScrollingEnabled =
-                        !(state.reviewUiState.isEmpty()&&state.recommendedUiState.isEmpty())
-                }
-            }
             binding.appBarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
                 when {
                     // Fully expanded state
