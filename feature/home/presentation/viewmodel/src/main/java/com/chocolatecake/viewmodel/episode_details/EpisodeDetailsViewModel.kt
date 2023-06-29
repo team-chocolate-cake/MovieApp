@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
@@ -28,7 +29,8 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val trailerUiMapper: TrailerUiMapper,
     private val episodeVideoUseCase: GetEpisodeVideoUseCase,
     private val checkIsLoggedInOrNotUseCase: CheckIsLoginedOrNotUseCase,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val stringsRes: StringsRes
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
     private val seriesId = savedStateHandle.get<Int>("seriesId") ?: 454
@@ -123,11 +125,11 @@ class EpisodeDetailsViewModel @Inject constructor(
     }
 
     private fun onRatingSuccess(episodeRateSatusEntity: RatingEpisodeDetailsStatusEntity) {
-        sendEvent(EpisodeDetailsUiEvent.SubmitRating("rating was added successfully 🥰"))
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating(stringsRes.ratingAddSuccessFully))
     }
 
     private fun onRatingError(th: Throwable) {
-        sendEvent(EpisodeDetailsUiEvent.SubmitRating("Something Went Wrong 🤔\nPlease Try Again Later."))
+        sendEvent(EpisodeDetailsUiEvent.SubmitRating(stringsRes.someThingErrorWhenAddRating))
     }
 
     fun updateRatingState(rate: Float) {
@@ -155,8 +157,7 @@ class EpisodeDetailsViewModel @Inject constructor(
     ///  region error
 
     private fun onError(th: Throwable) {
-        val errorMessage = th.message ?: "No network connection"
-        Log.d("banan-error", "No network connection")
+        val errorMessage = th.message ?: stringsRes.someThingError
         _state.update {
             it.copy(
                 onErrors = listOf(errorMessage),

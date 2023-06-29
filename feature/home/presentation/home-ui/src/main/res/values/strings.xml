@@ -5,6 +5,7 @@
     <string name="items">%s items</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
+    <string name="your_not_loged_in_to_rate">You are not logged in 😢, please login to rate this Movie</string>
     <string name="watchlist">Watchlist</string>
     <string name="watch_history">Watch History</string>
     <string name="my_lists">My Lists</string>
@@ -36,6 +37,7 @@
     <string name="number_of_movies">Number of Movies: </string>
     <string name="episode">Episode</string>
     <string name="rate_the_episode">ٌRate The Episode</string>
+    <string name="rate_this_movie">ٌRate This Movie</string>
     <string name="actors">Actors</string>
     <string name="apply">Apply</string>
     <string name="share_your_love_for_this_episode">Share your love for this Episode!</string>
