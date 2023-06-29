@@ -19,7 +19,6 @@ import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
-import com.chocolatecake.entities.my_rated.MyRatedEpisodesEntity
 import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
