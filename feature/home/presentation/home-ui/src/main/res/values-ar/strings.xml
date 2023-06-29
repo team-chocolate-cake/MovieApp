@@ -5,6 +5,7 @@
     <string name="items">%s عناصر</string>
     <string name="search">بحث</string>
     <string name="favorite">مفضلة</string>
+    <string name="your_not_loged_in_to_rate">انت لست مسجل دخول 😥, الرجاء تسجيل الدخول</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <string name="watch_history">سجل المشاهدة</string>
     <string name="my_lists">قائماتي</string>
@@ -26,7 +27,7 @@
     <string name="rate_this_tv_show" tools:ignore="ExtraTranslation">قيم هذة البرنامج التلفزيوني</string>
     <string name="cast" tools:ignore="ExtraTranslation">ممثلين</string>
     <string name="seasons" tools:ignore="ExtraTranslation">مواسم</string>
-    <string name="comments" tools:ignore="ExtraTranslation">تعليقات</string>
+    <string name="comments" tools:ignore="ExtraTranslation"> تعليقات</string>
     <string name="recommended">مقترحات</string>
     <string name="home_much_you_love_this_tv_show" tools:ignore="ExtraTranslation">كم تحب هذا العرض التلفزيوني؟</string>
     <string name="rate_it_with_stars_your_satisfaction_level" tools:ignore="ExtraTranslation">قيّمه بالنجوم وفقاً لمستوى رضاك.</string>
@@ -36,6 +37,7 @@
     <string name="season">موسم</string>
     <string name="episode">حلقة</string>
     <string name="rate_the_episode">ٌقيم هذه الحلقة</string>
+    <string name="rate_this_movie">قيم هذا الفلم</string>
     <string name="actors">ممثلين</string>
     <string name="apply">موافق</string>
     <string name="share_your_love_for_this_episode">شارك حبك لهذه الحلقة!</string>

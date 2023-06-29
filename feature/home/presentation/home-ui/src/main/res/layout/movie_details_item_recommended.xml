@@ -32,10 +32,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:id="@+id/recyclerViewRecommened"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small_8dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/spacing_custom_12dp"
@@ -63,22 +63,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_weight="10"
-                android:text="@{Integer.toString(item.totalReviews)+` Comments`}"
+                android:text="@string/comments"
                 android:textColor="@color/on_background_87"
-                android:textStyle="bold"
-                tools:text="totals comments" />
-
-            <TextView
-                android:id="@+id/text_view_comments_show_more"
-                style="@style/TextStyle.TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="right"
-                android:onClick="@{()->listener.onClickShowMore(item.movieInt)}"
-                android:text="Show more"
-                android:textColor="@color/primary"
-                app:isVisibleOrGone="@{item.totalPages}" />
+                android:textStyle="bold" />
+            <!--            Integer.toString(item.totalReviews)-->
+            <!--            android:text="@{@string/answer_text_one(String.valueOf(item.answers[0].answer))}"-->
         </LinearLayout>
 
 

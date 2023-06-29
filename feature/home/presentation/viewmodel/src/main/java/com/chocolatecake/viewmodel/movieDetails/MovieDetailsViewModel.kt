@@ -83,8 +83,8 @@ class MovieDetailsViewModel @Inject constructor(
     private fun onError(th: Throwable) {
         val errors = _state.value.onErrors.toMutableList()
         when (th) {
-            is NoNetworkThrowable -> errors.add("noNetwork")
-            is UnauthorizedThrowable -> errors.add("noNetwork")
+            is NoNetworkThrowable -> errors.add(stringsRes.someThingError)
+            is UnauthorizedThrowable -> errors.add(stringsRes.someThingError)
             else -> errors.add(th.message.toString())
         }
         _state.update { it.copy(onErrors = errors, isLoading = false) }
