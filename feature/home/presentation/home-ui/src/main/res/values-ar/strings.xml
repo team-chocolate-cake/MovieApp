@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="no_items_found">لم يتم العثور على عناصر.</string>
+    <string name="no_items_have">لا توجد عناصر</string>
+    <string name="items">%s عناصر</string>
+    <string name="search">بحث</string>
+    <string name="favorite">مفضلة</string>
+    <string name="watchlist">قائمة المشاهدة</string>
+    <string name="watch_history">سجل المشاهدة</string>
+    <string name="my_lists">قائماتي</string>
+    <string name="rating">التقييم</string>
+    <string name="popcorn_puzzles">ألغاز الفشار !</string>
+    <string name="theme">الوضع</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="_9_6" tools:ignore="ExtraTranslation">9.6</string>
+    <string name="explore_the_best_tv_shows" tools:ignore="ExtraTranslation">استكشف أفضل البرامج التلفزيونية</string>
+    <string name="airing_today" tools:ignore="ExtraTranslation">يعرض اليوم</string>
+    <string name="empty_field">الرجاء ادخال اسم قائمة</string>
+    <string name="number_of_movies">عدد الافلام: </string>
+    <string name="on_the_air" tools:ignore="ExtraTranslation">في البث</string>
+    <string name="cannot_fetch_movies" tools:ignore="ExtraTranslation">غير قادر على جلب الأفلام 😢</string>
+    <string name="swipe_to_delete" tools:ignore="ExtraTranslation">اسحب للحذف \n</string>
+    <string name="error_occured" tools:ignore="ExtraTranslation">حصل خطأ ما</string>
+    <string name="overview_title" tools:ignore="ExtraTranslation">نظرة عامة</string>
+    <string name="episodes_title" tools:ignore="ExtraTranslation">حلقات</string>
+    <string name="rate_this_tv_show" tools:ignore="ExtraTranslation">قيم هذة البرنامج التلفزيوني</string>
+    <string name="cast" tools:ignore="ExtraTranslation">ممثلين</string>
+    <string name="seasons" tools:ignore="ExtraTranslation">مواسم</string>
+    <string name="comments" tools:ignore="ExtraTranslation">تعليقات</string>
+    <string name="recommended">مقترحات</string>
+    <string name="home_much_you_love_this_tv_show" tools:ignore="ExtraTranslation">كم تحب هذا العرض التلفزيوني؟</string>
+    <string name="rate_it_with_stars_your_satisfaction_level" tools:ignore="ExtraTranslation">قيّمه بالنجوم وفقاً لمستوى رضاك.</string>
+    <string name="create" tools:ignore="ExtraTranslation">انشئ</string>
+    <string name="login_title">أضواء، كاميرا، اكشن! قم بتسجيل الدخول لتخصيص تجربتك في مشاهدة الأفلام.</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="season">موسم</string>
+    <string name="episode">حلقة</string>
+    <string name="rate_the_episode">ٌقيم هذه الحلقة</string>
+    <string name="actors">ممثلين</string>
+    <string name="apply">موافق</string>
+    <string name="share_your_love_for_this_episode">شارك حبك لهذه الحلقة!</string>
+    <string name="rating_description">ساعدنا عن طريق تقييم الحلقة بنجوم بناءً على مستوى رضاك!</string>
+    <string name="try_again">حاول مرة أخرى 🤔</string>
+    <string name="trailer">عرض تشويقي</string>
+    <string name="play_icon">أيقونة التشغيل</string>
+    <string name="play_full_screen">تشغيل بشاشة كاملة</string>
+    <string name="movie">فلم</string>
+    <string name="tv_show">برنامج تلفزيوني</string>
+    <string name="my_rated">تقييمي</string>
+    <string name="new_list_button">قائمة جديدة</string>
+    <string name="my_list_title">قائمتي</string>
+    <string name="delete">حذف</string>
+    <string name="biography">سيرة ذاتية</string>
+    <string name="add_list">+ اضف قائمة</string>
+    <string name="done">موافق</string>
+    <string name="create_list">انشئ قائمة</string>
+    <string name="list_name">اسم القائمة</string>
+    <string name="close">اغلاق</string>
+    <string name="save_to">الحفظ قي</string>
+    <string name="are_you_sure_that_you_want_to_delete_1d">هل انت متأكد من حذف %1s ؟</string>
+    <string name="cancel">الغاء</string>
+    <string name="confirm">تأكيد</string>
+</resources>

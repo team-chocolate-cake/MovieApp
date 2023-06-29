@@ -33,21 +33,24 @@
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
             android:clipToPadding="false"
             android:scrollbars="none"
+            android:paddingStart="@dimen/spacing_medium_16dp"
+            android:paddingEnd="@dimen/spacing_medium_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/spacing_medium_16dp"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
                 app:selectedTVShowType="@{viewModel.state.tvShowsType}"
                 app:selectionRequired="true"
                 app:singleSelection="true">

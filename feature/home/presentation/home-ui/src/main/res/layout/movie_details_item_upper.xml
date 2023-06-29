@@ -68,21 +68,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:isVisible="@{item.upperUiState.logined}"
             android:onClick="@{()->listener.onClickRate(item.upperUiState.id)}"
             android:text="Rate This Movie"
             android:textColor="@color/primary"
+            app:isVisible="@{item.upperUiState.logined}"
             app:layout_constraintBottom_toBottomOf="@+id/rating"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/text_view_description"
             android:layout_width="match_parent"
+            style="@style/TextStyle.BodySmall"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:maxLines="8"
             android:text="@{item.upperUiState.overview}"
             app:layout_constraintTop_toBottomOf="@id/rating"
             tools:layout_editor_absoluteX="16dp"

@@ -1,8 +1,11 @@
 package com.chocolatecake.viewmodel.common.model
 
+import com.chocolatecake.bases.StringsRes
 import kotlin.math.roundToInt
 
-data class ItemGameLevelUIState(
+
+data class ItemGameLevelUIState (
+    private val stringRes: StringsRes,
     val level: Int = 1,
     val questionsCount: Int = 0,
     val max: Int = 5,
@@ -22,8 +25,8 @@ data class ItemGameLevelUIState(
 
     val title
         get() = when (level) {
-            1 -> "Easy"
-            2 -> "Medium"
-            else -> "Hard"
+            1 -> stringRes.easy
+            2 -> stringRes.medium
+            else -> stringRes.hard
         }
 }

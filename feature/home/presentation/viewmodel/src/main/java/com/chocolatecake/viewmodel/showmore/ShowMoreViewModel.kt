@@ -7,6 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.usecase.showmore.GetMorePopularMoviesByTypeUseCase
 import com.chocolatecake.usecase.showmore.GetMoreTopRatedByTypeUseCase
 import com.chocolatecake.usecase.showmore.GetMoreTrendingByTypeUseCase
@@ -25,11 +26,14 @@ class ShowMoreViewModel @Inject constructor(
     private val getShowMoreTrendingByTypeUseCase: GetMoreTrendingByTypeUseCase,
     private val showMoreUiMapper: ShowMoreUiMapper,
     savedStateHandle: SavedStateHandle,
+    stringsRes: StringsRes
 ) : BaseViewModel<ShowMoreUiState, ShowMoreUiEvent>(
     ShowMoreUiState(
         showMoreType = savedStateHandle.get<ShowMoreType>(
             "showMoreType"
         ) ?: ShowMoreType.POPULAR_MOVIES
+    ,
+        stringsRes = stringsRes
     )
 ), ShowMoreListener {
 
@@ -43,7 +47,6 @@ class ShowMoreViewModel @Inject constructor(
             ShowMoreType.POPULAR_MOVIES -> getPopularMoviesShowMore()
             ShowMoreType.TOP_RATED -> getTopRatedShowMore()
             ShowMoreType.TRENDING -> getTrendingShowMore()
-
         }
     }
 

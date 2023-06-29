@@ -63,6 +63,9 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
+                    app:navigationIcon="@drawable/arrow_left"
+                    app:navigationIconTint="@color/on_background_87"
+                    app:onClickNavigation="@{viewModel.onClickBack}"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:elevation="2dp"
@@ -70,23 +73,12 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                    <ImageButton
-                        android:id="@+id/backButton"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@null"
-                        android:onClick="@{()->viewModel.onClickBack()}"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/arrow_left" />
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
+                        android:layout_gravity="start"
                         android:layout_marginEnd="@dimen/spacing_medium_16dp"
-                        android:text="Watch History"
+                        android:text="@string/watch_history"
                         android:textAppearance="@style/TextStyle.BodyMedium"
                         android:textColor="@color/on_background_87"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView"

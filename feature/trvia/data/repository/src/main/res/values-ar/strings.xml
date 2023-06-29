@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="which_of_the_following_names_for_this_actor_is_correct">أي الأسماء التالية لهذا الممثل صحيحة ؟</string>
+    <string name="which_of_the_following_names_for_this_movie_is_correct">أي الأسماء التالية لهذا الفيلم صحيحة ؟</string>
+    <string name="which_of_the_following_genres_for_this_movie_is_correct">أي الأنواع التالية لهذا الفيلم صحيحة ؟</string>
+    <string name="which_of_the_following_rates_for_this_movie_is_correct">أي من التقييمات التالية لهذا الفيلم صحيحة ؟</string>
+    <string name="which_of_the_following_names_for_this_tv_is_correct">أي الأسماء التالية لهذا البرنامج التلفزيوني صحيحة ؟</string>
+    <string name="which_of_the_following_genres_for_this_tv_is_correct">أي الأنواع التالية لهذا البرنامج التلفزيوني صحيحة ؟</string>
+    <string name="which_of_the_following_rates_for_this_tv_is_correct">أي من التقييمات التالية لهذا البرنامج التلفزيوني صحيحة ؟</string>
+</resources>

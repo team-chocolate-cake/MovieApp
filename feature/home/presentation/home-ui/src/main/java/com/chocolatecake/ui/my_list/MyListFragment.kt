@@ -11,7 +11,6 @@ import com.chocolatecake.viewmodel.myList.MyListUiEvent
 import com.chocolatecake.viewmodel.myList.MyListUiState
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -75,12 +74,12 @@ class MyListFragment :
 
     private fun showDialog(listId: Int, listName: String) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete")
-            .setMessage("Are you sure that you want to delete $listName?")
-            .setPositiveButton("Confirm") { _, _ ->
+            .setTitle(getString(R.string.delete))
+            .setMessage(getString(R.string.are_you_sure_that_you_want_to_delete_1d,listName))
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                 viewModel.deleteList(listId)
             }
-            .setNeutralButton("Cancel") { dialog, _ ->
+            .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

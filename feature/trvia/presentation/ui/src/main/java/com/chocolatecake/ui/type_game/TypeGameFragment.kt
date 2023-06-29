@@ -63,7 +63,7 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
             }
 
             is GameTypeUIEvent.ShowSnackbar -> {
-                showSnackBar("Coming Soon!!!")
+                showSnackBar(getString(R.string.comming_soon))
             }
 
             GameTypeUIEvent.PlaySound -> {

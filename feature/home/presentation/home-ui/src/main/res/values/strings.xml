@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="no_items_found">No items found</string>
     <string name="no_items_have">No items have</string>
+    <string name="items">%s items</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="watchlist">Watchlist</string>
@@ -17,7 +18,7 @@
     <string name="on_the_air" tools:ignore="ExtraTranslation">On The Air</string>
     <string name="cannot_fetch_movies" tools:ignore="ExtraTranslation">cannot fetch movies 😢</string>
     <string name="swipe_to_delete" tools:ignore="ExtraTranslation">swipe to delete\n</string>
-    <string name="error_occured" tools:ignore="ExtraTranslation">error occured</string>
+    <string name="error_occured" tools:ignore="ExtraTranslation">error occurred</string>
     <string name="overview_title" tools:ignore="ExtraTranslation">Overview</string>
     <string name="episodes_title" tools:ignore="ExtraTranslation">Episodes</string>
     <string name="rate_this_tv_show" tools:ignore="ExtraTranslation">Rate This Tv Show</string>
@@ -49,5 +50,14 @@
     <string name="my_list_title">My List</string>
     <string name="delete">Delete</string>
     <string name="biography">Biography</string>
-    <string name="empty_fail">Please enter list name</string>
+    <string name="empty_field">Please enter list name</string>
+    <string name="add_list">+ Add List</string>
+    <string name="done">Done</string>
+    <string name="create_list">Create List</string>
+    <string name="list_name">List Name</string>
+    <string name="close">Close</string>
+    <string name="save_to">Save to</string>
+    <string name="are_you_sure_that_you_want_to_delete_1d">Are you sure that you want to delete %1s ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>
