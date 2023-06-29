@@ -44,7 +44,7 @@
                     app:onClickNavigation="@{()->viewModel.clickToBack()}"                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:navigationIcon="@drawable/ic_back" />
+                    app:navigationIcon="@drawable/arrow_left" />
 
                 <include
                     layout="@layout/layout_loading"
