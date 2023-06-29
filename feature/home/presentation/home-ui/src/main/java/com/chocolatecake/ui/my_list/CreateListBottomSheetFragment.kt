@@ -12,6 +12,7 @@ import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.BottomSheetCreateListBinding
 import com.chocolatecake.viewmodel.myList.MyListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -41,11 +42,11 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) :
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.materialButtonCreate.setOnClickListener {
-            if (binding.textInputEditTextListName.text == null || binding.textInputEditTextListName.text.toString() == "") {
-                createButton.failCreated("The filed is empty")
-                dismiss()
+            val listName = binding.textInputEditTextListName.text.toString().trim()
+            if (listName == "") {
+                showSnackBar(getString(R.string.empty_fail))
             } else {
-                createButton.onClickCreate(binding.textInputEditTextListName.text.toString())
+                createButton.onClickCreate(listName)
             }
         }
 
@@ -54,9 +55,12 @@ class CreateListBottomSheetFragment(private val createButton: CreateListener) :
         }
 
     }
+
+    private fun showSnackBar(messages: String) {
+        Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
+    }
 }
 
 interface CreateListener {
     fun onClickCreate(listName: String)
-    fun failCreated(message: String)
 }

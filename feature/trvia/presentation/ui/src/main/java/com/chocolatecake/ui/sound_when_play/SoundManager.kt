@@ -32,6 +32,7 @@ class SoundManager @Inject constructor(@ApplicationContext private val context: 
         if (!isSoundOn) {
             stopSound()
         } else {
+            stopSound()
             playSound(soundResourceId)
         }
     }

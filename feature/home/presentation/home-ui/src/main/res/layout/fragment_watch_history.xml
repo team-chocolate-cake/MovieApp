@@ -25,8 +25,8 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsingToolbarLayout_details"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                app:contentScrim="@color/card"
+                android:layout_height="wrap_content"
+                android:background="@color/background"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <LinearLayout
@@ -36,17 +36,13 @@
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_extra_extra_giant_56dp" />
-
                     <EditText
                         android:id="@+id/edittext_search"
                         style="@style/TextInputLayoutStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_extra_extra_giant_56dp"
-                        android:layout_margin="@dimen/spacing_medium_16dp"
-                        android:layout_marginTop="@dimen/spacing_extra_extra_giant_56dp"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="?android:attr/actionBarSize"
+                        android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
                         android:afterTextChanged="@{(query)-> viewModel.onSearchInputChanged(query)}"
                         android:background="@drawable/edittext_background"
                         android:drawableStart="@drawable/ic_search"
@@ -73,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:elevation="2dp"
+                    android:background="@color/background"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 

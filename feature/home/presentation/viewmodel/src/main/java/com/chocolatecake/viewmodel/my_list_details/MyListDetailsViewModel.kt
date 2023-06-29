@@ -4,6 +4,7 @@ package com.chocolatecake.viewmodel.my_list_details
 import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.bases.ListName
+import com.chocolatecake.bases.ListType
 import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.NoNetworkThrowable
@@ -38,7 +39,7 @@ class MyListDetailsViewModel @Inject constructor(
     val listName = when (_listName) {
         "watchlist" -> stringsRes.watchlist
         "favorite" -> stringsRes.favourite
-        else -> ""
+        else -> _listName
     }
     private val listId = savedStateHandle.get<Int>("listId") ?: 0
 
@@ -103,6 +104,8 @@ class MyListDetailsViewModel @Inject constructor(
     fun deleteMedia(position: Int) {
 
         val mediaId = state.value.movies[position].id
+        val mediaType = state.value.movies[position].mediaType
+
         _state.update {
             it.copy(
                 isLoading = true,
@@ -110,11 +113,11 @@ class MyListDetailsViewModel @Inject constructor(
         }
         when (_listName) {
             ListName.favorite.name -> {
-                deleteFavorite(mediaId)
+                deleteFavorite(mediaId , mediaType)
             }
 
             ListName.watchlist.name -> {
-                deleteWatchlist(mediaId)
+                deleteWatchlist(mediaId, mediaType)
             }
 
             else -> {
@@ -123,17 +126,17 @@ class MyListDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun deleteFavorite(mediaId: Int) {
+    private fun deleteFavorite(mediaId: Int  , mediaType: String ) {
         tryToExecute(
-            call = { deleteFavoriteUseCase(mediaId, "movie", false) },
+            call = { deleteFavoriteUseCase(mediaId, mediaType, false) },
             onSuccess = ::onDeleteMediaSuccess,
             onError = ::onError,
         )
     }
 
-    private fun deleteWatchlist(mediaId: Int) {
+    private fun deleteWatchlist(mediaId: Int , mediaType: String  ) {
         tryToExecute(
-            call = { deleteWatchlistUseCase(mediaId, "movie", false) },
+            call = { deleteWatchlistUseCase(mediaId, mediaType, false) },
             onSuccess = ::onDeleteMediaSuccess,
             onError = ::onError,
         )
@@ -187,10 +190,20 @@ class MyListDetailsViewModel @Inject constructor(
     }
 
 
-    override fun onClickItem(itemId: Int) {
-        sendEvent(
-            MyListDetailsUiEvent.NavigateToMovieDetails(itemId)
-        )
+    override fun onClickItem(itemId: Int , mediaType:String) {
+        when(mediaType){
+             ListType.movie.name ->{
+                 sendEvent(
+                     MyListDetailsUiEvent.NavigateToMovieDetails(itemId)
+                 )
+            }
+            ListType.tv.name ->{
+                sendEvent(
+                    MyListDetailsUiEvent.NavigateToTvDetails(itemId)
+                )
+            }
+        }
+
     }
 
     override fun onClickBackButton() {

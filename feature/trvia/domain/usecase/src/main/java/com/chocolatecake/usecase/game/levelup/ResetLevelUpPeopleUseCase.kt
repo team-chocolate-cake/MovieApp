@@ -10,10 +10,10 @@ class ResetLevelUpPeopleUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Boolean {
         val oldUser = getCurrentUserUseCase()
-        if (oldUser.peopleGameLevel == 1 && oldUser.numMoviesQuestionsPassed == 0) return false
+        if (oldUser.peopleGameLevel == 1 && oldUser.numPeopleQuestionsPassed == 0) return false
         val updatedUser = oldUser.copy(
             peopleGameLevel = 1,
-            numMoviesQuestionsPassed = 0
+            numPeopleQuestionsPassed = 0
         )
         triviaRepository.updateUser(updatedUser)
         return true
