@@ -70,11 +70,13 @@ class ProfileViewModel @Inject constructor(
     }
 
     override fun onClickLogout() {
+        sendEvent(ProfileUiEvent.Logout)
+    }
+
+    fun logout() {
         viewModelScope.launch {
             _state.update { it.copy(isLoggedIn = false) }
-            if (_state.value.isLoggedIn == logoutUseCase()) {
-                sendEvent(ProfileUiEvent.Logout)
-            }
+            logoutUseCase()
         }
     }
 

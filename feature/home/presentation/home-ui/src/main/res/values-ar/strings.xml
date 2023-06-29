@@ -12,6 +12,7 @@
     <string name="popcorn_puzzles">ألغاز الفشار !</string>
     <string name="theme">الوضع</string>
     <string name="logout">تسجيل خروج</string>
+    <string name="do_u_wanna_leave_us">هل تريد تركنا؟</string>
     <string name="_9_6" tools:ignore="ExtraTranslation">9.6</string>
     <string name="explore_the_best_tv_shows" tools:ignore="ExtraTranslation">استكشف أفضل البرامج التلفزيونية</string>
     <string name="airing_today" tools:ignore="ExtraTranslation">يعرض اليوم</string>

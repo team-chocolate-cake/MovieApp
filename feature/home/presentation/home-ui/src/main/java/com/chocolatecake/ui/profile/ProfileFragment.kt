@@ -14,6 +14,7 @@ import com.chocolatecake.ui.home.databinding.FragmentProfileBinding
 import com.chocolatecake.viewmodel.profile.ProfileUIState
 import com.chocolatecake.viewmodel.profile.ProfileUiEvent
 import com.chocolatecake.viewmodel.profile.ProfileViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,13 +64,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileUIState, Pro
                 )
             }
 
-            ProfileUiEvent.Logout -> showSnackBar("Logout!")
+            ProfileUiEvent.Logout -> {
+                showCofirmDialog()
+            }
 
             is ProfileUiEvent.NavigateWithLink -> {
                 findNavController().navigate(event.link)
             }
         }
     }
+
+    private fun showCofirmDialog(){
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.logout))
+            .setMessage(getString(R.string.do_u_wanna_leave_us))
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                viewModel.logout()
+            }
+            .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 
     private fun changeAppTheme() {
         val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
