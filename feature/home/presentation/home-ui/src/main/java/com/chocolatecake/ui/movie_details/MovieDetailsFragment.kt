@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails
+package com.chocolatecake.ui.movie_details
 
 import android.os.Bundle
 import android.view.View
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
-import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
-import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem
+import com.chocolatecake.ui.movie_details.adapter.MovieDetailsAdapter
+import com.chocolatecake.ui.movie_details.adapter.MovieDetailsItem
 import com.chocolatecake.ui.tv_details.AddToListBottomSheet
 import com.chocolatecake.ui.tv_details.CreateListener
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
@@ -65,7 +65,7 @@ class MovieDetailsFragment :
                         ) + state.reviewUiState.map { MovieDetailsItem.Reviews(it) }
                 )
                 binding.nestedRecycler.smoothScrollToPosition(0)
-                binding.appBarLayout.setExpanded(true,true)
+                binding.appBarLayout.setExpanded(true, true)
             }
         }
     }
@@ -75,6 +75,7 @@ class MovieDetailsFragment :
             MovieDetailsUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
+
             is MovieDetailsUiEvent.NavigateToPeopleDetails -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPeopleDetailsFragment(
@@ -82,12 +83,15 @@ class MovieDetailsFragment :
                     )
                 )
             }
+
             is MovieDetailsUiEvent.PlayVideoTrailer -> {
                 navigateToTrailerVideo(event.videoKey)
             }
+
             is MovieDetailsUiEvent.RateMovie -> {
-                showRatingBottomSheet(event.movieId)
+                checkIsLoggedInOrNot()
             }
+
             is MovieDetailsUiEvent.NavigateToMovie -> {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentSelf(
@@ -95,10 +99,12 @@ class MovieDetailsFragment :
                     )
                 )
             }
+
             is MovieDetailsUiEvent.SaveToList -> showAddToListBottomSheet()
             is MovieDetailsUiEvent.NavigateToShowMore -> {
                 //todo
             }
+
             is MovieDetailsUiEvent.ApplyRating -> showSnackBar(event.message)
             is MovieDetailsUiEvent.OnDoneAdding -> showSnackBar(event.message)
             is MovieDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
@@ -115,7 +121,16 @@ class MovieDetailsFragment :
         )
     }
 
-    private fun showRatingBottomSheet(movieId: Int) {
+    private fun checkIsLoggedInOrNot() {
+        val isLoggedIn = viewModel.state.value.isLogined
+        if (isLoggedIn) {
+            showRatingBottomSheet()
+        } else {
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this Movie")
+        }
+    }
+
+    private fun showRatingBottomSheet() {
         val bottomSheet = RatingMovieBottomSheet()
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)

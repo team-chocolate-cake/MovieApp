@@ -9,6 +9,7 @@ import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeVideoUseCase
 import com.chocolatecake.usecase.episode_details.SetEpisodeRatingUseCase
+import com.chocolatecake.usecase.movie_details.CheckIsLoginedOrNotUseCase
 import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
@@ -26,6 +27,7 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val peopleUiMapper: PeopleUiMapper,
     private val trailerUiMapper: TrailerUiMapper,
     private val episodeVideoUseCase: GetEpisodeVideoUseCase,
+    private val checkIsLoggedInOrNotUseCase: CheckIsLoginedOrNotUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<EpisodeDetailsUiState, EpisodeDetailsUiEvent>(EpisodeDetailsUiState()),
     EpisodeDetailsListener, PeopleListener {
@@ -34,6 +36,7 @@ class EpisodeDetailsViewModel @Inject constructor(
     private val episodeNumber = savedStateHandle.get<Int>("episodeNumber") ?: 1
 
     init {
+        _state.update { it.copy(isLoading = true, isLoggedIn = checkIsLoggedInOrNotUseCase()) }
         getData(seriesId, seasonNumber, episodeNumber)
     }
 
@@ -86,7 +89,9 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
                 val mappedData = trailerUiMapper.map(inputData)
                 onSuccessEpisodeVideo(mappedData)
-            } catch (th: Throwable) { _state.update { it.copy(trailerKey = "") } }
+            } catch (th: Throwable) {
+                _state.update { it.copy(trailerKey = "") }
+            }
         }
     }
 
@@ -172,7 +177,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         sendEvent(EpisodeDetailsUiEvent.ClickToRate(episodeId))
     }
 
-    override fun clickToPlayFullScreen(videoKey:String) {
+    override fun clickToPlayFullScreen(videoKey: String) {
         sendEvent(EpisodeDetailsUiEvent.ClickToPlayFullScreen(videoKey))
     }
 
