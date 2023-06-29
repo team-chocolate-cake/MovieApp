@@ -5,6 +5,7 @@
     <string name="items">%s عناصر</string>
     <string name="search">بحث</string>
     <string name="favorite">مفضلة</string>
+    <string name="your_not_loged_in_to_rate">انت لست مسجل دخول 😥, الرجاء تسجيل الدخول</string>
     <string name="watchlist">قائمة المشاهدة</string>
     <string name="watch_history">سجل المشاهدة</string>
     <string name="my_lists">قائماتي</string>
