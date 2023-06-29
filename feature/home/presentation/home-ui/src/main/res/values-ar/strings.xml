@@ -26,7 +26,7 @@
     <string name="rate_this_tv_show" tools:ignore="ExtraTranslation">قيم هذة البرنامج التلفزيوني</string>
     <string name="cast" tools:ignore="ExtraTranslation">ممثلين</string>
     <string name="seasons" tools:ignore="ExtraTranslation">مواسم</string>
-    <string name="comments" tools:ignore="ExtraTranslation">تعليقات</string>
+    <string name="comments" tools:ignore="ExtraTranslation"> تعليقات</string>
     <string name="recommended">مقترحات</string>
     <string name="home_much_you_love_this_tv_show" tools:ignore="ExtraTranslation">كم تحب هذا العرض التلفزيوني؟</string>
     <string name="rate_it_with_stars_your_satisfaction_level" tools:ignore="ExtraTranslation">قيّمه بالنجوم وفقاً لمستوى رضاك.</string>
