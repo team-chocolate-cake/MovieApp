@@ -116,7 +116,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         try {
             viewModelScope.launch {
 
-                getAllMyRatedEpisodesUseCase().first().
+                getAllMyRatedEpisodesUseCase().first()
             }
         } catch (th: Throwable) {
             onError(th)
