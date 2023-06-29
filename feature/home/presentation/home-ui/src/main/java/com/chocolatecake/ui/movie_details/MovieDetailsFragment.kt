@@ -1,4 +1,4 @@
-package com.chocolatecake.ui.movieDetails
+package com.chocolatecake.ui.movie_details
 
 import android.os.Bundle
 import android.view.View
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.bases.BaseFragment
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.FragmentMovieDetailsBinding
-import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsAdapter
-import com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem
+import com.chocolatecake.ui.movie_details.adapter.MovieDetailsAdapter
+import com.chocolatecake.ui.movie_details.adapter.MovieDetailsItem
 import com.chocolatecake.ui.tv_details.AddToListBottomSheet
 import com.chocolatecake.ui.tv_details.CreateListener
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
@@ -125,7 +125,7 @@ class MovieDetailsFragment :
         if (isLoggedIn) {
             showRatingBottomSheet()
         } else {
-            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode")
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this Movie")
         }
     }
 

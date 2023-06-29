@@ -76,7 +76,7 @@ class TvDetailsFragment :
         if (isLoggedIn) {
             showRateBottomSheet()
         } else {
-            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode")
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this TV Show")
         }
     }
 
