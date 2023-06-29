@@ -89,7 +89,7 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.chocolatecake.ui.movieDetails.MovieDetailsFragment"
+        android:name="com.chocolatecake.ui.movie_details.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details">
         <argument

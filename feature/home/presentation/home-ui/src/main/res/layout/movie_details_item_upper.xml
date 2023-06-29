@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.ui.movieDetails.adapter.MovieDetailsItem.Upper" />
+            type="com.chocolatecake.ui.movie_details.adapter.MovieDetailsItem.Upper" />
 
         <variable
             name="listener"
@@ -71,7 +71,6 @@
             android:onClick="@{()->listener.onClickRate(item.upperUiState.id)}"
             android:text="Rate This Movie"
             android:textColor="@color/primary"
-            app:isVisible="@{item.upperUiState.logined}"
             app:layout_constraintBottom_toBottomOf="@+id/rating"
             app:layout_constraintEnd_toEndOf="parent" />
 
