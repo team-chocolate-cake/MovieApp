@@ -7,7 +7,7 @@ import com.chocolatecake.repository.BuildConfig
 import javax.inject.Inject
 
 class DomainMovieMapper @Inject constructor() {
-    fun map(input: MovieRemoteDto, genres: List<GenreEntity>): MovieEntity {
+    fun map(input: MovieRemoteDto, genres: List<GenreEntity> , mediaType:String ="movie"): MovieEntity {
         return MovieEntity(
             id = input.id ?: 0,
             title = input.title ?: "",
@@ -15,6 +15,7 @@ class DomainMovieMapper @Inject constructor() {
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
             year = input.releaseDate ?: "",
             genreEntities = genres,
+            mediaType = mediaType,
         )
     }
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">افلام</string>
+    <string name="home">الرئيسية</string>
+    <string name="now_playing">يعرض الان</string>
+    <string name="top_rated">الاعلى تقيماً</string>
+    <string name="trending">شائع</string>
+    <string name="recommended">مقترحات</string>
+    <string name="show_more">اظهار المزيد</string>
+    <string name="popular_people">ناس مشهورة</string>
+    <string name="popular">مشهور</string>
+    <string name="don_t_have_an_account">ليس لديك حساب ؟</string>
+    <string name="signup">انشاء حساب</string>
+    <string name="password">كلمة السر</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="password_is_required">كلمة السر مطلوبة</string>
+    <string name="username_is_required">اسم المستخدم مطلوب</string>
+    <string name="chocolate">شوكولاتا</string>
+    <string name="password_hint">2131321</string>
+    <string name="the_request_failed">الطلب فشل للاسف 😥</string>
+    <string name="movie">افلام</string>
+    <string name="tv">برامج تلفزيونية</string>
+    <string name="person">ناس</string>
+    <string name="collection">مجموعة</string>
+    <string name="company">شركة</string>
+    <string name="apply">الموافقة</string>
+    <string name="Popular_Movies">الافلام المشهورة</string>
+    <string name="movies">افلام</string>
+    <string name="retry">حاول مرة اخرى</string>
+    <string name="item_deleted">تم حذف العنصر</string>
+    <string name="undo">تراجع</string>
+    <string name="duplicate_entry">تكرار الإدخال: الوسائط التي حاولت إضافتها موجودة بالفعل.</string>
+    <string name="some_thing_error">حصل خطأ ما</string>
+    <string name="added_successfully">تمت الاضافة بنجاح</string>
+    <string name="new_list_was_added_successfully">تمت إضافة القائمة الجديدة بنجاح.</string>
+    <string name="rating_was_added_successfully">تم التقييم بنجاح 🥰</string>
+    <string name="something_went_wrong_please_try_again_later">حصل خطأ ما 🤔\n حاول مرة اخرى لاحقاً</string>
+    <string name="search">بحث</string>
+    <string name="profile">ملف شخصي</string>
+    <string name="female">انثى</string>
+    <string name="male">ذكر</string>
+    <string name="easy">سهل</string>
+    <string name="medium">متوسط</string>
+    <string name="hard">صعب</string>
+    <string name="time_out">انتهت المهلة !</string>
+    <string name="today">اليوم</string>
+    <string name="yesterday">البارحة</string>
+</resources>

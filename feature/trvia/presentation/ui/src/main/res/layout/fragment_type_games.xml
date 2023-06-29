@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -8,11 +9,15 @@
             name="viewModel"
             type="com.chocolatecake.viewmodel.game_type.GameTypeViewModel" />
     </data>
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background">
+
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -94,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_large_24dp"
-            android:text="@string/tv_shows"
+            android:text="@string/tv"
             android:textColor="@color/on_primary"
             app:layout_constraintBottom_toBottomOf="@+id/view_card_type_game_tv_shows"
             app:layout_constraintStart_toStartOf="@+id/view_card_type_game_tv_shows"
@@ -217,4 +222,5 @@
             app:layout_constraintTop_toTopOf="@+id/text_view_game_comming_soon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

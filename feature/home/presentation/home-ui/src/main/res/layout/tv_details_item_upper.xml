@@ -70,6 +70,7 @@
             android:onClick="@{()-> rateListener.onRateButtonClick()}"
             android:text="@string/rate_this_tv_show"
             android:textColor="@color/primary"
+            app:isVisible="@{item.upperUiState.logined}"
             app:layout_constraintBottom_toBottomOf="@+id/rating"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -80,10 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
             android:layout_marginTop="@dimen/spacing_medium_16dp"
-            android:ellipsize="end"
-            android:maxLines="8"
             android:text="@{item.upperUiState.description}"
             android:textColor="@color/on_background_60"
+            android:textDirection="locale"
             app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="@tools:sample/lorem/random" />
         <!--endregion-->

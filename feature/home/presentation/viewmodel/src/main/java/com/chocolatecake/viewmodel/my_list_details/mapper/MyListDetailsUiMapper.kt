@@ -14,6 +14,7 @@ class MyListDetailsUiMapper @Inject constructor() : Mapper<MovieEntity, MovieUiS
             genres = input.convertGenreListToString(),
             year = input.extractYearFromDate(),
             rating = input.rate,
+            mediaType =input.mediaType,
         )
     }
 

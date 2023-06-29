@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Movies</string>
+    <string name="home">Home</string>
     <string name="now_playing">Now Playing</string>
     <string name="top_rated">Top Rated</string>
     <string name="trending">Trending</string>
@@ -24,6 +25,7 @@
     <string name="company">Company</string>
     <string name="apply">Apply</string>
     <string name="Popular_Movies">Popular Movies</string>
+    <string name="movies">Movies</string>
     <string name="retry">retry</string>
     <string name="item_deleted">Item Deleted</string>
     <string name="undo">UNDO</string>
@@ -33,7 +35,14 @@
     <string name="new_list_was_added_successfully">New List Was Added Successfully</string>
     <string name="rating_was_added_successfully">rating was added successfully 🥰</string>
     <string name="something_went_wrong_please_try_again_later">Something Went Wrong 🤔\nPlease Try Again Later.</string>
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
     <string name="female">female</string>
     <string name="male">male</string>
-
+    <string name="easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
+    <string name="time_out">Time Out !</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

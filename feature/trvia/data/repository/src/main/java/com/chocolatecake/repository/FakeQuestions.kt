@@ -1,24 +1,28 @@
 package com.chocolatecake.repository
 
+import android.content.Context
 import javax.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 @Singleton
-class FakeQuestions @Inject constructor() {
+class FakeQuestions @Inject constructor(
+    @ApplicationContext private val context:Context
+) {
     private val peopleQuestions = listOf(
-        "Which of the following names for this actor is correct?" to QuestionType.NAME
+        context.getString(R.string.which_of_the_following_names_for_this_actor_is_correct) to QuestionType.NAME
     )
 
     private val movieQuestions = listOf(
-        "Which of the following names for this movie is correct?" to QuestionType.NAME,
-        "Which of the following genres for this movie is correct?" to QuestionType.GENRE,
-        "Which of the following rates for this movie is correct?" to QuestionType.RATE,
+        context.getString(R.string.which_of_the_following_names_for_this_movie_is_correct) to QuestionType.NAME,
+        context.getString(R.string.which_of_the_following_genres_for_this_movie_is_correct) to QuestionType.GENRE,
+        context.getString(R.string.which_of_the_following_rates_for_this_movie_is_correct) to QuestionType.RATE,
     )
 
     private val tvQuestions = listOf(
-        "Which of the following names for this tv is correct?" to QuestionType.NAME,
-        "Which of the following genres for this tv is correct?" to QuestionType.GENRE,
-        "Which of the following rates for this tv is correct?" to QuestionType.RATE,
+        context.getString(R.string.which_of_the_following_names_for_this_tv_is_correct) to QuestionType.NAME,
+        context.getString(R.string.which_of_the_following_genres_for_this_tv_is_correct) to QuestionType.GENRE,
+        context.getString(R.string.which_of_the_following_rates_for_this_tv_is_correct) to QuestionType.RATE,
     )
 
     fun getPeopleQuestion(): Pair<String, QuestionType> {

@@ -71,6 +71,7 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainNowPlayingMovieMa
 import com.chocolatecake.repository.mappers.domain.movie.DomainPopularMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTopRatedMovieMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainTrendingMoviesMapper
+import com.chocolatecake.repository.mappers.domain.movie.DomainTvMapper
 import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapper
 import com.chocolatecake.repository.mappers.domain.showmore.PopularMoviesShowMorePagingSource
 import com.chocolatecake.repository.mappers.domain.showmore.TopRatedShowMorePagingSource
@@ -127,6 +128,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val domainTvShowMapper: DomainTvShowMapper,
     private val domainTvDetailsSeasonMapper: DomainTvDetailsSeasonMapper,
     private val domainMovieMapper: DomainMovieMapper,
+    private val domainTvMapper: DomainTvMapper,
     private val domainReviewsMapper: DomainReviewsMapper,
     private val domainUserListsMapper: DomainUserListsMapper,
     private val random: Random,
@@ -305,7 +307,7 @@ class MovieRepositoryImpl @Inject constructor(
                 tvDtos.map { input ->
                     TvEntity(
                         id = input.id ?: 0,
-                        name = input.name ?: "",
+                        title = input.name ?: "",
                         rate = input.voteAverage ?: 0.0,
                         imageUrl = BuildConfig.IMAGE_BASE_PATH + input.posterPath,
                         genreEntities = filterGenres(
@@ -461,10 +463,27 @@ class MovieRepositoryImpl @Inject constructor(
         val result = wrapApiCall { movieService.getFavoriteMovies() }.results
         return result?.map { item ->
             domainMovieMapper.map(
-                input = item!!, filterGenres(
+                input = item!!,
+                genres = filterGenres(
                     item.genreIds?.filterNotNull() ?: emptyList(),
                     genresEntities
-                )
+                ),
+                mediaType = "movie",
+            )
+        } ?: emptyList()
+    }
+
+    override suspend fun getFavoriteTv(): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
+        val result = wrapApiCall { movieService.getFavoriteTv() }.results
+        return result?.map { item ->
+            domainTvMapper.map(
+                input = item!!,
+                genres = filterGenres(
+                    item.genreIds?.filterNotNull() ?: emptyList(),
+                    genresEntities
+                ),
+                mediaType = "tv",
             )
         } ?: emptyList()
     }
@@ -474,10 +493,27 @@ class MovieRepositoryImpl @Inject constructor(
         val result = wrapApiCall { movieService.getWatchlist() }.results
         return result?.map { item ->
             domainMovieMapper.map(
-                input = item!!, filterGenres(
+                input = item!!,
+                genres = filterGenres(
                     item.genreIds?.filterNotNull() ?: emptyList(),
                     genresEntities
-                )
+                ),
+                mediaType = "movie",
+            )
+        } ?: emptyList()
+    }
+
+    override suspend fun getWatchlistTv(): List<MovieEntity> {
+        val genresEntities = getGenresMovies()
+        val result = wrapApiCall { movieService.getWatchlistTv() }.results
+        return result?.map { item ->
+            domainTvMapper.map(
+                input = item!!,
+                genres = filterGenres(
+                    item.genreIds?.filterNotNull() ?: emptyList(),
+                    genresEntities
+                ),
+                mediaType = "tv"
             )
         } ?: emptyList()
     }

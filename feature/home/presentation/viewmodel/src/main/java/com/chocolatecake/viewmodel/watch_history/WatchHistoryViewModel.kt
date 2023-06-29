@@ -2,6 +2,7 @@ package com.chocolatecake.viewmodel.watch_history
 
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
+import com.chocolatecake.bases.StringsRes
 import com.chocolatecake.usecase.watch_history.DeleteMovieFromWatchHistoryUseCase
 import com.chocolatecake.usecase.watch_history.GetAllWatchHistoryMoviesUseCase
 import com.chocolatecake.usecase.watch_history.SearchWatchHistoryUseCase
@@ -28,10 +29,11 @@ class WatchHistoryViewModel @Inject constructor(
     private val searchWatchHistoryUseCase: SearchWatchHistoryUseCase,
     private val movieDomainMapper: MovieDomainMapper,
     private val movieUiStateMapper: MovieUiStateMapper,
+    private val stringsRes:StringsRes
 ) :
     BaseViewModel<WatchHistoryUiState, WatchHistoryUiEvent>(WatchHistoryUiState()), MediaListener {
 
-    private val itemsCreator = WatchHistoryRecyclerItemsCreator()
+    private val itemsCreator = WatchHistoryRecyclerItemsCreator(stringsRes)
 
     init {
         getAllMovies()

@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class StringsResImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : StringsRes {
     override val theRequestFailed: String = getString(R.string.the_request_failed)
 
@@ -24,12 +24,31 @@ class StringsResImpl @Inject constructor(
 
     override val addSuccessfully: String = getString(R.string.added_successfully)
 
-    override val newListAddSuccessFully: String = getString(R.string.new_list_was_added_successfully)
+    override val newListAddSuccessFully: String =
+        getString(R.string.new_list_was_added_successfully)
 
     override val ratingAddSuccessFully: String = getString(R.string.rating_was_added_successfully)
 
-    override val someThingErrorWhenAddRating: String = getString(R.string.something_went_wrong_please_try_again_later)
+    override val someThingErrorWhenAddRating: String =
+        getString(R.string.something_went_wrong_please_try_again_later)
 
+    override val easy: String = getString(R.string.easy)
+
+    override val medium: String = getString(R.string.medium)
+
+    override val hard: String = getString(R.string.hard)
+    override val watchlist: String = getString(com.chocolatecake.ui.home.R.string.watchlist)
+    override val favourite: String = getString(com.chocolatecake.ui.home.R.string.favorite)
+
+    override val popularMovies: String = getString(R.string.popular)
+    override val topRatedMovies: String = getString(R.string.top_rated)
+    override val trending: String = getString(R.string.trending)
+
+    override val timeOut: String =getString(R.string.time_out)
+
+    override val today: String = getString(R.string.today)
+
+    override val yesterday: String = getString(R.string.yesterday)
 
     private fun getString(@StringRes stringsRes: Int): String {
         return context.getString(stringsRes)

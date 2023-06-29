@@ -78,8 +78,13 @@ class MyListDetailsFragment :
             }
 
             is MyListDetailsUiEvent.ShowSnackBar -> showSnackBar(event.message)
-
-            else -> {}
+            is MyListDetailsUiEvent.NavigateToTvDetails -> {
+                findNavController().navigate(
+                    MyListDetailsFragmentDirections.actionMyListDetailsFragmentToTvDetailsFragment(
+                        tvShowId = event.movieId,
+                    )
+                )
+            }
         }
     }
 }

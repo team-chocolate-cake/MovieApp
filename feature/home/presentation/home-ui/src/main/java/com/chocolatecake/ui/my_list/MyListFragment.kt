@@ -15,12 +15,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyListFragment :
-    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>() ,CreateListener{
+    BaseFragment<FragmentMyListBinding, MyListUiState, MyListUiEvent>(), CreateListener {
 
     override val layoutIdFragment: Int = R.layout.fragment_my_list
     override val viewModel: MyListViewModel by viewModels()
     private lateinit var createListBottomSheet: CreateListBottomSheetFragment
-
 
     private lateinit var myListAdapter: MyListAdapter
 
@@ -55,14 +54,17 @@ class MyListFragment :
                 showBottomSheet()
             }
 
-            is MyListUiEvent.OnClickBack ->{
+            is MyListUiEvent.OnClickBack -> {
                 findNavController().popBackStack()
             }
 
             is MyListUiEvent.ShowSnackBar -> {
                 showSnackBar(event.message)
             }
-            is MyListUiEvent.OnCreateNewList -> { showSnackBar(event.message) }
+
+            is MyListUiEvent.OnCreateNewList -> {
+                showSnackBar(event.message)
+            }
 
             is MyListUiEvent.ShowConfirmDeleteDialog -> {
                 showDialog(event.listId, event.listName)
@@ -72,12 +74,12 @@ class MyListFragment :
 
     private fun showDialog(listId: Int, listName: String) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete")
-            .setMessage("Are you sure that you want to delete $listName?")
-            .setPositiveButton("Confirm") { _, _ ->
+            .setTitle(getString(R.string.delete))
+            .setMessage(getString(R.string.are_you_sure_that_you_want_to_delete_1d,listName))
+            .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                 viewModel.deleteList(listId)
             }
-            .setNeutralButton("Cancel"){ dialog, _ ->
+            .setNeutralButton(getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -94,8 +96,9 @@ class MyListFragment :
         createListBottomSheet.dismiss()
     }
 
-    override fun failCreated(message: String) {
-        showSnackBar(message)
+    override fun onResume() {
+        super.onResume()
+        viewModel.getData()
     }
 }
 

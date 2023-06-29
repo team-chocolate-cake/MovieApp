@@ -1,5 +1,6 @@
 package com.chocolatecake.ui.search.utils
 
+import android.content.res.Configuration
 import android.view.View
 import android.widget.ImageButton
 import androidx.databinding.BindingAdapter
@@ -47,7 +48,11 @@ fun RecyclerView.setSearchLayoutManager(searchUiState: SearchUiState?) {
             LinearLayoutManager(context)
         }
         SearchUiState.SearchMedia.PEOPLE -> {
-            GridLayoutManager(context, 4)
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                GridLayoutManager(context, 8)
+            } else {
+                GridLayoutManager(context, 5)
+            }
         }
         else -> {
             LinearLayoutManager(context)

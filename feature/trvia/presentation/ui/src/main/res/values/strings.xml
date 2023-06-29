@@ -16,8 +16,6 @@
     <string name="answer_text_three">C |  %1$s</string>
     <string name="answer_text_four">D |  %1$s</string>
     <string name="characters">Characters</string>
-    <string name="tv_shows">Tv Shows</string>
-    <string name="movies">Movies</string>
     <string name="memorize">Memorize</string>
     <string name="comming_soon">Coming Soon</string>
     <string name="time_out">Time Out! 😥</string>
@@ -28,5 +26,4 @@ need to pass the last level %1$d</string>
     <string name="trivai_lost_title">You Lost GG</string>
     <string name="trivia_cancel_game">Cancel Game</string>
     <string name="trivai_buy_dialog">Buy</string>
-
 </resources>

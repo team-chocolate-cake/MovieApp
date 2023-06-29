@@ -14,8 +14,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,11 +47,11 @@
                 android:layout_marginBottom="@dimen/spacing_medium_16dp"
                 android:scaleType="centerCrop"
                 app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
-                app:profileUrl="@{viewModel.state.peopleData.imageUrl}"
                 app:layout_constraintBottom_toTopOf="@id/text_view_people_biography_title"
                 app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:profileUrl="@{viewModel.state.peopleData.imageUrl}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -59,8 +59,8 @@
                 android:id="@+id/view"
                 android:layout_width="149dp"
                 android:layout_height="186dp"
-                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
                 android:background="@drawable/gradient_background"
+                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
                 app:layout_constraintBottom_toBottomOf="@+id/shape_image_view_people"
                 app:layout_constraintEnd_toEndOf="@+id/shape_image_view_people"
                 app:layout_constraintStart_toStartOf="@+id/shape_image_view_people" />
@@ -68,11 +68,13 @@
             <TextView
                 android:id="@+id/text_view_people_name"
                 style="@style/TextStyle.TitleMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
                 android:text="@{viewModel.state.peopleData.name}"
                 android:textColor="@color/on_background_87"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
                 app:layout_constraintTop_toTopOf="@+id/shape_image_view_people"
                 app:layout_constraintVertical_chainStyle="packed"
@@ -81,12 +83,14 @@
             <TextView
                 android:id="@+id/text_view_people_acting"
                 style="@style/TextStyle.Caption"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
                 android:text="@{viewModel.state.peopleData.acting}"
                 android:textColor="@color/on_background_60"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_people_name"
                 tools:text="Acting" />
@@ -95,11 +99,13 @@
                 android:id="@+id/text_view_people_gender"
                 style="@style/TextStyle.Caption"
                 convertGenderText="@{viewModel.state.peopleData.gender}"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
                 android:textColor="@color/on_background_60"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
                 app:layout_constraintTop_toBottomOf="@id/text_view_people_acting"
                 tools:text="Male" />
@@ -107,13 +113,14 @@
             <TextView
                 android:id="@+id/text_view_people_movies_number"
                 style="@style/TextStyle.BodySmall"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
-                android:text="@{viewModel.state.peopleData.num_movies}"
+                app:isVisible="@{!viewModel.state.loading}"
+                android:text="@{@string/number_of_movies+ String.valueOf(viewModel.state.movies.size())}"
                 android:textColor="@color/on_background_60"
-                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/shape_image_view_people"
                 app:layout_constraintTop_toBottomOf="@id/text_view_people_gender"
                 tools:text="Number of Movies: 30" />
@@ -125,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
                 android:text="@{viewModel.state.peopleData.placeOfBirth}"
                 android:textColor="@color/on_background_60"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,20 +143,22 @@
             <TextView
                 android:id="@+id/text_view_people_biography_title"
                 style="@style/TextStyle.TitleMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginEnd="@dimen/spacing_medium_16dp"
                 android:text="@string/biography"
-                app:isVisibleOrGone="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.peopleData.biography.blank}"
                 android:textColor="@color/on_background_87"
+                app:isVisibleOrGone="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.peopleData.biography.blank}"
                 app:layout_constraintBottom_toTopOf="@id/text_view_people_biography"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/shape_image_view_people" />
 
             <TextView
                 android:id="@+id/text_view_people_biography"
                 style="@style/TextStyle.Caption"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_small_8dp"
@@ -165,31 +175,32 @@
             <TextView
                 android:id="@+id/text_view_people_movies"
                 style="@style/TextStyle.TitleMedium"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium_16dp"
+                android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
                 android:text="@string/movies"
-                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.movies.empty}"
                 android:textColor="@color/on_background_87"
+                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.movies.empty}"
                 app:layout_constraintBottom_toTopOf="@id/recycler_view_people_movies"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_people_biography" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_people_movies"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small_8dp"
                 android:layout_marginTop="@dimen/spacing_tiny_4dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty}"
-
                 app:items="@{viewModel.state.movies}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_people_movies" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_movies"
+                tools:listitem="@layout/item_people_media" />
 
             <TextView
                 android:id="@+id/text_view_people_tv_shows"
@@ -198,9 +209,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium_16dp"
                 android:layout_marginTop="@dimen/spacing_medium_16dp"
-                android:text="@string/tv_shows"
-                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.tvShows.empty}"
+                android:text="@string/tv"
                 android:textColor="@color/on_background_87"
+                app:isVisible="@{!viewModel.state.isLoading &amp;&amp; viewModel.state.onErrors.empty &amp;&amp; !viewModel.state.tvShows.empty}"
                 app:layout_constraintBottom_toTopOf="@id/recycler_view_people_tv_shows"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recycler_view_people_movies" />
@@ -209,15 +220,16 @@
                 android:id="@+id/recycler_view_people_tv_shows"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_custom_12dp"
                 android:layout_marginTop="@dimen/spacing_tiny_4dp"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_custom_12dp"
                 app:items="@{viewModel.state.tvShows}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_people_tv_shows" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_people_tv_shows"
+                tools:listitem="@layout/item_people_media" />
 
 
             <ProgressBar
