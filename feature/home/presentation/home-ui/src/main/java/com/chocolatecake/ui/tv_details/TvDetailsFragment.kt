@@ -100,7 +100,8 @@ class TvDetailsFragment :
                     TvDetailsItem.Upper(state.info),
                     TvDetailsItem.People(state.cast, state.seasons.isNotEmpty()),
                 )
-                tvDetailsItems.addAll(state.seasons.map { TvDetailsItem.Season(it) }
+                tvDetailsItems.addAll(
+                    state.seasons.map { TvDetailsItem.Season(it) }
                         + TvDetailsItem.Recommended(state.recommended, state.reviews.isNotEmpty())
                         + state.reviews.map {
                     TvDetailsItem.Review(it)
