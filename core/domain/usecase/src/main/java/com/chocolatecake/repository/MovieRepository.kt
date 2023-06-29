@@ -19,6 +19,7 @@ import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
+import com.chocolatecake.entities.my_rated.MyRatedEpisodesEntity
 import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
@@ -69,9 +70,9 @@ interface MovieRepository {
     suspend fun getPopularTVShows(): Pager<Int, TVShowsEntity>
     suspend fun getOnTheAirTVShows(): Pager<Int, TVShowsEntity>
 
-    suspend fun getMoviesDetails(movieId:Int): MovieDetailsEntity
-    suspend fun setMovieRate(movieId:Int , rate:Float): StatusEntity
-    suspend fun getMovieReviews(movieId:Int, page:Int): ReviewResponseEntity
+    suspend fun getMoviesDetails(movieId: Int): MovieDetailsEntity
+    suspend fun setMovieRate(movieId: Int, rate: Float): StatusEntity
+    suspend fun getMovieReviews(movieId: Int, page: Int): ReviewResponseEntity
 
     suspend fun getGenresTvs(): List<GenreEntity>
     suspend fun refreshGenresTv()
@@ -80,7 +81,7 @@ interface MovieRepository {
     suspend fun refreshAll()
 
     /// region season details
-    suspend fun getSeasonDetails(seriesId : Int, seasonId : Int): SeasonDetailsEntity
+    suspend fun getSeasonDetails(seriesId: Int, seasonId: Int): SeasonDetailsEntity
 
     /// endregion
     suspend fun getTvDetailsInfo(tvShowID: Int): TvDetailsInfoEntity
@@ -100,25 +101,30 @@ interface MovieRepository {
 
     suspend fun getUserLists(): List<UserListEntity>
     suspend fun postUserLists(listId: Int, mediaId: Int): StatusEntity
-    suspend fun createUserList(listName:String):StatusEntity
+    suspend fun createUserList(listName: String): StatusEntity
 
 
     suspend fun getFavoriteMovies(): List<MovieEntity>
     suspend fun getWatchlistMovies(): List<MovieEntity>
 
-    suspend fun addList(name:String): Boolean
+    suspend fun addList(name: String): Boolean
 
     suspend fun getDetailsList(listId: Int): List<MovieEntity>
 
 
-    suspend fun deleteMovieDetailsList(listId: Int ,mediaId: Int ): StatusEntity
+    suspend fun deleteMovieDetailsList(listId: Int, mediaId: Int): StatusEntity
     suspend fun deleteList(listId: Int): StatusEntity
 
 
     suspend fun getListCreated(): List<ListCreatedEntity>
 
-    suspend fun addWatchlist(mediaId:Int,mediaType:String,isWatchList:Boolean): StatusEntity
-    suspend fun addFavouriteList(mediaId:Int,mediaType:String,isFavourite:Boolean): StatusEntity
+    suspend fun addWatchlist(mediaId: Int, mediaType: String, isWatchList: Boolean): StatusEntity
+    suspend fun addFavouriteList(
+        mediaId: Int,
+        mediaType: String,
+        isFavourite: Boolean
+    ): StatusEntity
+
     suspend fun getCastForEpisode(
         id: Int,
         seasonNumber: Int,
@@ -138,6 +144,8 @@ interface MovieRepository {
         value: Float
     ): RatingEpisodeDetailsStatusEntity
 
+    suspend fun getAllMyRatedEpisodes(): Pager<Int, MyRatedEpisodesEntity>
+
     fun isLoginedOrNot(): Boolean
 
 
@@ -146,6 +154,6 @@ interface MovieRepository {
     suspend fun getRatedTvShows(): Pager<Int, MyRatedTvShowEntity>
 
     suspend fun getPersonDetails(person_id: Int): PeopleDetailsEntity
-    suspend fun getMoviesByPerson( person_id: Int): List<MovieEntity>
-    suspend fun getTvShowsByPerson( person_id: Int): List<TvShowEntity>
+    suspend fun getMoviesByPerson(person_id: Int): List<MovieEntity>
+    suspend fun getTvShowsByPerson(person_id: Int): List<TvShowEntity>
 }

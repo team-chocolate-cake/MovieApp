@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.chocolatecake.bases.BaseViewModel
 import com.chocolatecake.entities.RatingEpisodeDetailsStatusEntity
+import com.chocolatecake.usecase.episode_details.GetAllMyRatedEpisodesUseCase
 import com.chocolatecake.usecase.episode_details.GetCastForEpisodeUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeDetailsUseCase
 import com.chocolatecake.usecase.episode_details.GetEpisodeVideoUseCase
@@ -14,6 +15,7 @@ import com.chocolatecake.viewmodel.common.listener.PeopleListener
 import com.chocolatecake.viewmodel.common.model.PeopleUIState
 import com.chocolatecake.viewmodel.search.mappers.PeopleUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,9 +24,11 @@ import javax.inject.Inject
 class EpisodeDetailsViewModel @Inject constructor(
     private val setEpisodeRatingUseCase: SetEpisodeRatingUseCase,
     private val episodeDetailsUseCase: GetEpisodeDetailsUseCase,
+    private val getAllMyRatedEpisodesUseCase: GetAllMyRatedEpisodesUseCase,
     private val episodeDetailsUiMapper: EpisodeDetailsUiMapper,
     private val castUseCase: GetCastForEpisodeUseCase,
     private val peopleUiMapper: PeopleUiMapper,
+    private val userRateUiMapper: UserRateUiMapper,
     private val trailerUiMapper: TrailerUiMapper,
     private val episodeVideoUseCase: GetEpisodeVideoUseCase,
     private val checkIsLoggedInOrNotUseCase: CheckIsLoginedOrNotUseCase,
@@ -39,6 +43,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true, isLoggedIn = checkIsLoggedInOrNotUseCase()) }
         getData(seriesId, seasonNumber, episodeNumber)
     }
+
     private fun getData(seriesId: Int, seasonNumber: Int, episodeNumber: Int) {
         _state.update { it.copy(isLoading = true) }
         getEpisodeDetailsData(seriesId, seasonNumber, episodeNumber)
@@ -88,7 +93,9 @@ class EpisodeDetailsViewModel @Inject constructor(
                 val inputData = episodeVideoUseCase(seriesId, seasonNumber, episodeNumber)
                 val mappedData = trailerUiMapper.map(inputData)
                 onSuccessEpisodeVideo(mappedData)
-            } catch (th: Throwable) { _state.update { it.copy(trailerKey = "") } }
+            } catch (th: Throwable) {
+                _state.update { it.copy(trailerKey = "") }
+            }
         }
     }
 
@@ -98,6 +105,21 @@ class EpisodeDetailsViewModel @Inject constructor(
                 trailerKey = trailerUiState.videoKey,
                 refreshing = false, onErrors = emptyList()
             )
+        }
+    }
+
+    /// endregion
+
+    /// region get user rate for specific episode
+
+    fun getUserRate() {
+        try {
+            viewModelScope.launch {
+
+                getAllMyRatedEpisodesUseCase().first().
+            }
+        } catch (th: Throwable) {
+            onError(th)
         }
     }
 
@@ -174,7 +196,7 @@ class EpisodeDetailsViewModel @Inject constructor(
         sendEvent(EpisodeDetailsUiEvent.ClickToRate(episodeId))
     }
 
-    override fun clickToPlayFullScreen(videoKey:String) {
+    override fun clickToPlayFullScreen(videoKey: String) {
         sendEvent(EpisodeDetailsUiEvent.ClickToPlayFullScreen(videoKey))
     }
 

@@ -34,6 +34,7 @@ import com.chocolatecake.remote.response.dto.UserListRemoteDto
 import com.chocolatecake.remote.response.dto.YoutubeVideoDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsCastRemoteDto
 import com.chocolatecake.remote.response.dto.episode_details.EpisodeDetailsRemoteDto
+import com.chocolatecake.remote.response.dto.episode_details.MyRatedEpisodesDto
 import com.chocolatecake.remote.response.dto.episode_details.RatingEpisodeDetailsRemoteDto
 import com.chocolatecake.remote.response.dto.my_rated.MyRatedMovieDto
 import com.chocolatecake.remote.response.dto.my_rated.MyRatedTvShowDto
@@ -182,7 +183,6 @@ interface MovieService {
     ): Response<ProfileRemoteDto>
     ///endregion
 
-
     /// region movie details
     @GET("movie/{movieId}?&append_to_response=videos,credits,recommendations,reviews")
     suspend fun getMovieDetails(
@@ -237,7 +237,6 @@ interface MovieService {
     ): Response<DataWrapperResponse<YoutubeVideoDetailsRemoteDto>>
     /// endregion
 
-
     //region my list
     @GET("account/account_id/lists")
     suspend fun getUserLists(): Response<DataWrapperResponse<UserListRemoteDto>>
@@ -268,6 +267,7 @@ interface MovieService {
 
     @POST("list")
     suspend fun addList(@Body listRequest: ListRequest): Response<ListResponse>
+
     @DELETE("list/{list_id}")
     suspend fun deleteList(@Path("list_id") listId: Int): Response<StatusResponse>
 
@@ -305,6 +305,10 @@ interface MovieService {
         @Path("episode_number") episodeNumber: Int
     ): Response<EpisodeDetailsRemoteDto>
 
+    @GET("account/{account_id}/rated/movies")
+    suspend fun getAllMyRatedEpisodes(
+        @Query("page") page: Int = 1
+    ): Response<DataWrapperResponse<MyRatedEpisodesDto>>
 
     @Headers("Content-Type: application/json;charset=utf-8")
     @POST("tv/{series_id}/season/{season_number}/episode/{episode_number}/rating")
@@ -342,16 +346,16 @@ interface MovieService {
     ///endregion
 
 
-//people details region
+    /// region people details
 
     @GET("person/{person_id}")
-    suspend fun getPerson(@Path("person_id") person_id: Int):Response<PeopleDetailsResponse>
+    suspend fun getPerson(@Path("person_id") person_id: Int): Response<PeopleDetailsResponse>
 
     @GET("person/{person_id}/movie_credits")
-    suspend fun getMoviesByPerson(@Path("person_id") person_id: Int):Response<MoviesByPeopleResponse>
+    suspend fun getMoviesByPerson(@Path("person_id") person_id: Int): Response<MoviesByPeopleResponse>
 
     @GET("person/{person_id}/tv_credits")
-    suspend fun getTvShowsByPerson(@Path("person_id") person_id: Int):Response<TvShowsByPeopleResponse>
+    suspend fun getTvShowsByPerson(@Path("person_id") person_id: Int): Response<TvShowsByPeopleResponse>
 
-    //end region
+    ///endregion
 }

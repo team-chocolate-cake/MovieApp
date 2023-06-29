@@ -20,6 +20,7 @@ import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
+import com.chocolatecake.entities.my_rated.MyRatedEpisodesEntity
 import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
@@ -75,6 +76,7 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapp
 import com.chocolatecake.repository.mappers.domain.showmore.PopularMoviesShowMorePagingSource
 import com.chocolatecake.repository.mappers.domain.showmore.TopRatedShowMorePagingSource
 import com.chocolatecake.repository.mappers.domain.showmore.TrendingShowMorePagingSource
+import com.chocolatecake.repository.my_rated.MyRatedEpisodesPagingSource
 import com.chocolatecake.repository.my_rated.RatedMoviesPagingSource
 import com.chocolatecake.repository.my_rated.RatedTvShowPagingSource
 import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
@@ -93,6 +95,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val topRatedTvShowsPagingSource: TopRatedTVShowsPagingSource,
     private val onTheAirTVShowsPagingSource: OnTheAirTVShowsPagingSource,
     private val popularTVShowsPagingSource: PopularTVShowsPagingSource,
+    private val myRatedEpisodesPagingSource: MyRatedEpisodesPagingSource,
     private val preferenceStorage: PreferenceStorage,
     private val localGenresMovieMapper: LocalGenresMovieMapper,
     private val localGenresTvMapper: LocalGenresTvMapper,
@@ -460,11 +463,12 @@ class MovieRepositoryImpl @Inject constructor(
         val genresEntities = getGenresMovies()
         val result = wrapApiCall { movieService.getFavoriteMovies() }.results
         return result?.map { item ->
-            domainMovieMapper.map(input = item!!
-                ,filterGenres(
-                item.genreIds?.filterNotNull() ?: emptyList(),
-                genresEntities
-            ))
+            domainMovieMapper.map(
+                input = item!!, filterGenres(
+                    item.genreIds?.filterNotNull() ?: emptyList(),
+                    genresEntities
+                )
+            )
         } ?: emptyList()
     }
 
@@ -473,11 +477,11 @@ class MovieRepositoryImpl @Inject constructor(
         val result = wrapApiCall { movieService.getWatchlist() }.results
         return result?.map { item ->
             domainMovieMapper.map(
-                input = item!!
-                ,filterGenres(
-                item.genreIds?.filterNotNull() ?: emptyList(),
-                genresEntities
-            ))
+                input = item!!, filterGenres(
+                    item.genreIds?.filterNotNull() ?: emptyList(),
+                    genresEntities
+                )
+            )
         } ?: emptyList()
     }
 
@@ -546,7 +550,8 @@ class MovieRepositoryImpl @Inject constructor(
 
     /// region user list
     override suspend fun getUserLists(): List<UserListEntity> {
-        val call = wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
+        val call =
+            wrapApiCall { movieService.getUserLists() }.results?.filterNotNull() ?: emptyList()
         return domainUserListsMapper.map(call)
     }
 
@@ -568,7 +573,7 @@ class MovieRepositoryImpl @Inject constructor(
         val result = wrapApiCall { movieService.getDetailsList(listId) }.items
         return result?.map { item ->
             domainMovieMapper.map(
-                input = item ,
+                input = item,
                 genres = filterGenres(
                     item.genreIds?.filterNotNull() ?: emptyList(),
                     genresEntities
@@ -578,15 +583,19 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteMovieDetailsList(listId: Int, mediaId: Int): StatusEntity {
-        val call = wrapApiCall { movieService.deleteMovieDetailsList(listId = listId, DeleteMovieRequest(mediaId = mediaId) )}
+        val call = wrapApiCall {
+            movieService.deleteMovieDetailsList(
+                listId = listId,
+                DeleteMovieRequest(mediaId = mediaId)
+            )
+        }
         return domainStatusMapper.map(call)
 
     }
 
     override suspend fun deleteList(listId: Int): StatusEntity {
-        return domainStatusMapper.map(wrapApiCall { movieService.deleteList(listId = listId)})
+        return domainStatusMapper.map(wrapApiCall { movieService.deleteList(listId = listId) })
     }
-
 
 
     override suspend fun getListCreated(): List<ListCreatedEntity> {
@@ -652,6 +661,13 @@ class MovieRepositoryImpl @Inject constructor(
         })
     }
 
+    override suspend fun getAllMyRatedEpisodes(): Pager<Int, MyRatedEpisodesEntity> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = { myRatedEpisodesPagingSource }
+        )
+    }
+
     /// endregion
 
     /// region trailer
@@ -675,8 +691,8 @@ class MovieRepositoryImpl @Inject constructor(
         episodeNumber: Int
     ): YoutubeVideoDetailsEntity {
         val response =
-            wrapApiCall {movieService.getEpisodeVideos(seriesId, seasonNumber, episodeNumber)}
-                .results?.first()?:YoutubeVideoDetailsRemoteDto()
+            wrapApiCall { movieService.getEpisodeVideos(seriesId, seasonNumber, episodeNumber) }
+                .results?.first() ?: YoutubeVideoDetailsRemoteDto()
 
         return domainYoutubeDetailsMapper.map(response)
     }
