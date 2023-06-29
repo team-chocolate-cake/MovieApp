@@ -88,7 +88,7 @@ class MovieDetailsFragment :
             }
 
             is MovieDetailsUiEvent.RateMovie -> {
-                checkIsLoggedInOrNot(event.movieId)
+                checkIsLoggedInOrNot()
             }
 
             is MovieDetailsUiEvent.NavigateToMovie -> {
@@ -120,16 +120,16 @@ class MovieDetailsFragment :
         )
     }
 
-    private fun checkIsLoggedInOrNot(movieId: Int) {
+    private fun checkIsLoggedInOrNot() {
         val isLoggedIn = viewModel.state.value.isLogined
         if (isLoggedIn) {
-            showRatingBottomSheet(movieId)
+            showRatingBottomSheet()
         } else {
-            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
+            showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode")
         }
     }
 
-    private fun showRatingBottomSheet(movieId: Int) {
+    private fun showRatingBottomSheet() {
         val bottomSheet = RatingMovieBottomSheet()
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
@@ -145,7 +145,7 @@ class MovieDetailsFragment :
 
     private fun collapseState() {
         var pos = 0
-        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
             binding.nestedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     val firstVisibleItemPosition = recyclerView.layoutManager as LinearLayoutManager

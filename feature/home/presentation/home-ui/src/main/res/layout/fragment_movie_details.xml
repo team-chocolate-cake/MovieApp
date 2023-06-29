@@ -26,8 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 app:contentScrim="@color/card"
+                app:layout_collapseMode="pin"
                 android:nestedScrollingEnabled="false"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <FrameLayout
                     android:id="@+id/frameLayout"
