@@ -20,7 +20,6 @@ import com.chocolatecake.entities.YoutubeVideoDetailsEntity
 import com.chocolatecake.entities.movieDetails.MovieDetailsEntity
 import com.chocolatecake.entities.movieDetails.ReviewResponseEntity
 import com.chocolatecake.entities.myList.ListCreatedEntity
-import com.chocolatecake.entities.my_rated.MyRatedEpisodesEntity
 import com.chocolatecake.entities.my_rated.MyRatedMovieEntity
 import com.chocolatecake.entities.my_rated.MyRatedTvShowEntity
 import com.chocolatecake.entities.season_details.SeasonDetailsEntity
@@ -76,7 +75,6 @@ import com.chocolatecake.repository.mappers.domain.movie.DomainUpcomingMovieMapp
 import com.chocolatecake.repository.mappers.domain.showmore.PopularMoviesShowMorePagingSource
 import com.chocolatecake.repository.mappers.domain.showmore.TopRatedShowMorePagingSource
 import com.chocolatecake.repository.mappers.domain.showmore.TrendingShowMorePagingSource
-import com.chocolatecake.repository.my_rated.MyRatedEpisodesPagingSource
 import com.chocolatecake.repository.my_rated.RatedMoviesPagingSource
 import com.chocolatecake.repository.my_rated.RatedTvShowPagingSource
 import com.chocolatecake.repository.tv_shows.AiringTodayTVShowsPagingSource
@@ -95,7 +93,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val topRatedTvShowsPagingSource: TopRatedTVShowsPagingSource,
     private val onTheAirTVShowsPagingSource: OnTheAirTVShowsPagingSource,
     private val popularTVShowsPagingSource: PopularTVShowsPagingSource,
-    private val myRatedEpisodesPagingSource: MyRatedEpisodesPagingSource,
     private val preferenceStorage: PreferenceStorage,
     private val localGenresMovieMapper: LocalGenresMovieMapper,
     private val localGenresTvMapper: LocalGenresTvMapper,
@@ -659,13 +656,6 @@ class MovieRepositoryImpl @Inject constructor(
                 episodeNumber
             )
         })
-    }
-
-    override suspend fun getAllMyRatedEpisodes(): Pager<Int, MyRatedEpisodesEntity> {
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = { myRatedEpisodesPagingSource }
-        )
     }
 
     /// endregion

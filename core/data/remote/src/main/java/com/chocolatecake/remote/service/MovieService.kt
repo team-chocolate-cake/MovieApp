@@ -305,11 +305,6 @@ interface MovieService {
         @Path("episode_number") episodeNumber: Int
     ): Response<EpisodeDetailsRemoteDto>
 
-    @GET("account/{account_id}/rated/movies")
-    suspend fun getAllMyRatedEpisodes(
-        @Query("page") page: Int = 1
-    ): Response<DataWrapperResponse<MyRatedEpisodesDto>>
-
     @Headers("Content-Type: application/json;charset=utf-8")
     @POST("tv/{series_id}/season/{season_number}/episode/{episode_number}/rating")
     suspend fun postEpisodeRating(
