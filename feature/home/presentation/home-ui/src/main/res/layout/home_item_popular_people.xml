@@ -27,7 +27,7 @@
             android:layout_marginStart="@dimen/spacing_tiny_4dp"
             android:layout_marginEnd="@dimen/spacing_tiny_4dp"
             android:adjustViewBounds="true"
-            android:onClick="@{()-> listener.onClickPopularPeople(item.id)}"
+            android:onClick="@{()-> listener.onClickMovieDetails(item.id)}"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.profilePath}"
             app:layout_constraintDimensionRatio="1:1"
