@@ -34,7 +34,7 @@ class MyRatedViewModel @Inject constructor(
     }
 
     private fun getData() {
-        when (_state.value.MyRateType) {
+        when (_state.value.myRateType) {
             RateType.Movies -> fetchMyRatedMovies()
             RateType.TVShows -> fetchMyRatedTvShow()
         }
@@ -62,8 +62,8 @@ class MyRatedViewModel @Inject constructor(
         }.cachedIn(viewModelScope)
         _state.update {
             it.copy(
-                MyRateType = RateType.Movies,
-                MyRatedMedia = items,
+                myRateType = RateType.Movies,
+                myRatedMedia = items,
                 isLoading = false,
                 errorList = emptyList()
             )
@@ -75,8 +75,8 @@ class MyRatedViewModel @Inject constructor(
         }.cachedIn(viewModelScope)
         _state.update {
             it.copy(
-                MyRateType = RateType.TVShows,
-                MyRatedMedia = items,
+                myRateType = RateType.TVShows,
+                myRatedMedia = items,
                 isLoading = false,
                 errorList = emptyList()
             )
@@ -127,7 +127,7 @@ class MyRatedViewModel @Inject constructor(
     }
 
     override fun onClickMedia(id: Int) {
-        when(_state.value.MyRateType){
+        when(_state.value.myRateType){
             RateType.Movies -> sendEvent(MyRatedEvents.NavigateToMovieDetails(id))
             RateType.TVShows -> sendEvent(MyRatedEvents.NavigateToTVShowDetails(id))
         }

@@ -33,7 +33,7 @@ class MyRatedFragment : BaseFragment<FragmentMyRatedBinding, MyRatedUiState , My
         binding.recyclerViewMedia.adapter = myRateAdapter.withLoadStateFooter(footerAdapter)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collectLatest { state ->
-                val flow = state.MyRatedMedia
+                val flow = state.myRatedMedia
                 collectLast(flow) { itemsPagingData ->
                     viewLifecycleOwner.lifecycleScope.launch {
                         myRateAdapter.submitData(itemsPagingData)

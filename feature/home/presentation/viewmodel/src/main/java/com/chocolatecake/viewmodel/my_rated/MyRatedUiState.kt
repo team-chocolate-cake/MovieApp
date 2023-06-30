@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
 data class MyRatedUiState (
-    val MyRateType: RateType = RateType.Movies,
-    val MyRatedMedia: Flow<PagingData<MovieHorizontalUIState>> = emptyFlow(),
+    val myRateType: RateType = RateType.Movies,
+    val myRatedMedia: Flow<PagingData<MovieHorizontalUIState>> = emptyFlow(),
     val errorList: List<String>? = emptyList(),
     val isLoading: Boolean = false
 )
