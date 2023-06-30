@@ -172,42 +172,12 @@ class HomeViewModel @Inject constructor(
     /// endregion
 
     /// region events
-    override fun onClickNowPlaying(itemId: Int) {
-        sendEvent(HomeUiEvent.NowPlayingMovieEvent(itemId))
+    override fun onClickMovieDetails(itemId: Int) {
+        sendEvent(HomeUiEvent.MovieEvent(itemId))
     }
 
-    override fun onClickTrending(itemId: Int) {
-        sendEvent(HomeUiEvent.TrendingMovieEvent(itemId))
-    }
-
-    override fun onClickPopularMovies(itemId: Int) {
-        sendEvent(HomeUiEvent.PopularMovieEvent(itemId))
-    }
-
-    override fun onClickTopRated(itemId: Int) {
-        sendEvent(HomeUiEvent.TopRatedMovieEvent(itemId))
-    }
-
-
-    override fun onClickUpComing(itemId: Int) {
-        sendEvent(HomeUiEvent.UpComingMovieEvent(itemId))
-    }
-
-    override fun onClickPopularPeople(itemId: Int) {
-        sendEvent(HomeUiEvent.PopularPeopleEvent(itemId))
-    }
-
-
-    override fun onClickTrendingShowMore() {
-        sendEvent(HomeUiEvent.ClickTrendingShowMore)
-    }
-
-    override fun onClickTopRatedShowMore() {
-        sendEvent(HomeUiEvent.ClickTopRatedShowMore)
-    }
-
-    override fun onClickPopularMoviesShowMore() {
-        sendEvent(HomeUiEvent.ClickPopularMoviesShowMore)
+    override fun onClickShowMore() {
+        sendEvent(HomeUiEvent.ClickShowMore)
     }
     /// endregion
 
