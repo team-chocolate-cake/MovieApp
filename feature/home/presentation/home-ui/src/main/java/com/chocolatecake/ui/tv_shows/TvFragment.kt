@@ -1,6 +1,7 @@
 package com.chocolatecake.ui.tv_shows
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.forEach
 import androidx.fragment.app.viewModels
@@ -79,7 +80,12 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun showTopRatedResult() = viewModel.getTopRatedTVShows()
     private fun showPopularResult() = viewModel.getPopularTVShows()
     private fun navigateToTv(tvId: Int) {
-        findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
+        try {
+            findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
+        }catch (e:Exception){
+            Log.e("TAGG", "navigateToTv: ${e}", )
+        }
+
     }
 
     private fun doNothingWhenTheSameChipIsReselected() {
