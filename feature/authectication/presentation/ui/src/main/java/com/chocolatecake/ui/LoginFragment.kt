@@ -1,11 +1,13 @@
 package com.chocolatecake.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.bases.BaseFragment
@@ -74,6 +76,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginUiState, LoginUiEv
             }
 
             is LoginUiEvent.ShowSnackBar -> {
+                val keyboard = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                keyboard.hideSoftInputFromWindow(view?.windowToken, 0)
                 showSnackBar(event.message)
             }
 
