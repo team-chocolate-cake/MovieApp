@@ -1,6 +1,8 @@
 package com.chocolatecake.ui.youtube_player
 
 import android.content.pm.ActivityInfo
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -24,9 +26,15 @@ class TrailerFragment :
         super.onViewCreated(view, savedInstanceState)
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         activity?.window?.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        activity?.window?.navigationBarColor = Color.BLACK
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            activity?.window?.setDecorFitsSystemWindows(false)
+        } else {
+            activity?.window?.decorView?.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+        }
     }
 
     override fun onDestroyView() {
