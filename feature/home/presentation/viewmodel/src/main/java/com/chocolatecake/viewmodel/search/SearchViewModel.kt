@@ -223,6 +223,10 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    override fun onClickClear() {
+       query.value = ""
+    }
+
     override fun showResultMovie() {
         sendEvent(SearchUiEvent.ShowMovieResult)
         _state.update {

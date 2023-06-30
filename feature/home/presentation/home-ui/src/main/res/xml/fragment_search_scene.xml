@@ -23,10 +23,10 @@
             android:id="@+id/image_button_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_custom_12dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/edittext_search"
-            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
-            motion:layout_constraintTop_toTopOf="@+id/edittext_search"
+            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/image_button_clear"
+            motion:layout_constraintTop_toTopOf="@+id/image_button_clear"
+            motion:layout_constraintEnd_toStartOf="@+id/image_button_clear"
             motion:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/edittext_search"
@@ -109,6 +109,15 @@
             motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
             motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
             android:layout_marginTop="@dimen/spacing_medium_16dp" />
+        <Constraint
+            android:id="@+id/image_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_custom_12dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/edittext_search"
+            motion:layout_constraintTop_toTopOf="@+id/edittext_search"
+            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
+            motion:visibilityMode="ignore" />
 
     </ConstraintSet>
 
@@ -128,10 +137,10 @@
             android:id="@+id/image_button_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_custom_12dp"
-            motion:layout_constraintBottom_toBottomOf="@+id/edittext_search"
-            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
-            motion:layout_constraintTop_toTopOf="@+id/edittext_search"
+            android:layout_marginEnd="@dimen/spacing_tiny_4dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/image_button_clear"
+            motion:layout_constraintTop_toTopOf="@+id/image_button_clear"
+            motion:layout_constraintEnd_toStartOf="@+id/image_button_clear"
             motion:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/edittext_search"
@@ -214,6 +223,15 @@
             motion:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
             motion:layout_constraintStart_toStartOf="@id/lottie_animation_view_no_network"
             android:layout_marginTop="@dimen/spacing_medium_16dp" />
+        <Constraint
+            android:id="@+id/image_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_custom_12dp"
+            motion:layout_constraintBottom_toBottomOf="@+id/edittext_search"
+            motion:layout_constraintTop_toTopOf="@+id/edittext_search"
+            motion:layout_constraintEnd_toEndOf="@+id/edittext_search"
+            motion:visibilityMode="ignore" />
 
     </ConstraintSet>
 </MotionScene>
