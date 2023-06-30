@@ -6,10 +6,9 @@
         android:id="@+id/show_keyboard"
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="300">
         <OnClick motion:targetId="@id/textview_username"
                 motion:clickAction="transitionToEnd"
-
             />
     </Transition>
 
