@@ -7,12 +7,15 @@ import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.MovieRatingBottomSheetBinding
 import com.chocolatecake.ui.tv_details.BaseBottomSheet
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiEvent
+import com.chocolatecake.viewmodel.movieDetails.MovieDetailsUiState
 import com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RatingMovieBottomSheet : BaseBottomSheet<MovieRatingBottomSheetBinding>() {
+class RatingMovieBottomSheet :
+    BaseBottomSheet<MovieRatingBottomSheetBinding>() {
     override val layoutIdFragment: Int = R.layout.movie_rating_bottom_sheet
     override val viewModel by activityViewModels<MovieDetailsViewModel>()
     private var dismissListener: BottomSheetDismissListener? = null
@@ -27,10 +30,8 @@ class RatingMovieBottomSheet : BaseBottomSheet<MovieRatingBottomSheetBinding>() 
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
 
-
-        binding.movieRatingBar.rating = viewModel.state.value.movieUiState.voteAverage
-
-        Log.d("rate", viewModel.state.value.movieUiState.voteAverage.toString())
+        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
+        binding.movieRatingBar.rating = voteAverage / 2
 
         binding.movieRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2

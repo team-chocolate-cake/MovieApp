@@ -74,7 +74,7 @@ class TvDetailsFragment :
     private fun checkIsLoggedInOrNot() {
         val isLoggedIn = viewModel.state.value.isLogined
         if (isLoggedIn) {
-            showRateBottomSheet()
+            showRateBottomSheet(viewModel.state.value.info.rating)
         } else {
             showSnackBar(getString(R.string.your_not_loged_in_to_rate))
         }
@@ -122,8 +122,11 @@ class TvDetailsFragment :
         }
     }
     //region rating bottom sheet
-    private fun showRateBottomSheet() {
+    private fun showRateBottomSheet(voteAverage: Float) {
         rateBottomSheet = RateBottomSheet()
+        rateBottomSheet.arguments = Bundle().apply {
+            putFloat("voteAverage", voteAverage)
+        }
         rateBottomSheet.setListener(this)
         rateBottomSheet.show(childFragmentManager, "BOTTOM")
     }

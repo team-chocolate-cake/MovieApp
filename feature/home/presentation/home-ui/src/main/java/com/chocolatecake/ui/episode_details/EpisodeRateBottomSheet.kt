@@ -7,6 +7,8 @@ import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.ItemEpisodeDetailsRateBottomSheetBinding
 import com.chocolatecake.ui.tv_details.BaseBottomSheet
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsUiEvent
+import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsUiState
 import com.chocolatecake.viewmodel.episode_details.EpisodeDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,17 +21,18 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
     fun setListener(dismissListener: BottomSheetListener) {
         this.dismissListener = dismissListener
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
 
-
+        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
+        binding.episodeRatingBar.rating = voteAverage / 2
 
         binding.episodeRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
-
             Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
@@ -38,12 +41,7 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
             dismiss()
         }
     }
-    fun setRatingValue(rating: Float) {
-        binding.episodeRatingBar.rating = rating
-        Log.d("mimo",rating.toString())
-    }
 }
-
 
 
 interface BottomSheetListener {

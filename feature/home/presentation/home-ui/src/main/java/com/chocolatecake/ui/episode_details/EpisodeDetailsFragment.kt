@@ -32,7 +32,6 @@ class EpisodeDetailsFragment :
         binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
-
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
@@ -48,11 +47,21 @@ class EpisodeDetailsFragment :
     private fun checkIsLoggedInOrNot() {
         val isLoggedIn = viewModel.state.value.isLoggedIn
         if (isLoggedIn) {
-            showBottomSheet()
+            showBottomSheet(viewModel.state.value.voteAverage)
         } else {
             showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
         }
     }
+
+    private fun showBottomSheet(voteAverage: Float) {
+        val bottomSheet = EpisodeRateBottomSheet()
+        bottomSheet.arguments = Bundle().apply {
+            putFloat("voteAverage", voteAverage)
+        }
+        bottomSheet.show(childFragmentManager, "BOTTOM")
+        bottomSheet.setListener(this)
+    }
+
 
     private fun navigateToPlayFullScreen(videoKey: String) {
         findNavController().navigate(
@@ -85,12 +94,5 @@ class EpisodeDetailsFragment :
                 itemId
             )
         )
-    }
-
-    private fun showBottomSheet() {
-        val bottomSheet = EpisodeRateBottomSheet()
-       // bottomSheet.setRatingValue(viewModel.state.value.voteAverage)
-        bottomSheet.show(childFragmentManager, "BOTTOM")
-        bottomSheet.setListener(this)
     }
 }
