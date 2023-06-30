@@ -11,13 +11,16 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chocolatecake.movieapp.databinding.ActivityMainBinding
+import com.chocolatecake.ui.sound_when_play.SoundManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    @Inject
+    lateinit var soundManager:SoundManager
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -27,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         changeAppTheme()
     }
 
+    override fun onPause() {
+        super.onPause()
+        soundManager.stopSound()
+    }
     override fun onResume() {
         super.onResume()
         val navController = findNavController(R.id.nav_host_fragment)
