@@ -109,6 +109,7 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPersonName"
                 android:maxLines="1"
+                android:maxLength="24"
                 android:padding="16dp"
                 android:text="@={viewModel.state.userName}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
