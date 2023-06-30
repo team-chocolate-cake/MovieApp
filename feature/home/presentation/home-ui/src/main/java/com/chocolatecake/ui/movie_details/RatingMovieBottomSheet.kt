@@ -29,14 +29,10 @@ class RatingMovieBottomSheet :
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-
-        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
-        binding.movieRatingBar.rating = voteAverage / 2
+        setVoteAverageInRatingBar()
 
         binding.movieRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
-
-            Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
             if (userRating == 0f) {
@@ -48,7 +44,10 @@ class RatingMovieBottomSheet :
             }
         }
     }
-
+    private fun setVoteAverageInRatingBar() {
+        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
+        binding.movieRatingBar.rating = voteAverage / 2
+    }
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }

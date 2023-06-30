@@ -27,19 +27,20 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-
-        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
-        binding.episodeRatingBar.rating = voteAverage / 2
+        setVoteAverageInRatingBar()
 
         binding.episodeRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
-            Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
             dismissListener?.onApplyRateBottomSheet()
             dismissListener?.updateRatingValue(userRating)
             dismiss()
         }
+    }
+    private fun setVoteAverageInRatingBar() {
+        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
+        binding.episodeRatingBar.rating = voteAverage / 2
     }
 }
 

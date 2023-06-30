@@ -26,9 +26,7 @@ class RateBottomSheet :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var userRating = 0f
-
-        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
-        binding.tvRatingBar.rating = voteAverage / 2
+        setVoteAverageInRatingBar()
 
         binding.tvRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
@@ -42,10 +40,11 @@ class RateBottomSheet :
                 dismiss()
             }
         }
-
     }
-
-
+    private fun setVoteAverageInRatingBar() {
+        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
+        binding.tvRatingBar.rating = voteAverage / 2
+    }
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }

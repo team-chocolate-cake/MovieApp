@@ -82,7 +82,6 @@ class EpisodeDetailsViewModel @Inject constructor(
                 refreshing = false,
             )
         }
-        Log.d("mimo-model", _state.value.voteAverage.toString())
     }
     /// endregion
 
