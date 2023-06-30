@@ -29,7 +29,7 @@
             android:imeOptions="flagNoFullscreen"
             android:inputType="text"
             android:paddingStart="@dimen/spacing_custom_12dp"
-            android:paddingEnd="48dp"
+            android:paddingEnd="74dp"
             android:text="@={viewModel.query}"
             android:textColor="@color/on_background_60"
             app:layout_constraintEnd_toEndOf="parent"
