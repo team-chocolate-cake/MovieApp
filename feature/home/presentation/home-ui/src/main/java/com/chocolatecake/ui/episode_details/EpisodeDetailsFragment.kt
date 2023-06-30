@@ -32,6 +32,7 @@ class EpisodeDetailsFragment :
         binding.swipeToRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
         }
+
     }
 
     override fun onEvent(event: EpisodeDetailsUiEvent) {
@@ -88,6 +89,7 @@ class EpisodeDetailsFragment :
 
     private fun showBottomSheet() {
         val bottomSheet = EpisodeRateBottomSheet()
+       // bottomSheet.setRatingValue(viewModel.state.value.voteAverage)
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }

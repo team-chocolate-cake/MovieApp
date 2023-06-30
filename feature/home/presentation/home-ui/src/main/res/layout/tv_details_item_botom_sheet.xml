@@ -50,7 +50,7 @@
                 />
 
             <RatingBar
-                android:id="@+id/rating"
+                android:id="@+id/tv_rating_bar"
                 style="@style/CustomRatingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

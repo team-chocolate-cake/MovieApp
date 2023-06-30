@@ -17,7 +17,7 @@ import com.chocolatecake.usecase.movie_details.AddToFavouriteUseCase
 import com.chocolatecake.usecase.movie_details.AddToWatchList
 import com.chocolatecake.usecase.movie_details.CheckIsLoginedOrNotUseCase
 import com.chocolatecake.usecase.movie_details.GetMovieDetailsUseCase
-import com.chocolatecake.usecase.movie_details.GetRatingUseCase
+import com.chocolatecake.usecase.movie_details.SetRatingUseCase
 import com.chocolatecake.usecase.watch_history.InsertMovieToWatchHistoryUseCase
 import com.chocolatecake.viewmodel.common.listener.ChipListener
 import com.chocolatecake.viewmodel.common.listener.MediaListener
@@ -39,7 +39,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val movieDetailsUseCase: GetMovieDetailsUseCase,
-    private val ratingUseCase: GetRatingUseCase,
+    private val ratingUseCase: SetRatingUseCase,
     private val getUserListsUseCase: GetUserListsUseCase,
     private val addToUserListUseCase: AddToUserListUseCase,
     private val createUserListUseCase: CreateUserListUseCase,

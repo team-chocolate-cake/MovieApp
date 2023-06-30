@@ -16,6 +16,7 @@ class DomainEpisodeDetailsMapper @Inject constructor() :
             seasonNumber = input.seasonNumber ?: 0,
             episodeNumber = input.episodeNumber ?: 0,
             episodeName = input.name ?: "",
+            voteAverage = input.voteAverage ?: 0f,
             imageUrl = BuildConfig.IMAGE_BASE_PATH + input.stillPath,
             episodeRate = input.voteAverage ?: 0.0F
         )

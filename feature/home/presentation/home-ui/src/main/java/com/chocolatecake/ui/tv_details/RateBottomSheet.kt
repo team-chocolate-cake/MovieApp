@@ -24,7 +24,8 @@ class RateBottomSheet: BaseBottomSheet<TvDetailsItemBotomSheetBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var userRating = 0f
-        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+
+        binding.tvRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
 
         }

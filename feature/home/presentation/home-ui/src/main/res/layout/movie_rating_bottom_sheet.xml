@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="item"
+            type="com.chocolatecake.ui.movie_details.adapter.MovieDetailsItem.Upper" />
+
+        <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.movieDetails.MovieDetailsViewModel" />
     </data>
@@ -50,18 +54,15 @@
                 />
 
             <RatingBar
-                android:id="@+id/rating"
+                android:id="@+id/movie_rating_bar"
                 style="@style/CustomRatingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:isIndicator="false"
                 android:numStars="5"
-                android:rating="0"
                 android:stepSize="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_group_genere"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/chip_group_genere" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_apply"

@@ -76,11 +76,13 @@ class EpisodeDetailsViewModel @Inject constructor(
                 seasonNumber = episodeDetails.seasonNumber,
                 episodeRate = episodeDetails.episodeRate,
                 episodeOverview = episodeDetails.episodeOverview,
+                voteAverage = episodeDetails.voteAverage,
                 onErrors = emptyList(),
                 isLoading = false,
-                refreshing = false
+                refreshing = false,
             )
         }
+        Log.d("mimo-model", _state.value.voteAverage.toString())
     }
     /// endregion
 

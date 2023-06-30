@@ -12,7 +12,8 @@ class EpisodeDetailsUiMapper  @Inject constructor() : Mapper<EpisodeDetailsEntit
             episodeName = input.episodeName,
             episodeRate = input.episodeRate,
             episodeOverview = input.overview,
-            seasonNumber = input.seasonNumber
+            seasonNumber = input.seasonNumber,
+            voteAverage = input.voteAverage
         )
     }
 }

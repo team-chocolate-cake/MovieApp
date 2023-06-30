@@ -9,14 +9,16 @@ data class EpisodeDetailsUiState(
     val userRate: Float = 0f,
     val episodeOverview: String = "",
     val episodeNumber: Int = 0,
+    val voteAverage: Float = 0f,
     val seasonNumber: Int = 0,
     val refreshing: Boolean = false,
     val cast: List<PeopleUIState> = emptyList(),
     val trailerKey: String = "",
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
-    val isLoggedIn:Boolean=false
-){
-    val isFailure: Boolean get() =
-        onErrors.isNotEmpty()
+    val isLoggedIn: Boolean = false
+) {
+    val isFailure: Boolean
+        get() =
+            onErrors.isNotEmpty()
 }

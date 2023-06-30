@@ -24,8 +24,12 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
+
+
+
+        binding.episodeRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
+
             Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
@@ -34,7 +38,14 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
             dismiss()
         }
     }
+    fun setRatingValue(rating: Float) {
+        binding.episodeRatingBar.rating = rating
+        Log.d("mimo",rating.toString())
+    }
 }
+
+
+
 interface BottomSheetListener {
     fun onApplyRateBottomSheet()
     fun updateRatingValue(rate: Float)

@@ -50,7 +50,7 @@
             app:selectionRequired="false" />
         <!--endregion-->
         <RatingBar
-            android:id="@+id/rating"
+            android:id="@+id/episode_rating_bar"
             style="@style/CustomRatingBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
             android:onClick="@{()->listener.onClickRate(item.upperUiState.id)}"
             android:text="@string/rate_this_movie"
             android:textColor="@color/primary"
-            app:layout_constraintBottom_toBottomOf="@+id/rating"
+            app:layout_constraintBottom_toBottomOf="@+id/episode_rating_bar"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
@@ -83,7 +83,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:text="@{item.upperUiState.overview}"
-            app:layout_constraintTop_toBottomOf="@id/rating"
+            app:layout_constraintTop_toBottomOf="@id/episode_rating_bar"
             tools:layout_editor_absoluteX="16dp"
             tools:text="@tools:sample/lorem/random" />
 

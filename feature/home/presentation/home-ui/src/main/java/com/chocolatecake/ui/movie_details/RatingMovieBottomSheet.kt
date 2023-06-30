@@ -26,9 +26,15 @@ class RatingMovieBottomSheet : BaseBottomSheet<MovieRatingBottomSheetBinding>() 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-        binding.rating.setOnRatingBarChangeListener { _, rating, _ ->
-            // Access the rating value here
+
+
+        binding.movieRatingBar.rating = viewModel.state.value.movieUiState.voteAverage
+
+        Log.d("rate", viewModel.state.value.movieUiState.voteAverage.toString())
+
+        binding.movieRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
+
             Log.i("rate", "$userRating")
         }
         binding.buttonApply.setOnClickListener {
@@ -41,6 +47,7 @@ class RatingMovieBottomSheet : BaseBottomSheet<MovieRatingBottomSheetBinding>() 
             }
         }
     }
+
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }

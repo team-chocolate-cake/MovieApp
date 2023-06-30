@@ -7,6 +7,7 @@ data class EpisodeDetailsEntity(
     val seasonNumber: Int,
     val episodeNumber: Int,
     val overview: String,
+    val voteAverage: Float,
     val productionCode: String,
     val episodeRate: Float
 )

@@ -4,7 +4,7 @@ import com.chocolatecake.entities.StatusEntity
 import com.chocolatecake.repository.MovieRepository
 import javax.inject.Inject
 
-class GetRatingUseCase @Inject constructor(
+class SetRatingUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
     suspend operator fun invoke(movieId:Int , rate:Float): StatusEntity {
