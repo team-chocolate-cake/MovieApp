@@ -28,9 +28,9 @@
 
     <style name="MediaDetailsChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipStrokeColor">@color/on_background_38</item>
-        <item name="chipBackgroundColor">@null</item>
-        <item name="chipStrokeWidth">1dp</item>
-        <item name="android:textColor">@color/on_background_38</item>
+        <item name="chipBackgroundColor">@color/background</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textColor">@color/on_background_60</item>
     </style>
 
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
