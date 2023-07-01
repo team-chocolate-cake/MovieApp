@@ -64,4 +64,5 @@
     <string name="are_you_sure_that_you_want_to_delete_1d">هل انت متأكد من حذف %1s ؟</string>
     <string name="cancel">الغاء</string>
     <string name="confirm">تأكيد</string>
+    <string name="please_rate_first">الرجاء التقييم اولا</string>
 </resources>
