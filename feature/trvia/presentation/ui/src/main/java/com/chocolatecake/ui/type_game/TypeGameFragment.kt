@@ -25,11 +25,14 @@ class TypeGameFragment : BaseFragment<FragmentTypeGamesBinding, Unit, GameTypeUI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+    override fun onResume() {
+        super.onResume()
         val volumeDrawableRes =
             if (soundManager.isSoundOn) R.drawable.ic_volume_full else R.drawable.ic_volume_mute
         binding.imageButtonVolume.setImageResource(volumeDrawableRes)
     }
-
     override fun onEvent(event: GameTypeUIEvent) {
         when (event) {
             GameTypeUIEvent.NavigateToMemorizeBoard -> {
