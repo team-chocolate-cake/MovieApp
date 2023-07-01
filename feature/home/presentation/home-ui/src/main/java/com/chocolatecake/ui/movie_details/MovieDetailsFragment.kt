@@ -122,19 +122,16 @@ class MovieDetailsFragment :
     }
 
     private fun checkIsLoggedInOrNot() {
-        val isLoggedIn = viewModel.state.value.isLogined
+        val isLoggedIn = viewModel.state.value.isLogedin
         if (isLoggedIn) {
-            showRatingBottomSheet(viewModel.state.value.movieUiState.voteAverage)
+            showRatingBottomSheet()
         } else {
             showSnackBar(getString(R.string.your_not_loged_in_to_rate))
         }
     }
 
-    private fun showRatingBottomSheet(voteAverage: Float) {
+    private fun showRatingBottomSheet() {
         val bottomSheet = RatingMovieBottomSheet()
-        bottomSheet.arguments = Bundle().apply {
-            putFloat("voteAverage", voteAverage)
-        }
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }

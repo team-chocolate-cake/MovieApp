@@ -47,17 +47,14 @@ class EpisodeDetailsFragment :
     private fun checkIsLoggedInOrNot() {
         val isLoggedIn = viewModel.state.value.isLoggedIn
         if (isLoggedIn) {
-            showBottomSheet(viewModel.state.value.voteAverage)
+            showBottomSheet()
         } else {
             showSnackBar("You are not logged in \uD83D\uDE22, please log in to rate this episode");
         }
     }
 
-    private fun showBottomSheet(voteAverage: Float) {
+    private fun showBottomSheet() {
         val bottomSheet = EpisodeRateBottomSheet()
-        bottomSheet.arguments = Bundle().apply {
-            putFloat("voteAverage", voteAverage)
-        }
         bottomSheet.show(childFragmentManager, "BOTTOM")
         bottomSheet.setListener(this)
     }

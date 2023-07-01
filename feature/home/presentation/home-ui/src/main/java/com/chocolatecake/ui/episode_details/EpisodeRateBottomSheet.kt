@@ -27,7 +27,6 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-        setVoteAverageInRatingBar()
 
         binding.episodeRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
@@ -37,10 +36,6 @@ class EpisodeRateBottomSheet : BaseBottomSheet<ItemEpisodeDetailsRateBottomSheet
             dismissListener?.updateRatingValue(userRating)
             dismiss()
         }
-    }
-    private fun setVoteAverageInRatingBar() {
-        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
-        binding.episodeRatingBar.rating = voteAverage / 2
     }
 }
 

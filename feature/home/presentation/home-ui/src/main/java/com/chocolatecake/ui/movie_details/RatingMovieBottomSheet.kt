@@ -29,24 +29,19 @@ class RatingMovieBottomSheet :
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         var userRating = 0f
-        setVoteAverageInRatingBar()
 
         binding.movieRatingBar.setOnRatingBarChangeListener { _, rating, _ ->
             userRating = rating * 2
         }
         binding.buttonApply.setOnClickListener {
             if (userRating == 0f) {
-                showSnackBar("Please Rate First")
+                showSnackBar( getString(R.string.please_rate_first))
             } else {
                 dismissListener?.onApplyRateBottomSheet()
                 dismissListener?.updateRatingValue(userRating)
                 dismiss()
             }
         }
-    }
-    private fun setVoteAverageInRatingBar() {
-        val voteAverage = arguments?.getFloat("voteAverage", 0f) ?: 0f
-        binding.movieRatingBar.rating = voteAverage / 2
     }
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()

@@ -126,7 +126,7 @@
                             android:onClick="@{()-> viewModel.onClickSaveButton()}"
                             android:scaleType="centerCrop"
                             android:src="@drawable/ic_save_unpressed"
-                            app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.Logined }"
+                            app:isVisible="@{!viewModel.state.loading &amp; viewModel.state.logedin }"
                             app:tint="@color/on_background_60" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>

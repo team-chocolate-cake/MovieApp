@@ -14,7 +14,7 @@ data class MovieDetailsUiState(
     val reviewsDetails: ReviewDetailsUiState = ReviewDetailsUiState(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
-    val isLogined: Boolean = false,
+    val isLogedin: Boolean = false,
     val userRating: Float = 0f,
     val userLists: List<UserListUi> = emptyList(),
     val userSelectedLists: List<Int> = emptyList()
