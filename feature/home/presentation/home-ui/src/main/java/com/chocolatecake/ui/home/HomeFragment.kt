@@ -54,19 +54,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
         when (event) {
 
             is HomeUiEvent.MovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
+                try {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                            event.itemId
+                        )
                     )
-                )
+                }catch (_:Exception){ }
             }
 
             HomeUiEvent.ClickShowMore -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
-                        showMoreType = ShowMoreType.POPULAR_MOVIES
+                try {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                            showMoreType = ShowMoreType.POPULAR_MOVIES
+                        )
                     )
-                )
+                }catch (_:Exception){ }
             }
         }
     }
