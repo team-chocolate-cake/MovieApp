@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chocolatecake.viewmodel.LoginViewModel" />
@@ -14,7 +13,7 @@
         android:id="@+id/login_motion_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutDescription="@xml/fragment_login_xml_constraintlayout_scene">
+        app:layoutDescription="@xml/fragment_login_xml_landscape_constraintlayout_scene">
 
         <ImageView
             android:id="@+id/imageview_login"
@@ -35,22 +34,14 @@
             android:background="@drawable/header_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_55" />
+            app:layout_constraintTop_toBottomOf="@id/guideline_20" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.20" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_55"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.55" />
-
+            app:layout_constraintGuide_percent="0.15" />
 
         <TextView
             android:id="@+id/textview_username"
@@ -84,7 +75,7 @@
                 android:background="@drawable/edittext_background"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="16dp"
+                android:padding="@dimen/spacing_medium_16dp"
                 android:text="@={viewModel.state.password}"
                 android:textAppearance="@style/TextStyle.BodyMedium"
                 android:textColor="@color/on_background_60"

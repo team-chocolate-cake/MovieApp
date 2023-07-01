@@ -14,13 +14,6 @@
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
-            android:id="@+id/view_background"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/guideline_55" />
-        <Constraint
             motion:layout_constraintEnd_toStartOf="@+id/textview_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,13 +35,6 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
-        <Constraint
-            android:id="@+id/view_background"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/guideline_20" />
         <Constraint
             motion:layout_constraintEnd_toStartOf="@+id/textview_signup"
             android:layout_width="wrap_content"
