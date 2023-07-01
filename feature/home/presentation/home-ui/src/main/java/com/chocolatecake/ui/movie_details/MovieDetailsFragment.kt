@@ -144,6 +144,10 @@ class MovieDetailsFragment :
         viewModel.updateRatingUiState(rate)
     }
 
+    override fun getUserRating(): Float {
+        return viewModel.state.value.userRating.div(2)
+    }
+
     private fun collapseState() {
         collectLatest {
             viewModel.state.collectLatest { state ->

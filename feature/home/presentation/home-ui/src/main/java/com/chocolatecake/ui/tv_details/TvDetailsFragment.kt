@@ -136,6 +136,10 @@ class TvDetailsFragment :
     override fun updateRatingValue(rate: Float) {
         viewModel.updateRatingUiState(rate)
     }
+
+    override fun getUserRating(): Float {
+        return viewModel.state.value.userRating.div(2)
+    }
     //endregion
 
     //region collapse toolbar

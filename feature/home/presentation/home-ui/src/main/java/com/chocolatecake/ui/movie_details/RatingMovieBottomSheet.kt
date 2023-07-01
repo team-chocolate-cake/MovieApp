@@ -42,6 +42,7 @@ class RatingMovieBottomSheet :
                 dismiss()
             }
         }
+        binding.movieRatingBar.rating = dismissListener?.getUserRating() ?: 0f
     }
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
@@ -51,4 +52,5 @@ class RatingMovieBottomSheet :
 interface BottomSheetDismissListener {
     fun onApplyRateBottomSheet()
     fun updateRatingValue(rate: Float)
+    fun getUserRating(): Float
 }

@@ -5,8 +5,6 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.chocolatecake.ui.home.R
 import com.chocolatecake.ui.home.databinding.TvDetailsItemBotomSheetBinding
-import com.chocolatecake.viewmodel.tv_details.TvDetailsUiEvent
-import com.chocolatecake.viewmodel.tv_details.TvDetailsUiState
 import com.chocolatecake.viewmodel.tv_details.TvDetailsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +37,9 @@ class RateBottomSheet :
                 dismiss()
             }
         }
+        binding.tvRatingBar.rating = dismissListener?.getUserRating() ?: 0f
     }
+
     private fun showSnackBar(messages: String) {
         Snackbar.make(binding.root, messages, Snackbar.LENGTH_SHORT).show()
     }
@@ -48,4 +48,5 @@ class RateBottomSheet :
 interface BottomSheetDismissListener {
     fun onApplyRateBottomSheet()
     fun updateRatingValue(rate: Float)
+    fun getUserRating(): Float
 }
