@@ -145,5 +145,11 @@
     <style name="AddToListChipStyle" parent="TextStyle.BodySmall.ChipStyle">
         <item name="android:textColor">@color/add_to_list_text_color</item>
     </style>
+
+    <style name="DetailsChipStyle" parent="TextStyle.BodySmall.ChipStyle">
+        <item name="android:textColor">@color/on_background_60</item>
+        <item name="chipBackgroundColor">@color/background</item>
+        <item name="strokeColor">@color/on_background_38</item>
+    </style>
     <!--    endregion-->
 </resources>
