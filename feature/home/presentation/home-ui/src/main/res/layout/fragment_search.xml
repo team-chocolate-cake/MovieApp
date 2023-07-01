@@ -18,9 +18,10 @@
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edittext_search"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginHorizontal="@dimen/spacing_medium_16dp"
+            android:layout_marginStart="@dimen/spacing_medium_16dp"
+            android:layout_marginEnd="@dimen/spacing_small_8dp"
             android:layout_marginTop="@dimen/spacing_large_24dp"
             android:background="@drawable/edittext_background"
             android:drawableStart="@drawable/ic_search"
@@ -29,10 +30,10 @@
             android:imeOptions="flagNoFullscreen"
             android:inputType="text"
             android:paddingStart="@dimen/spacing_custom_12dp"
-            android:paddingEnd="48dp"
+            android:paddingEnd="74dp"
             android:text="@={viewModel.query}"
             android:textColor="@color/on_background_60"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image_button_filter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,14 +54,28 @@
             android:id="@+id/image_button_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/spacing_custom_12dp"
+            android:layout_marginEnd="@dimen/spacing_medium_16dp"
             android:background="@null"
             android:onClick="@{() -> viewModel.onClickFilter()}"
             app:isVisibleOrGone="@{(!viewModel.state.isSelectedPeople) &amp;&amp; (!viewModel.query.empty) &amp;&amp; (!viewModel.state.isFailure) }"
             android:src="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
-            app:layout_constraintEnd_toEndOf="@+id/edittext_search"
             app:layout_constraintTop_toTopOf="@+id/edittext_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="@color/on_background_60" />
+
+        <ImageButton
+            android:id="@+id/image_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_custom_12dp"
+            android:background="@null"
+            android:onClick="@{() -> viewModel.onClickClear()}"
+            app:isVisibleOrGone="@{(!viewModel.query.empty) &amp;&amp; (!viewModel.state.isFailure) }"
+            android:src="@drawable/ic_clear"
+            app:layout_constraintBottom_toBottomOf="@+id/edittext_search"
+            app:layout_constraintTop_toTopOf="@+id/edittext_search"
+            app:layout_constraintEnd_toEndOf="@+id/edittext_search"
             app:tint="@color/on_background_60" />
 
         <HorizontalScrollView
