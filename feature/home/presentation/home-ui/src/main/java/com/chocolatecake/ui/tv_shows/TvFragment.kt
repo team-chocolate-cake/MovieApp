@@ -82,9 +82,7 @@ class TvFragment : BaseFragment<FragmentTvBinding, TVShowUIState, TVShowsInterac
     private fun navigateToTv(tvId: Int) {
         try {
             findNavController().navigate(TvFragmentDirections.actionTvFragmentToTvDetailsFragment(tvId))
-        }catch (e:Exception){
-            Log.e("TAGG", "navigateToTv: ${e}", )
-        }
+        }catch (_:Exception){ }
 
     }
 
