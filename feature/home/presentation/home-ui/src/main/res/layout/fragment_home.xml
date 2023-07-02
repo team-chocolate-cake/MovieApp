@@ -40,24 +40,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textview_error_occurred"
-            style="@style/TextStyle.TitleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/error_occured"
-            app:layout_constraintTop_toBottomOf="@id/lottie_animation_view_no_network"
-            android:layout_marginTop="@dimen/spacing_small_8dp"
-            app:layout_constraintEnd_toEndOf="@+id/lottie_animation_view_no_network"
-            app:layout_constraintStart_toStartOf="@+id/lottie_animation_view_no_network" />
-
-
         <include
             android:id="@+id/lottie_animation_view_no_network"
             layout="@layout/layout_no_connection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:isVisible="@{viewModel.state.isError}"
+            app:isVisibleOrGone="@{viewModel.state.isError}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

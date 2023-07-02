@@ -13,7 +13,7 @@ data class HomeUiState(
     val isLoading: Boolean = false,
 ){
     val isError: Boolean
-        get() = onErrors.isEmpty()
+        get() = onErrors.isNotEmpty()
 }
 
 data class UpComingMoviesUiState(
