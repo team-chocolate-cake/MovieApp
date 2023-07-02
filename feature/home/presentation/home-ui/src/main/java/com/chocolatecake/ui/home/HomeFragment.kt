@@ -53,84 +53,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeUiState, HomeUiEvent>
     override fun onEvent(event: HomeUiEvent) {
         when (event) {
 
-            is HomeUiEvent.NowPlayingMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
+            is HomeUiEvent.MovieEvent -> {
+                try {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
+                            event.itemId
+                        )
                     )
-                )
+                }catch (_:Exception){ }
             }
 
-            is HomeUiEvent.PopularMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
+            HomeUiEvent.ClickShowMore -> {
+                try {
+                    findNavController().navigate(
+                        HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
+                            showMoreType = ShowMoreType.POPULAR_MOVIES
+                        )
                     )
-                )
-            }
-
-            is HomeUiEvent.PopularPeopleEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToPeopleDetailsFragment(
-                        event.itemId
-                    )
-                )
-            }
-
-            is HomeUiEvent.RecommendedMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
-                    )
-                )
-            }
-
-            is HomeUiEvent.TopRatedMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
-                    )
-                )
-            }
-
-            is HomeUiEvent.TrendingMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
-                    )
-                )
-            }
-
-            is HomeUiEvent.UpComingMovieEvent -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(
-                        event.itemId
-                    )
-                )
-            }
-
-            HomeUiEvent.ClickPopularMoviesShowMore -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
-                        showMoreType = ShowMoreType.POPULAR_MOVIES
-                    )
-                )
-            }
-
-            HomeUiEvent.ClickTopRatedShowMore -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
-                        showMoreType = ShowMoreType.TOP_RATED
-                    )
-                )
-            }
-
-            HomeUiEvent.ClickTrendingShowMore -> {
-                findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToShowMoreFragment(
-                        showMoreType = ShowMoreType.TRENDING
-                    )
-                )
+                }catch (_:Exception){ }
             }
         }
     }

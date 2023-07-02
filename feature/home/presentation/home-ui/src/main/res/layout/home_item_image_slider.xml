@@ -22,7 +22,7 @@
             android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:onClick="@{()->listener.onClickUpComing(item.id)}"
+            android:onClick="@{()->listener.onClickMovieDetails(item.id)}"
             app:imageUrl="@{item.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:9"

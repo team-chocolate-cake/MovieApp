@@ -24,7 +24,7 @@
             android:layout_height="@dimen/height_image"
             android:layout_marginStart="@dimen/spacing_tiny_4dp"
             android:layout_marginEnd="@dimen/spacing_tiny_4dp"
-            android:onClick="@{()-> listener.onClickNowPlaying(item.id)}"
+            android:onClick="@{()-> listener.onClickMovieDetails(item.id)}"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.imageUrl}"
             app:layout_constraintDimensionRatio="16:9"

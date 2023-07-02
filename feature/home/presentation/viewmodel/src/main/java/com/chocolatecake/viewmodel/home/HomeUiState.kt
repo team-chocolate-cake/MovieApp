@@ -11,7 +11,10 @@ data class HomeUiState(
     val topRated: List<TopRatedUiState> = emptyList(),
     val onErrors: List<String> = emptyList(),
     val isLoading: Boolean = false,
-)
+){
+    val isError: Boolean
+        get() = onErrors.isNotEmpty()
+}
 
 data class UpComingMoviesUiState(
     val id: Int,
