@@ -26,7 +26,7 @@ data class NowPlayingUiState(
 data class TrendingMoviesUiState(
     val id: Int,
     val imageUrl: String,
-    val rate: Double
+    val rate: Double,
 ) {
     fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
 }
@@ -34,13 +34,13 @@ data class TrendingMoviesUiState(
 data class PopularPeopleUiState(
     val id: Int,
     val profilePath: String,
-    val name: String
+    val name: String,
 )
 
 data class PopularMoviesUiState(
     val id: Int,
     val imageUrl: String,
-    val rate: Double
+    val rate: Double,
 ) {
     fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
 }
@@ -49,7 +49,7 @@ data class PopularMoviesUiState(
 data class TopRatedUiState(
     val id: Int,
     val imageUrl: String,
-    val rate: Double
+    val rate: Double,
 ) {
     fun formattedRate(): Double = (rate * 100).roundToInt() / 100.0
 }

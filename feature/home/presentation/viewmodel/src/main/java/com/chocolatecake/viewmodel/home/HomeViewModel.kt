@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getData() {
-        _state.update { it.copy(isLoading = true) }
+        _state.update { it.copy(isLoading = true, onErrors = listOfNotNull()) }
         getUpComingMovies()
         getPopularPeople()
         getNowPlayingMovies()
