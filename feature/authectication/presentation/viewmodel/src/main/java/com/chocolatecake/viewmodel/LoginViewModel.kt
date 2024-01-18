@@ -18,7 +18,7 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val stringsRes: StringsRes,
     private val navigationRes: NavigationRes,
-) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState()) {
+) : BaseViewModel<LoginUiState, LoginUiEvent>(LoginUiState()), LoginInterActionsListener {
 
     init {
         viewModelScope.launch { state.collectLatest { it.log() } }
@@ -26,6 +26,13 @@ class LoginViewModel @Inject constructor(
 
     fun onClickSignUp() {
         sendEvent(LoginUiEvent.SignUpEvent)
+    }
+    override fun onUsernameChanged(username: String) {
+        _state.update { it.copy(userName = username) }
+    }
+
+    override fun onPasswordChanged(password: String) {
+        _state.update { it.copy(password = password) }
     }
 
     fun login() {
